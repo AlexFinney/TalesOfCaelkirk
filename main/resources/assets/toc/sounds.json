@@ -1,0 +1,102 @@
+{
+  "rat_squeak": {
+    "category": "master",
+      "sounds": ["toc:entity/rat/rat_squeak_1", "toc:entity/rat/rat_squeak_2"]
+  },
+   "rat_die": {
+    "category": "master",
+      "sounds": ["toc:entity/rat/rat_die"]
+  },
+  "rat_hurt": {
+    "category": "master",
+      "sounds": ["toc:entity/rat/rat_hurt"]
+  },
+  "man_die": {
+    "category": "master",
+      "sounds": ["toc:entity/man/man_die_1"]
+  },
+  "man_grunt": {
+    "category": "master",
+      "sounds": ["toc:entity/man/man_grunt_3", "toc:entity/man/man_grunt_1", "toc:entity/man/man_grunt_2"]
+  },
+  "man_hurt": {
+    "category": "master",
+      "sounds": ["toc:entity/man/man_hurt_1", "toc:entity/man/man_grunt_1", "toc:entity/man/man_grunt_2"]
+  },
+  "goblin_snarl": {
+    "category": "master",
+      "sounds": ["toc:entity/goblin/goblin_snarl_1", "toc:entity/goblin/goblin_snarl_2", "toc:entity/goblin/goblin_snarl_3"]
+  },
+  "goblin_breathe": {
+    "category": "master",
+      "sounds": ["toc:entity/goblin/goblin_breathe_1", "toc:entity/goblin/goblin_breathe_2", "toc:entity/goblin/goblin_breathe_3"]
+  },
+  "goblin_laugh": {
+    "category": "master",
+      "sounds": ["toc:entity/goblin/goblin_laugh"]
+  },
+  "goblin_die": {
+    "category": "master",
+      "sounds": ["toc:entity/goblin/goblin_growl"]
+  },
+  "scorpian_die": {
+    "category": "master",
+      "sounds": ["toc:entity/scorpian/scorpian_die"]
+  },
+  "scorpian_hurt": {
+    "category": "master",
+      "sounds": ["toc:entity/scorpian/scorpian_hurt"]
+  },
+  "scorpian_idle_1": {
+    "category": "master",
+      "sounds": ["toc:entity/scorpian/scorpian_idle_1"]
+  },
+  "scorpian_sting": {
+    "category": "master",
+      "sounds": ["toc:entity/scorpian/scorpian_sting"]
+  },
+  "spider_forest_ambient": {
+    "category": "master",
+      "sounds": ["toc:ambient/spider_forest/behind_you", "toc:ambient/spider_forest/glad_you_did", "toc:ambient/spider_forest/ooh_look_dinner",
+                "toc:ambient/spider_forest/what_brings_human", "toc:ambient/spider_forest/where_are_you_going_1", "toc:ambient/spider_forest/you_look_juicy"]
+  },
+  "super_creepy_music": {
+    "category": "master",
+      "sounds": [
+            {
+            "name": "toc:music/super_creepy_0",
+            "stream": true
+            }
+      ]
+  },
+   "creepy_music": {
+    "category": "master",
+      "sounds": [
+            {
+            "name": "toc:music/creepy_0",
+            "stream": true
+            },
+            {
+            "name": "toc:music/creepy_1",
+            "stream": true
+            },
+            {
+            "name": "toc:music/creepy_2",
+            "stream": true
+            }
+      ]
+  },
+   "ingot_place": {
+    "category": "master",
+      "sounds": ["toc:sound_effects/smithing/ingot_place"]
+  },
+   "anvil_strike": {
+    "category": "master",
+      "sounds": ["toc:sound_effects/smithing/anvil_strike"]
+  },
+   "pickaxe_strike": {
+    "category": "master",
+      "sounds": ["toc:sound_effects/mining/pickaxe1", "toc:sound_effects/mining/pickaxe2", 
+                 "toc:sound_effects/mining/pickaxe3", "toc:sound_effects/mining/pickaxe4"]
+  }
+}

@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "toc:blocks/spider_tree_log_end",
+        "side": "toc:blocks/spider_tree_log"
+    }
+}
