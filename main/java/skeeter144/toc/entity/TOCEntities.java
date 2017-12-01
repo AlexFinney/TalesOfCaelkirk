@@ -12,6 +12,7 @@ import skeeter144.toc.entity.mob.monster.EntityViking;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityDonkeyMount;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityMuleMount;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityVariableHorseMount;
+import skeeter144.toc.entity.mob.mount.flying.EntityGriffin;
 import skeeter144.toc.entity.mob.mount.flying.EntityPegasus;
 import skeeter144.toc.entity.mob.passive.questgiver.EntityBobRatMan;
 import skeeter144.toc.entity.mob.passive.shopkeeper.EntityHumanShopKeeper;
@@ -29,11 +30,14 @@ public class TOCEntities {
 		
 		
 		//mounts
-		registerEntity(EntityMuleMount.class, "mule_mount", 80, 3, true, 0x7d3800, 0x361800);
-		registerEntity(EntityDonkeyMount.class, "donkey_mount", 80, 3, true, 0x7d3800, 0x361800);
-		registerEntity(EntityVariableHorseMount.class, "horse_mount", 80, 3, true, 0x7d3800, 0x361800);
-		
-		registerEntity(EntityPegasus.class, "pegasus", 80, 3, true, 0xffffff, 0xdddddd);
+			//horse-like
+			registerEntity(EntityMuleMount.class, "mule_mount", 80, 3, true, 0x7d3800, 0x361800);
+			registerEntity(EntityDonkeyMount.class, "donkey_mount", 80, 3, true, 0x7d3800, 0x361800);
+			registerEntity(EntityVariableHorseMount.class, "horse_mount", 80, 3, true, 0x7d3800, 0x361800);
+			
+			//flying
+			registerEntity(EntityPegasus.class, "pegasus", 80, 3, true, 0xffffff, 0xdddddd);
+			registerEntity(EntityGriffin.class, "griffin", 80, 3, true, 0xfa9d55, 0x732e00);
 		
 		//npcs
 		

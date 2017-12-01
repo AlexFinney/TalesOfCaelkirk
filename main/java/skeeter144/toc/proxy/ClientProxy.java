@@ -28,6 +28,7 @@ import skeeter144.toc.client.Keybindings;
 import skeeter144.toc.client.entity.model.ModelGiantScorpian;
 import skeeter144.toc.client.entity.model.ModelGiantSpider;
 import skeeter144.toc.client.entity.model.ModelGoblin;
+import skeeter144.toc.client.entity.model.ModelGriffin;
 import skeeter144.toc.client.entity.model.ModelHumanNpc;
 import skeeter144.toc.client.entity.model.ModelPegasus;
 import skeeter144.toc.client.entity.model.ModelRat;
@@ -36,6 +37,7 @@ import skeeter144.toc.client.entity.renderer.RenderCustomAbstractHorse;
 import skeeter144.toc.client.entity.renderer.RenderGiantScorpian;
 import skeeter144.toc.client.entity.renderer.RenderGiantSpider;
 import skeeter144.toc.client.entity.renderer.RenderGoblin;
+import skeeter144.toc.client.entity.renderer.RenderGriffin;
 import skeeter144.toc.client.entity.renderer.RenderHumanNpc;
 import skeeter144.toc.client.entity.renderer.RenderPegasus;
 import skeeter144.toc.client.entity.renderer.RenderRat;
@@ -51,6 +53,7 @@ import skeeter144.toc.entity.mob.monster.EntityViking;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityDonkeyMount;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityMuleMount;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityVariableHorseMount;
+import skeeter144.toc.entity.mob.mount.flying.EntityGriffin;
 import skeeter144.toc.entity.mob.mount.flying.EntityPegasus;
 import skeeter144.toc.entity.mob.passive.questgiver.EntityBobRatMan;
 import skeeter144.toc.entity.mob.passive.shopkeeper.EntityHumanShopKeeper;
@@ -115,6 +118,7 @@ public class ClientProxy extends CommonProxy
 		rm.entityRenderMap.put(EntityDonkeyMount.class, new RenderCustomAbstractHorse(rm, 0.87F));
 		rm.entityRenderMap.put(EntityVariableHorseMount.class, new RenderCustomAbstractHorse(rm, 1F));
 		rm.entityRenderMap.put(EntityPegasus.class, new RenderPegasus(rm, new ModelPegasus(), 1F));
+		rm.entityRenderMap.put(EntityGriffin.class, new RenderGriffin(rm, new ModelGriffin(), 1F));
 		
 	}	
 
