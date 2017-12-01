@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 
 public class EntityVariableHorseMount extends EntityAbstractHorseMount{
 	
-	 private static final DataParameter<Integer> HORSE_VARIANT = EntityDataManager.<Integer>createKey(EntityAbstractHorseMount.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> HORSE_VARIANT = EntityDataManager.<Integer>createKey(EntityAbstractHorseMount.class, DataSerializers.VARINT);
 	
 	public int horseVariant = 0;
 	public EntityVariableHorseMount(World worldIn) {

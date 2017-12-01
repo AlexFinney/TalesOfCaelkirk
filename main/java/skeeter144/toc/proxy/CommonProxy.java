@@ -18,7 +18,7 @@ import skeeter144.toc.handlers.EntityHandler;
 import skeeter144.toc.handlers.PlayerInteractHandler;
 import skeeter144.toc.handlers.PlayerInventoryHandler;
 import skeeter144.toc.handlers.PlayerLoginHandler;
-import skeeter144.toc.handlers.TickHandler;
+import skeeter144.toc.handlers.tick.TickHandler;
 import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.magic.Spells;
 import skeeter144.toc.network.AddLevelXpMessage;
@@ -68,6 +68,8 @@ import skeeter144.toc.network.SpawnParticlesMessage;
 import skeeter144.toc.network.SpawnParticlesMessage.SpawnParticlesMessageHandler;
 import skeeter144.toc.network.SpecialAttackCooldownMessage;
 import skeeter144.toc.network.SpecialAttackCooldownMessage.SpecialAttackCooldownMessageHandler;
+import skeeter144.toc.network.UpdatePlayerFlyingMessage;
+import skeeter144.toc.network.UpdatePlayerFlyingMessage.UpdatePlayerFlyingMessageHandler;
 import skeeter144.toc.network.WandEmbueMessage;
 import skeeter144.toc.network.WandEmbueMessage.WandEmbueMessageHandler;
 import skeeter144.toc.player.EntityLevels;
@@ -95,6 +97,7 @@ public class CommonProxy
 		Network.INSTANCE.registerMessage(ItemTransactionMessageHandler.class, ItemTransactionMessage.class, Network.getNextId(), Side.SERVER);
 		Network.INSTANCE.registerMessage(CraftItemMessageHandler.class, CraftItemMessage.class, Network.getNextId(), Side.SERVER);
 		Network.INSTANCE.registerMessage(SetAnvilRecipeMessageHandler.class, SetAnvilRecipeMessage.class, Network.getNextId(), Side.SERVER);
+		Network.INSTANCE.registerMessage(UpdatePlayerFlyingMessageHandler.class, UpdatePlayerFlyingMessage.class, Network.getNextId(), Side.SERVER);
 		
 		Network.INSTANCE.registerMessage(PlayerVitalsUpdateMessageHandler.class, PlayerVitalsUpdateMessage.class, Network.getNextId(), Side.CLIENT);
 		Network.INSTANCE.registerMessage(SetClientTOCPlayerMessageHandler.class, SetClientTOCPlayerMessage.class, Network.getNextId(), Side.CLIENT);

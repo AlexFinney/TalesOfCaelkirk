@@ -14,6 +14,8 @@ public class Keybindings {
 	public static CustomKey SPELLBOOK_KEYBIND;
 	public static CustomKey LEVELS_KEYBIND;
 	public static CustomKey INVENTORY_KEYBIND;
+	public static CustomKey MOUNT_FLY_UP;
+	public static CustomKey MOUNT_FLY_DOWN;
 	
 	public static void registerKeybinds() {
 		keyBinds = new ArrayList<CustomKey>();
@@ -22,11 +24,15 @@ public class Keybindings {
 		SPELLBOOK_KEYBIND = new CustomKey("key.magic.opengui", Keyboard.KEY_M, "key.toc.category");
 		LEVELS_KEYBIND = new CustomKey("key.levels.opengui", Keyboard.KEY_L, "key.toc.category");
 		INVENTORY_KEYBIND = new CustomKey("key.inventory.opengui", Keyboard.KEY_E, "key.toc.category");
+		MOUNT_FLY_UP = new CustomKey("key.mount_controls.fly_up", Keyboard.KEY_R, "key.toc.category");
+		MOUNT_FLY_DOWN = new CustomKey("key.mount_controls.fly_down", Keyboard.KEY_F, "key.toc.category");
 		
 		
 		keyBinds.add(SPELLBOOK_KEYBIND);
 		keyBinds.add(LEVELS_KEYBIND);
 		keyBinds.add(INVENTORY_KEYBIND);
+		keyBinds.add(MOUNT_FLY_UP);
+		keyBinds.add(MOUNT_FLY_DOWN);
 		
 		
 		for(CustomKey c : keyBinds)
@@ -41,13 +47,5 @@ public class Keybindings {
 			}
 			++i;
 		}
-		
-		
-	}
-	
-	public enum TOCKeys{
-		SPELLBOOK,
-		LEVELS,
-		UNKNOWN
 	}
 }

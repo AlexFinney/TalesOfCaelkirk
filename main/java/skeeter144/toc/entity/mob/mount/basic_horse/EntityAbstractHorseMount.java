@@ -23,8 +23,6 @@ import net.minecraft.world.World;
 
 public abstract class EntityAbstractHorseMount extends AbstractChestHorse{
 
-	
-	
 	int secondsSinceLastRide = 0;
 	public UUID horseOwner = null;
 	public EntityPlayer followTarget = null;
@@ -45,8 +43,6 @@ public abstract class EntityAbstractHorseMount extends AbstractChestHorse{
 		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64);
 	}
 	
-
-	
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
@@ -54,7 +50,7 @@ public abstract class EntityAbstractHorseMount extends AbstractChestHorse{
 			if(this.ticksExisted % 20 == 0) {
 				if(!this.isBeingRidden()) {
 					if(followTarget != null && followTarget.getPosition().distanceSq(this.getPosition()) > 4) {
-						this.navigator.tryMoveToEntityLiving(followTarget, 1.2);
+						this.navigator.tryMoveToEntityLiving(followTarget, this.getAIMoveSpeed());
 						secondsSinceLastRide = 0;
 					}else {
 						followTarget = null;
@@ -177,8 +173,11 @@ public abstract class EntityAbstractHorseMount extends AbstractChestHorse{
                 }
             }
         }
-        
-        
+	}
+	
+	@Override
+	public boolean canPassengerSteer() {
+		return true;
 	}
 	
 }

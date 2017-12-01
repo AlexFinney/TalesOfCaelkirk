@@ -55,6 +55,7 @@ import skeeter144.toc.entity.mob.mount.flying.EntityPegasus;
 import skeeter144.toc.entity.mob.passive.questgiver.EntityBobRatMan;
 import skeeter144.toc.entity.mob.passive.shopkeeper.EntityHumanShopKeeper;
 import skeeter144.toc.handlers.PlayerInputHandler;
+import skeeter144.toc.handlers.tick.ClientTickHandler;
 import skeeter144.toc.items.TOCItemsClientRegistration;
 import skeeter144.toc.models.ModelVikingHelm;
 import skeeter144.toc.particles.particle.DamageParticle;
@@ -84,6 +85,7 @@ public class ClientProxy extends CommonProxy
 		MinecraftForge.EVENT_BUS.register(new HUD());
 		MinecraftForge.EVENT_BUS.register(new RegionsRendering());
 		MinecraftForge.EVENT_BUS.register(new PlayerInputHandler());
+		MinecraftForge.EVENT_BUS.register(new ClientTickHandler());
 	}
 	
 	public void postInit(FMLPostInitializationEvent event)
@@ -94,7 +96,6 @@ public class ClientProxy extends CommonProxy
 	
 	@Override
 	public void renderInit(Item item, int meta, String name) {
-		
 		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(Reference.MODID + ":" + name, "inventory"));
 	}
 	
