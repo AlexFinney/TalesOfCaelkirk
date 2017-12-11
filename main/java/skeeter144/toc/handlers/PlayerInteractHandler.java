@@ -2,14 +2,21 @@ package skeeter144.toc.handlers;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -19,11 +26,16 @@ import skeeter144.toc.blocks.BlockHarvestableOre;
 import skeeter144.toc.blocks.TOCBlocks;
 import skeeter144.toc.client.gui.Guis;
 import skeeter144.toc.entity.tile.TileEntityAnvil;
-import skeeter144.toc.entity.tile.TileEntityHarvestedOre;
+import skeeter144.toc.entity.tile.TileEntityHarvestedTree;
 import skeeter144.toc.items.TOCItems;
+import skeeter144.toc.items.tools.TOCAxe;
 import skeeter144.toc.network.AddLevelXpMessage;
 import skeeter144.toc.network.Network;
+import skeeter144.toc.network.SpawnParticlesMessage;
+import skeeter144.toc.particles.system.ParticleSystem;
 import skeeter144.toc.player.EntityLevels.Levels;
+import skeeter144.toc.skills.Woodcutting;
+import skeeter144.toc.sounds.Sounds;
 import skeeter144.toc.tasks.TickableTask;
 
 public class PlayerInteractHandler {
@@ -37,6 +49,13 @@ public class PlayerInteractHandler {
 		if(e.getEntityPlayer().getCooledAttackStrength(1) != 1) {
 			e.setCanceled(true);
 			cancelSwing(e.getEntityPlayer());
+			return;
+		}
+		
+		Block b = e.getWorld().getBlockState(e.getPos()).getBlock();
+		if(b instanceof BlockLog) {
+			if(e.getEntityPlayer().getHeldItemMainhand().getItem() instanceof TOCAxe)
+				processLogChopped(e);
 		}
 	}
 	
@@ -75,7 +94,10 @@ public class PlayerInteractHandler {
 				}
 			}
 		} else {
-			TileEntityAnvil anvil = (TileEntityAnvil) e.getWorld().getTileEntity(e.getPos());
+			if(!(e.getWorld().getTileEntity(e.getPos()) instanceof TileEntityAnvil))
+				return;
+			
+			TileEntityAnvil anvil = (TileEntityAnvil)e.getWorld().getTileEntity(e.getPos());
 			if (bs.getBlock().getDefaultState().equals(TOCBlocks.blockAnvil.getDefaultState())) {
 				if (anvil != null && anvil.producedItem != null) {
 					e.getEntityPlayer().addItemStackToInventory(anvil.producedItem);
@@ -96,28 +118,70 @@ public class PlayerInteractHandler {
 	@SubscribeEvent
 	public void onBlockBreak(BlockEvent.BreakEvent e){
 		if(e.getState().getBlock() instanceof BlockHarvestableOre) {
-			e.setCanceled(true);
-			if(e.getWorld().isRemote)
-				return;
-			if(e.getPlayer().inventory.getFirstEmptyStack() == -1) {
-				e.getPlayer().sendMessage(new TextComponentString("Your inventory is too full to hold any more ore!"));
-				return;
-			}
-				
-			IBlockState oldState = e.getState();
-			e.getWorld().setBlockState(e.getPos(), TOCBlocks.harvested_ore.getDefaultState());
-			TileEntityHarvestedOre ore = (TileEntityHarvestedOre)e.getWorld().getTileEntity(e.getPos());
-			ore.resourceBlockState = oldState;
-			BlockHarvestableOre hOre = (BlockHarvestableOre)oldState.getBlock();
-			ore.minSecs = hOre.minSecs;
-			ore.maxSecs = hOre.maxSecs;
-			if(e.getPlayer() != null) {
-				e.getPlayer().addItemStackToInventory(new ItemStack(hOre.item));
-				TOCMain.pm.getPlayer(e.getPlayer().getUniqueID()).levels.addExp(Levels.MINING, hOre.xpGiven);
-				Network.INSTANCE.sendTo(new AddLevelXpMessage("Mining", hOre.xpGiven), (EntityPlayerMP) e.getPlayer());
-			}
+			
 		}
 	}
 	
-	
+	private void processLogChopped(PlayerInteractEvent e) {
+		World world = e.getWorld();
+		EntityPlayer player = e.getEntityPlayer();
+		BlockPos pos = e.getPos();
+		
+		if(e.getWorld().isRemote)
+			return;
+		
+		
+		//TODO: verify is actually a tree
+		
+		float pitchOffset = TOCMain.rand.nextFloat() / .3f - .15f;
+		world.playSound(player, pos, Sounds.pickaxe_strike, SoundCategory.MASTER, 1, 1 + pitchOffset);
+
+		Network.INSTANCE.sendToAll(new SpawnParticlesMessage(ParticleSystem.ORE_MINING_PARTICLE_SYSTEM, pos.getX(), pos.getY(), pos.getZ()));
+		
+		BlockLog log = (BlockLog) world.getBlockState(pos).getBlock();
+		
+		float chance = Woodcutting.getChopChanceForWood(log);
+		if(TOCMain.rand.nextFloat() <= chance) {
+			
+			if(player.inventory.getFirstEmptyStack() == -1) {
+				player.sendMessage(new TextComponentString("Your inventory is too full to hold any more ore!"));
+				return;
+			}
+				
+			Map<BlockPos, IBlockState> list = Woodcutting.getTreeFromLog(world, pos);
+			int leavesFound = 0;
+			for(Map.Entry<BlockPos, IBlockState> entry : list.entrySet()) {
+				if(entry.getValue().getBlock() instanceof BlockLeaves)
+					++leavesFound;
+				if(leavesFound > 5)
+					break;
+			}
+			
+			if(leavesFound < 5) {
+				System.out.println("Not enough leaves found: " + leavesFound);
+				return;
+			}
+			
+			for(Map.Entry<BlockPos, IBlockState> entry : list.entrySet()) {
+				world.setBlockState(entry.getKey(), Blocks.AIR.getDefaultState());
+			}
+			
+			
+			world.setBlockState(pos, TOCBlocks.harvested_tree.getDefaultState());
+			TileEntityHarvestedTree tree = (TileEntityHarvestedTree)world.getTileEntity(pos);
+			tree.minSecs = Woodcutting.getMinRespawnSecsForWood(log);
+			tree.maxSecs = Woodcutting.getMaxRespawnSecsForWood(log);
+			
+			tree.treeBlocks = list;
+			
+			int xpGiven = Woodcutting.getExpForWood(log);
+			Item item = Woodcutting.getHarvestItemForWood(log);
+			
+			if(player != null) {
+				player.addItemStackToInventory(new ItemStack(item));
+				TOCMain.pm.getPlayer(player.getUniqueID()).levels.addExp(Levels.WOODCUTTING, xpGiven);
+				Network.INSTANCE.sendTo(new AddLevelXpMessage("Mining", xpGiven), (EntityPlayerMP) player);
+			}
+		}
+	}
 }

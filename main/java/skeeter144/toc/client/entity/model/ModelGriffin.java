@@ -4,10 +4,7 @@ import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.entity.Entity;
 
-/**
- * ModelHorse - Either Mojang or a mod author
- * Created using Tabula 7.0.0
- */
+
 public class ModelGriffin extends AdvancedModelBase {
     public AdvancedModelRenderer body;
     public AdvancedModelRenderer l_wing;

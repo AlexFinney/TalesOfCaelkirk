@@ -6,18 +6,24 @@ import java.util.List;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BlockEvent;
 import skeeter144.toc.TOCMain;
+import skeeter144.toc.entity.tile.TileEntityHarvestedOre;
 import skeeter144.toc.items.TOCItems;
-import skeeter144.toc.items.tools.CustomPickaxe;
+import skeeter144.toc.items.tools.TOCPickaxe;
+import skeeter144.toc.network.AddLevelXpMessage;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.SpawnParticlesMessage;
 import skeeter144.toc.particles.system.ParticleSystem;
+import skeeter144.toc.player.EntityLevels.Levels;
 import skeeter144.toc.sounds.Sounds;
 
 public class BlockHarvestableOre extends CustomBlock{
@@ -50,10 +56,27 @@ public class BlockHarvestableOre extends CustomBlock{
 		
 		 Network.INSTANCE.sendToAll(new SpawnParticlesMessage(ParticleSystem.ORE_MINING_PARTICLE_SYSTEM, pos.getX(), pos.getY(), pos.getZ()));
 		
-		float chance =((CustomPickaxe)player.getHeldItemMainhand().getItem()).getMineChanceForOre(this);
+		float chance = ((TOCPickaxe)player.getHeldItemMainhand().getItem()).getMineChanceForOre(this);
 		if(TOCMain.rand.nextFloat() < chance) {
-			 MinecraftForge.EVENT_BUS.post(new BlockEvent.BreakEvent(world, pos, world.getBlockState(pos), player));
 			 Network.INSTANCE.sendToAll(new SpawnParticlesMessage(ParticleSystem.ORE_BROKEN_PARTICLE_SYSTEM, pos.getX(), pos.getY(), pos.getZ()));
+			 
+				if(player.inventory.getFirstEmptyStack() == -1) {
+					player.sendMessage(new TextComponentString("Your inventory is too full to hold any more ore!"));
+					return;
+				}
+					
+				IBlockState oldState = world.getBlockState(pos);
+				world.setBlockState(pos, TOCBlocks.harvested_ore.getDefaultState());
+				TileEntityHarvestedOre ore = (TileEntityHarvestedOre)world.getTileEntity(pos);
+				ore.resourceBlockState = oldState;
+				BlockHarvestableOre hOre = (BlockHarvestableOre)oldState.getBlock();
+				ore.minSecs = hOre.minSecs;
+				ore.maxSecs = hOre.maxSecs;
+				if(player != null) {
+					player.addItemStackToInventory(new ItemStack(hOre.item));
+					TOCMain.pm.getPlayer(player.getUniqueID()).levels.addExp(Levels.MINING, hOre.xpGiven);
+					Network.INSTANCE.sendTo(new AddLevelXpMessage("Mining", hOre.xpGiven), (EntityPlayerMP) player);
+				}
 		}
 	}
 	

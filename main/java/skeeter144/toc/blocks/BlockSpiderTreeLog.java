@@ -15,9 +15,6 @@ public class BlockSpiderTreeLog extends BlockLog{
 		this.setDefaultState(this.blockState.getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
     }
 
-    /**
-     * Convert the given metadata into a BlockState for this Block
-     */
     public IBlockState getStateFromMeta(int meta)
     {
         IBlockState state = this.getDefaultState();
@@ -44,9 +41,6 @@ public class BlockSpiderTreeLog extends BlockLog{
         return state;
     }
 
-    /**
-     * Convert the BlockState into the correct metadata value
-     */
     public int getMetaFromState(IBlockState state)
     {
         switch ((BlockLog.EnumAxis)state.getValue(LOG_AXIS))

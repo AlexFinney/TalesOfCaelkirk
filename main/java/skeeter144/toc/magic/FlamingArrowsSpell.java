@@ -64,7 +64,7 @@ public class FlamingArrowsSpell extends Spell {
 					float xP = target.getX() - arrowPos.getX();
 					float zP = target.getZ() - arrowPos.getZ();
 
-					entityarrow.setThrowableHeading(target.getX() - arrowPos.getX(),
+					entityarrow.shoot(target.getX() - arrowPos.getX(),
 													target.getY() + 1 - arrowPos.getY(), 
 													target.getZ() - arrowPos.getZ(), 
 													2, 0);

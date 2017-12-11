@@ -73,8 +73,7 @@ public class BasicWand extends Item
 				system.updatePosition(world, player.posX, player.posY, player.posZ);
 					
 				EntityWandProjectile spell = new EntityWandProjectile(world, player, embuedSpell.getId(), system);
-				spell.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0, 2.0f, 0);
-				
+				spell.shoot(player, player.rotationPitch, player.rotationYaw, 0, 2.0f, 0);
 				
 				//do special stuff for special spells down here. Kinda ugly but whatevs
 				if(embuedSpell.getName().equals(Strings.PUNISH_UNDEAD)) {

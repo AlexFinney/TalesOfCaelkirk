@@ -55,7 +55,32 @@ public class SetClientTOCPlayerMessage implements IMessage{
 	ByteBuf buf;
 	@SideOnly(Side.CLIENT)
 	public void fromBytes(ByteBuf buf) {
-		this.buf = buf;
+		int playerLevelsSize = buf.readInt();
+		
+		byte[] playerLevelData = new byte[playerLevelsSize];
+		buf.readBytes(playerLevelData);
+		
+		ByteArrayInputStream bais = new ByteArrayInputStream(playerLevelData);
+		ObjectInputStream ois = null;
+		EntityLevels pl = null;
+		
+		try {
+			ois = new ObjectInputStream(bais);
+			pl = (EntityLevels)ois.readObject();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {bais.close();} 
+			catch (Exception e) {	e.printStackTrace();}
+		}
+		
+		
+		int plHealth = buf.readInt();
+		int mHealth =  buf.readInt();
+		int mana =  buf.readInt();
+		int maxmana =  buf.readInt();
+		UUID uuid = Minecraft.getMinecraft().player.getPersistentID();
+		this.player = new TOCPlayer(Minecraft.getMinecraft().player, pl, plHealth, mHealth, mana, maxmana);		
 	}
 
 
@@ -65,32 +90,7 @@ public class SetClientTOCPlayerMessage implements IMessage{
 		public IMessage onMessage(SetClientTOCPlayerMessage message, MessageContext ctx) {
 			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
 				public void run() {
-					int playerLevelsSize = message.buf.readInt();
-					
-					byte[] playerLevelData = new byte[playerLevelsSize];
-					message.buf.readBytes(playerLevelData);
-					
-					ByteArrayInputStream bais = new ByteArrayInputStream(playerLevelData);
-					ObjectInputStream ois = null;
-					EntityLevels pl = null;
-					
-					try {
-						ois = new ObjectInputStream(bais);
-						pl = (EntityLevels)ois.readObject();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}finally {
-						try {bais.close();} 
-						catch (Exception e) {	e.printStackTrace();}
-					}
-					
-					
-					int plHealth = message.buf.readInt();
-					int mHealth =  message.buf.readInt();
-					int mana =  message.buf.readInt();
-					int maxmana =  message.buf.readInt();
-					UUID uuid = Minecraft.getMinecraft().player.getPersistentID();
-					TOCMain.localPlayer = new TOCPlayer(Minecraft.getMinecraft().player, pl, plHealth, mHealth, mana, maxmana);
+					TOCMain.localPlayer = message.player;
 				}
 			});
 			

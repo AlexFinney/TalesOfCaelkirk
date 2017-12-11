@@ -11,6 +11,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -25,6 +26,7 @@ import skeeter144.toc.commands.CommandRegions;
 import skeeter144.toc.commands.CommandSetXp;
 import skeeter144.toc.commands.CommandSummonNpc;
 import skeeter144.toc.event.Events;
+import skeeter144.toc.handler.PatternHandler;
 import skeeter144.toc.player.TOCPlayer;
 import skeeter144.toc.proxy.CommonProxy;
 import skeeter144.toc.quest.QuestManager;
@@ -60,9 +62,12 @@ public class TOCMain
 	public static TaskManager clientTaskManager = new TaskManager();
 	public static TaskManager serverTaskManager = new TaskManager();
 	
+	public static final CreativeTabs TAB_ADDITONAL_BANNERS = new CreativeTabAdditionalBanners();
+	
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event)
 	{
+		PatternHandler.initCraftingBanners();
 		rand = new Random(System.currentTimeMillis());
 		proxy.preInit(event);
 	}
