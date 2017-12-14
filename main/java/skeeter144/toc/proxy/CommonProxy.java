@@ -74,6 +74,7 @@ import skeeter144.toc.network.WandEmbueMessage;
 import skeeter144.toc.network.WandEmbueMessage.WandEmbueMessageHandler;
 import skeeter144.toc.player.EntityLevels;
 import skeeter144.toc.quest.QuestManager;
+import skeeter144.toc.skills.Woodcutting;
 import skeeter144.toc.sounds.Sounds;
 
 public class CommonProxy 
@@ -82,10 +83,15 @@ public class CommonProxy
 	{
 		TOCBlocks.registerAllBlocks();
 		MinecraftForge.EVENT_BUS.register(new TOCItems());
+		
 		MinecraftForge.EVENT_BUS.register(new Sounds());
+		
 		TOCBlocks.registerAllTileEntities();
 		TOCEntities.registerEntities();
+		
 		EntityLevels.init();
+		Woodcutting.init();
+		
 		QuestManager.initQuests();
 	}
 	

@@ -130,24 +130,19 @@ public class PlayerInteractHandler {
 		if(e.getWorld().isRemote)
 			return;
 		
-		
-		//TODO: verify is actually a tree
-		
 		float pitchOffset = TOCMain.rand.nextFloat() / .3f - .15f;
-		world.playSound(player, pos, Sounds.pickaxe_strike, SoundCategory.MASTER, 1, 1 + pitchOffset);
+		world.playSound(null, pos, Sounds.pickaxe_strike, SoundCategory.MASTER, 1, 1 + pitchOffset);
 
 		Network.INSTANCE.sendToAll(new SpawnParticlesMessage(ParticleSystem.ORE_MINING_PARTICLE_SYSTEM, pos.getX(), pos.getY(), pos.getZ()));
 		
 		BlockLog log = (BlockLog) world.getBlockState(pos).getBlock();
+
+		float chance = Woodcutting.getChopChanceForWood((TOCAxe) e.getEntityPlayer().getHeldItemMainhand().getItem(), world.getBlockState(pos));
+		if(chance == 0) {
+			player.sendMessage(new TextComponentString("Your axe may not be strong enough to chop that tree."));
+		}
 		
-		float chance = Woodcutting.getChopChanceForWood(log);
 		if(TOCMain.rand.nextFloat() <= chance) {
-			
-			if(player.inventory.getFirstEmptyStack() == -1) {
-				player.sendMessage(new TextComponentString("Your inventory is too full to hold any more ore!"));
-				return;
-			}
-				
 			Map<BlockPos, IBlockState> list = Woodcutting.getTreeFromLog(world, pos);
 			int leavesFound = 0;
 			for(Map.Entry<BlockPos, IBlockState> entry : list.entrySet()) {
@@ -159,6 +154,17 @@ public class PlayerInteractHandler {
 			
 			if(leavesFound < 5) {
 				System.out.println("Not enough leaves found: " + leavesFound);
+				return;
+			}
+			
+			if(player.inventory.getFirstEmptyStack() == -1) {
+				player.sendMessage(new TextComponentString("Your inventory is too full to hold any more logs!"));
+				return;
+			}
+			
+			
+			if(list.size() > Woodcutting.MAX_TREE_SIZE) {
+				player.sendMessage(new TextComponentString("You can't cut down that tree!"));
 				return;
 			}
 			
@@ -180,7 +186,7 @@ public class PlayerInteractHandler {
 			if(player != null) {
 				player.addItemStackToInventory(new ItemStack(item));
 				TOCMain.pm.getPlayer(player.getUniqueID()).levels.addExp(Levels.WOODCUTTING, xpGiven);
-				Network.INSTANCE.sendTo(new AddLevelXpMessage("Mining", xpGiven), (EntityPlayerMP) player);
+				Network.INSTANCE.sendTo(new AddLevelXpMessage("Woodcutting", xpGiven), (EntityPlayerMP) player);
 			}
 		}
 	}

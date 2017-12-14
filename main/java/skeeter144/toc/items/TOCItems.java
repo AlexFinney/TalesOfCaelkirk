@@ -1,14 +1,18 @@
 package skeeter144.toc.items;
 
 import java.lang.reflect.Field;
+import java.util.Map;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
@@ -259,6 +263,22 @@ public class TOCItems {
 				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			Class itemClass = Item.class;
+			Field f = itemClass.getDeclaredField("BLOCK_TO_ITEM");
+			f.setAccessible(true);
+			Map<Block, Item> map = (Map<Block, Item>)f.get(null);
+			
+			Field stackSize = itemClass.getDeclaredField("maxStackSize");
+			stackSize.setAccessible(true);
+			
+			stackSize.set(map.get(Blocks.LOG), 1);
+			stackSize.set(map.get(Blocks.LOG2), 1);
+			
+		} catch (SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
 	}
