@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class MinimapGui extends Gui{
 
 	Chunk lastKnownChunk = null;
+	MapChunk[][] loadedChunks = new MapChunk[3][3];
 	
 	@SubscribeEvent
 	public void onRenderExperienceBar(RenderGameOverlayEvent.Post event)
@@ -22,12 +23,22 @@ public class MinimapGui extends Gui{
 		
 		EntityPlayer player = Minecraft.getMinecraft().player;
 		BlockPos pos = player.getPosition();
-		Chunk c = player.world.getChunkFromBlockCoords(pos);
+		Chunk playersChunk = player.world.getChunkFromBlockCoords(pos);
 		
 		int[][] colors = null;
-		if(c != lastKnownChunk || colors == null) {
-			colors = getChunkColors(c);
-			lastKnownChunk = c;
+		if(playersChunk != lastKnownChunk || colors == null) {
+			colors = getChunkColors(playersChunk);
+			lastKnownChunk = playersChunk;
+			int xC = 0;
+			int zC = 0;
+			for(int x = playersChunk.x - 1; x <= playersChunk.x + 1; ++x) {
+				for(int z = playersChunk.z - 1; z <= playersChunk.z + 1; ++z) {
+					loadedChunks[xC][zC] = new MapChunk(getChunkColors(player.world.getChunkFromChunkCoords(x, z)));
+					++zC;
+				}
+				zC = 0;
+				++xC;
+			}
 		}
 		
 		if(colors != null)
@@ -40,13 +51,26 @@ public class MinimapGui extends Gui{
 	}
 	
 	private void drawMap(int[][] colors) {
-		long start = System.nanoTime();
-		for(int x = 0; x < 16; ++x) {
-			for(int z = 0; z < 16; ++z) {
-				drawRect(10 + x * 10, 10 + z * 10, 20 + x * 10, 20 + z * 10, colors[x][z] | 0xFF000000);
+		
+		int center = 100;
+		int chunkWidth = 16;
+		int blockPixels = chunkWidth / 16;
+
+		for(int x = 0; x <= 2; ++x) {
+			for(int z = 0; z <= 2; ++z) {
+				for(int chunkX = 0; chunkX < 16; ++chunkX) {
+					for(int chunkZ = 0; chunkZ < 16; ++chunkZ) {
+						
+						drawRect(chunkX * blockPixels + chunkWidth * x, 
+								chunkZ * blockPixels + chunkWidth * z, 
+								chunkX * blockPixels + chunkX + chunkWidth * x, 
+								chunkZ * blockPixels + chunkZ + chunkWidth * z,
+								loadedChunks[x][z].colors[chunkX][chunkZ] | 0xFF000000
+								);
+					}
+				}
 			}
 		}
-		
 	}
 	
 	private int[][] getChunkColors(Chunk c) {
