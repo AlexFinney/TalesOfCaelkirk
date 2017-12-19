@@ -45,7 +45,6 @@ import skeeter144.toc.client.entity.renderer.RenderViking;
 import skeeter144.toc.client.gui.GuiEntityStatus;
 import skeeter144.toc.client.gui.HUD;
 import skeeter144.toc.client.gui.RegionsRendering;
-import skeeter144.toc.client.minimap.MinimapGui;
 import skeeter144.toc.entity.mob.monster.EntityGiantScorpian;
 import skeeter144.toc.entity.mob.monster.EntityGiantSpider;
 import skeeter144.toc.entity.mob.monster.EntityGoblin;
@@ -87,7 +86,6 @@ public class ClientProxy extends CommonProxy
 		super.init(event);
 		registerEntityRenders();
 		MinecraftForge.EVENT_BUS.register(new HUD());
-		MinecraftForge.EVENT_BUS.register(new MinimapGui());
 		MinecraftForge.EVENT_BUS.register(new RegionsRendering());
 		MinecraftForge.EVENT_BUS.register(new PlayerInputHandler());
 		MinecraftForge.EVENT_BUS.register(new ClientTickHandler());

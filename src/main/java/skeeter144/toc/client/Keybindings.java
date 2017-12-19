@@ -44,6 +44,10 @@ public class Keybindings {
 				Minecraft.getMinecraft().gameSettings.keyBindInventory = new KeyBinding("key.inventory", Keyboard.KEY_F19, "key.categories.inventory");
 				Minecraft.getMinecraft().gameSettings.keyBindings[i] = Minecraft.getMinecraft().gameSettings.keyBindInventory;
 				break;
+			}else if(kb.equals(Minecraft.getMinecraft().gameSettings.keyBindAdvancements)) {
+				Minecraft.getMinecraft().gameSettings.keyBindInventory = new KeyBinding("key.advancements", Keyboard.KEY_F18, "key.categories.misc");
+				Minecraft.getMinecraft().gameSettings.keyBindings[i] = Minecraft.getMinecraft().gameSettings.keyBindInventory;
+				break;
 			}
 			++i;
 		}
