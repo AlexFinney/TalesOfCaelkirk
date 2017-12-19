@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "normal": { "model": "toc:block_ore_gold" }
+    }
+}

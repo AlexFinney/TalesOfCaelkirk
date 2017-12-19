@@ -1,0 +1,7 @@
+{
+    "__comment": "JimStoneCraft - 2017",
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "blocks/stone_granite5"
+    }
+}
