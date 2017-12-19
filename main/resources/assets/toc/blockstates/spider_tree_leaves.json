@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "axis=y":  { "model": "toc:spider_tree_leaves" },
-        "axis=z":   { "model": "toc:spider_tree_leaves"},
-        "axis=x":   { "model": "toc:spider_tree_leaves" },
-        "axis=none": { "model": "toc:spider_tree_leaves" }
-    }
-}
