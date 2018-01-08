@@ -18,6 +18,8 @@ import skeeter144.toc.player.EntityLevels.Levels;
 
 public class CombatManager {
 	
+	public static final float LOWER_DAMAGE_PCT = .5f;
+	
 	static CombatManager instance;
 	private CombatManager() {}
 	public static CombatManager instance() {
@@ -28,8 +30,6 @@ public class CombatManager {
 	}
 	
 	public float calcEntityDamage(EntityLivingBase e, float amount, DamageSource source) {
-		if(e instanceof EntityArmorStand)
-			return 0;
 		EntityLevels attackerLevels = null;
 		EntityLevels defenderLevels = null;
 		
@@ -45,6 +45,8 @@ public class CombatManager {
 			}else if(source.getTrueSource() instanceof CustomMob) {
 				attackerLevels = TOCMain.mm.getMob(source.getTrueSource().getPersistentID()).levels;
 			}
+		}else {
+			return amount;
 		}
 		
 
@@ -53,16 +55,15 @@ public class CombatManager {
 			TOCDamageSource tocSource = (TOCDamageSource)source;
 			type = tocSource.type;
 		}
-		
-		boolean doTOCCombatRolls = attackerLevels != null && defenderLevels != null;
-		if(type == DamageType.PURE) {
-			doTOCCombatRolls = false;
+		boolean doTOCCombatRolls = false;
+		if(type == DamageType.PHYSICAL && attackerLevels != null && defenderLevels != null) {
+			doTOCCombatRolls = true;
 		}
 		
 		if(doTOCCombatRolls) {
 			int defenseRoll = TOCMain.rand.nextInt(defenderLevels.getLevelFor(Levels.DEFENSE) + 1);
 			int attackRoll = TOCMain.rand.nextInt(attackerLevels.getLevelFor(Levels.ATTACK) + 1);
-			attackRoll *= 2;
+			attackRoll = 60;
 			
 			if(attackRoll < defenseRoll) {
 				if(TOCMain.rand.nextFloat() < .65f) {
@@ -73,7 +74,7 @@ public class CombatManager {
 			}
 			
 			int strengthRoll = TOCMain.rand.nextInt(attackerLevels.getLevelFor(Levels.STRENGTH) + 1);
-			float ratio = strengthRoll / attackerLevels.getLevelFor(Levels.STRENGTH);
+			float ratio = ((float)strengthRoll) / attackerLevels.getLevelFor(Levels.STRENGTH);
 			float strengthMult = ratio * EntityLevels.STRENGTH_MULT_PER_LEVEL * attackerLevels.getLevelFor(Levels.STRENGTH);
 			float bonusDamage = amount * strengthMult;
 			amount += bonusDamage;
@@ -92,8 +93,6 @@ public class CombatManager {
 			}
 		}
 		
-		
-		
 		float reduction = 0;
 		if(type == DamageType.PHYSICAL) {
 			reduction = amount * physResistance;
@@ -111,15 +110,13 @@ public class CombatManager {
 		}else if(type == DamageType.PURE) {
 			reduction = 0;
 		}
-		
+
 		amount -= reduction;
+
 		if(amount <= 1)
 			amount = 2;
-		int actualDamage = (int)amount;
 		
-		if(type != DamageType.PURE)
-		 actualDamage = TOCMain.rand.nextInt((int)amount);
-		
+		int actualDamage = TOCMain.rand.nextInt((int)(amount - amount * .5f)) + (int)(amount*.5f);
 		return actualDamage;
 	}
 	
@@ -145,6 +142,7 @@ public class CombatManager {
 		RANGED,
 		PHYSICAL_MAGIC,
 		RANGED_MAGIC, 
-		PROCESSED, PURE
+		PROCESSED, 
+		PURE
 	}
 }

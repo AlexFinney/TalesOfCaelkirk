@@ -68,7 +68,6 @@ public class RecipeManager {
 		for(Map.Entry<UUID, List<Recipe>> entry : playerCraftingQueue.entrySet()) {
 			EntityPlayerMP player = (EntityPlayerMP) TOCMain.pm.getPlayer(entry.getKey()).mcEntity;
 			Recipe r = entry.getValue().get(0);
-			System.out.println("check");
 			if(r.canRecipeBeCrafted(player.inventory)) {
 				craftRecipe(player, r);
 			}else {

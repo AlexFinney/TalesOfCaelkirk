@@ -43,7 +43,7 @@ public class EntityLevels implements Serializable{
 	
 	//only called on mobs for their creation. They dont have exp
 	public void setLevelFor(Levels l, int level) {
-		levelsMap.get(l).level = level;
+		levelsMap.get(l).setXp(getExpForLevel(level));
 	}
 	
 	public int getLevelFor(Levels l) {

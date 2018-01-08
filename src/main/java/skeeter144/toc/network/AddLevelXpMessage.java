@@ -68,9 +68,7 @@ public class AddLevelXpMessage implements IMessage{
 						if(l.getName().equalsIgnoreCase(message.name)) {
 							int prevLevel = l.getLevel();
 							if(message.xp == 0) {
-								System.out.println("it's 0");
 							}
-							System.out.println(message.xp);
 							HUD.addNewXpMessage(l, message.xp);
 							l.addExp(message.xp);
 							

@@ -54,7 +54,6 @@ public class UpdatePlayerFlyingMessage implements IMessage {
 						speed = ep.getEntityAttribute(SharedMonsterAttributes.FLYING_SPEED).getBaseValue();
 					}else if(!message.isFlyingUp && message.isFlyingDown) {
 						ep.motionY = -.5;
-						System.out.println("down");
 					}else if(!message.isFlyingUp && !message.isFlyingDown) {
 						ep.motionY = 0;
 					}

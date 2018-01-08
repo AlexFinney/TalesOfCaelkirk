@@ -180,7 +180,6 @@ public class DialogGui extends GuiScreen{
 	protected void actionPerformed(GuiButton button) throws IOException {
 		for(int i = 0; i < 5; ++i) {
 			if(buttonTexts[i] != null && buttonTexts[i].equals(button.displayString)) {
-				System.out.println(i);
 				Network.INSTANCE.sendToServer(new QuestDialogResponseMessage(e.getUniqueID(), questId, dialogId, i));
 			}
 		}

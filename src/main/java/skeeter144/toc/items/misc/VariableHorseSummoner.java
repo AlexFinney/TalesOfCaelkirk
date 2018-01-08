@@ -91,7 +91,6 @@ public class VariableHorseSummoner extends CustomItem {
 	private void moveHorseNearPlayerAndWalkTo(EntityAbstractHorseMount horse, EntityPlayer player) {
 		int diameter = 32;
 		int attempts = 15;
-		System.out.println(Math.sqrt(player.getPosition().distanceSq(horse.getPosition())));
 		if(Math.sqrt(player.getPosition().distanceSq(horse.getPosition())) < 30) {
 			if(horse.getNavigator().tryMoveToEntityLiving(player, 1.7)) {
 				horse.followTarget = player;

@@ -26,7 +26,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import skeeter144.toc.Reference;
-import skeeter144.toc.items.TOCItems;
+import skeeter144.toc.combat.CombatManager;
 
 public class TOCBow extends ItemBow {
 
@@ -58,7 +58,7 @@ public class TOCBow extends ItemBow {
 	}
 
 	private ItemStack findAmmo(EntityPlayer player) {
-		if (this.isArrow(player.getHeldItem(EnumHand.OFF_HAND))) {
+		if (isArrow(player.getHeldItem(EnumHand.OFF_HAND))) {
 			return player.getHeldItem(EnumHand.OFF_HAND);
 		} else if (isArrow(player.getHeldItem(EnumHand.MAIN_HAND))) {
 			return player.getHeldItem(EnumHand.MAIN_HAND);
@@ -92,7 +92,6 @@ public class TOCBow extends ItemBow {
 				}
 
 				float velocity = getArrowVelocity(ticksUsed, drawTicks, arrowMaxVel);
-				System.out.println(velocity);
 				if ((double) velocity >= 0.1D) {
 					boolean flag1 = entityplayer.capabilities.isCreativeMode
 							|| (arrowStack.getItem() instanceof ItemArrow && ((ItemArrow) arrowStack.getItem()).isInfinite(arrowStack, stack, entityplayer));
@@ -104,8 +103,7 @@ public class TOCBow extends ItemBow {
 						entityarrow.setIsCritical(true);
 						entityarrow.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, velocity, 0);
 
-						entityarrow.setDamage(entityarrow.getDamage() + .5);
-
+						entityarrow.setDamage(((TOCBow)stack.getItem()).baseDamage + entityarrow.getDamage() + baseDamage + .5);
 						entityarrow.setKnockbackStrength(0);
 
 						worldIn.spawnEntity(entityarrow);
@@ -135,7 +133,6 @@ public class TOCBow extends ItemBow {
 				if (entityIn == null) {
 					return 0.0F;
 				} else {
-					System.out.println((float) (stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / drawTicks);
 					return entityIn.getActiveItemStack().getItem() instanceof TOCBow ? (float) (stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / drawTicks : 0.0F;
 				}
 			}
@@ -150,7 +147,7 @@ public class TOCBow extends ItemBow {
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.YELLOW + "Base Damage:  " + baseDamage);
+		tooltip.add(TextFormatting.YELLOW + "Base Damage:  " + (int)(baseDamage * CombatManager.LOWER_DAMAGE_PCT) +" - " + baseDamage);
 		tooltip.add(TextFormatting.YELLOW + "Arrow Force:  " + (1 + arrowMaxVel));
 		tooltip.add(TextFormatting.YELLOW + "Draw Time:    " + drawTicks / 20f);
 	}

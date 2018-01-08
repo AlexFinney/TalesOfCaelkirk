@@ -16,7 +16,6 @@ public class CraftItemMessage implements IMessage{
 	public CraftItemMessage(Item item, int numToCraft) {
 		this.item = item;
 		this.numToCraft = numToCraft;
-		System.out.println("craft " + item.getRegistryName());
 	}
 	
 	

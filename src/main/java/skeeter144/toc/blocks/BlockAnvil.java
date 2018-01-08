@@ -140,7 +140,6 @@ public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
 				anvil.hammerStruck(playerIn);
 				Network.INSTANCE.sendToAll(new SpawnParticlesMessage(ParticleSystem.ANVIL_STRUCK_PARTICLE_SYSTEM, 
 						pos.getX(), pos.getY(), pos.getZ()));
-				System.out.println("spawn");
 			}else{
 				worldIn.playSound(null, pos, Sounds.anvil_strike, SoundCategory.MASTER, 1, TOCMain.rand.nextFloat() / 5 + 1);
 			}

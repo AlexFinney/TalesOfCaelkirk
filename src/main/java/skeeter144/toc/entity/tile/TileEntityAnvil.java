@@ -108,7 +108,6 @@ public class TileEntityAnvil extends TileEntity {
 	public void setSelectedRecipe(Recipe r) {
 		if(selectedRecipe != null)
 			strikesLeft = r.components[0].getCount() * 3;
-		System.out.println("set " + strikesLeft);
 		this.selectedRecipe = r;
 	}
 }

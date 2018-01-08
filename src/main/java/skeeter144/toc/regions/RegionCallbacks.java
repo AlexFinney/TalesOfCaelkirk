@@ -21,7 +21,6 @@ public class RegionCallbacks {
 		ServerEffectHandler.attemptAddNewEffect(e.getUniqueID(), new ReducedVision(e, "reduced_vision", .4f));
 		if(e instanceof EntityPlayerMP) {
 			Network.INSTANCE.sendTo(new PlayMusicTrackMessage(skeeter144.toc.sounds.music.MusicManager.SoundCategory.SUPER_CREEPY), (EntityPlayerMP)e);
-			System.out.println("play dat music");
 		}
 	}
 	

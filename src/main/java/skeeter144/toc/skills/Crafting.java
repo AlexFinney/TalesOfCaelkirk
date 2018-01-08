@@ -25,11 +25,11 @@ public class Crafting {
 	public Crafting() {
 		registerCraftingResult(TOCItems.stick_oak, 1, 3);
 		
-		registerCraftingResult(TOCItems.oak_shortbow_unstrung, 1, 8);
-		registerCraftingResult(TOCItems.oak_bow_short, 1, 10);
+		registerCraftingResult(TOCItems.bow_oak_short_unstrung, 1, 8);
+		registerCraftingResult(TOCItems.bow_oak_short, 1, 10);
 
-		registerCraftingResult(TOCItems.oak_longbow_unstrung, 2, 12);
-		registerCraftingResult(TOCItems.oak_bow_long, 2, 14);
+		registerCraftingResult(TOCItems.bow_oak_long_unstrung, 2, 12);
+		registerCraftingResult(TOCItems.bow_oak_long, 2, 14);
 	}
 	
 	@SubscribeEvent
@@ -45,7 +45,6 @@ public class Crafting {
 			return;
 		}
 		TOCPlayer p = TOCMain.pm.getPlayer(e.player.getPersistentID());
-		System.out.println(p.getPlayerLevels().getLevel(Levels.CRAFTING).getXp());
 		if(p.levels.getLevel(Levels.CRAFTING).getLevel() < levelReq) {
 			e.player.sendMessage(new TextComponentString("You must be Crafting Level " + levelReq + " to craft that!"));
 			e.crafting.setCount(0);

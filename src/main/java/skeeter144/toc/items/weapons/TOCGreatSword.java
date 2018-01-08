@@ -23,6 +23,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import skeeter144.toc.combat.CombatManager.DamageType;
 import skeeter144.toc.items.TOCItems;
+import skeeter144.toc.combat.CombatManager;
 import skeeter144.toc.combat.TOCDamageSource;
 import skeeter144.toc.util.Reference;
 import skeeter144.toc.util.Util;
@@ -85,6 +86,6 @@ public class TOCGreatSword extends ItemSword implements ISpecialAttackWeapon{
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.YELLOW + "Damage: " + (int)(this.damage * .75f) + " - " + (int)this.damage);
+		tooltip.add(TextFormatting.YELLOW + "Base Damage: " + (int)(this.damage * CombatManager.LOWER_DAMAGE_PCT) + " - " + (int)this.damage);
 	}
 }
