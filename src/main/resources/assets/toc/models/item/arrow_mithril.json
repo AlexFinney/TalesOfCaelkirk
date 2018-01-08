@@ -1,0 +1,6 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "toc:items/bow/arrow_mithril"
+    }
+}
