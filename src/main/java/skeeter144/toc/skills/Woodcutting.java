@@ -13,6 +13,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import skeeter144.toc.blocks.CustomBlockLog;
+import skeeter144.toc.blocks.TOCBlocks;
 import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.items.tools.TOCAxe;
 
@@ -20,8 +22,8 @@ public class Woodcutting {
 
 	public static final int MAX_TREE_SIZE = 300;
 	
-	static Map<BlockPlanks.EnumType, HashMap<TOCAxe, Float>> treeDestroyChancesPerHarvest = new HashMap<BlockPlanks.EnumType, HashMap<TOCAxe, Float>>();
-	static Map<BlockPlanks.EnumType, HashMap<TOCAxe, Float>> logHarvestChances = new HashMap<BlockPlanks.EnumType, HashMap<TOCAxe, Float>>();
+	static Map<CustomBlockLog, Float> treeDestroyChancesPerHarvest = new HashMap<CustomBlockLog, Float>();
+	static Map<CustomBlockLog, HashMap<TOCAxe, Float>> logHarvestChances = new HashMap<CustomBlockLog, HashMap<TOCAxe, Float>>();
 	
 	
 	public static void init() {
@@ -79,25 +81,27 @@ public class Woodcutting {
 		dark_oak_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .05f);
 		dark_oak_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .1f);
 		
-		logHarvestChances.put(BlockPlanks.EnumType.OAK, oak_harvest_chances);
-		logHarvestChances.put(BlockPlanks.EnumType.BIRCH, birch_harvest_chances);
-		logHarvestChances.put(BlockPlanks.EnumType.SPRUCE, birch_harvest_chances);
-		logHarvestChances.put(BlockPlanks.EnumType.ACACIA, birch_harvest_chances);
-		logHarvestChances.put(BlockPlanks.EnumType.JUNGLE, birch_harvest_chances);
-		logHarvestChances.put(BlockPlanks.EnumType.DARK_OAK, birch_harvest_chances);
+		logHarvestChances.put((CustomBlockLog) TOCBlocks.oak_log, oak_harvest_chances);
+		logHarvestChances.put((CustomBlockLog) TOCBlocks.birch_log, birch_harvest_chances);
+		logHarvestChances.put((CustomBlockLog) TOCBlocks.spruce_log, spruce_harvest_chances);
+		logHarvestChances.put((CustomBlockLog) TOCBlocks.acacia_log, acacia_harvest_chances);
+		logHarvestChances.put((CustomBlockLog) TOCBlocks.jungle_log, jungle_harvest_chances);
+		logHarvestChances.put((CustomBlockLog) TOCBlocks.dark_oak_log, dark_oak_harvest_chances);
+
+		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.oak_log, .3f);
+		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.birch_log, .25f);
+		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.spruce_log, .15f);
+		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.acacia_log, .15f);
+		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.jungle_log, .15f);
+		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.dark_oak_log, .15f);
 	}
 	
 	public static float getChopChanceForWood(TOCAxe axe, IBlockState wood) {
-		BlockPlanks.EnumType type = null;
-		if(wood.getBlock() instanceof BlockOldLog) {
-			type = wood.getValue(BlockOldLog.VARIANT);
-		}else {
-			type = wood.getValue(BlockNewLog.VARIANT);
-		}
-		
-		Float f = logHarvestChances.get(type).get(axe);
-		
-		return f == null ? 0 : f;
+		return logHarvestChances.get(wood.getBlock()).get(axe);
+	}
+	
+	public static float getDestroyChanceForWood(IBlockState wood) {
+		return treeDestroyChancesPerHarvest.get(wood.getBlock());
 	}
 	
 	public static int getMinRespawnSecsForWood(BlockLog wood) {

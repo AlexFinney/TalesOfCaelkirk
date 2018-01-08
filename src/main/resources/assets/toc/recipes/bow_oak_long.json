@@ -1,0 +1,16 @@
+{ 
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "toc:bow_oak_long_unstrung"
+    },
+    {
+        "item": "minecraft:string"    
+    }
+  ],
+  
+  "result": {
+    "item": "toc:bow_oak_long",
+    "count": 1
+  }
+}

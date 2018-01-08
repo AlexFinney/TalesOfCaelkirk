@@ -11,6 +11,9 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.client.Keybindings;
@@ -78,6 +81,14 @@ public class LevelsGui extends GuiScreen{
 			if(rect.contains(adjustedX, adjustedY)) {
 				if(!wasMouseClicked && Mouse.isButtonDown(0)) {
 					wasMouseClicked = true;
+					if(level.name.equalsIgnoreCase("mining")) {
+						ItemStack is = new ItemStack(Items.WRITABLE_BOOK);
+						NBTTagCompound nbt = new NBTTagCompound();
+						nbt.setString("pages", "[adasfasf]");
+						is.setTagCompound(nbt);
+						Minecraft.getMinecraft().player.inventory.addItemStackToInventory(is);
+					}
+					
 				}
 				
 				String str = level.getName();
@@ -105,11 +116,6 @@ public class LevelsGui extends GuiScreen{
 				GlStateManager.color(1, 1, 1);
 			}
 			
-		//	if(count == selectedIcon) {
-		//		tm.bindTexture(new ResourceLocation(Reference.MODID, "textures/spells/selected_icon.png"));
-		//		drawModalRectWithCustomSizedTexture(iconX, iconY, 0, 0, iconDim, iconDim, iconDim, iconDim);
-				
-		//	}
 			count++;
 			col = count % 4;
 			if(count % 4 == 0) {

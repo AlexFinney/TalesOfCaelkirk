@@ -1,0 +1,6 @@
+{
+    "parent": "toc:item/bow_oak_long",
+    "textures": {
+        "layer0": "toc:items/bow/oak_bow_pulling_3"
+    }
+}

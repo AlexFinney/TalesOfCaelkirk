@@ -42,4 +42,5 @@ public class ArmorVikingHelmet extends CustomArmor{
 		}
 		return null;
 	}
+	
 }

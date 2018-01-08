@@ -23,6 +23,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.blocks.BlockHarvestableOre;
+import skeeter144.toc.blocks.CustomBlockLog;
 import skeeter144.toc.blocks.TOCBlocks;
 import skeeter144.toc.client.gui.Guis;
 import skeeter144.toc.entity.tile.TileEntityAnvil;
@@ -53,9 +54,15 @@ public class PlayerInteractHandler {
 		}
 		
 		Block b = e.getWorld().getBlockState(e.getPos()).getBlock();
-		if(b instanceof BlockLog) {
+		if(b instanceof CustomBlockLog) {
 			if(e.getEntityPlayer().getHeldItemMainhand().getItem() instanceof TOCAxe)
 				processLogChopped(e);
+		}else if(b instanceof BlockLog) {
+			if(e.getEntityPlayer().getHeldItemMainhand().getItem() instanceof TOCAxe) {
+				if(e.getWorld().isRemote)
+					return;
+				e.getEntityPlayer().sendMessage(new TextComponentString("You can't chop those logs. Silly goose."));
+			}
 		}
 	}
 	
@@ -162,26 +169,33 @@ public class PlayerInteractHandler {
 				return;
 			}
 			
-			
 			if(list.size() > Woodcutting.MAX_TREE_SIZE) {
 				player.sendMessage(new TextComponentString("You can't cut down that tree!"));
 				return;
 			}
-			
-			for(Map.Entry<BlockPos, IBlockState> entry : list.entrySet()) {
-				world.setBlockState(entry.getKey(), Blocks.AIR.getDefaultState());
-			}
-			
-			
-			world.setBlockState(pos, TOCBlocks.harvested_tree.getDefaultState());
-			TileEntityHarvestedTree tree = (TileEntityHarvestedTree)world.getTileEntity(pos);
-			tree.minSecs = Woodcutting.getMinRespawnSecsForWood(log);
-			tree.maxSecs = Woodcutting.getMaxRespawnSecsForWood(log);
-			
-			tree.treeBlocks = list;
-			
+
 			int xpGiven = Woodcutting.getExpForWood(log);
 			Item item = Woodcutting.getHarvestItemForWood(log);
+			
+			if(TOCMain.rand.nextFloat() < Woodcutting.getDestroyChanceForWood(world.getBlockState(pos))) {
+				IBlockState lowestBlock = null;
+				BlockPos lowestPos = null;
+				for(Map.Entry<BlockPos, IBlockState> entry : list.entrySet()) {
+					if(lowestBlock == null && lowestPos == null || lowestPos.getY() > entry.getKey().getY()) {
+						lowestPos = entry.getKey();
+						lowestBlock = entry.getValue();
+					}
+					world.setBlockState(entry.getKey(), Blocks.AIR.getDefaultState());
+				}
+				world.setBlockState(lowestPos, lowestBlock);
+			
+				world.setBlockState(pos, TOCBlocks.harvested_tree.getDefaultState());
+				TileEntityHarvestedTree tree = (TileEntityHarvestedTree)world.getTileEntity(pos);
+				tree.minSecs = Woodcutting.getMinRespawnSecsForWood(log);
+				tree.maxSecs = Woodcutting.getMaxRespawnSecsForWood(log);
+				
+				tree.treeBlocks = list;
+			}
 			
 			if(player != null) {
 				player.addItemStackToInventory(new ItemStack(item));

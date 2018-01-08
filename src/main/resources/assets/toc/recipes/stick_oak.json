@@ -1,0 +1,13 @@
+{ 
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "toc:oak_log"
+    }
+  ],
+  
+  "result": {
+    "item": "toc:stick_oak",
+    "count": 4
+  }
+}

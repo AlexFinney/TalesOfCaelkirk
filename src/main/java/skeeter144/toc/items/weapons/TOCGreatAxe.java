@@ -1,10 +1,13 @@
 package skeeter144.toc.items.weapons;
 
+import java.util.List;
+
 import org.apache.commons.lang3.tuple.MutablePair;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -19,6 +22,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.combat.TOCDamageSource;
@@ -78,4 +82,8 @@ public class TOCGreatAxe extends ItemSword implements ISpecialAttackWeapon{
 		}
 	}
 	
+	@Override
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(TextFormatting.YELLOW + "Damage: " + (int)(this.damage * .75f) + " - " + (int)this.damage);
+	}
 }

@@ -27,9 +27,15 @@ public class EntityLevels implements Serializable{
 		levelsMap.put(Levels.SMITHING, new Level("Smithing"));
 		levelsMap.put(Levels.FISHING, new Level("Fishing"));
 		levelsMap.put(Levels.WOODCUTTING, new Level("Woodcutting"));
+		levelsMap.put(Levels.CRAFTING, new Level("Crafting"));
 		
+		initBooks();
 	}
 	
+	private void initBooks() {
+
+	}
+
 	public boolean addExp(Levels level, int amt) {
 		Level l = levelsMap.get(level);
 		return l.addExp(amt);
@@ -91,6 +97,7 @@ public class EntityLevels implements Serializable{
 		MINING,
 		SMITHING,
 		FISHING,
-		WOODCUTTING
+		WOODCUTTING,
+		CRAFTING
 	}
 }

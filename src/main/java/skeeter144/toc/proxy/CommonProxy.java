@@ -74,6 +74,7 @@ import skeeter144.toc.network.WandEmbueMessage;
 import skeeter144.toc.network.WandEmbueMessage.WandEmbueMessageHandler;
 import skeeter144.toc.player.EntityLevels;
 import skeeter144.toc.quest.QuestManager;
+import skeeter144.toc.skills.Crafting;
 import skeeter144.toc.skills.Woodcutting;
 import skeeter144.toc.sounds.Sounds;
 
@@ -131,6 +132,7 @@ public class CommonProxy
 		MinecraftForge.EVENT_BUS.register(new PlayerInteractHandler());
 		MinecraftForge.EVENT_BUS.register(new EntityHandler());
 		MinecraftForge.EVENT_BUS.register(new TickHandler());
+		MinecraftForge.EVENT_BUS.register(new Crafting());
 		
 		Spells.init();
 	}

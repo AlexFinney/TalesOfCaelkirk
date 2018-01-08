@@ -1,13 +1,20 @@
 package skeeter144.toc.items.weapons;
 
+import java.util.List;
+
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.player.EntityPlayer.EnumChatVisibility;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.player.EntityLevels.Levels;
 import skeeter144.toc.util.Reference;
@@ -38,5 +45,9 @@ public class TOCSword extends ItemSword{
 		return map;
 	}
 	
+	@Override
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(TextFormatting.YELLOW +  "Damage: " + (int)(this.damage * .75f) + " - " + (int)this.damage);
+	}
 	
 }

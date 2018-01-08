@@ -1,6 +1,7 @@
 package skeeter144.toc.blocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLog;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemBlock;
@@ -30,6 +31,13 @@ public class TOCBlocks {
 	public static Block spiderTreeLeaves = new BlockSpiderTreeLog("spider_tree_leaves");
 	public static Block blockAnvil = new BlockAnvil("anvil");
 	
+	public static Block oak_log = new CustomBlockLog("oak_log");
+	public static Block spruce_log = new CustomBlockLog("spruce_log");
+	public static Block birch_log = new CustomBlockLog("birch_log");
+	public static Block jungle_log = new CustomBlockLog("jungle_log");
+	public static Block dark_oak_log = new CustomBlockLog("dark_oak_log");
+	public static Block acacia_log = new CustomBlockLog("acacia_log");
+	
 	public static void registerRenders() {
 		registerBlockItemRender(copper_ore);
 		registerBlockItemRender(tin_ore);
@@ -45,6 +53,12 @@ public class TOCBlocks {
 		registerBlockItemRender(spiderTreeLog);
 		registerBlockItemRender(blockAnvil);
 		registerBlockItemRender(harvested_tree);
+		registerBlockItemRender(oak_log);
+		registerBlockItemRender(spruce_log);
+		registerBlockItemRender(birch_log);
+		registerBlockItemRender(jungle_log);
+		registerBlockItemRender(dark_oak_log);
+		registerBlockItemRender(acacia_log);
 	}
 	
 	public static void registerAllTileEntities() {
@@ -69,6 +83,12 @@ public class TOCBlocks {
 				harvested_ore,
 				blockAnvil,
 				harvested_tree,
+				oak_log,
+				acacia_log,
+				spruce_log,
+				dark_oak_log,
+				birch_log,
+				jungle_log,
 		};
 		for(Block b : blocks) {
 			register(b);
@@ -78,6 +98,20 @@ public class TOCBlocks {
 	private static void register(Block block) {
 		ForgeRegistries.BLOCKS.register(block);
 		ForgeRegistries.ITEMS.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
+		
+		if(block.equals(oak_log)) {
+			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
+		} else if(block.equals(spruce_log)) {
+			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
+		}else if(block.equals(birch_log)) {
+			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
+		}else if(block.equals(acacia_log)) {
+			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
+		}else if(block.equals(jungle_log)) {
+			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
+		}else if(block.equals(dark_oak_log)) {
+			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
+		}
 	}
 	
 	private static void registerBlockItemRender(Block block) {

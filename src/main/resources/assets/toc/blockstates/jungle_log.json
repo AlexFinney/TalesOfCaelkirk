@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "axis=y":  { "model": "junle_log" },
+        "axis=z":   { "model": "junle_log", "x": 90 },
+        "axis=x":   { "model": "junle_log", "x": 90, "y": 90 },
+        "axis=none": { "model": "junle_bark" }
+    }
+}

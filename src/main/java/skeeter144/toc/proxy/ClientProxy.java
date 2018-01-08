@@ -57,6 +57,7 @@ import skeeter144.toc.entity.mob.mount.flying.EntityGriffin;
 import skeeter144.toc.entity.mob.mount.flying.EntityPegasus;
 import skeeter144.toc.entity.mob.passive.questgiver.EntityBobRatMan;
 import skeeter144.toc.entity.mob.passive.shopkeeper.EntityHumanShopKeeper;
+import skeeter144.toc.handlers.ItemTooltipHandler;
 import skeeter144.toc.handlers.PlayerInputHandler;
 import skeeter144.toc.handlers.tick.ClientTickHandler;
 import skeeter144.toc.items.TOCItemsClientRegistration;
@@ -81,14 +82,14 @@ public class ClientProxy extends CommonProxy
 		Keybindings.registerKeybinds();
 	}
 	
-	public void init(FMLInitializationEvent event)
-	{
+	public void init(FMLInitializationEvent event){
 		super.init(event);
 		registerEntityRenders();
 		MinecraftForge.EVENT_BUS.register(new HUD());
 		MinecraftForge.EVENT_BUS.register(new RegionsRendering());
 		MinecraftForge.EVENT_BUS.register(new PlayerInputHandler());
 		MinecraftForge.EVENT_BUS.register(new ClientTickHandler());
+		MinecraftForge.EVENT_BUS.register(new ItemTooltipHandler());
 	}
 	
 	public void postInit(FMLPostInitializationEvent event)
