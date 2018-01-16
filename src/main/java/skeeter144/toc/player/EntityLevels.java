@@ -23,6 +23,7 @@ public class EntityLevels implements Serializable{
 		levelsMap.put(Levels.DEFENSE, new Level("Defense"));
 		levelsMap.put(Levels.HITPOINTS, new Level("Hitpoints"));
 		levelsMap.put(Levels.MAGIC, new Level("Magic"));
+		levelsMap.put(Levels.RANGED, new Level("Ranged"));
 		levelsMap.put(Levels.MINING, new Level("Mining"));
 		levelsMap.put(Levels.SMITHING, new Level("Smithing"));
 		levelsMap.put(Levels.FISHING, new Level("Fishing"));
@@ -98,6 +99,7 @@ public class EntityLevels implements Serializable{
 		SMITHING,
 		FISHING,
 		WOODCUTTING,
-		CRAFTING
+		CRAFTING, 
+		RANGED
 	}
 }

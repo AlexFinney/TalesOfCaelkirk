@@ -29,12 +29,12 @@ import skeeter144.toc.items.consumable.ItemManaPotion;
 import skeeter144.toc.items.magic.BasicWand;
 import skeeter144.toc.items.misc.HorseDonkeySummoner;
 import skeeter144.toc.items.misc.ItemGlassVial;
-import skeeter144.toc.items.misc.TOCArrow;
 import skeeter144.toc.items.misc.VariableHorseSummoner;
 import skeeter144.toc.items.quest.QuestItem;
 import skeeter144.toc.items.tools.BlacksmithHammer;
 import skeeter144.toc.items.tools.TOCAxe;
 import skeeter144.toc.items.tools.TOCPickaxe;
+import skeeter144.toc.items.weapons.TOCArrow;
 import skeeter144.toc.items.weapons.TOCBow;
 import skeeter144.toc.items.weapons.TOCGreatAxe;
 import skeeter144.toc.items.weapons.TOCGreatSword;
@@ -211,19 +211,19 @@ public class TOCItems {
 	public static Item horse_summoner_zombie = new VariableHorseSummoner("horse_summoner_zombie", 5);
 	public static Item horse_summoner_skeleton = new VariableHorseSummoner("horse_summoner_skeleton", 6);
 
-	public static Item arrow_bronze      = new TOCArrow("arrow_bronze", 3);
-	public static Item arrow_iron        = new TOCArrow("arrow_iron", 6);
-	public static Item arrow_steel       = new TOCArrow("arrow_steel", 11);
-	public static Item arrow_mithril     = new TOCArrow("arrow_mithril", 18);
-	public static Item arrow_adamantite  = new TOCArrow("arrow_adamantite", 27);
-	public static Item arrow_runite      = new TOCArrow("arrow_runite", 38);
-	public static Item arrow_dragonstone = new TOCArrow("arrow_dragonstone", 52);
+	public static Item arrow_bronze      = new TOCArrow("arrow_bronze",       3, .5f);
+	public static Item arrow_iron        = new TOCArrow("arrow_iron",         6, .4f);
+	public static Item arrow_steel       = new TOCArrow("arrow_steel",       11, .4f);
+	public static Item arrow_mithril     = new TOCArrow("arrow_mithril",     18, .3f);
+	public static Item arrow_adamantite  = new TOCArrow("arrow_adamantite",  27, .2f);
+	public static Item arrow_runite      = new TOCArrow("arrow_runite",      38, .1f);
+	public static Item arrow_dragonstone = new TOCArrow("arrow_dragonstone", 52, .05f);
 	
 	public static Item bow_oak_short_unstrung = new CustomItem("bow_oak_short_unstrung", 1, CreativeTabs.MISC);
-	public static Item bow_oak_long_unstrung = new CustomItem("bow_oak_long_unstrung", 1, CreativeTabs.MISC);
+	public static Item bow_oak_long_unstrung =  new CustomItem("bow_oak_long_unstrung",  1, CreativeTabs.MISC);
 	
 	public static Item bow_oak_short = new TOCBow("bow_oak_short", 5, 20, .2f);
-	public static Item bow_oak_long = new TOCBow("bow_oak_long", 8, 30, .9f);
+	public static Item bow_oak_long = new TOCBow("bow_oak_long", 8, 30, 1.3f);
 	
 	
 	public static Item stick_oak = new CustomItem("stick_oak", 20, CreativeTabs.MISC);

@@ -8,7 +8,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -27,6 +26,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import skeeter144.toc.Reference;
 import skeeter144.toc.combat.CombatManager;
+import skeeter144.toc.entity.projectile.EntityTOCArrow;
 
 public class TOCBow extends ItemBow {
 
@@ -97,13 +97,14 @@ public class TOCBow extends ItemBow {
 							|| (arrowStack.getItem() instanceof ItemArrow && ((ItemArrow) arrowStack.getItem()).isInfinite(arrowStack, stack, entityplayer));
 
 					if (!worldIn.isRemote) {
-						ItemArrow itemarrow = (ItemArrow) (arrowStack.getItem() instanceof ItemArrow ? arrowStack.getItem() : Items.ARROW);
-						EntityArrow entityarrow = itemarrow.createArrow(worldIn, arrowStack, entityplayer);
-						
-						entityarrow.setIsCritical(true);
+						TOCArrow itemarrow = (TOCArrow) (arrowStack.getItem() instanceof ItemArrow ? arrowStack.getItem() : Items.ARROW);
+						EntityTOCArrow entityarrow = (EntityTOCArrow) itemarrow.createArrow(worldIn, arrowStack, entityplayer);
 						entityarrow.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, velocity, 0);
 
-						entityarrow.setDamage(((TOCBow)stack.getItem()).baseDamage + entityarrow.getDamage() + baseDamage + .5);
+						System.out.println("Bow total damage: " + (((TOCBow)stack.getItem()).baseDamage + itemarrow.damage));
+						
+						entityarrow.setDamage(((TOCBow)stack.getItem()).baseDamage + itemarrow.damage);
+						System.out.println("Arrow damage: " + entityarrow.getDamage());
 						entityarrow.setKnockbackStrength(0);
 
 						worldIn.spawnEntity(entityarrow);

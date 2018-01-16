@@ -18,4 +18,15 @@ public class TOCDamageSource extends DamageSource{
 		this.type = type;
 		this.source = source;
 	}
+	
+	public TOCDamageSource(DamageType type, DamageSource other) {
+		super("");
+		this.type = type;
+		source = other.getTrueSource();
+	}
+
+	@Override
+	public Entity getTrueSource() {
+		return source;
+	}
 }

@@ -30,6 +30,9 @@ public class CombatManager {
 	}
 	
 	public float calcEntityDamage(EntityLivingBase e, float amount, DamageSource source) {
+		if(e.world.isRemote)
+			return 100;
+		
 		EntityLevels attackerLevels = null;
 		EntityLevels defenderLevels = null;
 		

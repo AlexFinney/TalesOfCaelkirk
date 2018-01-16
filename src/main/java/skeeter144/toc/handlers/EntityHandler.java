@@ -1,5 +1,6 @@
 package skeeter144.toc.handlers;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -9,7 +10,6 @@ import java.util.Set;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.DamageSource;
@@ -24,6 +24,7 @@ import skeeter144.toc.combat.CombatManager.DamageType;
 import skeeter144.toc.combat.TOCDamageSource;
 import skeeter144.toc.entity.TOCEntity;
 import skeeter144.toc.entity.mob.CustomMob;
+import skeeter144.toc.entity.projectile.EntityTOCArrow;
 import skeeter144.toc.items.weapons.TOCGreatAxe;
 import skeeter144.toc.items.weapons.TOCGreatSword;
 import skeeter144.toc.items.weapons.TOCSword;
@@ -148,7 +149,6 @@ public class EntityHandler {
 							EntityLevels levels = player.getPlayerLevels();
 							
 							EntityPlayer pl = (EntityPlayer) src.source;
-							String levelName = "Attack";
 							if(pl.getHeldItemMainhand().getItem() instanceof TOCGreatSword) {
 								level = Levels.ATTACK;
 							}else if(pl.getHeldItemMainhand().getItem() instanceof TOCGreatAxe) {
@@ -162,7 +162,7 @@ public class EntityHandler {
 							
 							
 					}else if(src.type == DamageType.RANGED) {
-						
+						level = Levels.RANGED;
 					}else if(src.type == DamageType.MAGICAL) {
 						level = Levels.MAGIC;
 						leveledUp = player.getPlayerLevels().addExp(Levels.MAGIC, ((CustomMob)e.getEntity()).xpGiven);
@@ -186,7 +186,6 @@ public class EntityHandler {
 				EntityPlayer player = (EntityPlayer)e.getSource().getTrueSource();
 				EntityLevels levels = TOCMain.pm.getPlayer(player.getUniqueID()).getPlayerLevels();
 				Levels level = Levels.ATTACK;
-				String levelName = "Attack";
 				if(player.getHeldItemMainhand().getItem() instanceof TOCGreatSword) {
 					level = Levels.ATTACK;
 				}else if(player.getHeldItemMainhand().getItem() instanceof TOCGreatAxe) {
@@ -223,10 +222,21 @@ public class EntityHandler {
 			return;
 
 		DamageSource source = event.getSource();
-		if(source instanceof TOCDamageSource) {
-			TOCDamageSource tds = (TOCDamageSource)source;
-		}
+
 		
+		if(source.getImmediateSource() instanceof EntityTOCArrow) {
+			Class c = event.getClass();
+			try {
+				Field f = c.getDeclaredField("source");
+				f.setAccessible(true);
+				TOCDamageSource tds = new TOCDamageSource(DamageType.RANGED, source.getTrueSource());
+				source = tds;
+				f.set(event, tds);
+			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e1) {
+				e1.printStackTrace();
+			}
+			
+		}
 		event.setCanceled(true);
 		float amount = 0;
 		Entity attacker = event.getSource().getTrueSource(); 
@@ -260,6 +270,8 @@ public class EntityHandler {
 		}else {
 			amount = TOCMain.cm.calcEntityDamage(event.getEntityLiving(), (int)event.getAmount(), source);
 		}
+		
+		
 		
 		if(amount != 0) {
 			if(event.getEntityLiving() instanceof EntityPlayer) {
