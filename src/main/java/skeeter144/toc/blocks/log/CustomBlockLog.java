@@ -1,4 +1,4 @@
-package skeeter144.toc.blocks;
+package skeeter144.toc.blocks.log;
 
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockPlanks;
@@ -16,6 +16,7 @@ public class CustomBlockLog extends BlockLog{
 		this.setUnlocalizedName(name);
 		
 		this.setDefaultState(this.blockState.getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
+		this.setHardness(-1);
 	}
 	
 	  public IBlockState getStateFromMeta(int meta)

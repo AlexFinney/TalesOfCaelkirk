@@ -171,4 +171,8 @@ public class EntityTOCArrow extends EntityTippedArrow {
 		return new ItemStack(toc_arrow);
 	}
 
+	@Override
+	public int getColor() {
+		return toc_arrow.color;
+	}
 }

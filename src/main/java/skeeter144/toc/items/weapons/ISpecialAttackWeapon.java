@@ -33,7 +33,7 @@ public interface ISpecialAttackWeapon {
 				TOCPlayer pl = PlayerManager.instance().getPlayer(attacker.getUniqueID());	
 				if(!pl.specialAttackCooldowns.containsKey(item.getItem().getRegistryName().toString())) {
 					doAttack(attacker, hand, e);
-					pl.specialAttackCooldowns.put(item.getItem().getRegistryName().toString(), new MutablePair(cooldown, cooldown));
+					pl.specialAttackCooldowns.put(item.getItem().getRegistryName().toString(), new MutablePair<Integer, Integer>(cooldown, cooldown));
 					
 					Network.INSTANCE.sendTo(new SpecialAttackCooldownMessage(item.getItem().getRegistryName().toString(), 
 							(byte)cooldown, (byte)cooldown), (EntityPlayerMP) pl.mcEntity);

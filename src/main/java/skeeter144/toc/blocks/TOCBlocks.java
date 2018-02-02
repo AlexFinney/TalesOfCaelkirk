@@ -1,13 +1,14 @@
 package skeeter144.toc.blocks;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLog;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import skeeter144.toc.blocks.log.CustomBlockLeaves;
+import skeeter144.toc.blocks.log.CustomBlockLog;
 import skeeter144.toc.items.TOCItems;
 
 public class TOCBlocks {
@@ -27,8 +28,6 @@ public class TOCBlocks {
 	
 	public static Block harvested_tree = new BlockHarvestedTree(Material.WOOD, "harvested_tree");
 	
-	public static Block spiderTreeLog = new BlockSpiderTreeLog("spider_tree_log");
-	public static Block spiderTreeLeaves = new BlockSpiderTreeLog("spider_tree_leaves");
 	public static Block blockAnvil = new BlockAnvil("anvil");
 	
 	public static Block oak_log = new CustomBlockLog("oak_log");
@@ -37,6 +36,10 @@ public class TOCBlocks {
 	public static Block jungle_log = new CustomBlockLog("jungle_log");
 	public static Block dark_oak_log = new CustomBlockLog("dark_oak_log");
 	public static Block acacia_log = new CustomBlockLog("acacia_log");
+	public static Block magic_log = new CustomBlockLog("magic_log");
+	
+	public static Block magicLeaves = new CustomBlockLeaves("magic_leaves");
+	
 	
 	public static void registerRenders() {
 		registerBlockItemRender(copper_ore);
@@ -49,8 +52,6 @@ public class TOCBlocks {
 		registerBlockItemRender(runite_ore);
 		registerBlockItemRender(dragonstone_ore);
 		registerBlockItemRender(harvested_ore);
-		registerBlockItemRender(spiderTreeLeaves);
-		registerBlockItemRender(spiderTreeLog);
 		registerBlockItemRender(blockAnvil);
 		registerBlockItemRender(harvested_tree);
 		registerBlockItemRender(oak_log);
@@ -59,6 +60,8 @@ public class TOCBlocks {
 		registerBlockItemRender(jungle_log);
 		registerBlockItemRender(dark_oak_log);
 		registerBlockItemRender(acacia_log);
+		registerBlockItemRender(magic_log);
+		registerBlockItemRender(magicLeaves);
 	}
 	
 	public static void registerAllTileEntities() {
@@ -69,8 +72,6 @@ public class TOCBlocks {
 
 	public static void registerAllBlocks() {
 		final Block[] blocks = {
-				spiderTreeLeaves,
-				spiderTreeLog,
 				copper_ore,
 				tin_ore,
 				iron_ore,
@@ -89,6 +90,8 @@ public class TOCBlocks {
 				dark_oak_log,
 				birch_log,
 				jungle_log,
+				magicLeaves,
+				magic_log
 		};
 		for(Block b : blocks) {
 			register(b);
@@ -101,16 +104,25 @@ public class TOCBlocks {
 		
 		if(block.equals(oak_log)) {
 			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
+			block.setHardness(-1);
 		} else if(block.equals(spruce_log)) {
 			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
+			block.setHardness(-1);
 		}else if(block.equals(birch_log)) {
 			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
+			block.setHardness(-1);
 		}else if(block.equals(acacia_log)) {
 			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
+			block.setHardness(-1);
 		}else if(block.equals(jungle_log)) {
 			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
+			block.setHardness(-1);
 		}else if(block.equals(dark_oak_log)) {
 			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
+			block.setHardness(-1);
+		}else if(block.equals(magic_log)) {
+			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
+			block.setHardness(-1);
 		}
 	}
 	

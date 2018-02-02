@@ -19,14 +19,9 @@ public class TOCItemsClientRegistration {
 	
 	@SubscribeEvent
 	public void registerItemModels(ModelRegistryEvent e) {
-		registerAllBlockModels();
 		registerAllItemModels();
 	}
 	
-	private void registerAllBlockModels() {
-		registerBlockItemModel(TOCBlocks.spiderTreeLeaves.getDefaultState());
-		registerBlockItemModel(TOCBlocks.spiderTreeLog.getDefaultState());
-	}
 	
 	private void registerAllItemModels() {
 		try {
@@ -40,21 +35,6 @@ public class TOCItemsClientRegistration {
 		}
 	}
 	
-	private final StateMapperBase propertyStringMapper = new StateMapperBase() {
-        protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-            return new ModelResourceLocation("minecraft:air");
-        }
-    };
-	
-	private void registerBlockItemModel(final IBlockState state) {
-		final Block block = state.getBlock();
-		final Item item = Item.getItemFromBlock(block);
-
-		if (item != Items.AIR) {
-			ModelResourceLocation loc =  new ModelResourceLocation(block.getRegistryName(), propertyStringMapper.getPropertyString(state.getProperties()));
-			registerItemModel(item, stack -> loc);
-		}
-	}
 	
 	private void registerItemRendering(Item i) {
 		String modelLocation =  i.getRegistryName().toString();

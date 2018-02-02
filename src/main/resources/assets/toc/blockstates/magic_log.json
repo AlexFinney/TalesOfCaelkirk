@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "axis=y":  { "model": "toc:magic_log" },
+        "axis=z":   { "model": "toc:magic_log", "x": 90 },
+        "axis=x":   { "model": "toc:magic_log", "x": 90, "y": 90 },
+        "axis=none": { "model": "toc:magic_log" }
+    }
+}

@@ -13,8 +13,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import skeeter144.toc.blocks.CustomBlockLog;
 import skeeter144.toc.blocks.TOCBlocks;
+import skeeter144.toc.blocks.log.CustomBlockLog;
 import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.items.tools.TOCAxe;
 
@@ -81,12 +81,23 @@ public class Woodcutting {
 		dark_oak_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .05f);
 		dark_oak_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .1f);
 		
+		
+		HashMap<TOCAxe, Float>  magic_harvest_chances = new HashMap<TOCAxe, Float>();
+		magic_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, 0f);
+		magic_harvest_chances.put((TOCAxe) TOCItems.axe_iron, 0f);
+		magic_harvest_chances.put((TOCAxe) TOCItems.axe_steel, 0f);
+		magic_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, 0f);
+		magic_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .0f);
+		magic_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .05f);
+		magic_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .1f);
+		
 		logHarvestChances.put((CustomBlockLog) TOCBlocks.oak_log, oak_harvest_chances);
 		logHarvestChances.put((CustomBlockLog) TOCBlocks.birch_log, birch_harvest_chances);
 		logHarvestChances.put((CustomBlockLog) TOCBlocks.spruce_log, spruce_harvest_chances);
 		logHarvestChances.put((CustomBlockLog) TOCBlocks.acacia_log, acacia_harvest_chances);
 		logHarvestChances.put((CustomBlockLog) TOCBlocks.jungle_log, jungle_harvest_chances);
 		logHarvestChances.put((CustomBlockLog) TOCBlocks.dark_oak_log, dark_oak_harvest_chances);
+		logHarvestChances.put((CustomBlockLog) TOCBlocks.magic_log, magic_harvest_chances);
 
 		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.oak_log, .3f);
 		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.birch_log, .25f);
@@ -94,6 +105,7 @@ public class Woodcutting {
 		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.acacia_log, .15f);
 		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.jungle_log, .15f);
 		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.dark_oak_log, .15f);
+		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.magic_log, .15f);
 	}
 	
 	public static float getChopChanceForWood(TOCAxe axe, IBlockState wood) {

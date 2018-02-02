@@ -40,12 +40,12 @@ public class EntityGiantScorpian extends CustomMob{
 		
 		
 		this.setSize(1f, 1f);
-		this.setHealth(50f);
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50);
 		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.3f);
 		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(9);
 		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(.8f);
+		this.setHealth(50f);
 	}
 	
 	@Override

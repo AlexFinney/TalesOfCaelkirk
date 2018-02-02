@@ -9,7 +9,7 @@ import skeeter144.toc.TOCMain;
 public class BasicSpellTrailParticle extends Particle{
 
 	public boolean fizzleOut = true;
-	public BasicSpellTrailParticle(World worldIn, double posXIn, double posYIn, double posZIn, float size, int color, float pVel) {
+	public BasicSpellTrailParticle(World worldIn, double posXIn, double posYIn, double posZIn, float size, int color, float pVel, boolean useGravity) {
 		super(worldIn, posXIn, posYIn, posZIn);
 		
 		double velX = (TOCMain.rand.nextDouble() - .5f) * pVel;

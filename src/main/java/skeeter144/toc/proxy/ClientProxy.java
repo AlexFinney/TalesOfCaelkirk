@@ -55,6 +55,8 @@ import skeeter144.toc.entity.mob.mount.basic_horse.EntityMuleMount;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityVariableHorseMount;
 import skeeter144.toc.entity.mob.mount.flying.EntityGriffin;
 import skeeter144.toc.entity.mob.mount.flying.EntityPegasus;
+import skeeter144.toc.entity.mob.passive.banker.EntityThreeStreamsBanker;
+import skeeter144.toc.entity.mob.passive.banker.EntityYarrinBanker;
 import skeeter144.toc.entity.mob.passive.questgiver.EntityBobRatMan;
 import skeeter144.toc.entity.mob.passive.shopkeeper.EntityHumanShopKeeper;
 import skeeter144.toc.handlers.ItemTooltipHandler;
@@ -107,10 +109,15 @@ public class ClientProxy extends CommonProxy
 		RenderManager rm = Minecraft.getMinecraft().getRenderManager();
 		
 		
+		rm.entityRenderMap.put(EntityBobRatMan.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
+		
+		rm.entityRenderMap.put(EntityYarrinBanker.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
+		rm.entityRenderMap.put(EntityThreeStreamsBanker.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
+		
+		rm.entityRenderMap.put(EntityHumanShopKeeper.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
+		
 		rm.entityRenderMap.put(EntityRat.class, new RenderRat(rm, new ModelRat(), .25f));
 		rm.entityRenderMap.put(EntityViking.class, new RenderViking(rm, new ModelViking(), .5f));
-		rm.entityRenderMap.put(EntityBobRatMan.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
-		rm.entityRenderMap.put(EntityHumanShopKeeper.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
 		rm.entityRenderMap.put(EntityGoblin.class, new RenderGoblin(rm, new ModelGoblin(), .5f));
 		rm.entityRenderMap.put(EntityGiantScorpian.class, new RenderGiantScorpian(rm, new ModelGiantScorpian(), .5f));
 		rm.entityRenderMap.put(EntityGiantSpider.class, new RenderGiantSpider(rm, new ModelGiantSpider(), .5f));
@@ -123,6 +130,8 @@ public class ClientProxy extends CommonProxy
 		
 	}	
 
+	
+	@SuppressWarnings({ "unchecked", "rawtypes", "unused" })
 	private void createNewRender(Class<? extends Entity> c, Class<? extends Render> renderClass, ModelBase model, float shadowSize) {
 		RenderingRegistry.registerEntityRenderingHandler(c, new IRenderFactory() {
 			public Render createRenderFor(RenderManager manager) {

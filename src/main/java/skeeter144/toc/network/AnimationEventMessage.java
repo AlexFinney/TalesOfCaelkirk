@@ -53,7 +53,7 @@ public class AnimationEventMessage implements IMessage{
 			ctx.getServerHandler().player.getServerWorld().addScheduledTask(new Runnable() {
 				@Override
 				public void run() {
-					Class c = AnimationEvents.class;
+					Class<AnimationEvents> c = AnimationEvents.class;
 					try {
 						Method[] methods = c.getMethods();
 						for (Method m : methods) {

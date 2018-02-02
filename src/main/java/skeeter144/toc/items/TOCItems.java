@@ -21,7 +21,6 @@ import net.minecraftforge.registries.IForgeRegistry;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityDonkeyMount;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityMuleMount;
-import skeeter144.toc.items.admin_use.SpiderTreePlacer;
 import skeeter144.toc.items.armor.ArmorVikingHelmet;
 import skeeter144.toc.items.armor.CustomArmor;
 import skeeter144.toc.items.consumable.ItemHealingPotion;
@@ -197,7 +196,6 @@ public class TOCItems {
 	public static Item dragonstone_leggings = new CustomArmor(DRAGONSTONE_ARMOR, 2, EntityEquipmentSlot.LEGS, "dragonstone_leggings", .05f, 0f, .06f);
 	public static Item dragonstone_boots = new CustomArmor(DRAGONSTONE_ARMOR, 3, EntityEquipmentSlot.FEET, "dragonstone_boots", .02f, 0f, .06f);
 
-	public static Item tree_placer = new SpiderTreePlacer("spider_tree_placer");
 	public static Item rat_tail = new QuestItem("rat_tail", false, 1);
 	public static Item blacksmith_hammer = new BlacksmithHammer();
 
@@ -211,13 +209,13 @@ public class TOCItems {
 	public static Item horse_summoner_zombie = new VariableHorseSummoner("horse_summoner_zombie", 5);
 	public static Item horse_summoner_skeleton = new VariableHorseSummoner("horse_summoner_skeleton", 6);
 
-	public static Item arrow_bronze      = new TOCArrow("arrow_bronze",       3, .5f);
-	public static Item arrow_iron        = new TOCArrow("arrow_iron",         6, .4f);
-	public static Item arrow_steel       = new TOCArrow("arrow_steel",       11, .4f);
-	public static Item arrow_mithril     = new TOCArrow("arrow_mithril",     18, .3f);
-	public static Item arrow_adamantite  = new TOCArrow("arrow_adamantite",  27, .2f);
-	public static Item arrow_runite      = new TOCArrow("arrow_runite",      38, .1f);
-	public static Item arrow_dragonstone = new TOCArrow("arrow_dragonstone", 52, .05f);
+	public static Item arrow_bronze      = new TOCArrow("arrow_bronze",       3, .5f, 0xFF0000);
+	public static Item arrow_iron        = new TOCArrow("arrow_iron",         6, .4f, 0xFF0000);
+	public static Item arrow_steel       = new TOCArrow("arrow_steel",       11, .4f, 0xFF0000);
+	public static Item arrow_mithril     = new TOCArrow("arrow_mithril",     18, .3f, 0xFF0000);
+	public static Item arrow_adamantite  = new TOCArrow("arrow_adamantite",  27, .2f, 0xFF0000);
+	public static Item arrow_runite      = new TOCArrow("arrow_runite",      38, .1f, 0xFF0000);
+	public static Item arrow_dragonstone = new TOCArrow("arrow_dragonstone", 52, .05f, 0xFF0000);
 	
 	public static Item bow_oak_short_unstrung = new CustomItem("bow_oak_short_unstrung", 1, CreativeTabs.MISC);
 	public static Item bow_oak_long_unstrung =  new CustomItem("bow_oak_long_unstrung",  1, CreativeTabs.MISC);

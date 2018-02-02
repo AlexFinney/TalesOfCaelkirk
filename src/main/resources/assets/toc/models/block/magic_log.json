@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "toc:blocks/magic_log_top",
+        "side": "toc:blocks/magic_log"
+    }
+}

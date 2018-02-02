@@ -48,7 +48,7 @@ public class BasicWand extends Item
 		embuedSpell = Spells.getSpell(player.getHeldItem(hand).getTagCompound().getInteger("embued_spell"));
 		
 		if(embuedSpell == null) {
-			return new ActionResult(EnumActionResult.FAIL, player.getHeldItem(hand));
+			return new ActionResult<ItemStack>(EnumActionResult.FAIL, player.getHeldItem(hand));
 		}
 		
 		
@@ -63,7 +63,7 @@ public class BasicWand extends Item
 		}else {
 			if(TOCMain.localPlayer.getMana() < embuedSpell.getManaCost() && !Minecraft.getMinecraft().player.isCreative()) {
 				player.sendMessage(new TextComponentString("You do not have enough mana to cast " + embuedSpell.getName() + " (need " + embuedSpell.getManaCost() + ")"));
-				return new ActionResult(EnumActionResult.FAIL, player.getHeldItem(hand));
+				return new ActionResult<ItemStack>(EnumActionResult.FAIL, player.getHeldItem(hand));
 			}
 			
 			embuedSpell.onCast(player);;
@@ -86,7 +86,7 @@ public class BasicWand extends Item
 			}
 		}
 		
-		return new ActionResult(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 	}
 	
 	@Override

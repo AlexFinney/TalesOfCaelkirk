@@ -5,9 +5,13 @@ import net.minecraft.world.World;
 import skeeter144.toc.entity.mob.CustomMob;
 
 public class EntityNpc extends CustomMob{
-	public static ResourceLocation texture;
+	public ResourceLocation texture;
 	public EntityNpc(World worldIn) {
 		super(worldIn);
 	}
-
+	
+	@Override
+	public boolean getIsInvulnerable() {
+		return true;
+	}
 }

@@ -17,11 +17,13 @@ public class TOCArrow extends ItemArrow {
 
 	int damage;
 	public final float destroyChance;
-	public TOCArrow(String name, int damage, float destroyChance) {
+	public final int color;
+	public TOCArrow(String name, int damage, float destroyChance, int color) {
 		this.setUnlocalizedName(name);
 		this.setRegistryName(new ResourceLocation(Reference.MODID, name));
 		this.damage = damage;
 		this.destroyChance = destroyChance;
+		this.color = color;
 	}
 
 	@Override
