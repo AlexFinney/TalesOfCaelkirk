@@ -44,31 +44,13 @@ public class CustomBlockLeaves extends BlockLeaves {
 
 	}
 
-	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-	}
+	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {}
 
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
 
-	@Override
-	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-		if(worldIn.rand.nextInt(5) != 0)
-			return;
-		
-		BasicSpellTrailParticle p = new BasicSpellTrailParticle(worldIn,  pos.getX() + .5, pos.getY() + 1, pos.getZ() + .5, 
-				2, 0x00FFFF, 1f, true);
-		try {
-			Field f = p.getClass().getSuperclass().getDeclaredField("particleGravity");
-			f.setAccessible(true);
-			f.set(p, 3);
-		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-			e.printStackTrace();
-		}
-		
-		Minecraft.getMinecraft().effectRenderer.addEffect(p);
-	}
 	
 	   public IBlockState getStateFromMeta(int meta)
 	    {
@@ -91,8 +73,7 @@ public class CustomBlockLeaves extends BlockLeaves {
 	}
 	
 	@Override
-	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-	}
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {}
 	
 	
 }

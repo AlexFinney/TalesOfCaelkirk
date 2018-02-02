@@ -54,34 +54,6 @@ public class Woodcutting {
 		spruce_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .31f);
 		spruce_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .38f);
 		
-		HashMap<TOCAxe, Float> acacia_harvest_chances = new HashMap<TOCAxe, Float>();
-		acacia_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, 0f);
-		acacia_harvest_chances.put((TOCAxe) TOCItems.axe_iron, 0f);
-		acacia_harvest_chances.put((TOCAxe) TOCItems.axe_steel, 0f);
-		acacia_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, .1f);
-		acacia_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .15f);
-		acacia_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .2f);
-		acacia_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .25f);
-		
-		HashMap<TOCAxe, Float> jungle_harvest_chances = new HashMap<TOCAxe, Float>();
-		jungle_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, 0f);
-		jungle_harvest_chances.put((TOCAxe) TOCItems.axe_iron, 0f);
-		jungle_harvest_chances.put((TOCAxe) TOCItems.axe_steel, 0f);
-		jungle_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, 0f);
-		jungle_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .05f);
-		jungle_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .1f);
-		jungle_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .15f);
-		
-		HashMap<TOCAxe, Float> dark_oak_harvest_chances = new HashMap<TOCAxe, Float>();
-		dark_oak_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, 0f);
-		dark_oak_harvest_chances.put((TOCAxe) TOCItems.axe_iron, 0f);
-		dark_oak_harvest_chances.put((TOCAxe) TOCItems.axe_steel, 0f);
-		dark_oak_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, 0f);
-		dark_oak_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .0f);
-		dark_oak_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .05f);
-		dark_oak_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .1f);
-		
-		
 		HashMap<TOCAxe, Float>  magic_harvest_chances = new HashMap<TOCAxe, Float>();
 		magic_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, 0f);
 		magic_harvest_chances.put((TOCAxe) TOCItems.axe_iron, 0f);
@@ -91,21 +63,26 @@ public class Woodcutting {
 		magic_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .05f);
 		magic_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .1f);
 		
+		HashMap<TOCAxe, Float>  orc_harvest_chances = new HashMap<TOCAxe, Float>();
+		orc_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, 0f);
+		orc_harvest_chances.put((TOCAxe) TOCItems.axe_iron, 0f);
+		orc_harvest_chances.put((TOCAxe) TOCItems.axe_steel, 0f);
+		orc_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, 0f);
+		orc_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .0f);
+		orc_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .05f);
+		orc_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .1f);
+		
 		logHarvestChances.put((CustomBlockLog) TOCBlocks.oak_log, oak_harvest_chances);
 		logHarvestChances.put((CustomBlockLog) TOCBlocks.birch_log, birch_harvest_chances);
 		logHarvestChances.put((CustomBlockLog) TOCBlocks.spruce_log, spruce_harvest_chances);
-		logHarvestChances.put((CustomBlockLog) TOCBlocks.acacia_log, acacia_harvest_chances);
-		logHarvestChances.put((CustomBlockLog) TOCBlocks.jungle_log, jungle_harvest_chances);
-		logHarvestChances.put((CustomBlockLog) TOCBlocks.dark_oak_log, dark_oak_harvest_chances);
 		logHarvestChances.put((CustomBlockLog) TOCBlocks.magic_log, magic_harvest_chances);
+		logHarvestChances.put((CustomBlockLog) TOCBlocks.orc_log, orc_harvest_chances);
 
 		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.oak_log, .3f);
 		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.birch_log, .25f);
 		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.spruce_log, .15f);
-		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.acacia_log, .15f);
-		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.jungle_log, .15f);
-		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.dark_oak_log, .15f);
 		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.magic_log, .15f);
+		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.orc_log, .15f);
 	}
 	
 	public static float getChopChanceForWood(TOCAxe axe, IBlockState wood) {
