@@ -1,8 +1,11 @@
 package skeeter144.toc.blocks;
 
+import java.lang.reflect.Field;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -24,44 +27,34 @@ public class TOCBlocks {
 	public static Block dragonstone_ore = new BlockHarvestableOre("block_ore_dragonstone", TOCItems.ore_dragonstone, 578, 420, 600);
 	
 	public static Block harvested_ore = new BlockHarvestedOre(Material.ROCK, "harvested_ore");
-	
-	
 	public static Block harvested_tree = new BlockHarvestedTree(Material.WOOD, "harvested_tree");
-	
 	public static Block blockAnvil = new BlockAnvil("anvil");
 	
 	public static Block oak_log = new CustomBlockLog("oak_log");
-	public static Block spruce_log = new CustomBlockLog("spruce_log");
 	public static Block birch_log = new CustomBlockLog("birch_log");
-	public static Block magic_log = new CustomBlockLog("magic_log");
+	public static Block maple_log = new CustomBlockLog("maple_log");
+	public static Block yew_log = new CustomBlockLog("yew_log");
 	public static Block orc_log = new CustomBlockLog("orc_log");
+	public static Block magic_log = new CustomBlockLog("magic_log");
 	
 	public static Block magicLeaves = new BlockMagicLeaves("magic_leaves");
 	public static Block orc_leaves = new BlockMagicLeaves("orc_leaves");
-	
+	//TODO maple leaves
+	//TODO yew leaves
 	
 	public static void registerRenders() {
-		registerBlockItemRender(copper_ore);
-		registerBlockItemRender(tin_ore);
-		registerBlockItemRender(iron_ore);
-		registerBlockItemRender(coal_ore);
-		registerBlockItemRender(gold_ore);
-		registerBlockItemRender(mithril_ore);
-		registerBlockItemRender(adamantite_ore);
-		registerBlockItemRender(runite_ore);
-		registerBlockItemRender(dragonstone_ore);
-		registerBlockItemRender(harvested_ore);
-		registerBlockItemRender(blockAnvil);
-		registerBlockItemRender(harvested_tree);
-		registerBlockItemRender(oak_log);
-		registerBlockItemRender(spruce_log);
-		registerBlockItemRender(birch_log);
-		registerBlockItemRender(magic_log);
-		registerBlockItemRender(magicLeaves);
-		registerBlockItemRender(orc_log);
-		registerBlockItemRender(orc_leaves);
+		try {
+			for (Field f : TOCBlocks.class.getFields()) {
+				if (f.get(null) instanceof Block) {
+					registerBlockItemRender((Block) f.get(null));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static void registerAllTileEntities() {
 		GameRegistry.registerTileEntity(((BlockHarvestedOre)harvested_ore).getTileEntityClass(), harvested_ore.getRegistryName().toString());
 		GameRegistry.registerTileEntity(((BlockAnvil)blockAnvil).getTileEntityClass(), blockAnvil.getRegistryName().toString());
@@ -69,29 +62,14 @@ public class TOCBlocks {
 	}
 
 	public static void registerAllBlocks() {
-		final Block[] blocks = {
-				copper_ore,
-				tin_ore,
-				iron_ore,
-				coal_ore,
-				gold_ore,
-				mithril_ore,
-				adamantite_ore,
-				runite_ore,
-				dragonstone_ore,
-				harvested_ore,
-				blockAnvil,
-				harvested_tree,
-				oak_log,
-				spruce_log,
-				birch_log,
-				magicLeaves,
-				magic_log,
-				orc_log,
-				orc_leaves
-		};
-		for(Block b : blocks) {
-			register(b);
+		try {
+			for (Field f : TOCBlocks.class.getFields()) {
+				if (f.get(null) instanceof Block) {
+					register((Block) f.get(null));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -102,10 +80,7 @@ public class TOCBlocks {
 		if(block.equals(oak_log)) {
 			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
 			block.setHardness(-1);
-		} else if(block.equals(spruce_log)) {
-			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
-			block.setHardness(-1);
-		}else if(block.equals(birch_log)) {
+		} else if(block.equals(birch_log)) {
 			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
 			block.setHardness(-1);
 		}else if(block.equals(magic_log)) {

@@ -74,13 +74,11 @@ public class Woodcutting {
 		
 		logHarvestChances.put((CustomBlockLog) TOCBlocks.oak_log, oak_harvest_chances);
 		logHarvestChances.put((CustomBlockLog) TOCBlocks.birch_log, birch_harvest_chances);
-		logHarvestChances.put((CustomBlockLog) TOCBlocks.spruce_log, spruce_harvest_chances);
 		logHarvestChances.put((CustomBlockLog) TOCBlocks.magic_log, magic_harvest_chances);
 		logHarvestChances.put((CustomBlockLog) TOCBlocks.orc_log, orc_harvest_chances);
 
 		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.oak_log, .3f);
 		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.birch_log, .25f);
-		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.spruce_log, .15f);
 		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.magic_log, .15f);
 		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.orc_log, .15f);
 	}
