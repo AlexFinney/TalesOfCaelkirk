@@ -6,4 +6,5 @@ public class Guis {
 	public static final int DIALOG_GUI = 2;
 	public static final int SMELTING_GUI = 3;
 	public static final int SMITHING_GUI = 4;
+	public static final int BANK_GUI = 5;
 }

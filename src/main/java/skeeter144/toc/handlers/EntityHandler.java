@@ -44,7 +44,7 @@ public class EntityHandler {
 		Entity e = event.getEntity();
 		
 		if(!e.world.isRemote && e instanceof EntityPlayer) {
-			TOCPlayer pl = TOCMain.pm.getPlayer(e.getPersistentID());
+			TOCPlayer pl = TOCMain.pm.getPlayer((EntityPlayer) e);
 			pl.tick();
 			
 			if(e.ticksExisted % 100 == 0) {
@@ -143,7 +143,7 @@ public class EntityHandler {
 				TOCDamageSource src = (TOCDamageSource)e.getSource();
 				if(src.source instanceof EntityPlayer) {
 					boolean leveledUp = false;
-					TOCPlayer player = TOCMain.pm.getPlayer(((EntityPlayer)src.source).getUniqueID());
+					TOCPlayer player = TOCMain.pm.getPlayer(((EntityPlayer)src.source));
 					Levels level = Levels.ATTACK;
 					 if(src.type == DamageType.PHYSICAL) {
 							EntityLevels levels = player.getPlayerLevels();
@@ -184,7 +184,7 @@ public class EntityHandler {
 				}
 			}else if(e.getSource().getTrueSource() != null && e.getSource().getTrueSource() instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer)e.getSource().getTrueSource();
-				EntityLevels levels = TOCMain.pm.getPlayer(player.getUniqueID()).getPlayerLevels();
+				EntityLevels levels = TOCMain.pm.getPlayer(player).getPlayerLevels();
 				Levels level = Levels.ATTACK;
 				if(player.getHeldItemMainhand().getItem() instanceof TOCGreatSword) {
 					level = Levels.ATTACK;
@@ -203,7 +203,7 @@ public class EntityHandler {
 				
 				
 				if(leveledUp || hpLeveled) {
-					TOCPlayer pl = TOCMain.pm.getPlayer(((EntityPlayer)e.getSource().getTrueSource()).getUniqueID());
+					TOCPlayer pl = TOCMain.pm.getPlayer(((EntityPlayer)e.getSource().getTrueSource()));
 					pl.combatLeveledUp();
 				}
 			}else {
@@ -275,7 +275,7 @@ public class EntityHandler {
 		
 		if(amount != 0) {
 			if(event.getEntityLiving() instanceof EntityPlayer) {
-				TOCMain.pm.getPlayer(event.getEntity().getUniqueID()).adjustVitals((int)-event.getAmount(), 0);
+				TOCMain.pm.getPlayer((EntityPlayer) event.getEntity()).adjustVitals((int)-event.getAmount(), 0);
 			}else {
 				event.setCanceled(false);
 				event.setAmount(amount);

@@ -5,13 +5,13 @@ import java.lang.reflect.Field;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import skeeter144.toc.blocks.log.CustomBlockLog;
 import skeeter144.toc.blocks.log.BlockMagicLeaves;
+import skeeter144.toc.blocks.log.CustomBlockLeaves;
+import skeeter144.toc.blocks.log.CustomBlockLog;
 import skeeter144.toc.items.TOCItems;
 
 public class TOCBlocks {
@@ -38,9 +38,9 @@ public class TOCBlocks {
 	public static Block magic_log = new CustomBlockLog("magic_log");
 	
 	public static Block magicLeaves = new BlockMagicLeaves("magic_leaves");
-	public static Block orc_leaves = new BlockMagicLeaves("orc_leaves");
-	//TODO maple leaves
-	//TODO yew leaves
+	public static Block orc_leaves = new CustomBlockLeaves("orc_leaves");
+	public static Block maple_leaves = new CustomBlockLeaves("maple_leaves");
+	public static Block yew_leaves = new CustomBlockLeaves("yew_leaves");
 	
 	public static void registerRenders() {
 		try {
@@ -81,6 +81,15 @@ public class TOCBlocks {
 			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
 			block.setHardness(-1);
 		} else if(block.equals(birch_log)) {
+			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
+			block.setHardness(-1);
+		}else if(block.equals(maple_log)) {
+			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
+			block.setHardness(-1);
+		}else if(block.equals(yew_log)) {
+			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
+			block.setHardness(-1);
+		}else if(block.equals(orc_log)) {
 			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
 			block.setHardness(-1);
 		}else if(block.equals(magic_log)) {

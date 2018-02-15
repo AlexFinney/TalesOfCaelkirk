@@ -22,10 +22,15 @@ public class SetClientTOCPlayerMessage implements IMessage{
 
 	public SetClientTOCPlayerMessage() {}
 	
-	TOCPlayer player;
+	EntityLevels pl;
+	int health, mHealth, mana, mMana;
 	int bytes = 0;
 	public SetClientTOCPlayerMessage(TOCPlayer player) {
-		this.player = player;
+		pl = player.levels;
+		health = player.getHealth();
+		mHealth = player.getMaxHealth();
+		mana = player.getMana();
+		mMana = player.getMaxMana();
 	}
 	
 	@Override
@@ -34,7 +39,7 @@ public class SetClientTOCPlayerMessage implements IMessage{
 		ObjectOutputStream oos = null;
 		try {
 			oos = new ObjectOutputStream(baos);
-			oos.writeObject(player.getPlayerLevels());
+			oos.writeObject(pl);
 			byte[] b = baos.toByteArray();
 			buf.writeInt(b.length);
 			buf.writeBytes(b);
@@ -45,10 +50,10 @@ public class SetClientTOCPlayerMessage implements IMessage{
 			catch (IOException e) {	e.printStackTrace();}
 		}
 		
-		buf.writeInt(player.getHealth());
-		buf.writeInt(player.getMaxHealth());
-		buf.writeInt(player.getMana());
-		buf.writeInt(player.getMaxMana());
+		buf.writeInt(health);
+		buf.writeInt(mHealth);
+		buf.writeInt(mana);
+		buf.writeInt(mMana);
 	}
 	
 	
@@ -62,7 +67,7 @@ public class SetClientTOCPlayerMessage implements IMessage{
 		
 		ByteArrayInputStream bais = new ByteArrayInputStream(playerLevelData);
 		ObjectInputStream ois = null;
-		EntityLevels pl = null;
+		pl = null;
 		
 		try {
 			ois = new ObjectInputStream(bais);
@@ -75,12 +80,11 @@ public class SetClientTOCPlayerMessage implements IMessage{
 		}
 		
 		
-		int plHealth = buf.readInt();
-		int mHealth =  buf.readInt();
-		int mana =  buf.readInt();
-		int maxmana =  buf.readInt();
-		UUID uuid = Minecraft.getMinecraft().player.getPersistentID();
-		this.player = new TOCPlayer(Minecraft.getMinecraft().player, pl, plHealth, mHealth, mana, maxmana);		
+		health = buf.readInt();
+		mHealth =  buf.readInt();
+		mana =  buf.readInt();
+		mMana =  buf.readInt();
+		
 	}
 
 
@@ -90,7 +94,7 @@ public class SetClientTOCPlayerMessage implements IMessage{
 		public IMessage onMessage(SetClientTOCPlayerMessage message, MessageContext ctx) {
 			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
 				public void run() {
-					TOCMain.localPlayer = message.player;
+					TOCMain.localPlayer = new TOCPlayer(Minecraft.getMinecraft().player, message.pl, message.health, message.mHealth, message.mana, message.mMana);
 				}
 			});
 			

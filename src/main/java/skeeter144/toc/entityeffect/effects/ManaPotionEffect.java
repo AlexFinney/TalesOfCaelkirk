@@ -17,7 +17,7 @@ public class ManaPotionEffect extends EntityEffect {
 	public ManaPotionEffect(Entity effected, int duration, float totalHealthHealed) {
 		super(effected, "mana_potion", duration);
 		addedRegen = totalHealthHealed / (duration / 20);
-		player = TOCMain.pm.getPlayer(effected.getUniqueID());
+		player = TOCMain.pm.getPlayer((EntityPlayer) effected);
 		this.duration = duration;
 	}
 	

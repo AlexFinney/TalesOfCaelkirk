@@ -64,7 +64,7 @@ public class TileEntityAnvil extends TileEntity {
 					if(selectedRecipe != null)
 						producedItem = selectedRecipe.crafted;
 					striker.addItemStackToInventory(new ItemStack(ingot, selectedRecipe.components[0].getCount() - addedIngots));
-					TOCMain.pm.getPlayer(striker.getPersistentID()).levels.addExp(selectedRecipe.level, selectedRecipe.xp);
+					TOCMain.pm.getPlayer(striker).levels.addExp(selectedRecipe.level, selectedRecipe.xp);
 					Network.INSTANCE.sendTo(new AddLevelXpMessage(selectedRecipe.level.name().toString(), selectedRecipe.xp), (EntityPlayerMP) striker);
 					selectedRecipe = null;
 					addedIngots = 0;

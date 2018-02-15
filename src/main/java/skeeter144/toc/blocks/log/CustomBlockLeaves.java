@@ -13,6 +13,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleCloud;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -26,9 +27,10 @@ public class CustomBlockLeaves extends BlockLeaves {
 	public CustomBlockLeaves(String name) {
 		this.setUnlocalizedName(name);
 		this.setRegistryName(new ResourceLocation(Reference.MODID, name));
-		this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, Boolean.valueOf(false))
+		this.setDefaultState(this.blockState.getBaseState()
+				.withProperty(CHECK_DECAY, Boolean.valueOf(false))
 				.withProperty(DECAYABLE, Boolean.valueOf(false)));
-		
+
 		this.setHardness(-1);
 	}
 
@@ -44,36 +46,37 @@ public class CustomBlockLeaves extends BlockLeaves {
 
 	}
 
-	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {}
-
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
 
-	
-	   public IBlockState getStateFromMeta(int meta)
-	    {
-	        return this.getDefaultState().withProperty(DECAYABLE, false).withProperty(CHECK_DECAY, false);
-	    }
+	public IBlockState getStateFromMeta(int meta) {
+		return this.getDefaultState().withProperty(DECAYABLE, false)
+				.withProperty(CHECK_DECAY, false);
+	}
 
-	    public int getMetaFromState(IBlockState state)
-	    {
-	        return 0;
-	    }
-	
-	    protected BlockStateContainer createBlockState()
-	    {
-	        return new BlockStateContainer(this, new IProperty[] {CHECK_DECAY, DECAYABLE});
-	    }
-	    
+	public int getMetaFromState(IBlockState state) {
+		return 0;
+	}
+
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this,
+				new IProperty[]{CHECK_DECAY, DECAYABLE});
+	}
+
 	@Override
 	public void setGraphicsLevel(boolean fancy) {
 		super.setGraphicsLevel(fancy);
 	}
+
+	@Override
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+	}
 	
 	@Override
-	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {}
-	
-	
+	public BlockRenderLayer getBlockLayer() {
+		return BlockRenderLayer.TRANSLUCENT;
+	}
+
 }

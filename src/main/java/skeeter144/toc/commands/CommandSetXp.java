@@ -7,6 +7,7 @@ import java.util.List;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
@@ -59,7 +60,7 @@ public class CommandSetXp implements ICommand{
 		String level = args[0];
 		int amount = Integer.parseInt(args[1]);
 		
-		TOCPlayer pl = TOCMain.pm.getPlayer(sender.getCommandSenderEntity().getUniqueID());
+		TOCPlayer pl = TOCMain.pm.getPlayer((EntityPlayer) sender.getCommandSenderEntity());
 		int prevXp = 0;
 		if(pl != null) {
 			Collection<Level> levels = pl.getPlayerLevels().getLevels();

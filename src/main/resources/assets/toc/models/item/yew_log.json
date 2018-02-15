@@ -1,3 +1,4 @@
 {
-    "parent": "block/acacia_log"
+	"_comment": "This should be acacia log, it is not an error",
+    "parent": "toc:block/acacia_log"
 }

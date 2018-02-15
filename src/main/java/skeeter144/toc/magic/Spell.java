@@ -3,6 +3,7 @@ package skeeter144.toc.magic;
 import java.util.UUID;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.player.TOCPlayer;
@@ -25,7 +26,7 @@ public abstract class Spell {
 	
 	public void onCast(Entity caster) {
 		if(!caster.world.isRemote) {
-			TOCPlayer tocCaster = TOCMain.pm.getPlayer(caster.getPersistentID());
+			TOCPlayer tocCaster = TOCMain.pm.getPlayer((EntityPlayer) caster);
 			tocCaster.adjustVitals(0, -manaCost);
 			performSpellAction(caster);
 		}

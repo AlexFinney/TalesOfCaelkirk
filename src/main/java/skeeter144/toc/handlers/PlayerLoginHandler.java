@@ -8,6 +8,7 @@ import skeeter144.toc.TOCMain;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.SetClientTOCPlayerMessage;
 import skeeter144.toc.player.TOCPlayer;
+import skeeter144.toc.tasks.TickableTask;
 
 public class PlayerLoginHandler {
 
@@ -17,15 +18,14 @@ public class PlayerLoginHandler {
 		   return;
 	   }
 	   
-	   if(TOCMain.pm.loadPlayerFromFile(event.player.getUniqueID(), event.player)) {
+	   if(TOCMain.pm.hasPlayerPreviouslyPlayed(event.player.getUniqueID())) {
 		   event.player.sendMessage(new TextComponentTranslation("Welcome back, traveller.  I see you haven't been eaten by a monster yet.  This is good..."));
 	   }else {
 		   event.player.sendMessage(new TextComponentTranslation("Welome to the Land of Caelkirk, traveller.  So now, here begins your tale..."));
 	   }
 	   
-	   TOCPlayer player = TOCMain.pm.getPlayer(event.player.getPersistentID());
+	   TOCPlayer player = TOCMain.pm.getPlayer(event.player);
 	   Network.INSTANCE.sendTo(new SetClientTOCPlayerMessage(player), (EntityPlayerMP)event.player);
-	   
 	}
 	
 	

@@ -37,14 +37,14 @@ public class CombatManager {
 		EntityLevels defenderLevels = null;
 		
 		if(e instanceof EntityPlayer) {
-			defenderLevels = TOCMain.pm.getPlayer(e.getPersistentID()).getPlayerLevels();
+			defenderLevels = TOCMain.pm.getPlayer((EntityPlayer) e).getPlayerLevels();
 		}else if(e instanceof CustomMob) {
 			defenderLevels = TOCMain.mm.getMob(e.getPersistentID()).levels;
 		}
 		
 		if(source.getTrueSource() != null) {
 			if(source.getTrueSource() instanceof EntityPlayer) {
-				attackerLevels = TOCMain.pm.getPlayer(source.getTrueSource().getPersistentID()).getPlayerLevels();
+				attackerLevels = TOCMain.pm.getPlayer((EntityPlayer) source.getTrueSource()).getPlayerLevels();
 			}else if(source.getTrueSource() instanceof CustomMob) {
 				attackerLevels = TOCMain.mm.getMob(source.getTrueSource().getPersistentID()).levels;
 			}

@@ -30,7 +30,7 @@ public interface ISpecialAttackWeapon {
 		if(!targetRequired || targetRequired && e != null) {
 			if(!attacker.world.isRemote) {
 				
-				TOCPlayer pl = PlayerManager.instance().getPlayer(attacker.getUniqueID());	
+				TOCPlayer pl = PlayerManager.instance().getPlayer(attacker);	
 				if(!pl.specialAttackCooldowns.containsKey(item.getItem().getRegistryName().toString())) {
 					doAttack(attacker, hand, e);
 					pl.specialAttackCooldowns.put(item.getItem().getRegistryName().toString(), new MutablePair<Integer, Integer>(cooldown, cooldown));

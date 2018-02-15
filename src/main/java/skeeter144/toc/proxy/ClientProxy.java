@@ -25,6 +25,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import skeeter144.toc.blocks.TOCBlocks;
 import skeeter144.toc.blocks.TOCClientBlockRenderers;
 import skeeter144.toc.client.Keybindings;
+import skeeter144.toc.client.entity.model.ModelGhost;
 import skeeter144.toc.client.entity.model.ModelGiantScorpian;
 import skeeter144.toc.client.entity.model.ModelGiantSpider;
 import skeeter144.toc.client.entity.model.ModelGoblin;
@@ -34,6 +35,7 @@ import skeeter144.toc.client.entity.model.ModelPegasus;
 import skeeter144.toc.client.entity.model.ModelRat;
 import skeeter144.toc.client.entity.model.ModelViking;
 import skeeter144.toc.client.entity.renderer.RenderCustomAbstractHorse;
+import skeeter144.toc.client.entity.renderer.RenderGhost;
 import skeeter144.toc.client.entity.renderer.RenderGiantScorpian;
 import skeeter144.toc.client.entity.renderer.RenderGiantSpider;
 import skeeter144.toc.client.entity.renderer.RenderGoblin;
@@ -45,6 +47,7 @@ import skeeter144.toc.client.entity.renderer.RenderViking;
 import skeeter144.toc.client.gui.GuiEntityStatus;
 import skeeter144.toc.client.gui.HUD;
 import skeeter144.toc.client.gui.RegionsRendering;
+import skeeter144.toc.entity.mob.monster.EntityGhost;
 import skeeter144.toc.entity.mob.monster.EntityGiantScorpian;
 import skeeter144.toc.entity.mob.monster.EntityGiantSpider;
 import skeeter144.toc.entity.mob.monster.EntityGoblin;
@@ -55,8 +58,7 @@ import skeeter144.toc.entity.mob.mount.basic_horse.EntityMuleMount;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityVariableHorseMount;
 import skeeter144.toc.entity.mob.mount.flying.EntityGriffin;
 import skeeter144.toc.entity.mob.mount.flying.EntityPegasus;
-import skeeter144.toc.entity.mob.passive.banker.EntityThreeStreamsBanker;
-import skeeter144.toc.entity.mob.passive.banker.EntityYarrinBanker;
+import skeeter144.toc.entity.mob.passive.banker.EntityBanker;
 import skeeter144.toc.entity.mob.passive.questgiver.EntityBobRatMan;
 import skeeter144.toc.entity.mob.passive.shopkeeper.EntityHumanShopKeeper;
 import skeeter144.toc.handlers.ItemTooltipHandler;
@@ -111,8 +113,7 @@ public class ClientProxy extends CommonProxy
 		
 		rm.entityRenderMap.put(EntityBobRatMan.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
 		
-		rm.entityRenderMap.put(EntityYarrinBanker.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
-		rm.entityRenderMap.put(EntityThreeStreamsBanker.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
+		rm.entityRenderMap.put(EntityBanker.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
 		
 		rm.entityRenderMap.put(EntityHumanShopKeeper.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
 		
@@ -121,6 +122,7 @@ public class ClientProxy extends CommonProxy
 		rm.entityRenderMap.put(EntityGoblin.class, new RenderGoblin(rm, new ModelGoblin(), .5f));
 		rm.entityRenderMap.put(EntityGiantScorpian.class, new RenderGiantScorpian(rm, new ModelGiantScorpian(), .5f));
 		rm.entityRenderMap.put(EntityGiantSpider.class, new RenderGiantSpider(rm, new ModelGiantSpider(), .5f));
+		rm.entityRenderMap.put(EntityGhost.class, new RenderGhost(rm, new ModelGhost(), .5f));
 
 		rm.entityRenderMap.put(EntityMuleMount.class, new RenderCustomAbstractHorse(rm, 0.92F));
 		rm.entityRenderMap.put(EntityDonkeyMount.class, new RenderCustomAbstractHorse(rm, 0.87F));
@@ -210,7 +212,12 @@ public class ClientProxy extends CommonProxy
 		}
 	}
 
-
+	@Override
+	public void cancelSwing() {
+		Minecraft.getMinecraft().player.swingProgress = 0;
+		Minecraft.getMinecraft().player.swingProgressInt = 0;
+		Minecraft.getMinecraft().player.isSwingInProgress = false;
+	}
 	
 	private static final ModelVikingHelm modelVikingHelm = new ModelVikingHelm();
 	@Override

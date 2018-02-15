@@ -58,6 +58,9 @@ public class TOCPlayer extends TOCEntity{
 		curHealth = health;
 		curMana = mana;
 		
+		maxHealth = getMaxHealth();
+		maxMana = getMaxMana();
+		
 		if(curHealth > getMaxHealth())
 			curHealth = getMaxHealth();
 		if(curHealth < 0)

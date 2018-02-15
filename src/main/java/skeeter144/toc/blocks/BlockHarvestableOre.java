@@ -74,7 +74,7 @@ public class BlockHarvestableOre extends CustomBlock{
 				ore.maxSecs = hOre.maxSecs;
 				if(player != null) {
 					player.addItemStackToInventory(new ItemStack(hOre.item));
-					TOCMain.pm.getPlayer(player.getUniqueID()).levels.addExp(Levels.MINING, hOre.xpGiven);
+					TOCMain.pm.getPlayer(player).levels.addExp(Levels.MINING, hOre.xpGiven);
 					Network.INSTANCE.sendTo(new AddLevelXpMessage("Mining", hOre.xpGiven), (EntityPlayerMP) player);
 				}
 		}

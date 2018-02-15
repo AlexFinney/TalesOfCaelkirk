@@ -29,7 +29,7 @@ public abstract class Quest implements Serializable{
 	}
 	
 	public void onQuestFinished(EntityPlayerMP player) {
-		EntityLevels l = TOCMain.pm.getPlayer(player.getUniqueID()).levels;
+		EntityLevels l = TOCMain.pm.getPlayer(player).levels;
 		boolean combatLeveled = false;
 		for(Map.Entry<Levels, Integer> pair : experienceRewards.entrySet()) {
 			boolean leveled = l.addExp(pair.getKey(), pair.getValue());
@@ -39,7 +39,7 @@ public abstract class Quest implements Serializable{
 				combatLeveled = true;
 				
 			if(combatLeveled)
-				TOCMain.pm.getPlayer(player.getUniqueID()).combatLeveledUp();
+				TOCMain.pm.getPlayer(player).combatLeveledUp();
 			
 			Network.INSTANCE.sendTo(new AddLevelXpMessage(pair.getKey().name(), pair.getValue()), player);
 		}

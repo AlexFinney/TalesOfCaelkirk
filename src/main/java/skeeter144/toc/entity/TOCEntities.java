@@ -4,6 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import skeeter144.toc.TOCMain;
+import skeeter144.toc.entity.mob.monster.EntityGhost;
 import skeeter144.toc.entity.mob.monster.EntityGiantScorpian;
 import skeeter144.toc.entity.mob.monster.EntityGiantSpider;
 import skeeter144.toc.entity.mob.monster.EntityGoblin;
@@ -14,8 +15,7 @@ import skeeter144.toc.entity.mob.mount.basic_horse.EntityMuleMount;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityVariableHorseMount;
 import skeeter144.toc.entity.mob.mount.flying.EntityGriffin;
 import skeeter144.toc.entity.mob.mount.flying.EntityPegasus;
-import skeeter144.toc.entity.mob.passive.banker.EntityThreeStreamsBanker;
-import skeeter144.toc.entity.mob.passive.banker.EntityYarrinBanker;
+import skeeter144.toc.entity.mob.passive.banker.EntityBanker;
 import skeeter144.toc.entity.mob.passive.questgiver.EntityBobRatMan;
 import skeeter144.toc.entity.mob.passive.shopkeeper.EntityHumanShopKeeper;
 import skeeter144.toc.util.Reference;
@@ -29,6 +29,7 @@ public class TOCEntities {
 		registerEntity(EntityGoblin.class, "goblin", 80, 3, true, 0x007F0E, 0x877436);
 		registerEntity(EntityGiantScorpian.class, "giant_scorpian", 80, 3, true, 0x00AA0E, 0x87BD36);
 		registerEntity(EntityGiantSpider.class, "giant_spider", 80, 3, true, 0xFF0000, 0x000000);
+		registerEntity(EntityGhost.class, "ghost", 80, 3, true, 0xFFFFFF, 0x000000);
 		
 		
 		//mounts
@@ -44,8 +45,7 @@ public class TOCEntities {
 		//npcs
 			
 			//bankers
-			registerEntity(EntityYarrinBanker.class, "banker1", 80, 3, false, 0xefff11, 0xededed);
-			registerEntity(EntityThreeStreamsBanker.class, "banker2", 80, 3, false, 0xefff11, 0xededed);
+			registerEntity(EntityBanker.class, "banker", 80, 3, false, 0xefff11, 0xededed);
 			
 			//quests
 			registerEntity(EntityBobRatMan.class, "bob_the_rat_man", 80, 3, true, 0xFFFFFFFF, 0xFFFFFFFF);

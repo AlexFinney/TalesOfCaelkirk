@@ -44,6 +44,8 @@ import skeeter144.toc.network.LightningBoltCastMessage.LightningBoltCastHandler;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.NotfyClientOfEffectMessage;
 import skeeter144.toc.network.NotfyClientOfEffectMessage.NotfyClientOfEffectMessageHandler;
+import skeeter144.toc.network.OpenBankGUIMessage;
+import skeeter144.toc.network.OpenBankGUIMessage.OpenBankGUIMessageHandler;
 import skeeter144.toc.network.OpenShopGuiMessage;
 import skeeter144.toc.network.OpenShopGuiMessage.OpenShopGuiMessageHandler;
 import skeeter144.toc.network.PlayMobAnimationMessage;
@@ -84,6 +86,7 @@ public class CommonProxy
 	{
 		TOCBlocks.registerAllBlocks();
 		MinecraftForge.EVENT_BUS.register(new TOCItems());
+		MinecraftForge.EVENT_BUS.register(new Crafting());
 		
 		MinecraftForge.EVENT_BUS.register(new Sounds());
 		
@@ -123,6 +126,7 @@ public class CommonProxy
 		Network.INSTANCE.registerMessage(OpenShopGuiMessageHandler.class, OpenShopGuiMessage.class, Network.getNextId(), Side.CLIENT);
 		Network.INSTANCE.registerMessage(ItemCraftingQueueAddedMessageHandler.class, ItemCraftingQueueAddedMessage.class, Network.getNextId(), Side.CLIENT);
 		Network.INSTANCE.registerMessage(ItemCraftedMessageHandler.class, ItemCraftedMessage.class, Network.getNextId(), Side.CLIENT);
+		Network.INSTANCE.registerMessage(OpenBankGUIMessageHandler.class, OpenBankGUIMessage.class, Network.getNextId(), Side.CLIENT);
 		
 		
 		NetworkRegistry.INSTANCE.registerGuiHandler(TOCMain.instance, new GuiHandler());
@@ -132,7 +136,7 @@ public class CommonProxy
 		MinecraftForge.EVENT_BUS.register(new PlayerInteractHandler());
 		MinecraftForge.EVENT_BUS.register(new EntityHandler());
 		MinecraftForge.EVENT_BUS.register(new TickHandler());
-		MinecraftForge.EVENT_BUS.register(new Crafting());
+		
 		
 		Spells.init();
 	}
@@ -151,6 +155,8 @@ public class CommonProxy
 	public ModelBiped getModelForId(int id) {return null;}
 
 	public void renderInit(Item item, int meta, String name) {}
+
+	public void cancelSwing() {}
 	
 	
 }

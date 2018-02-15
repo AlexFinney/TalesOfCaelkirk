@@ -25,7 +25,6 @@ public class Level implements Serializable{
 	
 	public boolean addExp(int amt){
 		curXp += amt;
-		
 		boolean levelUp = curXp >= EntityLevels.getExpForLevel(level + 1);
 		if(levelUp)
 			++level;

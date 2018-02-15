@@ -1,6 +1,7 @@
 package skeeter144.toc.entityeffect.effects;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.network.Network;
@@ -25,7 +26,7 @@ public class HealWoundsEffect extends EntityEffect{
 	float addedRegen = 0;
 	@Override
 	protected void onEffectStart() {
-		TOCPlayer pl = TOCMain.pm.getPlayer(effected.getPersistentID());
+		TOCPlayer pl = TOCMain.pm.getPlayer((EntityPlayer) effected);
 		int initialHeal = (int)(pl.getMaxHealth() *  INITIAL_HEAL_PCT);
 		pl.adjustVitals(initialHeal, 0);
 		addedRegen = pl.getHealthRegen() * HEALTH_REGEN_MULT;
@@ -40,7 +41,7 @@ public class HealWoundsEffect extends EntityEffect{
 
 	@Override
 	protected void onEffectEnd(EffectEndType type) {
-		TOCPlayer pl = TOCMain.pm.getPlayer(effected.getPersistentID());
+		TOCPlayer pl = TOCMain.pm.getPlayer((EntityPlayer) effected);
 		pl.setHealthAndManaRegen(pl.getHealthRegen() - addedRegen, pl.getManaRegen());
 	}
 

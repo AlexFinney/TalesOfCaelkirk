@@ -3,13 +3,17 @@ package skeeter144.toc.handlers;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import skeeter144.toc.client.gui.BankGui;
 import skeeter144.toc.entity.mob.passive.shopkeeper.ShopData.ItemPrice;
 import skeeter144.toc.items.TOCItems;
 

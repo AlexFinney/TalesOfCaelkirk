@@ -17,7 +17,7 @@ public class HealingPotionEffect extends EntityEffect {
 	public HealingPotionEffect(Entity effected, int duration, float totalHealthHealed) {
 		super(effected, "healing_potion", duration);
 		addedRegen = totalHealthHealed / (duration / 20);
-		player = TOCMain.pm.getPlayer(effected.getUniqueID());
+		player = TOCMain.pm.getPlayer((EntityPlayer) effected);
 		this.duration = duration;
 	}
 	

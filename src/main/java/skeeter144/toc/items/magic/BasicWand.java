@@ -54,7 +54,7 @@ public class BasicWand extends Item
 		
 		if(!world.isRemote) //on the server
 		{
-			TOCPlayer tocPlayer = TOCMain.pm.getPlayer(player.getPersistentID());
+			TOCPlayer tocPlayer = TOCMain.pm.getPlayer(player);
 			if(tocPlayer.getMana() >= embuedSpell.getManaCost() || player.isCreative()) {
 				embuedSpell.onCast(player);
 				player.getCooldownTracker().setCooldown(this, embuedSpell.getCooldown());

@@ -9,6 +9,7 @@ import java.util.UUID;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.network.AddLevelXpMessage;
@@ -66,7 +67,8 @@ public class RecipeManager {
 	
 	public void craftRecipes() {
 		for(Map.Entry<UUID, List<Recipe>> entry : playerCraftingQueue.entrySet()) {
-			EntityPlayerMP player = (EntityPlayerMP) TOCMain.pm.getPlayer(entry.getKey()).mcEntity;
+			EntityPlayerMP player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(entry.getKey());
+			
 			Recipe r = entry.getValue().get(0);
 			if(r.canRecipeBeCrafted(player.inventory)) {
 				craftRecipe(player, r);
@@ -100,7 +102,7 @@ public class RecipeManager {
 		if(playerCraftingQueue.get(player.getUniqueID()).size() == 0)
 			playerCraftingQueue.remove(player.getUniqueID());
 		Network.INSTANCE.sendTo(new ItemCraftedMessage(), player);
-		TOCMain.pm.getPlayer(player.getPersistentID()).levels.addExp(r.level, r.xp);
+		TOCMain.pm.getPlayer(player).levels.addExp(r.level, r.xp);
 		Network.INSTANCE.sendTo(new AddLevelXpMessage(r.level.name().toString(), r.xp), player);
 	}
 	

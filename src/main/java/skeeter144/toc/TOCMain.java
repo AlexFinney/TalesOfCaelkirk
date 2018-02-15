@@ -20,6 +20,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
+import skeeter144.toc.banking.BankManager;
 import skeeter144.toc.combat.CombatManager;
 import skeeter144.toc.commands.CommandRegions;
 import skeeter144.toc.commands.CommandSetXp;
@@ -98,6 +99,8 @@ public class TOCMain
 		event.registerServerCommand(new CommandSetXp());
 		event.registerServerCommand(new CommandRegions());
 		event.registerServerCommand(new CommandSummonNpc());
+		
+		BankManager.loadInventories();
 	}
 	
 	
@@ -113,5 +116,8 @@ public class TOCMain
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		BankManager.saveInventories();
+		pm.savePlayers();
 	}
 }

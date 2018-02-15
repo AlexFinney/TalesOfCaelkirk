@@ -51,6 +51,7 @@ public class PlayerInteractHandler {
 		if(e.getEntityPlayer().getCooledAttackStrength(1) != 1) {
 			e.setCanceled(true);
 			cancelSwing(e.getEntityPlayer());
+			System.out.println("cancel");
 			return;
 		}
 		
@@ -76,10 +77,11 @@ public class PlayerInteractHandler {
 	}
 	
 	private void cancelSwing(EntityPlayer p) {
-		TOCMain.clientTaskManager.addTask(new TickableTask(1) {
+		TOCMain.clientTaskManager.addTask(new TickableTask(4) {
 			public void tick(int worldTick) {
 				p.swingProgress = 0;
 				p.isSwingInProgress = false;
+				TOCMain.proxy.cancelSwing();
 			}
 		});
 	}
@@ -145,9 +147,17 @@ public class PlayerInteractHandler {
 		
 		BlockLog log = (BlockLog) world.getBlockState(pos).getBlock();
 
+		if(TOCMain.pm.getPlayer(e.getEntityPlayer()).getPlayerLevels().getLevel(Levels.WOODCUTTING).getLevel() < 
+				Woodcutting.getLevelRequirementForWood(log)) {
+			player.sendMessage(new TextComponentString("You need at least Woodcutting level " + Woodcutting.getLevelRequirementForWood(log)
+					+ " to cut down " + log.getLocalizedName()));
+			return;
+		}
+		
 		float chance = Woodcutting.getChopChanceForWood((TOCAxe) e.getEntityPlayer().getHeldItemMainhand().getItem(), world.getBlockState(pos));
 		if(chance == 0) {
-			player.sendMessage(new TextComponentString("Your axe may not be strong enough to chop that tree."));
+			player.sendMessage(new TextComponentString("Your axe is not strong enough to chop down " + log.getLocalizedName()));
+			return;
 		}
 		
 		if(TOCMain.rand.nextFloat() <= chance) {
@@ -200,7 +210,7 @@ public class PlayerInteractHandler {
 			
 			if(player != null) {
 				player.addItemStackToInventory(new ItemStack(item));
-				TOCMain.pm.getPlayer(player.getUniqueID()).levels.addExp(Levels.WOODCUTTING, xpGiven);
+				TOCMain.pm.getPlayer(player).levels.addExp(Levels.WOODCUTTING, xpGiven);
 				Network.INSTANCE.sendTo(new AddLevelXpMessage("Woodcutting", xpGiven), (EntityPlayerMP) player);
 			}
 		}

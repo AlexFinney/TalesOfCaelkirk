@@ -1,6 +1,6 @@
 {
     "parent": "item/handheld",
     "textures": {
-        "layer0": "toc:items/crafting/stick_spruce"
+        "layer0": "toc:items/crafting/stick_magic"
      }
 }

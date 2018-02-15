@@ -223,13 +223,14 @@ public class TOCItems {
 	public static Item bow_oak_short = new TOCBow("bow_oak_short", 5, 20, .2f);
 	public static Item bow_oak_long = new TOCBow("bow_oak_long", 8, 30, 1.3f);
 	
+	public static Item bowstring = new CustomItem("bowstring", 20, CreativeTabs.MISC);
 	
 	public static Item stick_oak = new CustomItem("stick_oak", 20, CreativeTabs.MISC);
-	public static Item stick_spruce = new CustomItem("stick_spruce", 20, CreativeTabs.MISC);
-	public static Item stick_acacia = new CustomItem("stick_acacia", 20, CreativeTabs.MISC);
-	public static Item stick_dark_oak = new CustomItem("stick_dark_oak", 20, CreativeTabs.MISC);
 	public static Item stick_birch = new CustomItem("stick_birch", 20, CreativeTabs.MISC);
-	public static Item stick_jungle = new CustomItem("stick_jungle", 20, CreativeTabs.MISC);
+	public static Item stick_maple = new CustomItem("stick_maple", 20, CreativeTabs.MISC);
+	public static Item stick_yew = new CustomItem("stick_yew", 20, CreativeTabs.MISC);
+	public static Item stick_orc = new CustomItem("stick_orc", 20, CreativeTabs.MISC);
+	public static Item stick_magic = new CustomItem("stick_magic", 20, CreativeTabs.MISC);
 	
 	@SubscribeEvent
 	public void registerItems(RegistryEvent.Register<Item> event) {
