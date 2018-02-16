@@ -3,6 +3,7 @@ package skeeter144.toc.client.entity.model;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.entity.Entity;
+import skeeter144.toc.entity.mob.monster.EntityGhost;
 
 /**
  * Ghost - Undefined
@@ -40,6 +41,27 @@ public class ModelGhost extends AdvancedModelBase {
         this.body.render(f5);
     }
 
+    @Override
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
+    		float headPitch, float scaleFactor, Entity entityIn) {
+    	super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
+    	
+    	resetToDefaultPose();
+    	
+    	EntityGhost ghost = (EntityGhost)entityIn;
+    	if(ghost.getAttackTarget() == null) {
+	    	float f = entityIn.ticksExisted;
+	        float f1 = 1;
+	    	float speed = .2f;
+	        float degree =  1.5f;
+	    	
+	        this.walk(left_arm, speed, degree / 10, false, 0, 0, f, f1);
+	        this.walk(left_arm_1, speed, degree / 10, true, 0, 0, f, f1);
+	        
+	        bob(body, speed, 3, false, f, f1);
+    	}
+    }
+    
     public void setRotateAngle(AdvancedModelRenderer modelRenderer, float x, float y, float z) {
         modelRenderer.rotateAngleX = x;
         modelRenderer.rotateAngleY = y;

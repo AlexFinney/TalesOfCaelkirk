@@ -119,7 +119,11 @@ public class CombatManager {
 		if(amount <= 1)
 			amount = 2;
 		
-		int actualDamage = TOCMain.rand.nextInt((int)(amount - amount * .5f)) + (int)(amount*.5f);
+		int upperBound = (int)(amount - amount * .5f);
+		if(upperBound <= 0)
+			return 0;
+		
+		int actualDamage = TOCMain.rand.nextInt(upperBound) + (int)(amount*.5f);
 		return actualDamage;
 	}
 	

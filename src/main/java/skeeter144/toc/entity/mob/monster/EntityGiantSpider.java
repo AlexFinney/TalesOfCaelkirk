@@ -33,6 +33,7 @@ public class EntityGiantSpider extends CustomMob{
 		this.tasks.addTask(3, new  EntityAIMoveTowardsRestriction(this, .5f));
 		this.tasks.addTask(4, new  EntityAIWander(this, .5f));
 		this.tasks.addTask(6, new EntityAILookIdle(this));
+		
 		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true, true));
 		
 		
