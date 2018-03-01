@@ -4,6 +4,7 @@ import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.entity.Entity;
 import skeeter144.toc.entity.mob.monster.EntityGhost;
+import skeeter144.toc.entity.mob.monster.EntityGhost.AIGhostDiveAttack.DiveStage;
 
 /**
  * Ghost - Undefined
@@ -49,17 +50,69 @@ public class ModelGhost extends AdvancedModelBase {
     	resetToDefaultPose();
     	
     	EntityGhost ghost = (EntityGhost)entityIn;
-    	if(ghost.getAttackTarget() == null) {
-	    	float f = entityIn.ticksExisted;
-	        float f1 = 1;
-	    	float speed = .2f;
-	        float degree =  1.5f;
-	    	
-	        this.walk(left_arm, speed, degree / 10, false, 0, 0, f, f1);
-	        this.walk(left_arm_1, speed, degree / 10, true, 0, 0, f, f1);
+    	float f = entityIn.ticksExisted;
+        float f1 = 1;
+    	float speed = .2f;
+        float degree =  1.5f;
+    	
+        int stage = (int)ghost.getEntityAttribute(EntityGhost.DIVE_STAGE).getBaseValue();
+        
+        if(stage == DiveStage.IDLE.ordinal()) {
+        	this.walk(left_arm, speed, degree / 10, false, 0, 0, f, f1);
+            this.walk(left_arm_1, speed, degree / 10, true, 0, 0, f, f1);
+            
+            bob(body, speed, 3, false, f, f1);
+            
+        }else if(stage == DiveStage.ANGRY.ordinal()) {
+	        this.left_arm.rotationPointX = 8;
+	        this.left_arm.rotationPointY = -6;
 	        
-	        bob(body, speed, 3, false, f, f1);
-    	}
+	        this.left_arm.rotateAngleX = (float) Math.toRadians(-20);
+	        this.left_arm.rotateAngleY = (float) Math.toRadians(20);
+	        this.left_arm.rotateAngleZ = (float) Math.toRadians(-145);
+	        
+	        this.left_arm_1.rotationPointX = -3;
+	        this.left_arm_1.rotationPointY = -8;
+	        this.left_arm_1.rotationPointZ = -4;
+	        
+	        this.left_arm_1.rotateAngleX = (float) Math.toRadians(-20);
+	        this.left_arm_1.rotateAngleY = (float) Math.toRadians(20);
+	        this.left_arm_1.rotateAngleZ = (float) Math.toRadians(145);
+	        
+	        this.head.rotateAngleX = (float) Math.toRadians(-45);
+	           
+	        this.left_arm.walk(.8f, .3f, false, 0, 0, f, f1);
+	        this.left_arm_1.walk(.8f, .3f, true, 0, 0, f, f1);
+	        
+	        this.head.swing(.5f, .3f, false, 0, 0, f, f1);
+        }else if(stage == DiveStage.DIVING.ordinal()) {
+            this.body.rotateAngleX = (float) Math.toRadians(70);
+            
+            this.left_arm.rotationPointX = 8;
+            this.left_arm.rotationPointY = -6;
+            
+            this.left_arm.rotateAngleX = (float) Math.toRadians(-20);
+            this.left_arm.rotateAngleY = (float) Math.toRadians(20);
+            this.left_arm.rotateAngleZ = (float) Math.toRadians(-145);
+            
+            this.left_arm_1.rotationPointX = -3;
+            this.left_arm_1.rotationPointY = -8;
+            this.left_arm_1.rotationPointZ = -4;
+            
+            this.left_arm_1.rotateAngleX = (float) Math.toRadians(-20);
+            this.left_arm_1.rotateAngleY = (float) Math.toRadians(20);
+            this.left_arm_1.rotateAngleZ = (float) Math.toRadians(145);
+            
+            this.head.rotateAngleX = (float) Math.toRadians(-60);
+            
+            this.left_arm.walk(.4f, .3f, false, 0, 0, f, f1);
+            this.left_arm_1.walk(.4f, .3f, true, 0, 0, f, f1);
+        }
+        
+    
+        
+       
+     
     }
     
     public void setRotateAngle(AdvancedModelRenderer modelRenderer, float x, float y, float z) {

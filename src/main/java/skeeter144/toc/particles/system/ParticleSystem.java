@@ -62,6 +62,7 @@ public abstract class ParticleSystem {
 	public static final int ORE_MINING_PARTICLE_SYSTEM = 9;
 	public static final int ORE_BROKEN_PARTICLE_SYSTEM = 10;
 	public static final int ANVIL_STRUCK_PARTICLE_SYSTEM = 11;
+	public static final int GHOST_TELEPORT_SYSTEM = 12;
 	
 	
 	public static ParticleSystem getNewParticleSystem(int id) {
@@ -90,6 +91,8 @@ public abstract class ParticleSystem {
         		return new OreBrokenParticleSystem();
         	case ANVIL_STRUCK_PARTICLE_SYSTEM:
         		return new AnvilStruckParticleSystem();
+        	case GHOST_TELEPORT_SYSTEM:
+        		return new GhostTeleportSystem();
 		}
 		return null;
 	}

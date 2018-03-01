@@ -55,6 +55,14 @@
     "category": "master",
       "sounds": ["toc:entity/scorpian/scorpian_sting"]
   },
+   "ghost_scream": {
+    "category": "master",
+      "sounds": ["toc:entity/ghost/ghost_scream"]
+  },
+   "ghost_scream2": {
+    "category": "master",
+      "sounds": ["toc:entity/ghost/ghost_scream2"]
+  },
   "spider_forest_ambient": {
     "category": "master",
       "sounds": ["toc:ambient/spider_forest/behind_you", "toc:ambient/spider_forest/glad_you_did", "toc:ambient/spider_forest/ooh_look_dinner",

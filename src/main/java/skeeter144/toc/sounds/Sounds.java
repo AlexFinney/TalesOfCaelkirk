@@ -27,6 +27,10 @@ public class Sounds {
 	public static final SoundEvent scorpian_idle_1 = new CustomSoundEvent(new ResourceLocation(Reference.MODID, "scorpian_idle_1"));
 	public static final SoundEvent scorpian_sting = new CustomSoundEvent(new ResourceLocation(Reference.MODID, "scorpian_sting"));
 	
+	public static final SoundEvent ghost_scream = new CustomSoundEvent(new ResourceLocation(Reference.MODID, "ghost_scream"));
+	public static final SoundEvent ghost_scream_angry = new CustomSoundEvent(new ResourceLocation(Reference.MODID, "ghost_scream2"));
+	
+	
 	public static final SoundEvent spider_forest_ambient = new CustomSoundEvent(new ResourceLocation(Reference.MODID, "spider_forest_ambient"));
 	
 	public static final SoundEvent anvil_strike = new CustomSoundEvent(new ResourceLocation(Reference.MODID, "anvil_strike"));
