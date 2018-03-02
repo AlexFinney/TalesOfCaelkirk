@@ -4,6 +4,7 @@ import java.util.Random;
 
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -32,6 +33,7 @@ import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.entity.mob.monster.EntityGhost.AIGhostDiveAttack.DiveStage;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.SpawnParticlesMessage;
+import skeeter144.toc.particles.particle.BasicParticle;
 import skeeter144.toc.particles.system.ParticleSystem;
 import skeeter144.toc.sounds.Sounds;
 

@@ -2,10 +2,14 @@ package skeeter144.toc.client.entity.model;
 
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
+import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.mob.monster.EntityGhost;
 import skeeter144.toc.entity.mob.monster.EntityGhost.AIGhostDiveAttack.DiveStage;
+import skeeter144.toc.particles.particle.BasicParticle;
 
 /**
  * Ghost - Undefined
@@ -50,6 +54,8 @@ public class ModelGhost extends AdvancedModelBase {
     	
     	resetToDefaultPose();
     	
+    	
+    	
     	EntityGhost ghost = (EntityGhost)entityIn;
     	float f = entityIn.ticksExisted;
         float f1 = 1;
@@ -57,6 +63,17 @@ public class ModelGhost extends AdvancedModelBase {
         float degree =  1.5f;
     	
         int stage = (int)ghost.getEntityAttribute(EntityGhost.DIVE_STAGE).getBaseValue();
+        
+        
+        if(ghost.world.rand.nextInt(20) == 0) {
+			Particle p = new BasicParticle(ghost.world, ghost.posX, ghost.posY + 1, ghost.posZ, 1, 0x000000, 
+					TOCMain.rand.nextFloat() * .5f - .25f, 
+					TOCMain.rand.nextFloat() * .25f + .125f, 
+					TOCMain.rand.nextFloat() * .5f - .25f, 
+					true);
+			
+			Minecraft.getMinecraft().effectRenderer.addEffect(p);
+		}
         
         if(stage == DiveStage.IDLE.ordinal()) {
         	this.walk(left_arm, speed, degree / 10, false, 0, 0, f, f1);
@@ -86,6 +103,17 @@ public class ModelGhost extends AdvancedModelBase {
 	        this.left_arm_1.walk(.8f, .3f, true, 0, 0, f, f1);
 	        
 	        this.head.swing(.5f, .3f, false, 0, 0, f, f1);
+	        
+	        if(ghost.world.rand.nextInt(2) == 0) {
+				Particle p = new BasicParticle(ghost.world, ghost.posX, ghost.posY + 1, ghost.posZ, 1, 0x000000, 
+						TOCMain.rand.nextFloat() * .5f - .25f, 
+						TOCMain.rand.nextFloat() * .25f + .125f, 
+						TOCMain.rand.nextFloat() * .5f - .25f, 
+						true);
+				
+				Minecraft.getMinecraft().effectRenderer.addEffect(p);
+			}
+	        
         }else if(stage == DiveStage.DIVING.ordinal()) {
         	
         	Vec3d prevPos = new Vec3d(ghost.prevPosX, ghost.prevPosY, ghost.prevPosZ);
