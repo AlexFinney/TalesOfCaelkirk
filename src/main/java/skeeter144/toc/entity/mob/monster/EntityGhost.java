@@ -223,14 +223,18 @@ public class EntityGhost extends CustomMob{
 		
 		@Override
 		public void updateTask() {
+			if(ghost.getAttackTarget() == null)
+				return;
+			
 			int stage = (int)ghost.getEntityAttribute(EntityGhost.DIVE_STAGE).getBaseValue();
 			 
 			if(stage == DiveStage.ANGRY.ordinal()) {
 				if(ghost.ticksInCurrentStage > 30) {
 					//teleport
 					spawnTeleportParticles(ghost.getPosition());
-					ghost.setPosition(raisePos.getX(), raisePos.getY(), raisePos.getZ());
 					ghost.world.playSound(null, ghost.getPosition(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.MASTER, 1, 1);
+					ghost.setPosition(raisePos.getX(), raisePos.getY(), raisePos.getZ());
+
 					
 					
 					ghost.setDiveStage(DiveStage.SCREAMING);
@@ -239,7 +243,7 @@ public class EntityGhost extends CustomMob{
 			
 			if(stage == DiveStage.SCREAMING.ordinal()) {
 				if(ghost.ticksInCurrentStage > 30) {
-					ghost.world.playSound(null, ghost.getPosition(), Sounds.ghost_scream, SoundCategory.MASTER, 1, 1);
+					ghost.world.playSound(null, ghost.getAttackTarget().getPosition(), Sounds.ghost_scream, SoundCategory.MASTER, 1, 1);
 					
 					ghost.setDiveStage(DiveStage.DIVING);
 				}
@@ -263,6 +267,13 @@ public class EntityGhost extends CustomMob{
 				ghost.motionX = -moveVec.x;
 				ghost.motionY = -moveVec.y;
 				ghost.motionZ = -moveVec.z;
+				
+				
+				double dy = ghost.getAttackTarget().posY - ghost.posX;
+            	
+            	double dist = ghost.getAttackTarget().getPositionVector().distanceTo(ghost.getPositionVector());
+            	ghost.rotationPitch = (float)Math.asin(dy / dist);
+				
 				
 				if(ghost.getPosition().distanceSq(targetPos) < 2) {
 					ghost.getAttackTarget().attackEntityFrom(DamageSource.GENERIC, 40);

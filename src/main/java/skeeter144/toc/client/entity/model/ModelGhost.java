@@ -86,8 +86,13 @@ public class ModelGhost extends AdvancedModelBase {
 	        
 	        this.head.swing(.5f, .3f, false, 0, 0, f, f1);
         }else if(stage == DiveStage.DIVING.ordinal()) {
-            this.body.rotateAngleX = (float) Math.toRadians(70);
-            
+        	if(ghost.getAttackTarget() != null) {
+        		//double dy = ghost.getAttackTarget().posY - ghost.posX;
+            	
+            	//double dist = ghost.getAttackTarget().getPositionVector().distanceTo(ghost.getPositionVector());
+            	//this.body.rotateAngleX = (float)Math.asin(dy / dist);
+        	}
+        	
             this.left_arm.rotationPointX = 8;
             this.left_arm.rotationPointY = -6;
             
