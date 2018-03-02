@@ -143,6 +143,16 @@ public class ModelGhost extends AdvancedModelBase {
             
             this.left_arm.walk(.1f, .3f, false, 0, 0, f, f1);
             this.left_arm_1.walk(.1f, .3f, true, 0, 0, f, f1);
+            
+            if(ghost.world.rand.nextInt(2) == 0) {
+				Particle p = new BasicParticle(ghost.world, ghost.posX, ghost.posY + 1, ghost.posZ, 1, 0x000000, 
+						TOCMain.rand.nextFloat() * .5f - .25f, 
+						TOCMain.rand.nextFloat() * .25f + .125f, 
+						TOCMain.rand.nextFloat() * .5f - .25f, 
+						true);
+				
+				Minecraft.getMinecraft().effectRenderer.addEffect(p);
+			}
         }
         
     
