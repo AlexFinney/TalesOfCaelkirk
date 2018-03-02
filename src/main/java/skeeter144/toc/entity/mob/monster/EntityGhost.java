@@ -98,6 +98,7 @@ public class EntityGhost extends CustomMob{
 	public void fall(float distance, float damageMultiplier) {}
 	
 	public void travel(float strafe, float vertical, float forward) {
+
 		if (this.isInWater()) {
 			this.moveRelative(strafe, vertical, forward, 0.02F);
 			this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);

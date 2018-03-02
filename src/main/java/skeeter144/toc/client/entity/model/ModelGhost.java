@@ -3,6 +3,7 @@ package skeeter144.toc.client.entity.model;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.Vec3d;
 import skeeter144.toc.entity.mob.monster.EntityGhost;
 import skeeter144.toc.entity.mob.monster.EntityGhost.AIGhostDiveAttack.DiveStage;
 
@@ -86,12 +87,14 @@ public class ModelGhost extends AdvancedModelBase {
 	        
 	        this.head.swing(.5f, .3f, false, 0, 0, f, f1);
         }else if(stage == DiveStage.DIVING.ordinal()) {
-        	if(ghost.getAttackTarget() != null) {
-        		//double dy = ghost.getAttackTarget().posY - ghost.posX;
+        	
+        	Vec3d prevPos = new Vec3d(ghost.prevPosX, ghost.prevPosY, ghost.prevPosZ);
+        	
+        	double dy = ghost.prevPosY - ghost.posY;
             	
-            	//double dist = ghost.getAttackTarget().getPositionVector().distanceTo(ghost.getPositionVector());
-            	//this.body.rotateAngleX = (float)Math.asin(dy / dist);
-        	}
+            double dist = prevPos.distanceTo(ghost.getPositionVector());
+            
+           	this.body.rotateAngleX = (float)Math.asin(dy / dist) + (float)Math.toRadians(75);
         	
             this.left_arm.rotationPointX = 8;
             this.left_arm.rotationPointY = -6;
@@ -110,8 +113,8 @@ public class ModelGhost extends AdvancedModelBase {
             
             this.head.rotateAngleX = (float) Math.toRadians(-60);
             
-            this.left_arm.walk(.4f, .3f, false, 0, 0, f, f1);
-            this.left_arm_1.walk(.4f, .3f, true, 0, 0, f, f1);
+            this.left_arm.walk(.1f, .3f, false, 0, 0, f, f1);
+            this.left_arm_1.walk(.1f, .3f, true, 0, 0, f, f1);
         }
         
     
