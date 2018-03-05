@@ -1,7 +1,10 @@
 package skeeter144.toc.proxy;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.util.Random;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
@@ -14,6 +17,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagInt;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
@@ -66,6 +70,7 @@ import skeeter144.toc.handlers.PlayerInputHandler;
 import skeeter144.toc.handlers.tick.ClientTickHandler;
 import skeeter144.toc.items.TOCItemsClientRegistration;
 import skeeter144.toc.models.ModelVikingHelm;
+import skeeter144.toc.particles.particle.BasicSpellTrailParticle;
 import skeeter144.toc.particles.particle.DamageParticle;
 import skeeter144.toc.util.Reference;
 import skeeter144.toc.util.Util;
@@ -217,6 +222,21 @@ public class ClientProxy extends CommonProxy
 		Minecraft.getMinecraft().player.swingProgress = 0;
 		Minecraft.getMinecraft().player.swingProgressInt = 0;
 		Minecraft.getMinecraft().player.isSwingInProgress = false;
+	}
+	
+	@Override
+	public void magicLeavesParticle(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+		BasicSpellTrailParticle p = new BasicSpellTrailParticle(worldIn,  pos.getX() + .5, pos.getY() + 1, pos.getZ() + .5, 
+				2, 0x00FFFF, 1f, true);
+		try {
+			Field f = p.getClass().getSuperclass().getDeclaredField("particleGravity");
+			f.setAccessible(true);
+			f.set(p, 3);
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		
+		Minecraft.getMinecraft().effectRenderer.addEffect(p);
 	}
 	
 	private static final ModelVikingHelm modelVikingHelm = new ModelVikingHelm();

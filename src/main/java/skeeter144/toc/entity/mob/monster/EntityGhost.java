@@ -271,7 +271,6 @@ public class EntityGhost extends CustomMob{
 				ghost.motionY = -moveVec.y;
 				ghost.motionZ = -moveVec.z;
 				
-				
 				double dy = ghost.getAttackTarget().posY - ghost.posX;
             	
             	double dist = ghost.getAttackTarget().getPositionVector().distanceTo(ghost.getPositionVector());
@@ -303,7 +302,6 @@ public class EntityGhost extends CustomMob{
 			SCREAMING,
 			DIVING
 		}
-		
 		
 		void spawnTeleportParticles(BlockPos pos) {
 			Network.INSTANCE.sendToAllAround(new SpawnParticlesMessage(ParticleSystem.GHOST_TELEPORT_SYSTEM, 

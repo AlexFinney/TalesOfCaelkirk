@@ -32,14 +32,15 @@ public class PlayerManager {
 		return new File("players\\" + uuid.toString()).exists();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public TOCPlayer getPlayer(EntityPlayer player) {
 		TOCPlayer pl = players.get(player.getPersistentID());
 		File playerFile = new File("players\\" + player.getPersistentID().toString());
 		
 		if(pl == null) {
-		
 			if(!playerFile.exists()) {
 				pl = new TOCPlayer(player);
+				savePlayer(pl, player.getPersistentID());
 				return pl;
 			}
 		
@@ -76,24 +77,26 @@ public class PlayerManager {
 	public void savePlayers() {
 		new File("players").mkdirs();
 		for(Map.Entry<UUID, TOCPlayer> entry : players.entrySet()) {
-			
-			try {
-				ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("players\\" + entry.getKey().toString()));
-				
-				TOCPlayer pl = entry.getValue();
-				
-				oos.writeObject(pl.levels);
-				
-				oos.writeInt(pl.getHealth());
-				oos.writeInt(pl.getMana());
-				oos.writeObject(pl.specialAttackCooldowns);
-				
-				oos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
+			savePlayer(entry.getValue(), entry.getKey());
 		}
 	}
+	
+	void savePlayer(TOCPlayer pl, UUID uuid) {
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("players\\" + uuid.toString()));
+			
+			oos.writeObject(pl.levels);
+			
+			oos.writeInt(pl.getHealth());
+			oos.writeInt(pl.getMana());
+			oos.writeObject(pl.specialAttackCooldowns);
+			
+			oos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 }

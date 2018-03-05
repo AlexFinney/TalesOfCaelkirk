@@ -1,4 +1,4 @@
-package skeeter144.toc.handlers;
+ package skeeter144.toc.handlers;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -13,7 +13,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.DamageSource;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -306,17 +305,5 @@ public class EntityHandler {
 		}
 		*/
 	}
-	
-	
-	@SubscribeEvent
-	public void renderPlayerPre(RenderPlayerEvent.Pre e) {
-	
-	
-	}
-	
-	@SubscribeEvent
-	public void renderPlayerPost(RenderPlayerEvent.Post e) {
-	}
-	
 	
 }
