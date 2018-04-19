@@ -2,7 +2,7 @@ package skeeter144.toc.items.misc;
 
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import skeeter144.toc.Reference;
+import skeeter144.toc.util.Reference;
 
 public class ItemGlassVial extends Item{
 

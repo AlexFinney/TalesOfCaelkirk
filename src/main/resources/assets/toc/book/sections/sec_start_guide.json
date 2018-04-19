@@ -1,0 +1,17 @@
+[
+  {
+    "name": "overview",
+    "type": "text",
+    "data": "intro/loc_intro.json"
+  },
+   {
+    "name": "beginner guide",
+    "type": "text",
+    "data": "intro/loc_begin_guide.json"
+  },
+   {
+    "name": "what next?",
+    "type": "text",
+    "data": "intro/loc_what_next.json"
+  }
+]

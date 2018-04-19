@@ -24,9 +24,9 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import skeeter144.toc.Reference;
 import skeeter144.toc.combat.CombatManager;
 import skeeter144.toc.entity.projectile.EntityTOCArrow;
+import skeeter144.toc.util.Reference;
 
 public class TOCBow extends ItemBow {
 

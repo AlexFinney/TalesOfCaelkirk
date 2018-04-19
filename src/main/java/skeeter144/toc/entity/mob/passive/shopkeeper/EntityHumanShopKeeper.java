@@ -2,7 +2,7 @@ package skeeter144.toc.entity.mob.passive.shopkeeper;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import skeeter144.toc.Reference;
+import skeeter144.toc.util.Reference;
 
 public class EntityHumanShopKeeper extends EntityShopKeeper {
 

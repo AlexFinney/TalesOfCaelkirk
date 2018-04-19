@@ -1,0 +1,7 @@
+[
+   {
+    "name": "Combat",
+    "type": "text",
+    "data": "combat/loc_combat.json"
+  }
+]

@@ -3,7 +3,7 @@ package skeeter144.toc.blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.ResourceLocation;
-import skeeter144.toc.Reference;
+import skeeter144.toc.util.Reference;
 
 public class CustomBlock extends Block{
 

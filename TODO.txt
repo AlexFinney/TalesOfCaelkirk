@@ -1,0 +1,66 @@
+Code:
+
+Create Sailor entities and world sailing travel mechanism
+## Implement a fishing system
+	- going to need custom biomes
+	- fishing poles/spears
+	- large fish mobs to swim around and spear
+
+## Teleport items
+
+
+# More bows
+# More wood types
+# More crafting recipes
+# Smithing arrowheads
+# Crafting arrows
+
+#faeries
+
+
+World Building:
+
+Tutorial Spawn Area
+Desert City
+
+Main City:
+	- Stockades/Gallows
+	
+Finish castle:
+	- Kitchen
+	- Jail
+	- King's room
+	- armory?
+
+	
+Ideas:
+
+Abandoned Castle w/ ghosts?
+
+The Mountain of the Dead
+	- giant hollow mountain that has a civilization of the dead inside of it.  Include huge expansive caverns, mine, rock cities
+
+
+Floating islands in the sky where pegasus and gryffens live.
+Part of quest to unlock flyable mount, use wizrd to teleport up there
+
+
+
+
+Wood Types:
+Wood
+Oak
+Birch
+Maple
+Yew
+Orc
+Magic
+
+
+
+
+
+
+
+
+

@@ -5,15 +5,11 @@ import com.google.common.collect.Multimap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import skeeter144.toc.Reference;
+import skeeter144.toc.util.Reference;
 
 public class BlacksmithHammer extends Item{
 	public BlacksmithHammer() {

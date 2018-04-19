@@ -3,7 +3,7 @@ package skeeter144.toc.items;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import skeeter144.toc.Reference;
+import skeeter144.toc.util.Reference;
 
 public class CustomItem extends Item{
 	

@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -20,12 +21,14 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
+import net.minecraftforge.fml.relauncher.Side;
 import skeeter144.toc.banking.BankManager;
 import skeeter144.toc.combat.CombatManager;
 import skeeter144.toc.commands.CommandRegions;
 import skeeter144.toc.commands.CommandSetXp;
 import skeeter144.toc.commands.CommandSummonNpc;
 import skeeter144.toc.event.Events;
+import skeeter144.toc.items.misc.TOCBook;
 import skeeter144.toc.player.TOCPlayer;
 import skeeter144.toc.proxy.CommonProxy;
 import skeeter144.toc.quest.QuestManager;
@@ -61,6 +64,11 @@ public class TOCMain
 	public static TaskManager clientTaskManager = new TaskManager();
 	public static TaskManager serverTaskManager = new TaskManager();
 	
+	static {
+	   if(FMLCommonHandler.instance().getSide() == Side.CLIENT){
+		      TOCBook.init();
+	   }
+	}
 	
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event)

@@ -6,16 +6,14 @@ import java.util.List;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.IInventoryChangedListener;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import skeeter144.toc.Reference;
 import skeeter144.toc.banking.BankInventory;
 import skeeter144.toc.banking.BankManager;
 import skeeter144.toc.entity.mob.passive.EntityNpc;
+import skeeter144.toc.util.Reference;
 
 public class EntityBanker extends EntityNpc {
 

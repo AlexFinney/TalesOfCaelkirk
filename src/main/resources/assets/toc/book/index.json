@@ -1,0 +1,46 @@
+[
+  {
+    "name": "intro",
+    "data": "sections/sec_start_guide.json",
+    "icon": {
+      "item": {
+        "id": "minecraft:diamond"
+      }
+    }
+  },
+  {
+    "name": "combat",
+    "data": "sections/sec_combat.json",
+    "icon": {
+      "item": {
+        "id": "toc:great_sword_steel"
+      }
+   	}
+   },
+   {
+    "name": "magic",
+    "data": "sections/sec_combat.json",
+    "icon": {
+      "file": "toc:textures/icons/levels/magic_icon.png"
+    }
+   },
+    {
+    "name": "skills",
+    "data": "sections/sec_skills.json",
+    "icon": {
+      "file": "toc:textures/icons/levels/mining_icon.png"
+    }
+  },
+  {
+    "name": "crafting",
+    "data": "sections/sec_crafting.json",
+    "icon": {
+      "item": {
+        "id": "minecraft:crafting_table"
+      }
+    }
+  }
+]
+
+
+

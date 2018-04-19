@@ -2,9 +2,7 @@ package skeeter144.toc.sounds.music;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import skeeter144.toc.Reference;
 import skeeter144.toc.sounds.Sounds;
 
 public class MusicManager {

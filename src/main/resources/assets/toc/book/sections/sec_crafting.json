@@ -1,0 +1,7 @@
+[
+   {
+    "name": "Crafting",
+    "type": "crafting",
+    "data": "crafting/loc_crafting.json"
+  }
+]

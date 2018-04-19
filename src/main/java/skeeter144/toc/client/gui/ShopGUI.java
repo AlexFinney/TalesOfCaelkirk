@@ -18,13 +18,13 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import skeeter144.toc.Reference;
 import skeeter144.toc.entity.mob.passive.shopkeeper.ShopData;
 import skeeter144.toc.entity.mob.passive.shopkeeper.ShopData.ItemPrice;
 import skeeter144.toc.entity.mob.passive.shopkeeper.ShopData.ShopListing;
 import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.network.ItemTransactionMessage;
 import skeeter144.toc.network.Network;
+import skeeter144.toc.util.Reference;
 
 public class ShopGUI extends GuiScreen{
 

@@ -154,11 +154,6 @@ public class ModelGhost extends AdvancedModelBase {
 				Minecraft.getMinecraft().effectRenderer.addEffect(p);
 			}
         }
-        
-    
-        
-       
-     
     }
     
     public void setRotateAngle(AdvancedModelRenderer modelRenderer, float x, float y, float z) {

@@ -1,0 +1,7 @@
+[
+   {
+    "name": "Skills",
+    "type": "text",
+    "data": "skills/loc_skills.json"
+  }
+]

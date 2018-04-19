@@ -1,12 +1,11 @@
 package skeeter144.toc.blocks.log;
 
 import net.minecraft.block.BlockLog;
-import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
-import skeeter144.toc.Reference;
+import skeeter144.toc.util.Reference;
 
 public class CustomBlockLog extends BlockLog{
 

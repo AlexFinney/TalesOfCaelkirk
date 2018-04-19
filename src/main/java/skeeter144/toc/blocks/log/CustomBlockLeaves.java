@@ -1,26 +1,19 @@
 package skeeter144.toc.blocks.log;
 
-import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Random;
 
 import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.ParticleCloud;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import skeeter144.toc.Reference;
-import skeeter144.toc.particles.particle.BasicSpellTrailParticle;
+import skeeter144.toc.util.Reference;
 
 public class CustomBlockLeaves extends BlockLeaves {
 

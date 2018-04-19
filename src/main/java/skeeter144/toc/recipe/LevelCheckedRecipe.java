@@ -22,9 +22,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
-import skeeter144.toc.Reference;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.player.EntityLevels.Levels;
+import skeeter144.toc.util.Reference;
 
 public class LevelCheckedRecipe implements IRecipe {
 	ResourceLocation registryName;

@@ -8,10 +8,10 @@ import net.minecraft.item.ItemBucketMilk;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import skeeter144.toc.Reference;
 import skeeter144.toc.entityeffect.ServerEffectHandler;
 import skeeter144.toc.entityeffect.effects.HealingPotionEffect;
 import skeeter144.toc.items.TOCItems;
+import skeeter144.toc.util.Reference;
 
 public class ItemHealingPotion extends ItemBucketMilk {
 

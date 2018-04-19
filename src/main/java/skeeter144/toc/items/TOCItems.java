@@ -1,10 +1,9 @@
-package skeeter144.toc.items;
+ package skeeter144.toc.items;
 
 import java.lang.reflect.Field;
 import java.util.Map;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
@@ -13,7 +12,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -28,6 +26,7 @@ import skeeter144.toc.items.consumable.ItemManaPotion;
 import skeeter144.toc.items.magic.BasicWand;
 import skeeter144.toc.items.misc.HorseDonkeySummoner;
 import skeeter144.toc.items.misc.ItemGlassVial;
+import skeeter144.toc.items.misc.ItemTOCBook;
 import skeeter144.toc.items.misc.VariableHorseSummoner;
 import skeeter144.toc.items.quest.QuestItem;
 import skeeter144.toc.items.tools.BlacksmithHammer;
@@ -232,7 +231,10 @@ public class TOCItems {
 	public static Item stick_orc = new CustomItem("stick_orc", 20, CreativeTabs.MISC);
 	public static Item stick_magic = new CustomItem("stick_magic", 20, CreativeTabs.MISC);
 	
+	public static Item tocBook = new ItemTOCBook("info_book");
+	
 	@SubscribeEvent
+	@SuppressWarnings("unchecked")
 	public void registerItems(RegistryEvent.Register<Item> event) {
 		TOCPickaxe.initPickaxeChances();
 		final IForgeRegistry<Item> registry = event.getRegistry();
@@ -247,7 +249,7 @@ public class TOCItems {
 		}
 
 		try {
-			Class itemClass = Item.class;
+			Class<Item> itemClass = Item.class;
 			Field f = itemClass.getDeclaredField("BLOCK_TO_ITEM");
 			f.setAccessible(true);
 			Map<Block, Item> map = (Map<Block, Item>) f.get(null);
@@ -275,7 +277,7 @@ public class TOCItems {
 			fieldName += standard_weapons[TOCMain.rand.nextInt(standard_weapons.length)];
 		}
 
-		Class c = TOCItems.class;
+		Class<TOCItems> c = TOCItems.class;
 		try {
 			return (Item) c.getField(fieldName).get(null);
 
@@ -284,10 +286,6 @@ public class TOCItems {
 		}
 
 		return null;
-	}
-
-	private static void clientRenderInit(Item item) {
-		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 	}
 
 }

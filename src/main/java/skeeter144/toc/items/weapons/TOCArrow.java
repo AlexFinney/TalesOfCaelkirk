@@ -10,8 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import skeeter144.toc.Reference;
 import skeeter144.toc.entity.projectile.EntityTOCArrow;
+import skeeter144.toc.util.Reference;
 
 public class TOCArrow extends ItemArrow {
 
