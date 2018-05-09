@@ -32,14 +32,38 @@ public class PlayerManager {
 		return new File("players\\" + uuid.toString()).exists();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public TOCPlayer getPlayer(EntityPlayer player) {
 		TOCPlayer pl = players.get(player.getPersistentID());
+		File playerFile = new File("players\\" + player.getPersistentID().toString());
 		
 		if(pl == null) {
-			pl = new TOCPlayer(player);
-			players.put(pl.mcEntity.getPersistentID(), pl);
-			savePlayers();
+			if(!playerFile.exists()) {
+				pl = new TOCPlayer(player);
+				savePlayer(pl, player.getPersistentID());
+				return pl;
+			}
+		
+			try {
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(playerFile));
+				
+				pl = new TOCPlayer(player);
+				pl.levels = (EntityLevels)ois.readObject();
+				pl.setHealthAndMana(ois.readInt(), ois.readInt());
+
+				pl.specialAttackCooldowns = (HashMap<String, Pair<Integer, Integer>>) ois.readObject();
+				
+				
+				ois.close();
+			} catch (IOException | ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		
+		
 		}
+			
+		players.put(player.getPersistentID(), pl);
+		
 		return pl;
 	}
 	
@@ -50,49 +74,29 @@ public class PlayerManager {
 		return instance;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public void loadPlayer(EntityPlayer player) {
-		if(players.containsKey(player.getPersistentID()))
-			return;
-		
-		try {
-			File playerFile = new File("players\\" + player.getPersistentID());
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(playerFile));
-			
-			TOCPlayer pl = new TOCPlayer(player);
-			pl.levels = (EntityLevels)ois.readObject();
-			pl.setHealthAndMana(ois.readInt(), ois.readInt());
-
-			pl.specialAttackCooldowns = (HashMap<String, Pair<Integer, Integer>>) ois.readObject();
-			ois.close();
-		} catch (IOException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
-	}
-	
 	public void savePlayers() {
 		new File("players").mkdirs();
 		for(Map.Entry<UUID, TOCPlayer> entry : players.entrySet()) {
-			
-			try {
-				ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("players\\" + entry.getKey().toString()));
-				
-				TOCPlayer pl = entry.getValue();
-				
-				oos.writeObject(pl.levels);
-				
-				oos.writeInt(pl.getHealth());
-				oos.writeInt(pl.getMana());
-				oos.writeObject(pl.specialAttackCooldowns);
-				
-				oos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
+			savePlayer(entry.getValue(), entry.getKey());
 		}
 	}
+	
+	void savePlayer(TOCPlayer pl, UUID uuid) {
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("players\\" + uuid.toString()));
+			
+			oos.writeObject(pl.levels);
+			
+			oos.writeInt(pl.getHealth());
+			oos.writeInt(pl.getMana());
+			oos.writeObject(pl.specialAttackCooldowns);
+			
+			oos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 }
