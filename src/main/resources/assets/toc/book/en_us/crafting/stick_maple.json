@@ -1,0 +1,21 @@
+{
+  "title": "Maple stick",
+  "grid_size": "small",
+  "grid": [
+    [
+      {
+        "id": "toc:maple_log"
+      }
+    ],
+    [
+    ]
+  ],
+  "result": {
+    "id": "toc:stick_maple"
+  },
+  "description": [
+    {
+      "text": "Requires level 18, grants 80 exp"
+    }
+  ]
+}

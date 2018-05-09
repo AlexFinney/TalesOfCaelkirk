@@ -33,6 +33,7 @@ public class RecipeManager {
 	
 	
 	public final Recipe[] SMITHING_RECIPES = new Recipe[] {
+			new Recipe(new ItemStack(TOCItems.arrowhead_bronze, 4), Levels.SMITHING, 2, new ItemStack(TOCItems.ingot_bronze, 1)),
 			new Recipe(new ItemStack(TOCItems.axe_bronze), Levels.SMITHING, 6, new ItemStack(TOCItems.ingot_bronze, 1)),
 			new Recipe(new ItemStack(TOCItems.bronze_short_sword), Levels.SMITHING, 12, new ItemStack(TOCItems.ingot_bronze, 2)),
 			new Recipe(new ItemStack(TOCItems.bronze_pickaxe), Levels.SMITHING, 18,new ItemStack(TOCItems.ingot_bronze, 3)),

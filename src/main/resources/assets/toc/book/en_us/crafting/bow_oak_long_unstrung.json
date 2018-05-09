@@ -1,0 +1,39 @@
+{
+  "title": "Oak longbow, unstrung",
+  "grid_size": "large",
+  "grid": [
+    [
+      {},
+      {
+        "id": "toc:stick_oak"
+      },
+      {
+        "id": "toc:stick_oak"
+      }
+    ],
+    [
+      {},
+      {},
+      {
+        "id": "toc:stick_oak"
+      }
+    ],
+    [
+      {},
+      {
+        "id": "toc:stick_oak"
+      },
+      {
+        "id": "toc:stick_oak"
+      }
+    ]
+  ],
+  "result": {
+    "id": "toc:bow_oak_long_unstrung"
+  },
+  "description": [
+    {
+      "text": "Requires level 3, grants 75 exp"
+    }
+  ]
+}

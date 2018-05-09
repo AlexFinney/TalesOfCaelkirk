@@ -2,6 +2,51 @@
    {
     "name": "Crafting",
     "type": "crafting",
-    "data": "crafting/loc_crafting.json"
+    "data": "crafting/stick_oak.json"
+  },
+   {
+    "name": "Crafting",
+    "type": "crafting",
+    "data": "crafting/stick_birch.json"
+  },
+   {
+    "name": "Crafting",
+    "type": "crafting",
+    "data": "crafting/stick_maple.json"
+  },
+   {
+    "name": "Crafting",
+    "type": "crafting",
+    "data": "crafting/stick_yew.json"
+  },
+   {
+    "name": "Crafting",
+    "type": "crafting",
+    "data": "crafting/stick_orc.json"
+  },
+  {
+    "name": "Crafting",
+    "type": "crafting",
+    "data": "crafting/stick_magic.json"
+  },
+   {
+    "name": "Crafting",
+    "type": "crafting",
+    "data": "crafting/bow_oak_short_unstrung.json"
+  },
+   {
+    "name": "Crafting",
+    "type": "crafting",
+    "data": "crafting/bow_oak_short.json"
+  },
+  {
+    "name": "Crafting",
+    "type": "crafting",
+    "data": "crafting/bow_oak_long_unstrung.json"
+  },
+  {
+    "name": "Crafting",
+    "type": "crafting",
+    "data": "crafting/bow_oak_long.json"
   }
 ]

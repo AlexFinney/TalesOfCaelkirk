@@ -1,0 +1,21 @@
+{
+  "title": "Magic stick",
+  "grid_size": "small",
+  "grid": [
+    [
+      {
+        "id": "toc:magic_log"
+      }
+    ],
+    [
+    ]
+  ],
+  "result": {
+    "id": "toc:stick_magic"
+  },
+  "description": [
+    {
+      "text": "Requires level 70, grants 300 exp"
+    }
+  ]
+}

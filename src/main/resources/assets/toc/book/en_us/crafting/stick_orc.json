@@ -1,0 +1,21 @@
+{
+  "title": "Orc stick",
+  "grid_size": "small",
+  "grid": [
+    [
+      {
+        "id": "toc:orc_log"
+      }
+    ],
+    [
+    ]
+  ],
+  "result": {
+    "id": "toc:stick_orc"
+  },
+  "description": [
+    {
+      "text": "Requires level 50, grants 180 exp"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "title": "Oak shortbow, unstrung",
+  "grid_size": "large",
+  "grid": [
+    [
+      {},
+      {
+       "id": "toc:stick_oak"
+      }
+    ],
+    [
+      {},
+      {},
+      {
+        "id": "toc:stick_oak"
+      }
+    ],
+    [
+     {},
+      {
+        "id": "toc:stick_oak"
+      }
+    ]
+  ],
+  "result": {
+    "id": "toc:bow_oak_short_unstrung"
+  },
+  "description": [
+    {
+      "text": "Requires level 2, grants 50 exp"
+    }
+  ]
+}

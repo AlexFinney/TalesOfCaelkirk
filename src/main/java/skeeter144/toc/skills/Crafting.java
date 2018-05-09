@@ -7,13 +7,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -47,7 +47,7 @@ public class Crafting {
 	
 	void initRecipes() {
 		
-		oak_shortbow_unstrung = new LevelCheckedRecipe(new ItemStack(TOCItems.bow_oak_short_unstrung), 2, 50, 
+		oak_shortbow_unstrung = new LevelCheckedRecipe(new ItemStack(TOCItems.bow_oak_short_unstrung), 1, 50, 
 				" o " +
 				"  o" + 
 				" o " + 
@@ -61,11 +61,11 @@ public class Crafting {
 		
 		
 		oak_stick = new LevelCheckedRecipe(asList(new ItemStack(TOCBlocks.oak_log).getItem()), new ItemStack(TOCItems.stick_oak, 4), 1, 10);
-		birch_stick = new LevelCheckedRecipe(asList(new ItemStack(TOCBlocks.birch_log).getItem()), new ItemStack(TOCItems.stick_birch, 4), 1, 10);
-		maple_stick = new LevelCheckedRecipe(asList(new ItemStack(TOCBlocks.maple_log).getItem()), new ItemStack(TOCItems.stick_maple, 4), 1, 10);
-		yew_stick = new LevelCheckedRecipe(asList(new ItemStack(TOCBlocks.yew_log).getItem()), new ItemStack(TOCItems.stick_yew, 4), 1, 10);
-		orc_stick = new LevelCheckedRecipe(asList(new ItemStack(TOCBlocks.orc_log).getItem()), new ItemStack(TOCItems.stick_orc, 4), 1, 10);
-		magic_stick = new LevelCheckedRecipe(asList(new ItemStack(TOCBlocks.magic_log).getItem()), new ItemStack(TOCItems.stick_magic, 4), 1, 10);
+		birch_stick = new LevelCheckedRecipe(asList(new ItemStack(TOCBlocks.birch_log).getItem()), new ItemStack(TOCItems.stick_birch, 4), 8, 30);
+		maple_stick = new LevelCheckedRecipe(asList(new ItemStack(TOCBlocks.maple_log).getItem()), new ItemStack(TOCItems.stick_maple, 4), 18, 80);
+		yew_stick = new LevelCheckedRecipe(asList(new ItemStack(TOCBlocks.yew_log).getItem()), new ItemStack(TOCItems.stick_yew, 4), 30, 120);
+		orc_stick = new LevelCheckedRecipe(asList(new ItemStack(TOCBlocks.orc_log).getItem()), new ItemStack(TOCItems.stick_orc, 4), 50, 180);
+		magic_stick = new LevelCheckedRecipe(asList(new ItemStack(TOCBlocks.magic_log).getItem()), new ItemStack(TOCItems.stick_magic, 4), 70, 300);
 		
 		oak_shortbow = new LevelCheckedRecipe(asList(TOCItems.bowstring, TOCItems.bow_oak_short_unstrung), new ItemStack(TOCItems.bow_oak_short), 3, 50);
 		oak_longbow = new LevelCheckedRecipe(asList(TOCItems.bowstring, TOCItems.bow_oak_long_unstrung), new ItemStack(TOCItems.bow_oak_long), 3, 50);
@@ -117,7 +117,6 @@ public class Crafting {
 			e.crafting.setCount(0);
 			return;
 		}
-		
 		int xpGiven = getXpFromItemCraft(e.crafting.getItem());
 		p.levels.addExp(Levels.CRAFTING, xpGiven);
 		Network.INSTANCE.sendTo(new AddLevelXpMessage("Crafting", xpGiven), (EntityPlayerMP) e.player);

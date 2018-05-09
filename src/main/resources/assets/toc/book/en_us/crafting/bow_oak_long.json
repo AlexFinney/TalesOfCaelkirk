@@ -1,0 +1,24 @@
+{
+  "title": "Oak longbow",
+  "grid_size": "small",
+  "grid": [
+    [
+      {
+        "id": "toc:bowstring"
+      },
+      {
+        "id": "toc:bow_oak_long_unstrung"
+      }
+    ],
+    [
+    ]
+  ],
+  "result": {
+    "id": "toc:bow_oak_long"
+  },
+  "description": [
+    {
+      "text": "Requires level 3, grants 30 exp"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "title": "Oak stick",
+  "grid_size": "small",
+  "grid": [
+    [
+      {
+        "id": "toc:oak_log"
+      }
+    ],
+    [
+    ]
+  ],
+  "result": {
+    "id": "toc:stick_oak"
+  },
+  "description": [
+    {
+      "text": "Requires level 1, grants 10 exp"
+    }
+  ]
+}

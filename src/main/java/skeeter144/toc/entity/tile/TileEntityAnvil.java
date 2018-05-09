@@ -61,12 +61,16 @@ public class TileEntityAnvil extends TileEntity {
 					&& addedIngots >= selectedRecipe.components[0].getCount()) {
 				if(--strikesLeft <= 0) {
 					strikesLeft = maxStrikes;
+					
 					if(selectedRecipe != null)
-						producedItem = selectedRecipe.crafted;
-					striker.addItemStackToInventory(new ItemStack(ingot, selectedRecipe.components[0].getCount() - addedIngots));
+						producedItem = new ItemStack(selectedRecipe.crafted.getItem(), selectedRecipe.crafted.getCount());
+					
+					striker.addItemStackToInventory(new ItemStack(ingot, addedIngots - selectedRecipe.components[0].getCount()));
+					
 					TOCMain.pm.getPlayer(striker).levels.addExp(selectedRecipe.level, selectedRecipe.xp);
+					
 					Network.INSTANCE.sendTo(new AddLevelXpMessage(selectedRecipe.level.name().toString(), selectedRecipe.xp), (EntityPlayerMP) striker);
-					selectedRecipe = null;
+					
 					addedIngots = 0;
 					ingot = null;
 					sendUpdates();

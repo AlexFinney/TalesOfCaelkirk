@@ -130,6 +130,9 @@ public class LevelCheckedRecipe implements IRecipe {
 	
 	boolean playerMeetsLevelReq(InventoryCrafting inv) {
 		EntityPlayer pl = findPlayer(inv);
+		if(pl.world.isRemote)
+			return true;
+		
 		if(pl == null)
 			return false;
 		

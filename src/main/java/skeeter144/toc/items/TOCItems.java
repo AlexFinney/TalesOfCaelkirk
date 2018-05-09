@@ -231,6 +231,14 @@ public class TOCItems {
 	public static Item stick_orc = new CustomItem("stick_orc", 20, CreativeTabs.MISC);
 	public static Item stick_magic = new CustomItem("stick_magic", 20, CreativeTabs.MISC);
 	
+	public static Item arrowhead_bronze      = new CustomItem("arrowhead_bronze", 40, CreativeTabs.MISC);
+	public static Item arrowhead_iron        = new CustomItem("arrowhead_iron", 40, CreativeTabs.MISC);
+	public static Item arrowhead_steel       = new CustomItem("arrowhead_steel", 40, CreativeTabs.MISC);
+	public static Item arrowhead_mithril     = new CustomItem("arrowhead_mithril", 40, CreativeTabs.MISC);
+	public static Item arrowhead_adamantite  = new CustomItem("arrowhead_adamantite", 40, CreativeTabs.MISC);
+	public static Item arrowhead_runite      = new CustomItem("arrowhead_runite", 40, CreativeTabs.MISC);
+	public static Item arrowhead_dragonstone = new CustomItem("arrowhead_dragonstone", 40, CreativeTabs.MISC);
+	
 	public static Item tocBook = new ItemTOCBook("info_book");
 	
 	@SubscribeEvent

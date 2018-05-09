@@ -1,0 +1,21 @@
+{
+  "title": "Yew stick",
+  "grid_size": "small",
+  "grid": [
+    [
+      {
+        "id": "toc:yew_log"
+      }
+    ],
+    [
+    ]
+  ],
+  "result": {
+    "id": "toc:stick_yew"
+  },
+  "description": [
+    {
+      "text": "Requires level 30, grants 120 exp"
+    }
+  ]
+}

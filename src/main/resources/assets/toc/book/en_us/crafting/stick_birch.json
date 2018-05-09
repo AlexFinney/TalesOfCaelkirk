@@ -1,0 +1,21 @@
+{
+  "title": "Birch stick",
+  "grid_size": "small",
+  "grid": [
+    [
+      {
+        "id": "toc:birch_log"
+      }
+    ],
+    [
+    ]
+  ],
+  "result": {
+    "id": "toc:stick_birch"
+  },
+  "description": [
+    {
+      "text": "Requires level 8, grants 30 exp"
+    }
+  ]
+}
