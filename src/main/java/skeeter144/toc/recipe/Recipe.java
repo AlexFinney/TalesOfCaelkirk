@@ -12,11 +12,13 @@ public class Recipe {
 	public final ItemStack[] components;
 	public final Levels level;
 	public final int xp;
-	public Recipe(ItemStack crafted, Levels level, int xp, ItemStack ...components) {
+	public final int levelReq;
+	public Recipe(ItemStack crafted, Levels level, int levelReq, int xp, ItemStack ...components) {
 		this.crafted = crafted;
 		this.components = components;
 		this.level = level;
 		this.xp = xp;
+		this.levelReq = levelReq;
 	}
 	
 	public boolean canRecipeBeCrafted(IInventory inv) {

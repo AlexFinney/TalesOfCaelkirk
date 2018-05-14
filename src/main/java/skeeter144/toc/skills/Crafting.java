@@ -47,6 +47,13 @@ public class Crafting {
 	
 	void initRecipes() {
 		
+		oak_shortbow_unstrung = new LevelCheckedRecipe(new ItemStack(TOCItems.arrow_bronze, 4), 1, 20, 
+				" a " +
+				" s " + 
+				" f " + 
+				"a,toc:arrowhead_bronze,s:toc:stick_oak,f:minecraft:feather");
+		
+		
 		oak_shortbow_unstrung = new LevelCheckedRecipe(new ItemStack(TOCItems.bow_oak_short_unstrung), 1, 50, 
 				" o " +
 				"  o" + 
