@@ -48,10 +48,12 @@ public class PlayerInteractHandler {
 	
 	@SubscribeEvent
 	public void onPlayerLeftClick(PlayerInteractEvent.LeftClickBlock e) {
+		if(e.getEntityPlayer().capabilities.isCreativeMode)
+			return;
+		
 		if(e.getEntityPlayer().getCooledAttackStrength(1) != 1) {
 			e.setCanceled(true);
 			cancelSwing(e.getEntityPlayer());
-			System.out.println("cancel");
 			return;
 		}
 		

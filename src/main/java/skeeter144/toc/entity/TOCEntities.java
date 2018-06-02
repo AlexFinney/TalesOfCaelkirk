@@ -1,6 +1,8 @@
 package skeeter144.toc.entity;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.init.Biomes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import skeeter144.toc.TOCMain;
@@ -52,10 +54,14 @@ public class TOCEntities {
 			
 			//swords
 			registerEntity(EntityHumanShopKeeper.class, "sam_derric", 80, 3, true, 0xFFFFFFFF, 0xFFFFFFFF);
+			
+		registerEntitySpawns();
 	}
 	
-	public static void setEntityToSpawn() {
-		//EntityRegistry.addSpawn(EntityViking.class, 6, 1, 5, EnumCreatureType.MONSTER, Biome);
+	
+	static void registerEntitySpawns() {
+		EntityRegistry.addSpawn(EntityRat.class, 10, 1, 1, EnumCreatureType.MONSTER, Biomes.DEFAULT);
+		EntityRegistry.addSpawn(EntityGiantScorpian.class, 10, 1, 1, EnumCreatureType.MONSTER, Biomes.DESERT);
 	}
 	
 	private static void registerEntity(Class<? extends Entity> entityClass, String entityName, int trackingRange, int updateFrequency,

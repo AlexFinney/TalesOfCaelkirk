@@ -89,6 +89,7 @@ public class CommonProxy
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		TOCBlocks.registerAllBlocks();
+		
 		MinecraftForge.EVENT_BUS.register(new TOCItems());
 		MinecraftForge.EVENT_BUS.register(new Crafting());
 		

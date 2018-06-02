@@ -26,9 +26,12 @@ public class TOCBlocks {
 	public static Block runite_ore = new BlockHarvestableOre("block_ore_runite", TOCItems.ore_runite, 475, 360, 480);
 	public static Block dragonstone_ore = new BlockHarvestableOre("block_ore_dragonstone", TOCItems.ore_dragonstone, 578, 420, 600);
 	
+	
+	//blocks that have corresponding TileEntity
 	public static Block harvested_ore = new BlockHarvestedOre(Material.ROCK, "harvested_ore");
 	public static Block harvested_tree = new BlockHarvestedTree(Material.WOOD, "harvested_tree");
 	public static Block blockAnvil = new BlockAnvil("anvil");
+	public static Block blockMobSpawner = new BlockMobSpawner("mob_spawner");
 	
 	public static Block oak_log = new CustomBlockLog("oak_log");
 	public static Block birch_log = new CustomBlockLog("birch_log");
@@ -59,6 +62,7 @@ public class TOCBlocks {
 		GameRegistry.registerTileEntity(((BlockHarvestedOre)harvested_ore).getTileEntityClass(), harvested_ore.getRegistryName().toString());
 		GameRegistry.registerTileEntity(((BlockAnvil)blockAnvil).getTileEntityClass(), blockAnvil.getRegistryName().toString());
 		GameRegistry.registerTileEntity(((BlockHarvestedTree)harvested_tree).getTileEntityClass(), harvested_tree.getRegistryName().toString());
+		GameRegistry.registerTileEntity(((BlockMobSpawner)blockMobSpawner).getTileEntityClass(), blockMobSpawner.getRegistryName().toString());
 	}
 
 	public static void registerAllBlocks() {
