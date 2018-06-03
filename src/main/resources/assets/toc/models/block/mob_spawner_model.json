@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "toc:blocks/mob_spawner_model"        
+    }
+}

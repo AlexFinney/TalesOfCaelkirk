@@ -7,4 +7,5 @@ public class Guis {
 	public static final int SMELTING_GUI = 3;
 	public static final int SMITHING_GUI = 4;
 	public static final int BANK_GUI = 5;
+	public static final int MOB_SPAWNER_GUI = 6;
 }
