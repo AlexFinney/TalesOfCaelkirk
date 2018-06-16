@@ -79,6 +79,8 @@ import skeeter144.toc.network.UpdatePlayerFlyingMessage.UpdatePlayerFlyingMessag
 import skeeter144.toc.network.WandEmbueMessage;
 import skeeter144.toc.network.WandEmbueMessage.WandEmbueMessageHandler;
 import skeeter144.toc.player.EntityLevels;
+import skeeter144.toc.quest.NpcDialog;
+import skeeter144.toc.quest.Quest;
 import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.skills.Crafting;
 import skeeter144.toc.skills.Woodcutting;
@@ -148,8 +150,12 @@ public class CommonProxy
 	
 	public void postInit(FMLPostInitializationEvent event)
 	{
-		
 	}
+	
+	public void loadQuestFile(String fileName, Quest quest) {
+	}
+	
+	public void showDialogToPlayer(EntityLivingBase ent, NpcDialog dialog){}
 	
 	public void spawnTornadoSystem(World world, double x, double y, double z, int level) {}
 

@@ -26,29 +26,22 @@ import skeeter144.toc.util.Reference;
 public class DialogGui extends GuiScreen{
 
 	ResourceLocation backgreoundImage = new ResourceLocation(Reference.MODID, "textures/gui/levels_background.png");
-
+	NpcDialog npcDialog;
 	int questId, dialogId;
-	public static EntityLivingBase e;
-	public DialogGui(EntityLivingBase e, int questId, int dialogId) {
+	public EntityLivingBase e;
+	public DialogGui(EntityLivingBase e, NpcDialog dialog) {
 		super();
-		this.questId = questId;
-		this.dialogId = dialogId;
 		this.e = e;
+		this.npcDialog = dialog;
 		
-		Quest q = QuestManager.getQuestById(questId);
-		NpcDialog dialog = q.questDialogs.get(dialogId);
-		if(dialog != null) {
-			this.dialog = dialog.npcDialog;
-			
-			for(int i = 0; i < 5; ++i) {
-				this.buttonTexts[i] = "";
-			}
-			
-			for(int i = 0; i <dialog.playerResponses.length; ++i){
-				this.buttonTexts[i] = dialog.playerResponses[i];
-			}
-		}else {
-			this.dialog = "This has not yet been implemented.  Please contact an administrator to notify them of theis error. Thanks <3";
+		this.dialog = dialog.dialogText;
+
+		for (int i = 0; i < 5; ++i) {
+			this.buttonTexts[i] = "";
+		}
+
+		for (int i = 0; i < dialog.playerResponses.size(); ++i) {
+			this.buttonTexts[i] = dialog.playerResponses.get(i).responseName;
 		}
 	}
 	
@@ -178,9 +171,21 @@ public class DialogGui extends GuiScreen{
 	
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
+		for(NpcDialogResponse response : npcDialog.playerResponses) {
+			if(response.responseName.equals(button.displayString)) {
+				if(response.transitionDialog != null)
+					Minecraft.getMinecraft().displayGuiScreen(new DialogGui(this.e, response.transitionDialog));
+				else
+					Minecraft.getMinecraft().displayGuiScreen(null);
+				
+				Network.INSTANCE.sendToServer(new QuestDialogResponseMessage(e.getUniqueID(), response.responseName));
+			}
+			
+		}
+		
 		for(int i = 0; i < 5; ++i) {
 			if(buttonTexts[i] != null && buttonTexts[i].equals(button.displayString)) {
-				Network.INSTANCE.sendToServer(new QuestDialogResponseMessage(e.getUniqueID(), questId, dialogId, i));
+				
 			}
 		}
 	}

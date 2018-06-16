@@ -18,7 +18,7 @@ import skeeter144.toc.entity.mob.mount.basic_horse.EntityVariableHorseMount;
 import skeeter144.toc.entity.mob.mount.flying.EntityGriffin;
 import skeeter144.toc.entity.mob.mount.flying.EntityPegasus;
 import skeeter144.toc.entity.mob.passive.banker.EntityBanker;
-import skeeter144.toc.entity.mob.passive.questgiver.EntityBobRatMan;
+import skeeter144.toc.entity.mob.passive.questgiver.EntityRobertCromwell;
 import skeeter144.toc.entity.mob.passive.shopkeeper.EntityHumanShopKeeper;
 import skeeter144.toc.util.Reference;
 
@@ -50,7 +50,7 @@ public class TOCEntities {
 			registerEntity(EntityBanker.class, "banker", 80, 3, false, 0xefff11, 0xededed);
 			
 			//quests
-			registerEntity(EntityBobRatMan.class, "bob_the_rat_man", 80, 3, true, 0xFFFFFFFF, 0xFFFFFFFF);
+			registerEntity(EntityRobertCromwell.class, "robert_cromwell", 80, 3, true, 0xFFFFFFFF, 0xFFFFFFFF);
 			
 			//swords
 			registerEntity(EntityHumanShopKeeper.class, "sam_derric", 80, 3, true, 0xFFFFFFFF, 0xFFFFFFFF);

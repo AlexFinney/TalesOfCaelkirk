@@ -1,8 +1,18 @@
 package skeeter144.toc.proxy;
 
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Map.Entry;
 import java.util.Random;
+
+import org.apache.commons.io.IOUtils;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -12,11 +22,13 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.resources.IResource;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagInt;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
@@ -48,8 +60,10 @@ import skeeter144.toc.client.entity.renderer.RenderHumanNpc;
 import skeeter144.toc.client.entity.renderer.RenderPegasus;
 import skeeter144.toc.client.entity.renderer.RenderRat;
 import skeeter144.toc.client.entity.renderer.RenderViking;
+import skeeter144.toc.client.gui.DialogGui;
 import skeeter144.toc.client.gui.GuiEntityStatus;
 import skeeter144.toc.client.gui.HUD;
+import skeeter144.toc.client.gui.NpcDialogResponse;
 import skeeter144.toc.client.gui.RegionsRendering;
 import skeeter144.toc.entity.mob.monster.EntityGhost;
 import skeeter144.toc.entity.mob.monster.EntityGiantScorpian;
@@ -63,7 +77,7 @@ import skeeter144.toc.entity.mob.mount.basic_horse.EntityVariableHorseMount;
 import skeeter144.toc.entity.mob.mount.flying.EntityGriffin;
 import skeeter144.toc.entity.mob.mount.flying.EntityPegasus;
 import skeeter144.toc.entity.mob.passive.banker.EntityBanker;
-import skeeter144.toc.entity.mob.passive.questgiver.EntityBobRatMan;
+import skeeter144.toc.entity.mob.passive.questgiver.EntityRobertCromwell;
 import skeeter144.toc.entity.mob.passive.shopkeeper.EntityHumanShopKeeper;
 import skeeter144.toc.handlers.ItemTooltipHandler;
 import skeeter144.toc.handlers.PlayerInputHandler;
@@ -72,6 +86,8 @@ import skeeter144.toc.items.TOCItemsClientRegistration;
 import skeeter144.toc.models.ModelVikingHelm;
 import skeeter144.toc.particles.particle.BasicSpellTrailParticle;
 import skeeter144.toc.particles.particle.DamageParticle;
+import skeeter144.toc.quest.NpcDialog;
+import skeeter144.toc.quest.Quest;
 import skeeter144.toc.util.Reference;
 import skeeter144.toc.util.Util;
 
@@ -116,7 +132,7 @@ public class ClientProxy extends CommonProxy
 		RenderManager rm = Minecraft.getMinecraft().getRenderManager();
 		
 		
-		rm.entityRenderMap.put(EntityBobRatMan.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
+		rm.entityRenderMap.put(EntityRobertCromwell.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
 		
 		rm.entityRenderMap.put(EntityBanker.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
 		
@@ -238,6 +254,52 @@ public class ClientProxy extends CommonProxy
 		
 		Minecraft.getMinecraft().effectRenderer.addEffect(p);
 	}
+	
+	@Override
+	public void loadQuestFile(String fileName, Quest quest) {
+		try {
+			IResource rsc =  Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(Reference.MODID, "quests/"  + fileName));
+			String s = IOUtils.toString(rsc.getInputStream(), Charset.defaultCharset());
+			JsonParser parser = new JsonParser();
+			JsonObject obj = (JsonObject) parser.parse(s);
+			
+			String questName = obj.get("name").getAsString();
+			
+			JsonObject dialogues = (JsonObject)obj.get("dialogues");
+			for(Entry<String, JsonElement> entry : dialogues.entrySet()) {
+				String dialogueName = entry.getKey();
+				
+				JsonObject dialogue = (JsonObject)entry.getValue();
+				String text = dialogue.get("text").getAsString();
+				
+				JsonObject responses = (JsonObject)dialogue.get("responses");
+				
+				ArrayList<NpcDialogResponse> dialogResponses = new ArrayList<NpcDialogResponse>();
+				for(Entry<String, JsonElement> responseEntry : responses.entrySet()) {
+					String responseName = responseEntry.getKey();
+					String dialogTransition = responseEntry.getValue().getAsString();
+					dialogResponses.add(new NpcDialogResponse(responseName, dialogTransition));
+				}
+				
+				NpcDialog npcDialog = new NpcDialog(dialogueName, text, dialogResponses);
+				quest.questDialogs.put(npcDialog.dialogName, npcDialog);
+			}
+			
+			for(NpcDialog dialog : quest.questDialogs.values()) {
+				for(NpcDialogResponse response : dialog.playerResponses) {
+					response.transitionDialog = quest.questDialogs.get(response.dialogueTransition);
+				}
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void showDialogToPlayer(EntityLivingBase ent, NpcDialog dialog) {
+		Minecraft.getMinecraft().displayGuiScreen(new DialogGui(ent, dialog));
+	}
+	
 	
 	private static final ModelVikingHelm modelVikingHelm = new ModelVikingHelm();
 	@Override

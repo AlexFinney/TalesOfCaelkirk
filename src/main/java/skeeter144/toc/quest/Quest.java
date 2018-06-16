@@ -3,7 +3,6 @@ package skeeter144.toc.quest;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -21,13 +20,19 @@ public abstract class Quest implements Serializable{
 	protected Map<Levels, Integer> experienceRewards = new HashMap<Levels, Integer>();
 	protected Map<Item, Integer> itemRewards = new HashMap<Item, Integer>();
 	protected int currentStage = 0;
-	public final Map<Integer, NpcDialog> questDialogs = new HashMap<Integer, NpcDialog>();
-	public Quest(String name, int id) {
-		this.name = name;
+	public final Map<String, NpcDialog> questDialogs = new HashMap<String, NpcDialog>();
+
+	public Quest(String questFile, int id) {
 		this.id = id;
-		createQuestDialogs();
+		
+		parseQuestFile(questFile + ".json");
+		name = "";
 	}
 	
+	private void parseQuestFile(String questFileName) {
+		TOCMain.proxy.loadQuestFile(questFileName, this);
+	}
+
 	public void onQuestFinished(EntityPlayerMP player) {
 		EntityLevels l = TOCMain.pm.getPlayer(player).levels;
 		boolean combatLeveled = false;
@@ -60,6 +65,4 @@ public abstract class Quest implements Serializable{
 	public abstract QuestProgress getNewQuestProgressInstance();
 	public abstract Class<? extends QuestProgress> getQuestProgressClass();
 	protected abstract void questFinished(EntityPlayerMP player);
-	protected abstract void createQuestDialogs();
-	public abstract void handleDialogResponse(EntityPlayerMP player, UUID questGiver, int dialogId, int responseIndex);
 }

@@ -12,22 +12,27 @@ import java.util.Map;
 import java.util.UUID;
 
 import net.minecraftforge.common.MinecraftForge;
-import skeeter144.toc.quest.quests.RatSlayerQuest;
+import skeeter144.toc.quest.quests.ANewAdventureQuest;
 
-public class QuestManager {
+public class QuestManager{
 
-	public static final Quest ratSlayer = new RatSlayerQuest("Rat Slayer", getNextId());
+	public static Quest aNewAdventure;
+	
 	public static final HashMap<Integer, Quest> quests = new HashMap<Integer, Quest>();
 	public static HashMap<UUID, ArrayList<QuestProgress>> playerQuestProgresses = new HashMap<UUID, ArrayList<QuestProgress>>();
 	
 	public static void initQuests() {
 		loadQuestProgress();
-		addQuest(ratSlayer);
+	
+		aNewAdventure = new ANewAdventureQuest("a_new_adventure", getNextId());
+		
+		addQuest(aNewAdventure);
 	}
 	
 	private static void addQuest(Quest q) {
 		quests.put(q.id, q);
 		MinecraftForge.EVENT_BUS.register(q);
+		
 	}
 	
 	public static int getIdFromQuestClass(Class<? extends Quest> questClass) {
@@ -36,6 +41,7 @@ public class QuestManager {
 				return entry.getKey().intValue();
 			}
 		}
+		
 		return -1;
 	}
 	
@@ -43,6 +49,7 @@ public class QuestManager {
 		return quests.get(id);
 	}
 	
+	@SuppressWarnings("unchecked")
 	private static void loadQuestProgress() {
 		File f = new File("quest_progress.bin");
 		if(f.exists()) {

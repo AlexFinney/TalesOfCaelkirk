@@ -5,8 +5,6 @@ import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import skeeter144.toc.entity.mob.passive.EntityNpc;
-import skeeter144.toc.entity.mob.passive.questgiver.EntityBobRatMan;
-import skeeter144.toc.entity.mob.passive.questgiver.EntityHumanQuestGiver;
 
 public class RenderHumanNpc extends RenderBiped<EntityNpc>{
 
