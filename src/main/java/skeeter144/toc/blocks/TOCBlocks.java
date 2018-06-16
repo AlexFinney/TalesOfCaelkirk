@@ -31,7 +31,8 @@ public class TOCBlocks {
 	public static Block harvested_ore = new BlockHarvestedOre(Material.ROCK, "harvested_ore");
 	public static Block harvested_tree = new BlockHarvestedTree(Material.WOOD, "harvested_tree");
 	public static Block blockAnvil = new BlockAnvil("anvil");
-	public static Block blockMobSpawner = new BlockMobSpawner("mob_spawner");
+	public static Block blockMobSpawnerInvis = new BlockMobSpawner("mob_spawner");
+	public static Block blockMobSpawner = new CustomBlock("mob_spawner_model", Material.AIR);
 	
 	public static Block oak_log = new CustomBlockLog("oak_log");
 	public static Block birch_log = new CustomBlockLog("birch_log");
@@ -62,7 +63,7 @@ public class TOCBlocks {
 		GameRegistry.registerTileEntity(((BlockHarvestedOre)harvested_ore).getTileEntityClass(), harvested_ore.getRegistryName().toString());
 		GameRegistry.registerTileEntity(((BlockAnvil)blockAnvil).getTileEntityClass(), blockAnvil.getRegistryName().toString());
 		GameRegistry.registerTileEntity(((BlockHarvestedTree)harvested_tree).getTileEntityClass(), harvested_tree.getRegistryName().toString());
-		GameRegistry.registerTileEntity(((BlockMobSpawner)blockMobSpawner).getTileEntityClass(), blockMobSpawner.getRegistryName().toString());
+		GameRegistry.registerTileEntity(((BlockMobSpawner)blockMobSpawnerInvis).getTileEntityClass(), blockMobSpawnerInvis.getRegistryName().toString());
 	}
 
 	public static void registerAllBlocks() {
@@ -103,7 +104,12 @@ public class TOCBlocks {
 	}
 	
 	private static void registerBlockItemRender(Block block) {
-		ModelLoader.setCustomModelResourceLocation(ForgeRegistries.ITEMS.getValue(block.getRegistryName()), 0, 
-				new ModelResourceLocation(block.getRegistryName(), "inventory"));
+		if(block == blockMobSpawnerInvis) {
+			ModelLoader.setCustomModelResourceLocation(ForgeRegistries.ITEMS.getValue(blockMobSpawnerInvis.getRegistryName()), 0, 
+					new ModelResourceLocation(blockMobSpawner.getRegistryName(), "inventory"));
+		}else{
+			ModelLoader.setCustomModelResourceLocation(ForgeRegistries.ITEMS.getValue(block.getRegistryName()), 0, 
+					new ModelResourceLocation(block.getRegistryName(), "inventory"));
+		}
 	}
 }

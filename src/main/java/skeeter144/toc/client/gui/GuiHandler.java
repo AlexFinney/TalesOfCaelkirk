@@ -1,13 +1,10 @@
 package skeeter144.toc.client.gui;
 
-import java.util.List;
-
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
-import skeeter144.toc.entity.mob.passive.banker.EntityBanker;
+import skeeter144.toc.entity.tile.TileEntityMobSpawner;
 
 public class GuiHandler implements IGuiHandler {
 	@Override
@@ -26,7 +23,9 @@ public class GuiHandler implements IGuiHandler {
 			return new SmeltingGui();
 		else if(ID == Guis.SMITHING_GUI)
 			return new SmithingGui(new BlockPos(x,y,z));
-			
+		else if(ID == Guis.MOB_SPAWNER_GUI)
+			return new MobSpawnerGUI((TileEntityMobSpawner) world.getTileEntity(new BlockPos(x, y, z)));
+		
 		return null;
 	}
 }

@@ -153,6 +153,9 @@ public class HUD extends Gui {
 		if (pl == null)
 			return;
 
+		if(Minecraft.getMinecraft().player.capabilities.isCreativeMode)
+			return;
+		
 		drawHealthBar(pl.getHealth(), pl.getMaxHealth());
 		drawManaBar(pl.getMana(), pl.getMaxMana());
 		drawXpMessages();

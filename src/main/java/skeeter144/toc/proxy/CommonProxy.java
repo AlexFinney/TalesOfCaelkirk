@@ -64,6 +64,8 @@ import skeeter144.toc.network.SetAnvilRecipeMessage;
 import skeeter144.toc.network.SetAnvilRecipeMessage.SetAnvilRecipeMessageHandler;
 import skeeter144.toc.network.SetClientTOCPlayerMessage;
 import skeeter144.toc.network.SetClientTOCPlayerMessage.SetClientTOCPlayerMessageHandler;
+import skeeter144.toc.network.SetMobSpawnerSettingsMessage;
+import skeeter144.toc.network.SetMobSpawnerSettingsMessage.SetMobSpawnerSettingsMessageHandler;
 import skeeter144.toc.network.ShouldShowRegionsMessage;
 import skeeter144.toc.network.ShouldShowRegionsMessage.ShouldShowRegionsMessageHandler;
 import skeeter144.toc.network.ShowQuestDialogMessage;
@@ -115,6 +117,7 @@ public class CommonProxy
 		Network.INSTANCE.registerMessage(CraftItemMessageHandler.class, CraftItemMessage.class, Network.getNextId(), Side.SERVER);
 		Network.INSTANCE.registerMessage(SetAnvilRecipeMessageHandler.class, SetAnvilRecipeMessage.class, Network.getNextId(), Side.SERVER);
 		Network.INSTANCE.registerMessage(UpdatePlayerFlyingMessageHandler.class, UpdatePlayerFlyingMessage.class, Network.getNextId(), Side.SERVER);
+		Network.INSTANCE.registerMessage(SetMobSpawnerSettingsMessageHandler.class, SetMobSpawnerSettingsMessage.class, Network.getNextId(), Side.SERVER);
 		
 		Network.INSTANCE.registerMessage(PlayerVitalsUpdateMessageHandler.class, PlayerVitalsUpdateMessage.class, Network.getNextId(), Side.CLIENT);
 		Network.INSTANCE.registerMessage(SetClientTOCPlayerMessageHandler.class, SetClientTOCPlayerMessage.class, Network.getNextId(), Side.CLIENT);
