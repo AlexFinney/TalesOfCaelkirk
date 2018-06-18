@@ -1,6 +1,16 @@
 package skeeter144.toc.proxy;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Map.Entry;
 import java.util.Random;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.model.ModelBiped;
@@ -17,6 +27,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.blocks.TOCBlocks;
 import skeeter144.toc.client.gui.GuiHandler;
+import skeeter144.toc.client.gui.NpcDialogResponse;
 import skeeter144.toc.entity.TOCEntities;
 import skeeter144.toc.handlers.EntityHandler;
 import skeeter144.toc.handlers.PlayerInteractHandler;
@@ -153,9 +164,6 @@ public class CommonProxy
 	
 	public void postInit(FMLPostInitializationEvent event)
 	{
-	}
-	
-	public void loadQuestFile(String fileName, Quest quest) {
 	}
 	
 	public void showDialogToPlayer(EntityLivingBase ent, NpcDialog dialog){}

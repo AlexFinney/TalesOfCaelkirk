@@ -178,7 +178,10 @@ public class DialogGui extends GuiScreen{
 				else
 					Minecraft.getMinecraft().displayGuiScreen(null);
 				
-				Network.INSTANCE.sendToServer(new QuestDialogResponseMessage(e.getUniqueID(), response.responseName));
+				if(!response.serverEventFunc.equals(""))
+					Network.INSTANCE.sendToServer(new QuestDialogResponseMessage(e.getUniqueID(), response.serverEventFunc));
+				else
+					Network.INSTANCE.sendToServer(new QuestDialogResponseMessage(e.getUniqueID(), response.responseName));
 			}
 			
 		}

@@ -4,7 +4,7 @@
   "name": "Tales Of Caelkirk",
   "description": "One legendary Minecraft RPG.",
   "version": "${0.1}",
-  "mcversion": "${1.11.2}",
+  "mcversion": "${1.12}",
   "url": "",
   "updateUrl": "",
   "authorList": ["Skeeter144"],

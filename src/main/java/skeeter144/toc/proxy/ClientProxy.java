@@ -255,47 +255,6 @@ public class ClientProxy extends CommonProxy
 		Minecraft.getMinecraft().effectRenderer.addEffect(p);
 	}
 	
-	@Override
-	public void loadQuestFile(String fileName, Quest quest) {
-		try {
-			IResource rsc =  Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(Reference.MODID, "quests/"  + fileName));
-			String s = IOUtils.toString(rsc.getInputStream(), Charset.defaultCharset());
-			JsonParser parser = new JsonParser();
-			JsonObject obj = (JsonObject) parser.parse(s);
-			
-			String questName = obj.get("name").getAsString();
-			
-			JsonObject dialogues = (JsonObject)obj.get("dialogues");
-			for(Entry<String, JsonElement> entry : dialogues.entrySet()) {
-				String dialogueName = entry.getKey();
-				
-				JsonObject dialogue = (JsonObject)entry.getValue();
-				String text = dialogue.get("text").getAsString();
-				
-				JsonObject responses = (JsonObject)dialogue.get("responses");
-				
-				ArrayList<NpcDialogResponse> dialogResponses = new ArrayList<NpcDialogResponse>();
-				for(Entry<String, JsonElement> responseEntry : responses.entrySet()) {
-					String responseName = responseEntry.getKey();
-					String dialogTransition = responseEntry.getValue().getAsString();
-					dialogResponses.add(new NpcDialogResponse(responseName, dialogTransition));
-				}
-				
-				NpcDialog npcDialog = new NpcDialog(dialogueName, text, dialogResponses);
-				quest.questDialogs.put(npcDialog.dialogName, npcDialog);
-			}
-			
-			for(NpcDialog dialog : quest.questDialogs.values()) {
-				for(NpcDialogResponse response : dialog.playerResponses) {
-					response.transitionDialog = quest.questDialogs.get(response.dialogueTransition);
-				}
-			}
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	public void showDialogToPlayer(EntityLivingBase ent, NpcDialog dialog) {
 		Minecraft.getMinecraft().displayGuiScreen(new DialogGui(ent, dialog));
 	}

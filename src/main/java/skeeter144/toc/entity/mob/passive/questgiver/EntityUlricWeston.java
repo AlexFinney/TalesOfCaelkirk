@@ -18,9 +18,9 @@ import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.QuestProgress;
 import skeeter144.toc.quest.quests.ANewAdventureQuest.ANewAdventureQuestProgress;
 
-public class EntityRobertCromwell extends EntityNPCInteractable{
+public class EntityUlricWeston extends EntityNPCInteractable{
 	
-	public EntityRobertCromwell(World worldIn) {
+	public EntityUlricWeston(World worldIn) {
 		super(worldIn, QuestManager.aNewAdventure);
 		this.setSize(.75f, 2f);
 		if(texture == null)
