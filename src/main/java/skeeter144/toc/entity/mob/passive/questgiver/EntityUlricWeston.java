@@ -5,17 +5,18 @@ import java.util.UUID;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import skeeter144.toc.client.gui.NpcDialogResponse;
+import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.ShowQuestDialogMessage;
 import skeeter144.toc.quest.NpcDialog;
 import skeeter144.toc.quest.QuestManager;
-import skeeter144.toc.quest.QuestProgress;
 import skeeter144.toc.quest.quests.ANewAdventureQuest.ANewAdventureQuestProgress;
 
 public class EntityUlricWeston extends EntityNPCInteractable{
@@ -34,10 +35,14 @@ public class EntityUlricWeston extends EntityNPCInteractable{
 		}
 		
 		ANewAdventureQuestProgress qp = (ANewAdventureQuestProgress)QuestManager.getQuestProgressForPlayer(player.getUniqueID(), QuestManager.aNewAdventure);
-		if(!qp.questStarted)
-			Network.INSTANCE.sendTo(new ShowQuestDialogMessage(this.getUniqueID(), QuestManager.aNewAdventure.id, "quest_offer"), (EntityPlayerMP)player);
-		else 
-			Network.INSTANCE.sendTo(new ShowQuestDialogMessage(this.getUniqueID(), QuestManager.aNewAdventure.id, "robert_player_returned"), (EntityPlayerMP)player);
+		if(qp == null || !qp.questStarted) {
+			Network.INSTANCE.sendTo(new ShowQuestDialogMessage(this.getUniqueID(), QuestManager.aNewAdventure.id, "ulric_refuse"), (EntityPlayerMP)player);
+		}
+		else if(!qp.ulricTalkedTo){
+			Network.INSTANCE.sendTo(new ShowQuestDialogMessage(this.getUniqueID(), QuestManager.aNewAdventure.id, "ulric_intro"), (EntityPlayerMP)player);
+		}else if(qp.logsChopped < 10){
+			Network.INSTANCE.sendTo(new ShowQuestDialogMessage(this.getUniqueID(), QuestManager.aNewAdventure.id, "ulric_not_done_yet"), (EntityPlayerMP)player);
+		}
 		
 		return true;
 	}
@@ -62,15 +67,17 @@ public class EntityUlricWeston extends EntityNPCInteractable{
 		//CUSTOM DIALOGS DOWN HERE
 	}
 	
-	public void onQuestStarted(UUID playerUUID) {
-		QuestManager.startPlayerOnQuest(playerUUID, QuestManager.aNewAdventure);
+	public void beginLogChopping(UUID playerUUID) {
+		ANewAdventureQuestProgress qp = (ANewAdventureQuestProgress)QuestManager.getQuestProgressForPlayer(playerUUID, QuestManager.aNewAdventure);
+		qp.ulricTalkedTo = true;
+		qp.logsChopped = 0;
 		
 		EntityPlayer player = this.world.getPlayerEntityByUUID(playerUUID);
-		player.sendMessage(new TextComponentString(TextFormatting.GREEN  + "[" +  QuestManager.aNewAdventure.name + "]" + TextFormatting.BLUE +" Speak with Ulric"));
+		player.sendMessage(new TextComponentString(TextFormatting.GREEN  + "[" +  QuestManager.aNewAdventure.name + "] [New Task]" + TextFormatting.BLUE +" Chop down 10 Oak Logs."));
+		
+		player.addItemStackToInventory(new ItemStack(TOCItems.axe_bronze));
 		//mark point on map
 		
-		ANewAdventureQuestProgress qp = (ANewAdventureQuestProgress)QuestManager.getQuestProgressForPlayer(playerUUID, QuestManager.aNewAdventure);
-		qp.questStarted = true;
 	}
 	
 	

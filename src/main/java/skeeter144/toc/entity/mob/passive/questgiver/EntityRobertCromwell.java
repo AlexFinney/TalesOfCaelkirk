@@ -34,7 +34,7 @@ public class EntityRobertCromwell extends EntityNPCInteractable{
 		}
 		
 		ANewAdventureQuestProgress qp = (ANewAdventureQuestProgress)QuestManager.getQuestProgressForPlayer(player.getUniqueID(), QuestManager.aNewAdventure);
-		if(!qp.questStarted)
+		if(qp == null || !qp.questStarted)
 			Network.INSTANCE.sendTo(new ShowQuestDialogMessage(this.getUniqueID(), QuestManager.aNewAdventure.id, "quest_offer"), (EntityPlayerMP)player);
 		else 
 			Network.INSTANCE.sendTo(new ShowQuestDialogMessage(this.getUniqueID(), QuestManager.aNewAdventure.id, "robert_player_returned"), (EntityPlayerMP)player);
@@ -66,7 +66,7 @@ public class EntityRobertCromwell extends EntityNPCInteractable{
 		QuestManager.startPlayerOnQuest(playerUUID, QuestManager.aNewAdventure);
 		
 		EntityPlayer player = this.world.getPlayerEntityByUUID(playerUUID);
-		player.sendMessage(new TextComponentString(TextFormatting.GREEN  + "[" +  QuestManager.aNewAdventure.name + "]" + TextFormatting.BLUE +" Speak with Ulric"));
+		player.sendMessage(new TextComponentString(TextFormatting.GREEN  + "[" +  QuestManager.aNewAdventure.name + "] [New Task]" + TextFormatting.BLUE +" Speak with Ulric"));
 		//mark point on map
 		
 		ANewAdventureQuestProgress qp = (ANewAdventureQuestProgress)QuestManager.getQuestProgressForPlayer(playerUUID, QuestManager.aNewAdventure);

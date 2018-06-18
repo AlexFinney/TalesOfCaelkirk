@@ -78,6 +78,7 @@ import skeeter144.toc.entity.mob.mount.flying.EntityGriffin;
 import skeeter144.toc.entity.mob.mount.flying.EntityPegasus;
 import skeeter144.toc.entity.mob.passive.banker.EntityBanker;
 import skeeter144.toc.entity.mob.passive.questgiver.EntityRobertCromwell;
+import skeeter144.toc.entity.mob.passive.questgiver.EntityUlricWeston;
 import skeeter144.toc.entity.mob.passive.shopkeeper.EntityHumanShopKeeper;
 import skeeter144.toc.handlers.ItemTooltipHandler;
 import skeeter144.toc.handlers.PlayerInputHandler;
@@ -133,6 +134,7 @@ public class ClientProxy extends CommonProxy
 		
 		
 		rm.entityRenderMap.put(EntityRobertCromwell.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
+		rm.entityRenderMap.put(EntityUlricWeston.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
 		
 		rm.entityRenderMap.put(EntityBanker.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
 		
