@@ -8,6 +8,7 @@ public class EntityNpc extends CustomMob{
 	public ResourceLocation texture;
 	public EntityNpc(World worldIn) {
 		super(worldIn);
+		this.enablePersistence();
 	}
 	
 	@Override

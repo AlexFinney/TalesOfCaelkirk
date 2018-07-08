@@ -15,7 +15,6 @@ public class CustomBlockLog extends BlockLog{
 		this.setUnlocalizedName(name);
 		
 		this.setDefaultState(this.blockState.getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
-		this.setHardness(-1);
 	}
 	
 	  public IBlockState getStateFromMeta(int meta)

@@ -7,16 +7,19 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import skeeter144.toc.client.gui.NpcDialogResponse;
 import skeeter144.toc.network.Network;
+import skeeter144.toc.network.SendIconUpdateMessage;
 import skeeter144.toc.network.ShowQuestDialogMessage;
 import skeeter144.toc.quest.NpcDialog;
 import skeeter144.toc.quest.QuestManager;
-import skeeter144.toc.quest.QuestProgress;
 import skeeter144.toc.quest.quests.ANewAdventureQuest.ANewAdventureQuestProgress;
+import skeeter144.toc.util.Reference;
+import skeeter144.toc.util.TOCUtils;
 
 public class EntityRobertCromwell extends EntityNPCInteractable{
 	
@@ -29,12 +32,11 @@ public class EntityRobertCromwell extends EntityNPCInteractable{
 	
 	@Override
 	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
-		if(player.world.isRemote) {
+		if(player.world.isRemote)
 			return true;
-		}
 		
 		ANewAdventureQuestProgress qp = (ANewAdventureQuestProgress)QuestManager.getQuestProgressForPlayer(player.getUniqueID(), QuestManager.aNewAdventure);
-		if(qp == null || !qp.questStarted)
+		if(qp == null || !qp.questStarted) 
 			Network.INSTANCE.sendTo(new ShowQuestDialogMessage(this.getUniqueID(), QuestManager.aNewAdventure.id, "quest_offer"), (EntityPlayerMP)player);
 		else 
 			Network.INSTANCE.sendTo(new ShowQuestDialogMessage(this.getUniqueID(), QuestManager.aNewAdventure.id, "robert_player_returned"), (EntityPlayerMP)player);
@@ -67,11 +69,10 @@ public class EntityRobertCromwell extends EntityNPCInteractable{
 		
 		EntityPlayer player = this.world.getPlayerEntityByUUID(playerUUID);
 		player.sendMessage(new TextComponentString(TextFormatting.GREEN  + "[" +  QuestManager.aNewAdventure.name + "] [New Task]" + TextFormatting.BLUE +" Speak with Ulric"));
-		//mark point on map
+
+		Network.INSTANCE.sendTo(new SendIconUpdateMessage("Speak with Ulric", 719, 42, 811, player.world.provider.getDimension(), Reference.MODID, "textures/icons/map/quest_objective.png"), (EntityPlayerMP)player);
 		
 		ANewAdventureQuestProgress qp = (ANewAdventureQuestProgress)QuestManager.getQuestProgressForPlayer(playerUUID, QuestManager.aNewAdventure);
 		qp.questStarted = true;
 	}
-	
-	
 }

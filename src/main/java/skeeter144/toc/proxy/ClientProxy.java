@@ -1,34 +1,27 @@
 package skeeter144.toc.proxy;
 
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Map.Entry;
 import java.util.Random;
 
-import org.apache.commons.io.IOUtils;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
+import mapwriter.map.IconMarker;
+import mapwriter.map.Marker;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.resources.IResource;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagInt;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
@@ -63,7 +56,6 @@ import skeeter144.toc.client.entity.renderer.RenderViking;
 import skeeter144.toc.client.gui.DialogGui;
 import skeeter144.toc.client.gui.GuiEntityStatus;
 import skeeter144.toc.client.gui.HUD;
-import skeeter144.toc.client.gui.NpcDialogResponse;
 import skeeter144.toc.client.gui.RegionsRendering;
 import skeeter144.toc.entity.mob.monster.EntityGhost;
 import skeeter144.toc.entity.mob.monster.EntityGiantScorpian;
@@ -88,7 +80,6 @@ import skeeter144.toc.models.ModelVikingHelm;
 import skeeter144.toc.particles.particle.BasicSpellTrailParticle;
 import skeeter144.toc.particles.particle.DamageParticle;
 import skeeter144.toc.quest.NpcDialog;
-import skeeter144.toc.quest.Quest;
 import skeeter144.toc.util.Reference;
 import skeeter144.toc.util.Util;
 
@@ -260,6 +251,7 @@ public class ClientProxy extends CommonProxy
 	public void showDialogToPlayer(EntityLivingBase ent, NpcDialog dialog) {
 		Minecraft.getMinecraft().displayGuiScreen(new DialogGui(ent, dialog));
 	}
+	
 	
 	
 	private static final ModelVikingHelm modelVikingHelm = new ModelVikingHelm();

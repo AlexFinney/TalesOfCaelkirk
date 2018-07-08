@@ -1,26 +1,24 @@
 package skeeter144.toc.quest.quests;
 
-import java.util.UUID;
+import com.mojang.realmsclient.gui.ChatFormatting;
 
-import net.minecraft.block.BlockBreakable;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import skeeter144.toc.blocks.TOCBlocks;
-import skeeter144.toc.network.CloseGuisMessage;
-import skeeter144.toc.network.Network;
-import skeeter144.toc.network.ShowQuestDialogMessage;
+import skeeter144.toc.handlers.PlayerInventoryHandler.ItemAddedToInventoryEvent;
 import skeeter144.toc.player.EntityLevels.Levels;
 import skeeter144.toc.player.TOCPlayer;
-import skeeter144.toc.quest.NpcDialog;
 import skeeter144.toc.quest.Quest;
 import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.QuestProgress;
 
 public class ANewAdventureQuest extends Quest{
-
+	
 	public ANewAdventureQuest(String name, int id) {
 		super(name, id);
 		this.experienceRewards.put(Levels.ATTACK, 50);
@@ -41,13 +39,19 @@ public class ANewAdventureQuest extends Quest{
 	}
 	
 	@SubscribeEvent
-	public void blockBroken(BlockEvent.BreakEvent e) {
-		if(e.getState().getBlock() != TOCBlocks.oak_log)
+	public void oakLogAdded(ItemAddedToInventoryEvent e) {
+		if(e.getEntity().world.isRemote)
 			return;
 		
-		ANewAdventureQuestProgress qp = (ANewAdventureQuestProgress)QuestManager.getQuestProgressForPlayer(e.getPlayer().getPersistentID(), this);
-		if(qp.logsChopped < 10 && qp.ulricTalkedTo == true) {
-			System.out.println("block break");
+		if(e.stack.getItem() != new ItemStack(TOCBlocks.oak_log).getItem())
+			return;
+		
+		ANewAdventureQuestProgress qp = (ANewAdventureQuestProgress)QuestManager.getQuestProgressForPlayer(e.getEntity().getUniqueID(), this);
+		if(qp.ulricTalkedTo && qp.logsChopped < 10) {
+			if(++qp.logsChopped == 10){
+				((EntityPlayer)e.getEntity()).sendMessage(new TextComponentString(ChatFormatting.GREEN + "[" + this.name +"] [Task Completed] " + ChatFormatting.WHITE + ChatFormatting.STRIKETHROUGH +"Harvest 10 Oak Logs." ));
+				((EntityPlayer)e.getEntity()).sendMessage(new TextComponentString(ChatFormatting.GREEN + "[" + this.name +"] [New Task] " + ChatFormatting.WHITE + "Return to Ulric." ));
+			}
 		}
 	}
 

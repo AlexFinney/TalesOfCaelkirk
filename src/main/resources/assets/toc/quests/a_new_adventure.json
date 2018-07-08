@@ -118,7 +118,7 @@
 		},
 		"ulric_woodcutting_tutorial4":
 		{
-			"text": "Once you've got a good enough axe, head up to the tree trunk and left click it.  There's no need to hold down your left mouse button.  Each time you click, you'll chop the tree, and might even harvest a log. After so many logs, you'll chop down the tree completely.  You'll want to move onto a new one after that, until it grows back.'",
+			"text": "Once you've got a good enough axe, head up to the tree trunk and left click it.  There's no need to hold down your left mouse button.  Each time you click, you'll chop the tree, and might even harvest a log. After so many logs, you'll chop down the tree completely.  You'll want to move onto a new one after that, until it grows back.",
 			"responses":
 			{
 				"->": {"name": "ulric_woodcutting_tutorial5"}
@@ -138,10 +138,34 @@
 		},
 		"ulric_not_done_yet":
 		{
-			"text": "What're ye doing back so soon?  I need ye to get me 10 Oak Logs. I even gave ye that fancy axe.  Get to choppin'",
+			"text": "What're ye doing back so soon?  I need ye to get me 10 Oak Logs. I even gave ye that fancy axe.  Get to choppin'.",
 			"responses":
 			{
 				"Okay": {"name": ""}
+			}
+		},
+		"ulric_finished":
+		{
+			"text": "Nice. I see ye've brought plenty o logs.  Ye did that pretty quick.  I can see the makin's of a fine lumberjack in ye one day.  I'll let ye keep the axe and the logs ye chopped down.  Ye should go talk to Eva Teffan next.  She can show ye some cool things to craft from these logs.",
+			"responses":
+			{
+				"My payment?": {"name": "ulric_finished2"}
+			}
+		},
+		"ulric_finished2":
+		{
+			"text": "Yer payment?! I already gave you the greatest gift there is! The pure JOY of being in the woods cuttin' some treees!!",
+			"responses":
+			{
+				"...": {"name": "ulric_finished3"}
+			}
+		},
+		"ulric_finished3":
+		{
+			"text": "Ugh fine. You city folk are all the same. Here's 20 copper for yer troubles.  But I'm keepin' half of yer logs",
+			"responses":
+			{
+				"Goodbye": {"name": "", "event": "ulricFinished"}
 			}
 		}
 	}

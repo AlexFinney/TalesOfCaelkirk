@@ -1,17 +1,8 @@
 package skeeter144.toc.proxy;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Map.Entry;
 import java.util.Random;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
+import mapwriter.map.Marker;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,7 +18,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.blocks.TOCBlocks;
 import skeeter144.toc.client.gui.GuiHandler;
-import skeeter144.toc.client.gui.NpcDialogResponse;
 import skeeter144.toc.entity.TOCEntities;
 import skeeter144.toc.handlers.EntityHandler;
 import skeeter144.toc.handlers.PlayerInteractHandler;
@@ -71,6 +61,8 @@ import skeeter144.toc.network.PlayerVitalsUpdateMessage;
 import skeeter144.toc.network.PlayerVitalsUpdateMessage.PlayerVitalsUpdateMessageHandler;
 import skeeter144.toc.network.QuestDialogResponseMessage;
 import skeeter144.toc.network.QuestDialogResponseMessage.QuestDialogResponseMessageHandler;
+import skeeter144.toc.network.SendIconUpdateMessage;
+import skeeter144.toc.network.SendIconUpdateMessage.SendIconUpdateMessageHandler;
 import skeeter144.toc.network.SetAnvilRecipeMessage;
 import skeeter144.toc.network.SetAnvilRecipeMessage.SetAnvilRecipeMessageHandler;
 import skeeter144.toc.network.SetClientTOCPlayerMessage;
@@ -93,7 +85,6 @@ import skeeter144.toc.network.WandEmbueMessage;
 import skeeter144.toc.network.WandEmbueMessage.WandEmbueMessageHandler;
 import skeeter144.toc.player.EntityLevels;
 import skeeter144.toc.quest.NpcDialog;
-import skeeter144.toc.quest.Quest;
 import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.skills.Crafting;
 import skeeter144.toc.skills.Woodcutting;
@@ -148,7 +139,7 @@ public class CommonProxy
 		Network.INSTANCE.registerMessage(ItemCraftingQueueAddedMessageHandler.class, ItemCraftingQueueAddedMessage.class, Network.getNextId(), Side.CLIENT);
 		Network.INSTANCE.registerMessage(ItemCraftedMessageHandler.class, ItemCraftedMessage.class, Network.getNextId(), Side.CLIENT);
 		Network.INSTANCE.registerMessage(OpenBankGUIMessageHandler.class, OpenBankGUIMessage.class, Network.getNextId(), Side.CLIENT);
-		
+		Network.INSTANCE.registerMessage(SendIconUpdateMessageHandler.class, SendIconUpdateMessage.class, Network.getNextId(), Side.CLIENT);
 		
 		NetworkRegistry.INSTANCE.registerGuiHandler(TOCMain.instance, new GuiHandler());
 
@@ -162,9 +153,9 @@ public class CommonProxy
 		Spells.init();
 	}
 	
-	public void postInit(FMLPostInitializationEvent event)
-	{
-	}
+	public void postInit(FMLPostInitializationEvent event) {}
+	
+	public void drawMapIconMarker(Marker marker) {}
 	
 	public void showDialogToPlayer(EntityLivingBase ent, NpcDialog dialog){}
 	
