@@ -74,5 +74,8 @@ public class ANewAdventureQuest extends Quest{
 		public boolean questStarted = false;
 		public boolean ulricTalkedTo = false;
 		public int logsChopped = 0;
+		public boolean ulricFinished = false;
+		public boolean evaTalkedTo = false;
+		public boolean sheepSheared = false;
 	}
 }

@@ -22,7 +22,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.blocks.BlockHarvestableOre;
@@ -40,24 +39,42 @@ import skeeter144.toc.network.SpawnParticlesMessage;
 import skeeter144.toc.particles.system.ParticleSystem;
 import skeeter144.toc.player.EntityLevels.Levels;
 import skeeter144.toc.skills.Woodcutting;
-import skeeter144.toc.sounds.Sounds;
 import skeeter144.toc.tasks.TickableTask;
 
 public class PlayerInteractHandler {
-
+	
 	@SubscribeEvent
 	public void onPlayerLeftClick(PlayerInteractEvent.LeftClickEmpty e) {
 	}
-
+	
 	@SubscribeEvent
 	public void onPlayerLeftClick(PlayerInteractEvent.LeftClickBlock e) {
-
+		if(e.getWorld().isRemote)
+			return;
+		
+		if(e.getEntityPlayer().capabilities.isCreativeMode)
+			return;
+		
+		if(e.getEntityPlayer().getCooledAttackStrength(1) != 1) {
+			e.setCanceled(true);
+			return;
+		}
+		
+		Block b = e.getWorld().getBlockState(e.getPos()).getBlock();
+		if(b instanceof CustomBlockLog) {
+			if(e.getEntityPlayer().getHeldItemMainhand().getItem() instanceof TOCAxe)
+				processLogChopped(e);
+		}
 	}
-
+	
 	@SubscribeEvent
 	public void onPlayerLeftClick(AttackEntityEvent e) {
+		if(e.getEntityPlayer().getCooledAttackStrength(1) != 1) {
+			e.setCanceled(true);
+			cancelSwing(e.getEntityPlayer());
+		}
 	}
-
+	
 	private void cancelSwing(EntityPlayer p) {
 		TOCMain.clientTaskManager.addTask(new TickableTask(4) {
 			public void tick(int worldTick) {
@@ -67,7 +84,7 @@ public class PlayerInteractHandler {
 			}
 		});
 	}
-
+	
 	@SubscribeEvent
 	public void onPlayerRightClickBlock(PlayerInteractEvent.RightClickBlock e) {
 		List<Item> ingots = Arrays.asList(TOCItems.ingot_bronze, TOCItems.ingot_iron, TOCItems.ingot_steel,
@@ -80,17 +97,16 @@ public class PlayerInteractHandler {
 
 			if (bs.getBlock().getDefaultState().equals(TOCBlocks.blockAnvil.getDefaultState())) {
 				TileEntityAnvil anvil = (TileEntityAnvil) e.getWorld().getTileEntity(e.getPos());
-				if (!ingots.contains(e.getEntityPlayer().getHeldItemMainhand().getItem())
-						&& anvil.producedItem == null) {
+				if (!ingots.contains(e.getEntityPlayer().getHeldItemMainhand().getItem()) && anvil.producedItem == null) {
 					e.getEntityPlayer().openGui(TOCMain.instance, Guis.SMITHING_GUI, e.getWorld(), e.getPos().getX(),
 							e.getPos().getY(), e.getPos().getZ());
 				}
 			}
 		} else {
-			if (!(e.getWorld().getTileEntity(e.getPos()) instanceof TileEntityAnvil))
+			if(!(e.getWorld().getTileEntity(e.getPos()) instanceof TileEntityAnvil))
 				return;
-
-			TileEntityAnvil anvil = (TileEntityAnvil) e.getWorld().getTileEntity(e.getPos());
+			
+			TileEntityAnvil anvil = (TileEntityAnvil)e.getWorld().getTileEntity(e.getPos());
 			if (bs.getBlock().getDefaultState().equals(TOCBlocks.blockAnvil.getDefaultState())) {
 				if (anvil != null && anvil.producedItem != null) {
 					e.getEntityPlayer().addItemStackToInventory(anvil.producedItem);
@@ -101,120 +117,100 @@ public class PlayerInteractHandler {
 			}
 		}
 	}
-
+		
 	@SubscribeEvent
 	public void onBlockPlace(BlockEvent.PlaceEvent e) {
-		if (e.getPlacedBlock().getBlock() instanceof BlockHarvestableOre) {
+		if(e.getPlacedBlock().getBlock() instanceof BlockHarvestableOre) {
 		}
 	}
-
+	
 	@SubscribeEvent
-	public void onBlockBreak(BlockEvent.BreakEvent e) {
-		if (e.getWorld().isRemote)
-			return;
-
-		Block b = e.getWorld().getBlockState(e.getPos()).getBlock();
-		if (b instanceof BlockLog) {
-			if (e.getPlayer().getHeldItemMainhand().getItem() instanceof TOCAxe) {
-				float chance = Woodcutting.getChopChanceForWood((TOCAxe) e.getPlayer().getHeldItemMainhand().getItem(),
-						e.getWorld().getBlockState(e.getPos()));
-				if (e.getWorld().rand.nextFloat() < chance) {
-					processLogChopped(e);
-				} else {
-					e.setCanceled(true);
-				}
-			}
-		}
-
-		if (e.getState().getBlock() instanceof BlockHarvestableOre) {
-
-		}
-
-		if (e.getState().getBlock() instanceof BlockLog) {
-
+	public void onBlockBreak(BlockEvent.BreakEvent e){
+		if(e.getState().getBlock() instanceof BlockHarvestableOre) {
+			
 		}
 	}
-
-	private void processLogChopped(BlockEvent.BreakEvent e) {
+	
+	private void processLogChopped(PlayerInteractEvent e) {
 		World world = e.getWorld();
-		EntityPlayer player = e.getPlayer();
+		EntityPlayer player = e.getEntityPlayer();
 		BlockPos pos = e.getPos();
-
-		if (e.getWorld().isRemote)
+		
+		if(e.getWorld().isRemote)
 			return;
-
+		
 		float pitchOffset = TOCMain.rand.nextFloat() / .3f - .15f;
-		world.playSound(null, pos, SoundEvents.BLOCK_WOOD_BREAK, SoundCategory.MASTER, 1, 1 + pitchOffset);
+		world.playSound(null, pos, SoundEvents.BLOCK_WOOD_HIT, SoundCategory.MASTER, 1, 1 + pitchOffset);
 
-		Network.INSTANCE.sendToAll(new SpawnParticlesMessage(ParticleSystem.ORE_MINING_PARTICLE_SYSTEM, pos.getX(),
-				pos.getY(), pos.getZ()));
-
+		Network.INSTANCE.sendToAll(new SpawnParticlesMessage(ParticleSystem.ORE_MINING_PARTICLE_SYSTEM, pos.getX(), pos.getY(), pos.getZ()));
+		
 		BlockLog log = (BlockLog) world.getBlockState(pos).getBlock();
 
-		if (TOCMain.pm.getPlayer(e.getPlayer()).getPlayerLevels().getLevel(Levels.WOODCUTTING).getLevel() < Woodcutting
-				.getLevelRequirementForWood(log)) {
-			player.sendMessage(new TextComponentString("You need at least Woodcutting level "
-					+ Woodcutting.getLevelRequirementForWood(log) + " to cut down " + log.getLocalizedName()));
+		if(TOCMain.pm.getPlayer(e.getEntityPlayer()).getPlayerLevels().getLevel(Levels.WOODCUTTING).getLevel() < 
+				Woodcutting.getLevelRequirementForWood(log)) {
+			player.sendMessage(new TextComponentString("You need at least Woodcutting level " + Woodcutting.getLevelRequirementForWood(log)
+					+ " to cut down " + log.getLocalizedName()));
 			return;
 		}
-
-		float chance = Woodcutting.getChopChanceForWood((TOCAxe) e.getPlayer().getHeldItemMainhand().getItem(),
-				world.getBlockState(pos));
-
-		if (TOCMain.rand.nextFloat() <= chance) {
+		
+		float chance = Woodcutting.getChopChanceForWood((TOCAxe) e.getEntityPlayer().getHeldItemMainhand().getItem(), world.getBlockState(pos));
+		if(chance == 0) {
+			player.sendMessage(new TextComponentString("Your axe is not strong enough to chop down " + log.getLocalizedName()));
+			return;
+		}
+		
+		if(TOCMain.rand.nextFloat() <= chance) {
 			Map<BlockPos, IBlockState> list = Woodcutting.getTreeFromLog(world, pos);
 			int leavesFound = 0;
-			for (Map.Entry<BlockPos, IBlockState> entry : list.entrySet()) {
-				if (entry.getValue().getBlock() instanceof BlockLeaves)
+			for(Map.Entry<BlockPos, IBlockState> entry : list.entrySet()) {
+				if(entry.getValue().getBlock() instanceof BlockLeaves)
 					++leavesFound;
-				if (leavesFound > 5)
+				if(leavesFound > 5)
 					break;
 			}
-
-			if (leavesFound < 5) {
+			
+			if(leavesFound < 5) {
 				System.out.println("Not enough leaves found: " + leavesFound);
 				return;
 			}
-
-			if (player.inventory.getFirstEmptyStack() == -1) {
+			
+			if(player.inventory.getFirstEmptyStack() == -1) {
 				player.sendMessage(new TextComponentString("Your inventory is too full to hold any more logs!"));
 				return;
 			}
-
-			if (list.size() > Woodcutting.MAX_TREE_SIZE) {
+			
+			if(list.size() > Woodcutting.MAX_TREE_SIZE) {
 				player.sendMessage(new TextComponentString("You can't cut down that tree!"));
 				return;
 			}
 
 			int xpGiven = Woodcutting.getExpForWood(log);
 			Item item = Woodcutting.getHarvestItemForWood(log);
-			BlockEvent.BreakEvent event = new BreakEvent(world, pos, world.getBlockState(pos), player);
-
-			if (TOCMain.rand.nextFloat() < Woodcutting.getDestroyChanceForWood(world.getBlockState(pos))) {
+			
+			if(TOCMain.rand.nextFloat() < Woodcutting.getDestroyChanceForWood(world.getBlockState(pos))) {
 				IBlockState lowestBlock = null;
 				BlockPos lowestPos = null;
-				for (Map.Entry<BlockPos, IBlockState> entry : list.entrySet()) {
-					if (lowestBlock == null && lowestPos == null || lowestPos.getY() > entry.getKey().getY()) {
+				for(Map.Entry<BlockPos, IBlockState> entry : list.entrySet()) {
+					if(lowestBlock == null && lowestPos == null || lowestPos.getY() > entry.getKey().getY()) {
 						lowestPos = entry.getKey();
 						lowestBlock = entry.getValue();
 					}
 					world.setBlockState(entry.getKey(), Blocks.AIR.getDefaultState());
 				}
 				world.setBlockState(lowestPos, lowestBlock);
-
+			
 				world.setBlockState(pos, TOCBlocks.harvested_tree.getDefaultState());
-				TileEntityHarvestedTree tree = (TileEntityHarvestedTree) world.getTileEntity(pos);
+				TileEntityHarvestedTree tree = (TileEntityHarvestedTree)world.getTileEntity(pos);
 				tree.minSecs = Woodcutting.getMinRespawnSecsForWood(log);
 				tree.maxSecs = Woodcutting.getMaxRespawnSecsForWood(log);
-
+				
 				tree.treeBlocks = list;
 			}
-
-			MinecraftForge.EVENT_BUS.post(event);
-			if (player != null) {
-				player.addItemStackToInventory(new ItemStack(item));
-				ItemAddedToInventoryEvent itemInvEvent = new ItemAddedToInventoryEvent(player, new ItemStack(item));
-				MinecraftForge.EVENT_BUS.post(itemInvEvent);
+			
+			if(player != null) {
+				ItemStack stack = new ItemStack(item);
+				MinecraftForge.EVENT_BUS.post(new ItemAddedToInventoryEvent(player, stack));
+				player.addItemStackToInventory(stack);
 				TOCMain.pm.getPlayer(player).levels.addExp(Levels.WOODCUTTING, xpGiven);
 				Network.INSTANCE.sendTo(new AddLevelXpMessage("Woodcutting", xpGiven), (EntityPlayerMP) player);
 			}

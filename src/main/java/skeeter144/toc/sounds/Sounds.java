@@ -1,10 +1,11 @@
 package skeeter144.toc.sounds;
 
+import java.lang.reflect.Field;
+
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 import skeeter144.toc.util.Reference;
 
 public class Sounds {
@@ -41,33 +42,24 @@ public class Sounds {
 	public static final SoundEvent super_creepy_music = new CustomSoundEvent(new ResourceLocation(Reference.MODID, "super_creepy_music"));
 	public static final SoundEvent creepy_music = new CustomSoundEvent(new ResourceLocation(Reference.MODID, "creepy_music"));
 	
+	public static final SoundEvent fake_wood_hit = new CustomSoundEvent(new ResourceLocation(Reference.MODID, "fake_wood_hit"));
+			
 	static SoundEvent registerSound(String name) {
 		return new SoundEvent(new ResourceLocation(Reference.MODID, name));
 	}
 	
 	@SubscribeEvent
 	public void registerSounds(RegistryEvent.Register<SoundEvent> event) {
-		event.getRegistry().registerAll(
-				rat_squeak,
-				rat_die,
-				rat_hurt,
-				man_die,
-				man_grunt,
-				man_hurt,
-				goblin_breathe,
-				goblin_snarl,
-				goblin_die,
-				goblin_laugh,
-				scorpian_die,
-				scorpian_hurt,
-				scorpian_idle_1,
-				scorpian_sting,
-				spider_forest_ambient,
-				super_creepy_music,
-				creepy_music,
-				anvil_strike,
-				ingot_place,
-				pickaxe_strike
-				);
+		
+		Field[] fields = Sounds.class.getDeclaredFields();
+		for(Field f : fields) {
+			try {
+				if(f.get(null) instanceof SoundEvent) {
+					event.getRegistry().register((SoundEvent)f.get(null));
+				}
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

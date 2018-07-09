@@ -106,5 +106,9 @@
     "category": "master",
       "sounds": ["toc:sound_effects/mining/pickaxe1", "toc:sound_effects/mining/pickaxe2", 
                  "toc:sound_effects/mining/pickaxe3", "toc:sound_effects/mining/pickaxe4"]
+  },
+  "fake_wood_hit": {
+    "category": "master",
+      "sounds": ["toc:block/fake_wood_hit"]
   }
 }

@@ -2,21 +2,18 @@ package skeeter144.toc.proxy;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Random;
 
-import mapwriter.map.IconMarker;
-import mapwriter.map.Marker;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,6 +21,7 @@ import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.sound.SoundEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
@@ -69,6 +67,8 @@ import skeeter144.toc.entity.mob.mount.basic_horse.EntityVariableHorseMount;
 import skeeter144.toc.entity.mob.mount.flying.EntityGriffin;
 import skeeter144.toc.entity.mob.mount.flying.EntityPegasus;
 import skeeter144.toc.entity.mob.passive.banker.EntityBanker;
+import skeeter144.toc.entity.mob.passive.questgiver.EntityEvaTeffan;
+import skeeter144.toc.entity.mob.passive.questgiver.EntityKelvinWhitestone;
 import skeeter144.toc.entity.mob.passive.questgiver.EntityRobertCromwell;
 import skeeter144.toc.entity.mob.passive.questgiver.EntityUlricWeston;
 import skeeter144.toc.entity.mob.passive.shopkeeper.EntityHumanShopKeeper;
@@ -126,6 +126,8 @@ public class ClientProxy extends CommonProxy
 		
 		rm.entityRenderMap.put(EntityRobertCromwell.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
 		rm.entityRenderMap.put(EntityUlricWeston.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
+		rm.entityRenderMap.put(EntityEvaTeffan.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
+		rm.entityRenderMap.put(EntityKelvinWhitestone.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
 		
 		rm.entityRenderMap.put(EntityBanker.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
 		

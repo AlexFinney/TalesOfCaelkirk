@@ -29,7 +29,9 @@ public class EntityUlricWeston extends EntityNPCInteractable{
 		super(worldIn, QuestManager.aNewAdventure);
 		this.setSize(.75f, 2f);
 		if(texture == null)
-			texture = new ResourceLocation("toc:textures/entity/bob_rat_man.png");
+			texture = new ResourceLocation("toc:textures/entity/ulric_weston.png");
+		
+		this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(TOCItems.axe_steel));
 	}
 	
 	@Override
@@ -46,39 +48,27 @@ public class EntityUlricWeston extends EntityNPCInteractable{
 		}
 		else if(!qp.ulricTalkedTo){
 			Network.INSTANCE.sendTo(new ShowQuestDialogMessage(this.getUniqueID(), QuestManager.aNewAdventure.id, "ulric_intro"), (EntityPlayerMP)player);
-		}else if(TOCUtils.getItemCountInInventory(new ItemStack(TOCBlocks.oak_log).getItem(), player.inventory) < 10){
+		}else if(qp.logsChopped < 10){
 			Network.INSTANCE.sendTo(new ShowQuestDialogMessage(this.getUniqueID(), QuestManager.aNewAdventure.id, "ulric_not_done_yet"), (EntityPlayerMP)player);
-		}else {
+		}else if(!qp.ulricFinished) {
 			Network.INSTANCE.sendTo(new ShowQuestDialogMessage(this.getUniqueID(), QuestManager.aNewAdventure.id, "ulric_finished"), (EntityPlayerMP)player);
+		}else {
+			Network.INSTANCE.sendTo(new ShowQuestDialogMessage(this.getUniqueID(), QuestManager.aNewAdventure.id, "ulric_finished_finally"), (EntityPlayerMP)player);
 		}
 		
 		return true;
 	}
-
-	@Override
-	public void handleDialogResponse(UUID playerUUID, String dialogResponse) {
-		for(NpcDialog dialog : QuestManager.aNewAdventure.questDialogs.values()) {
-			for(NpcDialogResponse response : dialog.playerResponses) {
-				if(response.serverEventFunc.equals(dialogResponse)) {
-					try {
-						Method m = this.getClass().getMethod(dialogResponse, UUID.class);
-						m.invoke(this, playerUUID);
-						return;
-					}catch(Exception e) {
-						System.out.println("ERROR! Server Function Not found: " + dialogResponse);
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-		
-		//CUSTOM DIALOGS DOWN HERE
-	}
 	
 	public void ulricFinished(UUID playerUUID) {
+		ANewAdventureQuestProgress qp = (ANewAdventureQuestProgress)QuestManager.getQuestProgressForPlayer(playerUUID, QuestManager.aNewAdventure);
+		if(qp.ulricFinished)
+			return;
+		
 		EntityPlayer player = this.world.getPlayerEntityByUUID(playerUUID);
 		player.addItemStackToInventory(new ItemStack(TOCItems.copper_coin, 20));
 		TOCUtils.removeItemsFromInventory(new ItemStack(TOCBlocks.oak_log).getItem(), 5, player.inventory);
+		
+		qp.ulricFinished = true;
 	}
 	
 	public void beginLogChopping(UUID playerUUID) {

@@ -36,11 +36,6 @@ public class EntityAbstractFlyingMount extends EntityAbstractHorseMount{
 		}
 	}
 	
-	@Override
-	public void onUpdate() {
-		// TODO Auto-generated method stub
-		super.onUpdate();
-	}
 	
 	@Override
 	public void writeEntityToNBT(NBTTagCompound compound) {

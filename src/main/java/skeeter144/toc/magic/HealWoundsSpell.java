@@ -22,7 +22,6 @@ public class HealWoundsSpell extends Spell {
 
 	@Override
 	public int getManaCost() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

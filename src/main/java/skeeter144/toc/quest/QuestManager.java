@@ -50,7 +50,7 @@ public class QuestManager{
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static void loadQuestProgress() {
+	public static void loadQuestProgress() {
 		File f = new File("quest_progress.bin");
 		if(f.exists()) {
 			try {

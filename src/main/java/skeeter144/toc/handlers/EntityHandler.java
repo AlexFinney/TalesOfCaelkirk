@@ -287,23 +287,6 @@ public class EntityHandler {
 			//TODO possibly keep track of what lightning bolts are owned by who to allow for 
 			//"skulling" with lightning spells
 		}
-		
-		
-		//TODO vanilla damage conversion
-		/*if(e instanceof EntityPlayer) {
-			boolean vanillaDamage = true;
-			if(event.getSource() instanceof TOCDamageSource )
-				vanillaDamage = false;
-			
-			TOCPlayer p =  TOCMain.pm.getPlayer(e.getPersistentID());
-			p.adjustVitals((int)(-1 * event.getAmount() * (vanillaDamage ? TOCMain.VANILLA_TO_TOC_DAMAGE_CONVERSION : 1)), 0);
-			if(p.getHealth() <= 0) {
-				//TODO: kill player
-			}
-		}else {
-			
-		}
-		*/
 	}
 	
 }

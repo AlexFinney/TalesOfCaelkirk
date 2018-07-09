@@ -109,6 +109,8 @@ public class TOCMain
 		event.registerServerCommand(new CommandSummonNpc());
 		
 		BankManager.loadInventories();
+		
+		QuestManager.loadQuestProgress();
 	}
 	
 	

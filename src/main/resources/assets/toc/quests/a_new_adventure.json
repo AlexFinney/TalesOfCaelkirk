@@ -89,7 +89,7 @@
 			"text": "Alright then.  When you decide you want to learn, come back and talk to me.",
 			"responses":
 			{
-				"->": {"name": ""}
+				"Okay": {"name": ""}
 			}
 		},
 		"ulric_woodcutting_tutorial":
@@ -165,7 +165,98 @@
 			"text": "Ugh fine. You city folk are all the same. Here's 20 copper for yer troubles.  But I'm keepin' half of yer logs",
 			"responses":
 			{
-				"Goodbye": {"name": "", "event": "ulricFinished"}
+				"Goodbye": {"name": "ulric_finished4"}
+			}
+		},
+		"ulric_finished4":
+		{
+			"text": "Ye should go talk to Eva Teffan next.  She can show ye some cool things to craft from these logs. She's over there in that yuppy cottage with those blasted sheep behind it.",
+			"responses":
+			{
+				"Goodbye": {"name": "",
+							"event": "ulricFinished"}
+			}
+		},
+		"eva_intro":
+		{
+			"text": "Well hello there.  My name is Eva Teffan.  I'm a master craftswoman, and I can teach you a little bit about my trade.  Are you interested?",
+			"responses":
+			{
+				"Sounds great": {"name": "eva_tutorial_1"},
+				"No thanks": {"name": "eva_alright_then"}
+			}
+		},
+		"eva_returned":
+		{
+			"text": "Did you have trouble finding the sheeps? They're just out back! Bring some wool and we'll get started, okay? Bye!",
+			"responses":
+			{
+				"Bye": {"name": ""}
+			}
+		},
+		"eva_not_expected":
+		{
+			"text": "Diddlee dee, diddlee dum. I love crafting!",
+			"responses":
+			{
+				"Huh.": {"name": ""}
+			}
+		},
+		"eva_alright_then":
+		{
+			"text": "Alright then young traveller.  Come and talk to me if you want some hands-on instruction in the crafting trade.",
+			"responses":
+			{
+				"Goodbye": {"name": ""}
+			}
+		},
+		"eva_tutorial_1":
+		{
+			"text": "Excellent! To start off with, crafting is the art of creating something beautiful out of lesser parts, it's a fantastic process.  You can craft all sorts of wonderful tools and many other things!",
+			"responses":
+			{
+				"Cool!": {"name": "eva_tutorial_2"}
+			}
+		},
+		"eva_tutorial_2":
+		{
+			"text": "As you progress in your crafting skill, you'll be able to craft more and more complex items that can be worth a lot of money! For the more complex items, you'll have to discover schematics on how to build them.",
+			"responses":
+			{
+				"Interesting.": {"name": "eva_tutorial_3"}
+			}
+		},
+		"eva_tutorial_3":
+		{
+			"text": "For most common items though, a decent crafting level and a little bit of intuition is all you'll need. Oh, and the required crafting materials, of course. Speaking of which, we'll need to get you some materials so can learn to craft something.",
+			"responses":
+			{
+				"What do I need?": {"name": "eva_tutorial_4"}
+			}
+		},
+		"eva_tutorial_4":
+		{
+			"text": "Hmm... well that depends I guess on what we're going to craft... Let's see... I think we'll craft... a nice fishing pole!  Especially since I want you to meet my favorite-est fishing pal after we're done.",
+			"responses":
+			{
+				"Sounds good to me.": {"name": "eva_tutorial_5"}
+			}
+		},
+		"eva_tutorial_5":
+		{
+			"text": "Splendid!  Okay, so to make a fishing pole, we're going to need some string and wood.  There's several ways to make string, but one of my favorites is super, duper cute!  You go out back to the sheeps, shear some of their fluffy-wuffy wool, and then craft some string out of it! Easy-peasy!",
+			"responses":
+			{
+				"Uh huh...": {"name": "eva_tutorial_6"}
+			}
+		},
+		"eva_tutorial_6":
+		{
+			"text": "Alrighty then! Here's some shears, go shear a sheep and bring his wool back! Then we'll get to business.'",
+			"responses":
+			{
+				"Okay, be right back": {"name": "",
+										"event": "beginShearSheep"}
 			}
 		}
 	}

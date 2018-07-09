@@ -37,20 +37,20 @@ public class Woodcutting {
 		
 		
 		HashMap<TOCAxe, Float> oak_harvest_chances = new HashMap<TOCAxe, Float>();
-		oak_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, .1f);
-		oak_harvest_chances.put((TOCAxe) TOCItems.axe_iron, .2f);
-		oak_harvest_chances.put((TOCAxe) TOCItems.axe_steel, .3f);
-		oak_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, .4f);
-		oak_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .5f);
-		oak_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .6f);
-		oak_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .7f);
+		oak_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, .2f);
+		oak_harvest_chances.put((TOCAxe) TOCItems.axe_iron, .25f);
+		oak_harvest_chances.put((TOCAxe) TOCItems.axe_steel, .35f);
+		oak_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, .45f);
+		oak_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .55f);
+		oak_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .65f);
+		oak_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .75f);
 		
 		HashMap<TOCAxe, Float> birch_harvest_chances = new HashMap<TOCAxe, Float>();
 		birch_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, 0f);
-		birch_harvest_chances.put((TOCAxe) TOCItems.axe_iron, .1f);
-		birch_harvest_chances.put((TOCAxe) TOCItems.axe_steel, .15f);
-		birch_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, .25f);
-		birch_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .35f);
+		birch_harvest_chances.put((TOCAxe) TOCItems.axe_iron, .15f);
+		birch_harvest_chances.put((TOCAxe) TOCItems.axe_steel, .2f);
+		birch_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, .3f);
+		birch_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .4f);
 		birch_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .5f);
 		birch_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .6f);
 		
@@ -206,17 +206,17 @@ public class Woodcutting {
 			if(bb instanceof BlockLeaves && pb.getDistance(origin.getX(), pb.getY(), origin.getZ()) < maxHorizLeafDist) 
 				getTreeFromLog(w, pb, blocks, origin);
 		}else {
-			if(bl instanceof BlockLog && pl.getDistance(origin.getX(), pl.getY(), origin.getZ()) < maxHorizLogDist) 
+			if(bl instanceof BlockLog && pl.getDistance(origin.getX(), pl.getY(), origin.getZ()) < maxHorizLogDist || bl instanceof BlockLeaves) 
 				getTreeFromLog(w, pl, blocks, origin);
-			if(br instanceof BlockLog && pr.getDistance(origin.getX(), pr.getY(), origin.getZ()) < maxHorizLogDist) 
+			if(br instanceof BlockLog && pr.getDistance(origin.getX(), pr.getY(), origin.getZ()) < maxHorizLogDist || br instanceof BlockLeaves) 
 				getTreeFromLog(w, pr, blocks, origin);
 			if(bu instanceof BlockLog || bu instanceof BlockLeaves) 
 				getTreeFromLog(w, pu, blocks, origin);
 			if(bd instanceof BlockLog || bd instanceof BlockLeaves) 
 				getTreeFromLog(w, pd, blocks, origin);
-			if(bf instanceof BlockLog && pf.getDistance(origin.getX(), pf.getY(), origin.getZ()) < maxHorizLogDist) 
+			if(bf instanceof BlockLog  && pf.getDistance(origin.getX(), pf.getY(), origin.getZ()) < maxHorizLogDist || bf instanceof BlockLeaves) 
 				getTreeFromLog(w, pf, blocks, origin);
-			if(bb instanceof BlockLog && pb.getDistance(origin.getX(), pb.getY(), origin.getZ()) < maxHorizLogDist) 
+			if(bb instanceof BlockLog && pb.getDistance(origin.getX(), pb.getY(), origin.getZ()) < maxHorizLogDist || bb instanceof BlockLeaves) 
 				getTreeFromLog(w, pb, blocks, origin);
 		}
 		

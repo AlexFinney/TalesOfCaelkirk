@@ -3,6 +3,7 @@ package skeeter144.toc.blocks;
 import java.lang.reflect.Field;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemBlock;

@@ -11,7 +11,6 @@ import skeeter144.toc.network.PlayMobAnimationMessage;
 public class EntityAIScorpianSting extends EntityAIBase{
 
 	EntityGiantScorpian e;
-	//TODO change name of timeSinceLastAttack to lastAttackTime
 	float lastAttackTime, ticksBetweenAttacks, maxDamage;
 	public EntityAIScorpianSting(EntityGiantScorpian e, float ticksBetweenAttacks, float maxDamage) {
 		this.e = e;
