@@ -7,10 +7,12 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import skeeter144.toc.blocks.TOCBlocks;
 import skeeter144.toc.handlers.PlayerInventoryHandler.ItemAddedToInventoryEvent;
+import skeeter144.toc.items.tools.TOCShears.SheepShearedEvent;
 import skeeter144.toc.player.EntityLevels.Levels;
 import skeeter144.toc.player.TOCPlayer;
 import skeeter144.toc.quest.Quest;
@@ -55,6 +57,19 @@ public class ANewAdventureQuest extends Quest{
 		}
 	}
 
+	@SubscribeEvent
+	public void sheepSheared(SheepShearedEvent e) {
+		if(e.getEntity().world.isRemote)
+			return;
+		
+		ANewAdventureQuestProgress qp = (ANewAdventureQuestProgress)QuestManager.getQuestProgressForPlayer(e.shearer.getUniqueID(), this);
+		if(!qp.sheepSheared) {
+			qp.sheepSheared = true;
+			((EntityPlayer)e.shearer).sendMessage(new TextComponentString(ChatFormatting.GREEN + "[" + this.name +"] [Task Completed] " + ChatFormatting.WHITE + ChatFormatting.STRIKETHROUGH +"Sheer a sheep." ));
+			((EntityPlayer)e.shearer).sendMessage(new TextComponentString(ChatFormatting.GREEN + "[" + this.name +"] [New Task] " + ChatFormatting.WHITE + "Return to Eva Teffan." ));
+		}
+	}
+	
 	@Override
 	public QuestProgress getNewQuestProgressInstance() {
 		return new ANewAdventureQuestProgress();

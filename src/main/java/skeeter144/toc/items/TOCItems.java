@@ -32,6 +32,7 @@ import skeeter144.toc.items.quest.QuestItem;
 import skeeter144.toc.items.tools.BlacksmithHammer;
 import skeeter144.toc.items.tools.TOCAxe;
 import skeeter144.toc.items.tools.TOCPickaxe;
+import skeeter144.toc.items.tools.TOCShears;
 import skeeter144.toc.items.weapons.TOCArrow;
 import skeeter144.toc.items.weapons.TOCBow;
 import skeeter144.toc.items.weapons.TOCGreatAxe;
@@ -215,6 +216,8 @@ public class TOCItems {
 	public static Item arrow_adamantite  = new TOCArrow("arrow_adamantite",  27, .2f, 0xFF0000);
 	public static Item arrow_runite      = new TOCArrow("arrow_runite",      38, .1f, 0xFF0000);
 	public static Item arrow_dragonstone = new TOCArrow("arrow_dragonstone", 52, .05f, 0xFF0000);
+	
+	public static Item shears = new TOCShears();
 	
 	public static Item bow_oak_short_unstrung = new CustomItem("bow_oak_short_unstrung", 1, CreativeTabs.MISC);
 	public static Item bow_oak_long_unstrung =  new CustomItem("bow_oak_long_unstrung",  1, CreativeTabs.MISC);

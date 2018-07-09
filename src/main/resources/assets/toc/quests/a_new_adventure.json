@@ -258,6 +258,14 @@
 				"Okay, be right back": {"name": "",
 										"event": "beginShearSheep"}
 			}
+		},
+		"eva_tutorial_7":
+		{
+			"text": "TODO: Teach about using the crafting table to make string/a fishing pole",
+			"responses":
+			{
+				"Okay": {"name": ""}
+			}
 		}
 	}
 }
