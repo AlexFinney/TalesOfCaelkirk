@@ -261,10 +261,82 @@
 		},
 		"eva_tutorial_7":
 		{
-			"text": "TODO: Teach about using the crafting table to make string/a fishing pole",
+			"text": "Excellent! Looks like you got yourself some fluffy wool!  Crafting is pretty simple in Caelkirk.  All you have to do is walk up to a crafting table and place the components in the right pattern for whatever you want to craft!  To make string, just put your wool into the crafting table.  Each piece of wool you harvest will yield two strings.",
 			"responses":
 			{
-				"Okay": {"name": ""}
+				"Okay": {"name": "eva_tutorial_8"}
+			}
+		},
+		"eva_tutorial_8":
+		{
+			"text": "After you've crafted your strings, do the same thing with one of the logs you chopped down earlier.  This time you'll craft sticks from your logs.  Each log will yield four sticks.  Come back to me once you've crafted at least 3 sticks and two string, okay?",
+			"responses":
+			{
+				"Alright, time to craft.": {"name": "", "event": "beginCrafting"}
+			}
+		},
+		"eva_tutorial_9":
+		{
+			"text": "Great! Now that you've got the basics down, let's make that fishing pole! It's a little more complicated, but not too bad!  What you're gonna do is put three sticks diagonally for the rod, and then hang two strings from the top of it! Not too hard.  Now go craft that rod!",
+			"responses":
+			{
+				"Okay": {"name": "", "event": ""}
+			}
+		},
+		"eva_finished":
+		{
+			"text": "Perfect! You're all done with me.  If you ever want to shear some sheep, feel free to stop by!  Now you're gonna go learn about fishing!  Go outside, cross the bridge, and follow the path to your left to the fishing shack!",
+			"responses":
+			{
+				"Alright, time to craft.": {"name": "", "event": "evaFinished"}
+			}
+		},
+		"marlin_intro":
+		{
+			"text": "Hey, this is my into. Grump, grump.",
+			"responses":
+			{
+				"Okay.": {"name": "marlin_finished", "event": ""}
+			}
+		},
+		"marlin_finished":
+		{
+			"text": "Yeah, yeah, I'm grumpy.  Fishing isn't implemented yet.  Go into the mines and find Kelvin Whitestone.",
+			"responses":
+			{
+				"Okay.": {"name": "", "event": "marlinFinished"}
+			}
+		},
+		"kelvin_intro":
+		{
+			"text": "Hey there.  Today you're gonna be learning about mining, smelting, and smithing.  A very valuable trade.  Here's a pickaxe.  Go find some copper ore and tin ore and mine them, come back to me when you have 5 of each.",
+			"responses":
+			{
+				"Okay.": {"name": "", "event": "kelvinStart"}
+			}
+		},
+		"kelvin_tut_2":
+		{
+			"text": "Easy enough, huh? Alright, go smelt your ore.  Right click on the big furnace, and select bronze ingots to smelt.  Each ingot takes 1 copper ore and 1 tin ore.",
+			"responses":
+			{
+				"Okay.": {"name": "", "event": "smeltingStart"}
+			}
+		},
+		"kelvin_tut_3":
+		{
+			"text": "Great.  Place your new ingots onto an anvil by right clicking it with your ingots.  With an empty hand, right click the anvil and select your recipe.  After selecting it, hit the anvil by left clicking it with this blacksmith's hammer until your item is crafted.",
+			"responses":
+			{
+				"Okay.": {"name": "", "event": "smithingStart"}
+			}
+		},
+		"kelvin_finished":
+		{
+			"text": "Excellent, you're a natural fighter! To really blow your mind open, head up the ladder and out the cave to the magic temple.  They'll introduce you to magic attacks and all sorts of cool things.  Too complicated for me, though.  I prefer a solid piece of steel in my hand myself.",
+			"responses":
+			{
+				"Okay, thanks.": {"name": "", "event": "kelvinFinished"}
 			}
 		}
 	}

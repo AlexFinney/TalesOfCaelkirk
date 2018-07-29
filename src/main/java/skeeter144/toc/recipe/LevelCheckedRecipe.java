@@ -129,7 +129,10 @@ public class LevelCheckedRecipe implements IRecipe {
 
 	
 	boolean playerMeetsLevelReq(InventoryCrafting inv) {
-		EntityPlayer pl = findPlayer(inv);
+		//TODO: Make this work with released code
+		
+		
+	/*	EntityPlayer pl = findPlayer(inv);
 		if(pl.world.isRemote)
 			return true;
 		
@@ -137,6 +140,8 @@ public class LevelCheckedRecipe implements IRecipe {
 			return false;
 		
 		 return TOCMain.pm.getPlayer(pl).getPlayerLevels().getLevel(Levels.CRAFTING).getLevel() >= levelReq;
+		 */
+		return false;
 	}
 
 	
@@ -192,7 +197,7 @@ public class LevelCheckedRecipe implements IRecipe {
 		return true;
 	}
 	
-	private final Field eventHandlerField = ReflectionHelper.findField(InventoryCrafting.class, "eventHandler");
+	/*private final Field eventHandlerField = ReflectionHelper.findField(InventoryCrafting.class, "eventHandler");
 	private final Field containerPlayerPlayerField = ReflectionHelper.findField(ContainerPlayer.class, "player");
 	private final Field slotCraftingPlayerField = ReflectionHelper.findField(SlotCrafting.class, "player");
 	
@@ -209,6 +214,7 @@ public class LevelCheckedRecipe implements IRecipe {
 		return null;
 	}
 	
+	*/
 	@Override
 	public ItemStack getRecipeOutput() {
 		return output;

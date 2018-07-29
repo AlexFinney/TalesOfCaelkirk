@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -13,6 +15,7 @@ import java.util.UUID;
 import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.entity.player.EntityPlayer;
+import skeeter144.toc.data.Database;
 import skeeter144.toc.player.EntityLevels;
 import skeeter144.toc.player.TOCPlayer;
 
@@ -29,7 +32,22 @@ public class PlayerManager {
 	
 	//returns true if the player has played on the server before
 	public boolean hasPlayerPreviouslyPlayed(UUID uuid) {
-		return new File("players\\" + uuid.toString()).exists();
+		try {
+			ResultSet rs = Database.executeQuery("SELECT * FROM users WHERE uuid = binary\"" + uuid.toString() + "\"");
+			rs.last();
+			
+			
+			int size = rs.getRow();
+			
+			if(size == 0)
+				return false;
+			else
+				return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+			return false;
+		}
 	}
 	
 	@SuppressWarnings("unchecked")

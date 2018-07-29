@@ -37,10 +37,19 @@ public class EntityEvaTeffan extends EntityNPCInteractable{
 		
 		if(qp.ulricFinished) {
 			if(qp.evaTalkedTo) {
-				if(!qp.sheepSheared)
+				if(qp.sheepSheared) {
+					if(qp.sticksCrafted && qp.stringCrafted) {
+						if(qp.rodCrafted) {
+							Network.INSTANCE.sendTo(new ShowQuestDialogMessage(this.getUniqueID(), QuestManager.aNewAdventure.id, "eva_finished"), (EntityPlayerMP)player);
+						}else {
+							Network.INSTANCE.sendTo(new ShowQuestDialogMessage(this.getUniqueID(), QuestManager.aNewAdventure.id, "eva_tutorial_9"), (EntityPlayerMP)player);
+						}
+					}else {
+						Network.INSTANCE.sendTo(new ShowQuestDialogMessage(this.getUniqueID(), QuestManager.aNewAdventure.id, "eva_tutorial_7"), (EntityPlayerMP)player);
+					}
+				}else {
 					Network.INSTANCE.sendTo(new ShowQuestDialogMessage(this.getUniqueID(), QuestManager.aNewAdventure.id, "eva_returned"), (EntityPlayerMP)player);
-				else
-					Network.INSTANCE.sendTo(new ShowQuestDialogMessage(this.getUniqueID(), QuestManager.aNewAdventure.id, "eva_tutorial_7"), (EntityPlayerMP)player);
+				}
 			}else {
 				Network.INSTANCE.sendTo(new ShowQuestDialogMessage(this.getUniqueID(), QuestManager.aNewAdventure.id, "eva_intro"), (EntityPlayerMP)player);
 			}
@@ -61,6 +70,19 @@ public class EntityEvaTeffan extends EntityNPCInteractable{
 		player.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.aNewAdventure.name + "] " + TextFormatting.GREEN + "[New Task]" + TextFormatting.WHITE + "Shear a sheep and collect its wool."));
 		player.inventory.addItemStackToInventory(new ItemStack(TOCItems.shears));
 		
+	}
+	
+	public void evaFinished(UUID playerUUID) {
+		EntityPlayer player = this.world.getPlayerEntityByUUID(playerUUID);
+		player.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.aNewAdventure.name + "] " + TextFormatting.GREEN + "[New Task]" + TextFormatting.WHITE + "Go across the bridge and talk to Marlin Monroe."));
+	}
+	
+	public void beginCrafting(UUID playerUUID) {
+		EntityPlayer player = world.getPlayerEntityByUUID(playerUUID);
+		
+		player.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.aNewAdventure.name + "] " + TextFormatting.GREEN + "[New Task]" + TextFormatting.WHITE + "Craft at least 3 sticks and two strings, then return to Eva."));
+		ANewAdventureQuestProgress qp = (ANewAdventureQuestProgress)QuestManager.getQuestProgressForPlayer(playerUUID, QuestManager.aNewAdventure);
+		qp.craftingStarted = true;
 	}
 	
 	

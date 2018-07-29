@@ -20,6 +20,7 @@ import skeeter144.toc.entity.mob.mount.flying.EntityPegasus;
 import skeeter144.toc.entity.mob.passive.banker.EntityBanker;
 import skeeter144.toc.entity.mob.passive.questgiver.EntityEvaTeffan;
 import skeeter144.toc.entity.mob.passive.questgiver.EntityKelvinWhitestone;
+import skeeter144.toc.entity.mob.passive.questgiver.EntityMarlinMonroe;
 import skeeter144.toc.entity.mob.passive.questgiver.EntityRobertCromwell;
 import skeeter144.toc.entity.mob.passive.questgiver.EntityUlricWeston;
 import skeeter144.toc.entity.mob.passive.shopkeeper.EntityHumanShopKeeper;
@@ -57,6 +58,7 @@ public class TOCEntities {
 			registerEntity(EntityUlricWeston.class, "ulric_weston", 80, 3, true, 0xFFFFFFFF, 0xFFFFFFFF);
 			registerEntity(EntityEvaTeffan.class, "eva_teffan", 80, 3, true, 0xFFFFFFFF, 0xFFFFFFFF);
 			registerEntity(EntityKelvinWhitestone.class, "kelvin_whitestone", 80, 3, true, 0xFFFFFFFF, 0xFFFFFFFF);
+			registerEntity(EntityMarlinMonroe.class, "marlin_monroe", 80, 3, true, 0xFFFFFFFF, 0xFFFFFFFF);
 			
 			//swords
 			registerEntity(EntityHumanShopKeeper.class, "sam_derric", 80, 3, true, 0xFFFFFFFF, 0xFFFFFFFF);

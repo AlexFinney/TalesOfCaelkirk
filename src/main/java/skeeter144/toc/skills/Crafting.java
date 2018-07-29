@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -41,18 +42,16 @@ public class Crafting {
 	public IRecipe oak_shortbow;
 	public IRecipe oak_longbow;
 	
+	public IRecipe string;
+	
+	public IRecipe fishingPole;
+	
+	
 	Map<Item, Integer> itemLevelRequirements = new HashMap<Item, Integer>();
 	Map<Item, Integer> itemXpRewards = new HashMap<Item, Integer>();
 	
 	
 	void initRecipes() {
-		
-		oak_shortbow_unstrung = new LevelCheckedRecipe(new ItemStack(TOCItems.arrow_bronze, 4), 1, 20, 
-				" a " +
-				" a " + 
-				" a " + 
-				"a,toc:arrowhead_bronze");
-		
 		
 		oak_shortbow_unstrung = new LevelCheckedRecipe(new ItemStack(TOCItems.bow_oak_short_unstrung), 1, 50, 
 				" o " +
@@ -76,6 +75,12 @@ public class Crafting {
 		
 		oak_shortbow = new LevelCheckedRecipe(asList(TOCItems.bowstring, TOCItems.bow_oak_short_unstrung), new ItemStack(TOCItems.bow_oak_short), 3, 50);
 		oak_longbow = new LevelCheckedRecipe(asList(TOCItems.bowstring, TOCItems.bow_oak_long_unstrung), new ItemStack(TOCItems.bow_oak_long), 3, 50);
+	
+		string = new LevelCheckedRecipe(asList(Item.getItemFromBlock(Blocks.WOOL)), new ItemStack(Items.STRING, 2), 1, 10);
+		
+		fishingPole = new LevelCheckedRecipe(new ItemStack(Items.FISHING_ROD), 1, 20, "  S" + 
+																					  " St" + 
+																					  "S t" + "S,toc:oak_stick,t,minecraft:string");
 		
 	}
 	

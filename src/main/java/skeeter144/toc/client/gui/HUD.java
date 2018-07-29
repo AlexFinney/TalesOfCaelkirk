@@ -68,7 +68,7 @@ public class HUD extends Gui {
 			 event.setYaw(event.getYaw() + (float) (Math.sin(ticks / 40) * 3) +
 			 event.getPitch() / 10);
 		}
-
+		
 	}
 
 	@SubscribeEvent

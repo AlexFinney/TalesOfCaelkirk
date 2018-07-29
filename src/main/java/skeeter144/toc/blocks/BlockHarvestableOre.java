@@ -66,6 +66,7 @@ public class BlockHarvestableOre extends CustomBlock{
 				}
 					
 				IBlockState oldState = world.getBlockState(pos);
+				MinecraftForge.EVENT_BUS.post(new BlockMinedEvent(world, pos, oldState, player));
 				world.setBlockState(pos, TOCBlocks.harvested_ore.getDefaultState());
 				TileEntityHarvestedOre ore = (TileEntityHarvestedOre)world.getTileEntity(pos);
 				ore.resourceBlockState = oldState;
@@ -88,5 +89,13 @@ public class BlockHarvestableOre extends CustomBlock{
 	@Override
 	public boolean isFullBlock(IBlockState state) {
 		return false;
+	}
+	
+	public static class BlockMinedEvent extends BlockEvent{
+		public EntityPlayer player;
+		public BlockMinedEvent(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+			super(world, pos, state);
+			this.player = player;
+		}
 	}
 }

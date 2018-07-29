@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.network.AddLevelXpMessage;
@@ -116,10 +119,13 @@ public class RecipeManager {
 				++slot;
 			}
 		}
+		MinecraftForge.EVENT_BUS.post(new ItemSmithedEvent(player, r.crafted.copy()));
+		
 		player.inventory.addItemStackToInventory(r.crafted.copy());
 		playerCraftingQueue.get(player.getUniqueID()).remove(r);
 		if(playerCraftingQueue.get(player.getUniqueID()).size() == 0)
 			playerCraftingQueue.remove(player.getUniqueID());
+		
 		Network.INSTANCE.sendTo(new ItemCraftedMessage(), player);
 		TOCMain.pm.getPlayer(player).levels.addExp(r.level, r.xp);
 		Network.INSTANCE.sendTo(new AddLevelXpMessage(r.level.name().toString(), r.xp), player);
@@ -130,5 +136,15 @@ public class RecipeManager {
 		if(instance == null)
 			instance = new RecipeManager();
 		return instance;
+	}
+	
+	public static class ItemSmithedEvent extends Event
+	{		
+		public EntityPlayer player;
+		public ItemStack smithed;
+		public ItemSmithedEvent(EntityPlayerMP player, ItemStack smithed) {
+			this.player = player;
+			this.smithed = smithed;
+		}
 	}
 }

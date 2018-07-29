@@ -18,6 +18,7 @@ import skeeter144.toc.util.Reference;
 public class CustomBlockLeaves extends BlockLeaves {
 
 	public CustomBlockLeaves(String name) {
+		super();
 		this.setUnlocalizedName(name);
 		this.setRegistryName(new ResourceLocation(Reference.MODID, name));
 		this.setDefaultState(this.blockState.getBaseState()
@@ -27,22 +28,6 @@ public class CustomBlockLeaves extends BlockLeaves {
 		this.setHardness(-1);
 	}
 
-	@Override
-	public List<ItemStack> onSheared(ItemStack item, IBlockAccess world,
-			BlockPos pos, int fortune) {
-		return null;
-	}
-
-	@Override
-	public EnumType getWoodType(int meta) {
-		return null;
-
-	}
-
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
-	}
 
 	public IBlockState getStateFromMeta(int meta) {
 		return this.getDefaultState().withProperty(DECAYABLE, false)
@@ -58,18 +43,15 @@ public class CustomBlockLeaves extends BlockLeaves {
 				new IProperty[]{CHECK_DECAY, DECAYABLE});
 	}
 
-	@Override
-	public void setGraphicsLevel(boolean fancy) {
-		super.setGraphicsLevel(fancy);
-	}
 
 	@Override
-	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-	}
-	
-	@Override
-	public BlockRenderLayer getBlockLayer() {
-		return BlockRenderLayer.TRANSLUCENT;
+	public List<ItemStack> onSheared(ItemStack item, IBlockAccess world, BlockPos pos, int fortune) {
+		return null;
 	}
 
+
+	@Override
+	public EnumType getWoodType(int meta) {
+		return null;
+	}
 }
