@@ -12,7 +12,6 @@ Create Sailor entities and world sailing travel mechanism
 # More bows
 # More wood types
 # More crafting recipes
-# Smithing arrowheads
 # Crafting arrows
 
 #faeries
@@ -45,8 +44,6 @@ Floating islands in the sky where pegasus and gryffens live.
 Part of quest to unlock flyable mount, use wizrd to teleport up there
 
 
-
-
 Wood Types:
 Wood
 Oak
@@ -55,6 +52,9 @@ Maple
 Yew
 Orc
 Magic
+
+"Rouge" ish type skill that lets you make traps, mines, etc.  
+You can place these mines in the world, and may or may not render for other players if high enough level, blow monsters up, etc.
 
 
 
