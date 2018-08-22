@@ -1,0 +1,110 @@
+{
+	"intro": {
+		"text": "Hey there.  Today you're gonna be learning about mining, smelting, and smithing.  A very valuable trade.  Here's a pickaxe.  Go find some copper ore and tin ore and mine them, come back to me when you have 5 of each.",
+		"responses": {
+			"Okay.": {
+				"transition": "",
+				"event": "kelvinStart"
+			}
+		}
+	},
+	"more_ore": {
+		"text": "Looks like you don't have enough ore yet. Go mine 5 copper and 5 tin ore from around the mine.",
+		"responses": {
+			"Okay.": {
+				"transition": "",
+				"event": ""
+			}
+		}
+	},
+	"tut_2": {
+		"text": "Easy enough, huh? Alright, go smelt your ore.  Right click on the big furnace, and select bronze ingots to smelt.  Each ingot takes 1 copper ore and 1 tin ore.",
+		"responses": {
+			"Okay.": {
+				"transition": "",
+				"event": ""
+			}
+		}
+	},
+	"tut_3": {
+		"text": "Great.  Here's a Blacksmith's hammer to help you smith your ingots. Place them onto an anvil by right clicking it with your ingots.  With an empty hand, right click the anvil and select your recipe.  After selecting it, hit the anvil by left clicking it with this blacksmith's hammer until your item is crafted.",
+		"responses": {
+			"Okay.": {
+				"transition": "",
+				"event": "smithingStart"
+			}
+		}
+	},
+	"tut_4": {
+		"text": "Excellent! That's a mighty fine bronze sword you've smithed.  Mighty sharp by the looks of it.  Look, there's a reason I wanted ye' to make a sword.  We've got a bit of a goblin problem here in the mines...",
+		"responses": {
+			"...": {
+				"transition": "tut_4_1",
+				"event": ""
+			}
+		}
+	},
+	"tut_4_1": {
+		"text": "You see, a huge problem we miners have is that we'll spend thousands of gold preparing a mine, laying the tunnel frameworks, building the cranes, laying the tracks, and as we get finally start to get to the ores, a raid of goblins will swoop into the mines!'",
+		"responses": {
+			"Goblins?!": {
+				"transition": "tut_4_2",
+				"event": ""
+			}
+		}
+	},
+	"tut_4_2": {
+		"text": "Oh YES! They're awfu-  I mean, they're not so bad really, mostly just pesky critters.  But you look like a much stronger warrior than me, so I was wondering if I could get you involved on the goblin bounty?",
+		"responses": {
+			"Goblin bounty?": {
+				"transition": "tut_4_3",
+				"event": ""
+			}
+		}
+	},
+	"tut_4_3": {
+		"text": "Yessssir! The goblin bounty is funded by the Miner's Guild of Caelkirk.  Each goblin ear earns 2 copper pieces.  As you turn in more and more ears, you can reach benchmark awards that can give you unique items.",
+		"responses": {
+			"Wow.": {
+				"transition": "tut_4_4",
+				"event": ""
+			}
+		}
+	},
+	"tut_4_4": {
+		"text": "I think this is a good place to start to teach you about combat.  Go kill 10 goblins, collecting their ears to prove that you got em, and then come back to me. Here's a bronze chestplate to protect your vitals.  Feel free to mine some more ores to smith more armor if you feel like it. You can equip armor by pressing 'E' and then dragging your armor onto the appropriate armor slot.",
+		"responses": {
+			"No mo' goblins!": {
+				"transition": "",
+				"event": "killGoblins"
+			}
+		}
+	},
+	"goblin_not_done": {
+		"text": "How goes the fight against the cave crawlers? Once you get 10 ears, head back to me, okay?",
+		"responses": {
+			"Goodbye": {
+				"transition": "",
+				"event": ""
+			}
+		}
+	},
+	"finished": {
+		"text": "Excellent, you're a natural fighter! As promised, you'll be paid for your bounty. To really blow your mind open, head up the ladder and out the cave to the magic temple.  They'll introduce you to magic attacks and all sorts of cool things.  Too complicated for me, though.  I prefer a solid piece of steel in my hand myself.",
+		"responses": {
+			"Okay, thanks.": {
+				"transition": "",
+				"event": "kelvinFinished"
+			}
+		}
+	},
+	"returned": {
+		"text": "Head to the wizard tower.  They'll show you some cool stuff.",
+		"responses": {
+			"Okay, thanks.": {
+				"transition": "",
+				"event": ""
+			}
+		}
+	}
+}

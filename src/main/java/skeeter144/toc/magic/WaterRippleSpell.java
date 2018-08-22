@@ -14,7 +14,6 @@ public class WaterRippleSpell extends ElementalSpell{
 
 	public WaterRippleSpell(String name, String iconName, int damage, int cooldown, int trailId) {
 		super(name, iconName, damage, cooldown, trailId);
-		manaCost = 14;
 	}
 
 	

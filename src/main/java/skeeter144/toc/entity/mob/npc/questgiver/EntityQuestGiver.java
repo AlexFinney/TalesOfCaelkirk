@@ -1,4 +1,4 @@
-package skeeter144.toc.entity.mob.passive.questgiver;
+package skeeter144.toc.entity.mob.npc.questgiver;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -7,10 +7,10 @@ import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.world.World;
 import skeeter144.toc.entity.mob.CustomMob;
-import skeeter144.toc.entity.mob.passive.EntityNpc;
+import skeeter144.toc.entity.mob.npc.EntityNpc;
 import skeeter144.toc.quest.Quest;
 
-public abstract class EntityQuestGiver extends EntityNpc{
+public abstract class EntityQuestGiver extends EntityNPCInteractable{
 
 	Quest[] quests;
 	public EntityQuestGiver(World worldIn, Quest... quests) {

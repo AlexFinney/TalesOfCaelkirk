@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class TileEntityMobSpawner extends TileEntity implements ITickable {
 
-	public int mob_id = 0;
+	public String mob_name = "";
 	public int spawn_radius = 10;
 	public int avg_spawns_per_min = 5;
 	public int mob_spawn_limit = 5;
@@ -29,7 +29,7 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable {
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		compound.setInteger("mob_id", mob_id);
+		compound.setString("mob_name", mob_name);
 		compound.setInteger("spawn_radius", spawn_radius);
 		compound.setInteger("avg_spawns_per_min", avg_spawns_per_min);
 		compound.setInteger("mob_spawn_limit", mob_spawn_limit);
@@ -41,7 +41,7 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable {
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
-		mob_id = compound.getInteger("mob_id");
+		mob_name = compound.getString("mob_name");
 		spawn_radius = compound.getInteger("spawn_radius");
 		avg_spawns_per_min = compound.getInteger("avg_spawns_per_min");
 		mob_spawn_limit = compound.getInteger("mob_spawn_limit");
@@ -61,13 +61,13 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable {
 			float chance = avg_spawns_per_min / 60f;
 			if(this.world.rand.nextFloat() < chance) {
 				for(EntityEntry entry : ForgeRegistries.ENTITIES) {
-					if(entry.hashCode() == mob_id) {
+					if(entry.getEntityClass().getName().equals(mob_name)) {
 						AxisAlignedBB bb = new AxisAlignedBB(pos.getX() - mob_spawn_search_radius / 2,
-															 pos.getY() - 20, 
+															 pos.getY() - 5, 
 															 pos.getZ() - mob_spawn_search_radius / 2,
 															 
 															 pos.getX() + mob_spawn_search_radius / 2,
-															 pos.getY() + 20, 
+															 pos.getY() + 5, 
 															 pos.getZ() + mob_spawn_search_radius / 2);
 						
 						if(this.world.getEntitiesWithinAABB(entry.getEntityClass(), bb).size() < mob_spawn_limit) {
@@ -78,7 +78,7 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable {
 									int spawnXOffset = world.rand.nextInt(spawn_radius) - spawn_radius / 2;
 									int spawnZOffset = world.rand.nextInt(spawn_radius) - spawn_radius / 2;
 									
-									BlockPos spawnPos = new BlockPos(pos.getX() + spawnXOffset, pos.getY() + 10, pos.getZ() + spawnZOffset);
+									BlockPos spawnPos = new BlockPos(pos.getX() + spawnXOffset, pos.getY(), pos.getZ() + spawnZOffset);
 									
 									if(!world.isAirBlock(spawnPos)) {
 										--i;
@@ -90,7 +90,7 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable {
 									}
 									
 									spawnPos = spawnPos.add(0, 1, 0);
-									if(!world.isAirBlock(spawnPos)) {
+									if(!world.isAirBlock(spawnPos) || !world.isAirBlock(spawnPos.add(0, 1, 0))) {
 										--i;
 										continue;
 									}else {

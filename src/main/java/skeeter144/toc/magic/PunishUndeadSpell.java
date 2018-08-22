@@ -21,7 +21,6 @@ public class PunishUndeadSpell extends ShootableSpell {
 	static final int DAMAGE = 25;
 	public PunishUndeadSpell(String name, String iconName, int cooldown, int trailId) {
 		super(name, iconName, cooldown, trailId);
-		this.manaCost = 15;
 	}
 
 	@Override

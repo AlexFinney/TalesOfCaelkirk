@@ -44,6 +44,10 @@ public class Sounds {
 	
 	public static final SoundEvent fake_wood_hit = new CustomSoundEvent(new ResourceLocation(Reference.MODID, "fake_wood_hit"));
 			
+	public static final SoundEvent spell_wind_gust = new CustomSoundEvent(new ResourceLocation(Reference.MODID, "wind_gust"));
+	public static final SoundEvent spell_summon_wall = new CustomSoundEvent(new ResourceLocation(Reference.MODID, "summon_wall"));
+	
+	
 	static SoundEvent registerSound(String name) {
 		return new SoundEvent(new ResourceLocation(Reference.MODID, name));
 	}

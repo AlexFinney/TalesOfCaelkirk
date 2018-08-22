@@ -1,0 +1,116 @@
+{
+	"intro":
+		{
+			"text": "Well hello there.  My name is Eva Teffan.  I'm a master craftswoman, and I can teach you a little bit about my trade.  Are you interested?",
+			"responses":
+			{
+				"Sounds great": {"transition": "tutorial_1"},
+				"No thanks": {"transition": "alright_then"}
+			}
+		},
+		"returned":
+		{
+			"text": "Did you have trouble finding the sheeps? They're just out back! Bring some wool and we'll get started, okay? Bye!",
+			"responses":
+			{
+				"Bye": {"transition": ""}
+			}
+		},
+		"not_expected":
+		{
+			"text": "Diddlee dee, diddlee dum. I love crafting!",
+			"responses":
+			{
+				"Huh.": {"transition": ""}
+			}
+		},
+		"alright_then":
+		{
+			"text": "Alright then young traveller.  Come and talk to me if you want some hands-on instruction in the crafting trade.",
+			"responses":
+			{
+				"Goodbye": {"transition": ""}
+			}
+		},
+		"tutorial_1":
+		{
+			"text": "Excellent! To start off with, crafting is the art of creating something beautiful out of lesser parts, it's a fantastic process.  You can craft all sorts of wonderful tools and many other things!",
+			"responses":
+			{
+				"Cool!": {"transition": "tutorial_2"}
+			}
+		},
+		"tutorial_2":
+		{
+			"text": "As you progress in your crafting skill, you'll be able to craft more and more complex items that can be worth a lot of money! For the more complex items, you'll have to discover schematics on how to build them.",
+			"responses":
+			{
+				"Interesting.": {"transition": "tutorial_3"}
+			}
+		},
+		"tutorial_3":
+		{
+			"text": "For most common items though, a decent crafting level and a little bit of intuition is all you'll need. Oh, and the required crafting materials, of course. Speaking of which, we'll need to get you some materials so can learn to craft something.",
+			"responses":
+			{
+				"What do I need?": {"transition": "tutorial_4"}
+			}
+		},
+		"tutorial_4":
+		{
+			"text": "Hmm... well that depends I guess on what we're going to craft... Let's see... I think we'll craft... a nice fishing pole!  Especially since I want you to meet my favorite-est fishing pal after we're done.",
+			"responses":
+			{
+				"Sounds good to me.": {"transition": "tutorial_5"}
+			}
+		},
+		"tutorial_5":
+		{
+			"text": "Splendid!  Okay, so to make a fishing pole, we're going to need some string and wood.  There's several ways to make string, but one of my favorites is super, duper cute!  You go out back to the sheeps, shear some of their fluffy-wuffy wool, and then craft some string out of it! Easy-peasy!",
+			"responses":
+			{
+				"Uh huh...": {"transition": "tutorial_6"}
+			}
+		},
+		"tutorial_6":
+		{
+			"text": "Alrighty then! Here's some shears, go shear a sheep and bring his wool back! Then we'll get to business.'",
+			"responses":
+			{
+				"Okay, be right back": {"transition": "",
+										"event": "beginShearSheep"}
+			}
+		},
+		"tutorial_7":
+		{
+			"text": "Excellent! Looks like you got yourself some fluffy wool!  Crafting is pretty simple in Caelkirk.  All you have to do is walk up to a crafting table and place the components in the right pattern for whatever you want to craft!  To make string, just put your wool into the crafting table.  Each piece of wool you harvest will yield two strings.",
+			"responses":
+			{
+				"Okay": {"transition": "tutorial_8"}
+			}
+		},
+		"tutorial_8":
+		{
+			"text": "After you've crafted your strings, do the same thing with one of the logs you chopped down earlier.  This time you'll craft sticks from your logs.  Each log will yield four sticks.  Come back to me once you've crafted at least 3 sticks and two string, okay?",
+			"responses":
+			{
+				"Alright, time to craft.": {"transition": "", "event": "beginCrafting"}
+			}
+		},
+		"tutorial_9":
+		{
+			"text": "Great! Now that you've got the basics down, let's make that fishing pole! It's a little more complicated, but not too bad!  What you're gonna do is put three sticks diagonally for the rod, and then hang two strings from the top of it! Not too hard.  Now go craft that rod!",
+			"responses":
+			{
+				"Okay": {"transition": "", "event": ""}
+			}
+		},
+		"finished":
+		{
+			"text": "Perfect! You're all done with me.  If you ever want to shear some sheep, feel free to stop by!  Now you're gonna go learn about fishing!  Go outside, cross the bridge, and follow the path to your left to the fishing shack!",
+			"responses":
+			{
+				"Woohoo, fishing!.": {"transition": "", "event": "evaFinished"}
+			}
+		}
+}

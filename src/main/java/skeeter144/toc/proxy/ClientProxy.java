@@ -2,10 +2,8 @@ package skeeter144.toc.proxy;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.Random;
 
-import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -21,7 +19,6 @@ import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.sound.SoundEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
@@ -66,13 +63,15 @@ import skeeter144.toc.entity.mob.mount.basic_horse.EntityMuleMount;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityVariableHorseMount;
 import skeeter144.toc.entity.mob.mount.flying.EntityGriffin;
 import skeeter144.toc.entity.mob.mount.flying.EntityPegasus;
-import skeeter144.toc.entity.mob.passive.banker.EntityBanker;
-import skeeter144.toc.entity.mob.passive.questgiver.EntityEvaTeffan;
-import skeeter144.toc.entity.mob.passive.questgiver.EntityKelvinWhitestone;
-import skeeter144.toc.entity.mob.passive.questgiver.EntityMarlinMonroe;
-import skeeter144.toc.entity.mob.passive.questgiver.EntityRobertCromwell;
-import skeeter144.toc.entity.mob.passive.questgiver.EntityUlricWeston;
-import skeeter144.toc.entity.mob.passive.shopkeeper.EntityHumanShopKeeper;
+import skeeter144.toc.entity.mob.npc.DialogManager;
+import skeeter144.toc.entity.mob.npc.banker.EntityBanker;
+import skeeter144.toc.entity.mob.npc.questgiver.EntityEvaTeffan;
+import skeeter144.toc.entity.mob.npc.questgiver.EntityKelvinWhitestone;
+import skeeter144.toc.entity.mob.npc.questgiver.EntityMarlinMonroe;
+import skeeter144.toc.entity.mob.npc.questgiver.EntityRobertCromwell;
+import skeeter144.toc.entity.mob.npc.questgiver.EntitySeloviusKamazz;
+import skeeter144.toc.entity.mob.npc.questgiver.EntityUlricWeston;
+import skeeter144.toc.entity.mob.npc.shopkeeper.EntityHumanShopKeeper;
 import skeeter144.toc.handlers.ItemTooltipHandler;
 import skeeter144.toc.handlers.PlayerInputHandler;
 import skeeter144.toc.handlers.tick.ClientTickHandler;
@@ -98,6 +97,7 @@ public class ClientProxy extends CommonProxy
 		TOCBlocks.registerRenders();
 		entityStatusGUI = new GuiEntityStatus();
 		Keybindings.registerKeybinds();
+		DialogManager.init();
 	}
 	
 	public void init(FMLInitializationEvent event){
@@ -130,6 +130,7 @@ public class ClientProxy extends CommonProxy
 		rm.entityRenderMap.put(EntityEvaTeffan.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
 		rm.entityRenderMap.put(EntityKelvinWhitestone.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
 		rm.entityRenderMap.put(EntityMarlinMonroe.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
+		rm.entityRenderMap.put(EntitySeloviusKamazz.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
 		
 		rm.entityRenderMap.put(EntityBanker.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
 		

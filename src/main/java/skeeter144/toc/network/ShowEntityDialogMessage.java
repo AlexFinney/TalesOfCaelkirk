@@ -11,38 +11,35 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import skeeter144.toc.client.gui.DialogGui;
+import skeeter144.toc.entity.mob.npc.questgiver.EntityNPCInteractable;
 import skeeter144.toc.quest.NpcDialog;
 import skeeter144.toc.quest.QuestManager;
 
-public class ShowQuestDialogMessage implements IMessage{
+public class ShowEntityDialogMessage implements IMessage{
 
-	int questId;
 	String dialogName;
 	UUID uuid;
-	public ShowQuestDialogMessage() {}
-	public ShowQuestDialogMessage(UUID entityId, int questId, String dialogName) {
+	public ShowEntityDialogMessage() {}
+	public ShowEntityDialogMessage(UUID entityId, String dialogName) {
 		this.uuid = entityId;
-		this.questId = questId;
 		this.dialogName = dialogName;
 	}
 	
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		questId = buf.readInt();
 		dialogName = ByteBufUtils.readUTF8String(buf);
 		uuid = new UUID(buf.readLong(), buf.readLong());
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		buf.writeInt(questId);
 		ByteBufUtils.writeUTF8String(buf, dialogName);
 		buf.writeLong(uuid.getMostSignificantBits());
 		buf.writeLong(uuid.getLeastSignificantBits());
 	}
 	
-	public static class ShoqQuestDialogMessageHandler implements IMessageHandler<ShowQuestDialogMessage, IMessage>{
-		public IMessage onMessage(ShowQuestDialogMessage message, MessageContext ctx) {
+	public static class ShowQuestDialogMessageHandler implements IMessageHandler<ShowEntityDialogMessage, IMessage>{
+		public IMessage onMessage(ShowEntityDialogMessage message, MessageContext ctx) {
 			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
 				public void run() {
 					EntityLivingBase ent = null;
@@ -53,8 +50,12 @@ public class ShowQuestDialogMessage implements IMessage{
 						}
 					}
 					
-					NpcDialog dialog = QuestManager.getQuestById(message.questId).questDialogs.get(message.dialogName);
-					Minecraft.getMinecraft().displayGuiScreen(new DialogGui(ent, dialog));
+					if(ent == null) {
+						System.out.println("\n\n*** ERRROR EntityDialog got a null Entity on Client Side *** \n\n");
+						return;
+					}
+					
+					Minecraft.getMinecraft().displayGuiScreen(new DialogGui(ent, ((EntityNPCInteractable)ent).getDialog(message.dialogName)));
 				}
 			});
 			return null;

@@ -180,8 +180,6 @@ public class DialogGui extends GuiScreen{
 				
 				if(!response.serverEventFunc.equals(""))
 					Network.INSTANCE.sendToServer(new QuestDialogResponseMessage(e.getUniqueID(), response.serverEventFunc));
-				else
-					Network.INSTANCE.sendToServer(new QuestDialogResponseMessage(e.getUniqueID(), response.responseName));
 			}
 			
 		}

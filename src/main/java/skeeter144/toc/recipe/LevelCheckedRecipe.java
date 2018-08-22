@@ -77,7 +77,7 @@ public class LevelCheckedRecipe implements IRecipe {
 		String[] tokens = patternKey.split(",");
 		for(int i = 0; i < tokens.length; i+=2) {
 			ResourceLocation loc = new ResourceLocation(tokens[i+1].split(":")[0], tokens[i+1].split(":")[1]);
-			itemKey.put(tokens[0], GameRegistry.findRegistry(Item.class).getValue(loc));
+			itemKey.put(tokens[i], GameRegistry.findRegistry(Item.class).getValue(loc));
 		}
 		
 		items.add(itemKey.get(Character.toString(pattern.charAt(0))));
@@ -141,7 +141,7 @@ public class LevelCheckedRecipe implements IRecipe {
 		
 		 return TOCMain.pm.getPlayer(pl).getPlayerLevels().getLevel(Levels.CRAFTING).getLevel() >= levelReq;
 		 */
-		return false;
+		return true;
 	}
 
 	

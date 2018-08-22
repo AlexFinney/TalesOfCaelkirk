@@ -9,7 +9,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
-import skeeter144.toc.entity.mob.passive.shopkeeper.EntityHumanShopKeeper;
+import skeeter144.toc.entity.mob.npc.shopkeeper.EntityHumanShopKeeper;
 
 public class CommandSummonNpc implements ICommand{
 

@@ -4,14 +4,15 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.mob.CustomMob;
+import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.sounds.Sounds;
 
 public class EntityGoblin extends CustomMob{
@@ -55,6 +56,11 @@ public class EntityGoblin extends CustomMob{
 	@Override
 	protected SoundEvent getHurtSound(DamageSource d) {
 		return Sounds.goblin_snarl;
+	}
+	@Override
+	protected void dropLoot(boolean wasRecentlyHit, int lootingModifier, DamageSource source) {
+		super.dropLoot(wasRecentlyHit, lootingModifier, source);
+		this.entityDropItem(new ItemStack(TOCItems.goblin_ear), 0);
 	}
 
 }

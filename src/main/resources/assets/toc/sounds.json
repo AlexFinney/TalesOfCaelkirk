@@ -110,5 +110,13 @@
   "fake_wood_hit": {
     "category": "master",
       "sounds": ["toc:block/fake_wood_hit"]
+  },
+  "wind_gust": {
+    "category": "master",
+      "sounds": ["toc:sound_effects/magic/wind_gust"]
+  },
+  "summon_wall": {
+    "category": "master",
+      "sounds": ["toc:sound_effects/magic/summon_wall"]
   }
 }

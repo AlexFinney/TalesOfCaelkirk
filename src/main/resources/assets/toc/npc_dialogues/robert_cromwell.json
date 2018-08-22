@@ -1,0 +1,74 @@
+{
+	"introduction": {
+		"text": "Hello there, new adventurer! So you're new to Caelkirk? Oh boy, this is exciting... you're going to love it here! Assuming you're not brutally killed by a monster that is... But not to worry, you might actually stand a chance here! Are you ready then?",
+		"responses": {
+			"Let's go!": {
+				"transition": "info_offer"
+			}
+		}
+	},
+	"info_offer": {
+		"text": "Great. Would you like to hear a little bit about this land, or just jump right in?",
+		"responses": {
+			"Tell me more": {
+				"transition": "more_info"
+			},
+			"Let's get to it!": {
+				"transition": "first_task"
+			}
+		}
+	},
+	"more_info": {
+		"text": "Caelkirk is a vast land with many monsters, castles, quests, and hidden areas to explore.  By completing quests, you will gain skill XP to level up your abilities and gold coins you can spend around the world! Some quests will even grant you rare items and access to special features.",
+		"responses": {
+			"Skills/XP?": {
+				"transition": "skills_xp_info"
+			},
+			"Gold coins?": {
+				"transition": "gold_coins"
+			},
+			"Let's get to it!": {
+				"transition": "first_task"
+			}
+		}
+	},
+	"skills_xp_info": {
+		"text": "Everyone in Caelkirk has special attributes called \"skills\".  By completing actions you can train your skills and level them up, becoming even stronger and more profecient at your task of choice. You can open up your skills menu by pressing \"L\".",
+		"responses": {
+			"Gold coins?": {
+				"transition": "gold_coins"
+			},
+			"Let's get to it!": {
+				"transition": "first_task"
+			}
+		}
+	},
+	"gold_coins": {
+		"text": "Yes! Oh there is so much wealth to be acquired here. A skilled adventurer can make a fortune! By killing monsters, selling items to shops and other players, completing quests, and more, you will earn coins.  There are 4 tiers of currency in Caelkirk.  Copper, Silver, Gold, and Platinum coins.  50 Copper coins is equal to 1 Silver, 50 Silvers is 1 Gold, and so on. Got it?",
+		"responses": {
+			"Skills/XP?": {
+				"transition": "skills_xp_info"
+			},
+			"Let's get to it!": {
+				"transition": "first_task"
+			}
+		}
+	},
+	"first_task": {
+		"text": "Alright, your first task is to go outside next door to the woodcutting shack and talk to Ulric. He'll teach you about the skill of Woodcutting. I put a marker on your map for you in case you have trouble finding it.",
+		"responses": {
+			"Thanks!": {
+				"transition": "",
+				"event": "startPlayerOnQuest"
+			}
+		}
+	},
+	"player_returned": {
+		"text": "What are you doing back? Are you having trouble finding Ulric? Just go outside the door, go to the fountain, turn left, and look for a small woodcutting shack.  He'll be right outside.  Also, you can look for the next quest objective by finding the \"!\" on your minimap.",
+		"responses": {
+			"Okay": {
+				"transition": ""
+			}
+		}
+	}
+}

@@ -1,4 +1,4 @@
-package skeeter144.toc.entity.mob.passive.shopkeeper;
+package skeeter144.toc.entity.mob.npc.shopkeeper;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;

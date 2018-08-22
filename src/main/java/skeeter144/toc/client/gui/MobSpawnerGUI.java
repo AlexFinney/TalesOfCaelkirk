@@ -32,7 +32,7 @@ public class MobSpawnerGUI extends GuiScreen{
 	public MobSpawnerGUI(TileEntityMobSpawner spawner) {
 		this.spawner = spawner;
 		
-		//this.mobIndex = spawner.mob_id;
+		this.mobIndex = 10;
 		this.spawnRadius = spawner.spawn_radius;
 		this.spawnsPerMin = spawner.avg_spawns_per_min;
 		this.mobSpawnLimit = spawner.mob_spawn_limit;
@@ -44,8 +44,9 @@ public class MobSpawnerGUI extends GuiScreen{
 		for(EntityEntry entry :ForgeRegistries.ENTITIES) {
 			if(entry.getEgg() != null) {
 				mobList.add(entry);
-				if(entry.hashCode() == spawner.mob_id)
+				if(entry.getEntityClass().getName().equals(spawner.mob_name)) {
 					mobIndex = i;
+				}
 				++i;
 			}
 		}
@@ -149,7 +150,7 @@ public class MobSpawnerGUI extends GuiScreen{
 			break;
 		case 14:
 			Network.INSTANCE.sendToServer(new SetMobSpawnerSettingsMessage(
-								    mobList.get(mobIndex).hashCode(),
+								    mobList.get(mobIndex).getEntityClass().getName(),
 									spawnRadius,
 									spawnsPerMin,
 									mobSpawnLimit,

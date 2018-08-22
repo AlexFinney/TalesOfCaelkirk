@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import skeeter144.toc.entity.mob.passive.questgiver.EntityNPCInteractable;
+import skeeter144.toc.entity.mob.npc.questgiver.EntityNPCInteractable;
 
 public class QuestDialogResponseMessage implements IMessage{
 
@@ -42,7 +42,7 @@ public class QuestDialogResponseMessage implements IMessage{
 					for(Entity e : player.world.loadedEntityList) {
 						if(e.getUniqueID().equals(message.questGiverUUID)) {
 							EntityNPCInteractable npc = (EntityNPCInteractable)e;
-							npc.handleDialogResponse(player.getUniqueID(), message.dialogResponse);
+							npc.runServerFunction(player.getUniqueID(), message.dialogResponse);
 						}
 					}
 				}

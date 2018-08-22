@@ -1,0 +1,75 @@
+{
+	"intro": {
+		"text": "Greetings, young adventurer. Sooooo..... you think you want to learn magic, huh? That is intriguing. What makes you think you're even powerful enough to learn the arcane arts?",
+		"responses": {
+			"Because! I wanna!": {
+				"transition": "intro_reject_1"
+			},
+			"Because I will become powerful!": {
+				"transition": "intro_reject_2"
+			},
+			"Cause I wanna do cool party tricks!": {
+				"transition": "intro_1"
+			}
+		}
+	},
+	"intro_reject_1": {
+		"text": "Wanting something does not entitle you to it, young one... You do not deserve it.",
+		"responses": {
+			"Awh...": {
+				"transition": ""
+			}
+		}
+	},
+	"intro_reject_2": {
+		"text": "Many-a folk want power. Fewer have it.  Yet even fewer know how to wield it.  Wanting power is no reason for me to teach you. Begone.",
+		"responses": {
+			"Awh...": {
+				"transition": ""
+			}
+		}
+	},
+	"intro_1": {
+		"text": "Intriguing answer, young one.  Not an answer I have received many times. You sound like a trouble maker.  But... you also sound like myeslf at your age.  Very well.  I shall take you some basic magics.  It is the start of the path to becoming a full wizard.",
+		"responses": {
+			"Awesome!": {
+				"transition": "intro_2"
+			}
+		}
+	},
+	"intro_2": {
+		"text": "I shall teach you how to use the basics of the magical energy that is flowing through the universe.  To begin, you'll need a wand.  I've got an apprentice wand for you here.  Wands allow wizards to channel the energy in nature, focusing it and bending it to his or her will.",
+		"responses": {
+			"Awesome!": {
+				"transition": "intro_3"
+			}
+		}
+	},
+	"intro_3": {
+		"text": "To use a wand, hold it in your hand and press 'M' to open your magic book.  Select a spell that you want to cast and bind it to your wand.  Then, all you have to do is right click with your wand to cast the bound spell, at the expense of your mana points.",
+		"responses": {
+			"Awesome!": {
+				"transition": "intro_4"
+			}
+		}
+	},
+	"intro_4": {
+		"text": "Alright.  Here is your first wand.  Guard it tightly.  You'll only know one spell to start out with, because you are inexperienced in the powerful arts, but as you grow in experience, and through adventure, research, study, and science, you will learn more powerful, and sometimes, quirky, spells.  Go blast some chickens upstairs with your air strike spell.  Come back when you feel comfortable with your wand.",
+		"responses": {
+			"Awesome!": {
+			    "transition": "",
+			    "event": "chickenKilling"
+			}
+		}
+	},
+	"finished": {
+		"text": "You're completed with the introduction to Caelkirk, young one.  These are the very base, core mechanics and skills of the game, but there is so much more to discover in this world.  Good luck in your adventures.  Try not to get eaten by a monster.  I'm going to teleport you to the Capitol city now.",
+		"responses": {
+			"Thank you, wizard": {
+			    "transition": "",
+			    "event": "tutorialFinished"
+			}
+		}
+	}
+	
+}

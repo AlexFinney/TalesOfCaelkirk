@@ -1,4 +1,4 @@
-package skeeter144.toc.entity.mob.passive.shopkeeper;
+package skeeter144.toc.entity.mob.npc.shopkeeper;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,9 +13,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-import skeeter144.toc.entity.mob.passive.EntityNpc;
-import skeeter144.toc.entity.mob.passive.shopkeeper.ShopData.ItemPrice;
-import skeeter144.toc.entity.mob.passive.shopkeeper.ShopData.ShopListing;
+import skeeter144.toc.entity.mob.npc.EntityNpc;
+import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData.ItemPrice;
+import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData.ShopListing;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.OpenShopGuiMessage;
 

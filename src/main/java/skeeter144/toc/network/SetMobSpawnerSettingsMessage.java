@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -14,7 +15,7 @@ public class SetMobSpawnerSettingsMessage implements IMessage{
 
 	public SetMobSpawnerSettingsMessage() {}
 	
-	int mobIndex;
+	String mobName;
 	int spawnRadius;
 	int spawnsPerMin;
 	int mobSpawnLimit;
@@ -22,12 +23,12 @@ public class SetMobSpawnerSettingsMessage implements IMessage{
 	int minMobsPerSpawn;
 	int maxMobsPersSpawn;
 	int x, y, z;
-	public SetMobSpawnerSettingsMessage(int mobIndex, int spawnRadius, int spawnsPerMin,
+	public SetMobSpawnerSettingsMessage(String mobName, int spawnRadius, int spawnsPerMin,
 										int mobSpawnLimit, int spawnSearchRadius,
 										int minMobsPerSpawn,int maxMobsPersSpawn,
 										int x, int y, int z) 
 	{
-		this.mobIndex = mobIndex;
+		this.mobName = mobName;
 		this.spawnRadius = spawnRadius;
 		this.spawnsPerMin = spawnsPerMin;
 		this.mobSpawnLimit = mobSpawnLimit;
@@ -41,7 +42,7 @@ public class SetMobSpawnerSettingsMessage implements IMessage{
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		buf.writeInt(mobIndex);
+		ByteBufUtils.writeUTF8String(buf, mobName);
 		buf.writeInt(spawnRadius);
 		buf.writeInt(spawnsPerMin);
 		buf.writeInt(mobSpawnLimit);
@@ -55,7 +56,7 @@ public class SetMobSpawnerSettingsMessage implements IMessage{
 	
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		mobIndex = buf.readInt();
+		mobName= ByteBufUtils.readUTF8String(buf);
 		spawnRadius = buf.readInt();
 		spawnsPerMin = buf.readInt();
 		mobSpawnLimit = buf.readInt();
@@ -83,7 +84,7 @@ public class SetMobSpawnerSettingsMessage implements IMessage{
 						TileEntity te = player.world.getTileEntity(new BlockPos(msg.x, msg.y, msg.z));
 						if(te != null && te instanceof TileEntityMobSpawner) {
 							TileEntityMobSpawner tems = (TileEntityMobSpawner)te;
-							tems.mob_id = msg.mobIndex;
+							tems.mob_name = msg.mobName;
 							tems.spawn_radius = msg.spawnRadius;
 							tems.avg_spawns_per_min = msg.spawnsPerMin;
 							tems.mob_spawn_limit = msg.mobSpawnLimit;

@@ -196,7 +196,8 @@ public class TOCItems {
 	public static Item dragonstone_leggings = new CustomArmor(DRAGONSTONE_ARMOR, 2, EntityEquipmentSlot.LEGS, "dragonstone_leggings", .05f, 0f, .06f);
 	public static Item dragonstone_boots = new CustomArmor(DRAGONSTONE_ARMOR, 3, EntityEquipmentSlot.FEET, "dragonstone_boots", .02f, 0f, .06f);
 
-	public static Item rat_tail = new QuestItem("rat_tail", false, 1);
+	public static Item goblin_ear = new QuestItem("goblin_ear", false, 20);
+	public static Item rat_tail = new QuestItem("rat_tail", false, 20);
 	public static Item blacksmith_hammer = new BlacksmithHammer();
 
 	public static Item donkey_summoner = new HorseDonkeySummoner("donkey_summoner", EntityDonkeyMount.class);

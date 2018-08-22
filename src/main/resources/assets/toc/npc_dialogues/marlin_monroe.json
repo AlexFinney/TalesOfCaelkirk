@@ -1,0 +1,20 @@
+{
+	"intro": {
+		"text": "Hey, this is my into. Grump, grump.",
+		"responses": {
+			"Okay.": {
+				"transition": "finished",
+				"event": ""
+			}
+		}
+	},
+	"finished": {
+		"text": "Yeah, yeah, I'm grumpy.  Fishing isn't implemented yet.  Go into the mines and find Kelvin Whitestone.",
+		"responses": {
+			"Okay.": {
+				"transition": "",
+				"event": "marlinFinished"
+			}
+		}
+	}
+}

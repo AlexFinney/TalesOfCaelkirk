@@ -31,7 +31,6 @@ public abstract class Quest implements Serializable{
 	public final int id;
 	protected Map<Levels, Integer> experienceRewards = new HashMap<Levels, Integer>();
 	protected Map<Item, Integer> itemRewards = new HashMap<Item, Integer>();
-	protected int currentStage = 0;
 	public final Map<String, NpcDialog> questDialogs = new HashMap<String, NpcDialog>();
 
 	public Quest(String questFile, int id) {
@@ -123,6 +122,5 @@ public abstract class Quest implements Serializable{
 	
 	public abstract boolean canPlayerStartQuest(TOCPlayer player);
 	public abstract QuestProgress getNewQuestProgressInstance();
-	public abstract Class<? extends QuestProgress> getQuestProgressClass();
 	protected abstract void questFinished(EntityPlayerMP player);
 }

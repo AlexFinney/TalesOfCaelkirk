@@ -80,7 +80,7 @@ public class Crafting {
 		
 		fishingPole = new LevelCheckedRecipe(new ItemStack(Items.FISHING_ROD), 1, 20, "  S" + 
 																					  " St" + 
-																					  "S t" + "S,toc:oak_stick,t,minecraft:string");
+																					  "S t" + "S,toc:stick_oak,t,minecraft:string");
 		
 	}
 	

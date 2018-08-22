@@ -19,7 +19,7 @@ public class QuestManager{
 	public static Quest aNewAdventure;
 	
 	public static final HashMap<Integer, Quest> quests = new HashMap<Integer, Quest>();
-	public static HashMap<UUID, ArrayList<QuestProgress>> playerQuestProgresses = new HashMap<UUID, ArrayList<QuestProgress>>();
+	public static HashMap<UUID, HashMap<Integer, QuestProgress>> playerQuestProgresses = new HashMap<UUID, HashMap<Integer, QuestProgress>>();
 	
 	public static void initQuests() {
 		loadQuestProgress();
@@ -56,7 +56,7 @@ public class QuestManager{
 			try {
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
 				
-				playerQuestProgresses = (HashMap<UUID, ArrayList<QuestProgress>>) ois.readObject();
+				playerQuestProgresses = (HashMap<UUID, HashMap<Integer, QuestProgress>>) ois.readObject();
 				
 				ois.close();
 			}catch(Exception e) {
@@ -83,57 +83,58 @@ public class QuestManager{
 	
 	
 	public static boolean hasPlayerFinishedQuest(UUID uuid, Quest c) {
-		ArrayList<QuestProgress> l = playerQuestProgresses.get(uuid);
-		if(l == null)
+		HashMap<Integer, QuestProgress> map = playerQuestProgresses.get(uuid);
+	
+		if(map.get(c.id) == null)
 			return false;
 		
-		boolean found = false;
-		for(QuestProgress qp : l) {
-			if(qp.getClass().equals(c.getQuestProgressClass())) {
-				if(qp.finished)
-					return true;
-				else
-					return false;
-			}
-		}
+		
 		
 		return false;
 	}
 	
 	public static boolean hasPlayerStartedQuest(UUID uuid, Quest c) {
+		HashMap<Integer, QuestProgress> map = playerQuestProgresses.get(uuid);
 		
-		ArrayList<QuestProgress> l = playerQuestProgresses.get(uuid);
-		if(l == null)
+		if(map == null || map.get(c.id) == null) {
+			playerQuestProgresses.put(uuid, new HashMap<Integer, QuestProgress>());
 			return false;
-		
-		for(QuestProgress qp : l) {
-			if(qp.getClass().equals(c.getQuestProgressClass())) {
-				return true;
-			}
+		}else {
+			return true;
 		}
-		return false;
 	}
 	
 	public static void startPlayerOnQuest(UUID uuid, Quest q) {
-		ArrayList<QuestProgress> progresses = QuestManager.playerQuestProgresses.get(uuid);
-		if(progresses == null)
-			progresses = new ArrayList<QuestProgress>();
+		HashMap<Integer, QuestProgress> map = playerQuestProgresses.get(uuid);
+		if(map == null) {
+			playerQuestProgresses.put(uuid, new HashMap<Integer, QuestProgress>());
+			map = playerQuestProgresses.get(uuid);
+		}
 		
-		progresses.add(q.getNewQuestProgressInstance());
-		playerQuestProgresses.put(uuid, progresses);
+
+		QuestProgress qp = map.get(q.id);
+		if(qp == null)
+			map.put(q.id, new QuestProgress());
 	}
 	
+	/**
+	 * 
+	 * @param uuid UUID Of the Player
+	 * @param theQuest The Quest in question
+	 * @return Returns the QuestProgress for the Player/Quest if it exists. Creates new instance if player hasn't started quest
+	 */
 	public static QuestProgress getQuestProgressForPlayer(UUID uuid, Quest theQuest) {
-		List<QuestProgress> progresses = QuestManager.playerQuestProgresses.get(uuid);
-		if(progresses == null)
-			return null;
-		
-		for(QuestProgress qp : progresses) {
-			if(qp.getClass().equals(theQuest.getQuestProgressClass())) {
-				return qp;
-			}
+		HashMap<Integer, QuestProgress> map = playerQuestProgresses.get(uuid);
+		if(map == null) {
+			playerQuestProgresses.put(uuid, new HashMap<Integer, QuestProgress>());
+			map = playerQuestProgresses.get(uuid);
 		}
-		return null;
+		
+		if(map.get(theQuest.id) == null) {
+			map.put(theQuest.id, theQuest.getNewQuestProgressInstance());
+		}
+		
+		return (QuestProgress)map.get(theQuest.id);
 	}
 	
 	private static int nextId = 0;

@@ -19,7 +19,6 @@ public class TornadoSpell extends ShootableSpell{
 	public TornadoSpell(String name, String iconName, int trailId) {
 		super(name, iconName, 200, trailId);
 		this.levelRequirement = 1;
-		this.manaCost = 40;
 	}
 
 	@Override

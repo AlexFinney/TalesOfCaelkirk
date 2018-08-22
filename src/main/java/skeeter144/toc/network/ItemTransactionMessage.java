@@ -13,9 +13,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import skeeter144.toc.entity.mob.passive.shopkeeper.EntityShopKeeper;
-import skeeter144.toc.entity.mob.passive.shopkeeper.ShopData;
-import skeeter144.toc.entity.mob.passive.shopkeeper.ShopData.ItemPrice;
+import skeeter144.toc.entity.mob.npc.shopkeeper.EntityShopKeeper;
+import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData;
+import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData.ItemPrice;
 import skeeter144.toc.handlers.PlayerInventoryHandler.CoinsAddedToInventoryEvent;
 import skeeter144.toc.util.CurrencyOperations;
 

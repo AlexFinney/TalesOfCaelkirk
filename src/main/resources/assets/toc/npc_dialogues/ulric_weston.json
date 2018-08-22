@@ -1,0 +1,112 @@
+{
+		"refuse":
+		{
+			"text": "Who're you? I'm not expecting you.  Go back and talk to Robert Cromwell at the inn to get started.",
+			"responses":
+			{
+				"Okay": {"transition": ""}
+			}
+		},
+		"intro":
+		{
+			"text": "'ey there.  Names's Ulric.  I run the woodcutting shop around here.  So you want to learn aboot woodcuttin', eh?",
+			"responses":
+			{
+				"Okay": {"transition": "woodcutting_tutorial"},
+				"No thanks": {"transition": "alright_then"}
+			}
+		},
+		"alright_then":
+		{
+			"text": "Alright then.  When you decide you want to learn, come back and talk to me.",
+			"responses":
+			{
+				"Okay": {"transition": ""}
+			}
+		},
+		"woodcutting_tutorial":
+		{
+			"text": "Excellent.  Woodcutting is great skill in Caelkirk, if you ask me.  The most important, if you ask me.  By practicing your woodcutting skill, you'll increase your woodcutting level and be able to get more logs per tree, and chop each tree down faster.",
+			"responses":
+			{
+				"->": {"transition": "woodcutting_tutorial2"}
+			}
+		},
+		"woodcutting_tutorial2":
+		{
+			"text": "By harvestin' trees, you're stockin' up a real valuable resource.  You can sell logs at the markets, or craft 'em into important items.  Heck, you can just stock 'em up and smell 'em if you're like me.",
+			"responses":
+			{
+				"->": {"transition": "woodcutting_tutorial3"}
+			}
+		},
+		"woodcutting_tutorial3":
+		{
+			"text": "Anyways, choppin' down trees is probably a little different in this land than you're used to.  To chop down a tree, you need an axe strong enough for the wood type.  You can read about the different axes and tree types in the Woodcutting book.",
+			"responses":
+			{
+				"->": {"transition": "woodcutting_tutorial4"}
+			}
+		},
+		"woodcutting_tutorial4":
+		{
+			"text": "Once you've got a good enough axe, head up to the tree trunk and left click it.  There's no need to hold down your left mouse button.  Each time you click, you'll chop the tree, and might even harvest a log. After so many logs, you'll chop down the tree completely.  You'll want to move onto a new one after that, until it grows back.",
+			"responses":
+			{
+				"->": {"transition": "woodcutting_tutorial5"}
+			}
+		},
+		"woodcutting_tutorial5":
+		{
+			"text": "I'm gonna give you a bronze axe here, and I want you to go chop down some oak tree, alright? I'll even pay you for yer work.  I'm going to need you to harvest 10 oak logs, alright? Once you have enough, bring them back to me for yer reward. Remeeber, one click per chop.  You'll get the hang of it.",
+			"responses":
+			{
+				"Sounds good": 
+				{
+					"transition": "",
+					"event": "beginLogChopping"
+				}
+			}
+		},
+		"not_done_yet":
+		{
+			"text": "What're ye doing back so soon?  I need ye to get me 10 Oak Logs. I even gave ye that fancy axe.  Get to choppin'.",
+			"responses":
+			{
+				"Okay": {"transition": ""}
+			}
+		},
+		"finished":
+		{
+			"text": "Nice. I see ye've brought plenty o logs.  Ye did that pretty quick.  I can see the makin's of a fine lumberjack in ye one day.  I'll let ye keep the axe and the logs ye chopped down.  Ye should go talk to Eva Teffan next.  She can show ye some cool things to craft from these logs.",
+			"responses":
+			{
+				"My payment?": {"transition": "finished2"}
+			}
+		},
+		"finished2":
+		{
+			"text": "Yer payment?! I already gave you the greatest gift there is! The pure JOY of being in the woods cuttin' some treees!!",
+			"responses":
+			{
+				"...": {"transition": "finished3"}
+			}
+		},
+		"finished3":
+		{
+			"text": "Ugh fine. You city folk are all the same. Here's 20 copper for yer troubles.  But I'm keepin' half of yer logs",
+			"responses":
+			{
+				"Goodbye": {"transition": "finished4"}
+			}
+		},
+		"finished4":
+		{
+			"text": "Go talk to Eva. She's over there in that yuppy cottage with those blasted sheep behind it.",
+			"responses":
+			{
+				"Goodbye": {"transition": "",
+							"event": "ulricFinished"}
+			}
+		}
+}

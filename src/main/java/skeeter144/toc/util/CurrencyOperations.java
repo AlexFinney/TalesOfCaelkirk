@@ -6,7 +6,7 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-import skeeter144.toc.entity.mob.passive.shopkeeper.ShopData.ItemPrice;
+import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData.ItemPrice;
 import skeeter144.toc.handlers.PlayerInventoryHandler.CoinsAddedToInventoryEvent;
 import skeeter144.toc.items.TOCItems;
 

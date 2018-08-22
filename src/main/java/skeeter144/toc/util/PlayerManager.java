@@ -32,22 +32,22 @@ public class PlayerManager {
 	
 	//returns true if the player has played on the server before
 	public boolean hasPlayerPreviouslyPlayed(UUID uuid) {
-		try {
-			ResultSet rs = Database.executeQuery("SELECT * FROM users WHERE uuid = binary\"" + uuid.toString() + "\"");
-			rs.last();
+	//	try {
+			//ResultSet rs = Database.executeQuery("SELECT * FROM users WHERE uuid = binary\"" + uuid.toString() + "\"");
+		//	rs.last();
 			
 			
-			int size = rs.getRow();
+			//int size = rs.getRow();
 			
-			if(size == 0)
-				return false;
-			else
-				return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
+			//if(size == 0)
+		//		return false;
+		//	else
+		//		return true;
+		//} catch (SQLException e) {
+	//		e.printStackTrace();
 			
-			return false;
-		}
+	//	}
+		return false;
 	}
 	
 	@SuppressWarnings("unchecked")
