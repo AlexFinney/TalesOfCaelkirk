@@ -73,7 +73,7 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable {
 						if(this.world.getEntitiesWithinAABB(entry.getEntityClass(), bb).size() < mob_spawn_limit) {
 							int numMobs = world.rand.nextInt(mobs_per_spawn_max - mobs_per_spawn_min + 1) + mobs_per_spawn_min;
 							try {
-								Entity e = entry.getEntityClass().getConstructor(World.class).newInstance(world);
+								
 								for(int i = 0; i < numMobs; ++i) {
 									int spawnXOffset = world.rand.nextInt(spawn_radius) - spawn_radius / 2;
 									int spawnZOffset = world.rand.nextInt(spawn_radius) - spawn_radius / 2;
@@ -94,6 +94,7 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable {
 										--i;
 										continue;
 									}else {
+										Entity e = entry.getEntityClass().getConstructor(World.class).newInstance(world);
 										e.setPosition(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
 										world.spawnEntity(e);
 									}
