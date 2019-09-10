@@ -1,4 +1,14 @@
+Game theory:
+	The grind should be about unlocking areas/teachers/techniques that give high xp/level rates,
+	not grinding the levels themselves. Players should need to explore, talk to NPCs, do quests, find maps, notes, clues, etc.
+	It should be about the adventure. Not about 
+	
+	There should be PLENTY of NPCs at spawn after the tutorial that can give the player direction based on what they want to do when they start.
+
+
 Code:
+- Get quest markers working
+- Refactor some quest code, making
 
 Create Sailor entities and world sailing travel mechanism
 ## Implement a fishing system
@@ -6,8 +16,7 @@ Create Sailor entities and world sailing travel mechanism
 	- fishing poles/spears
 	- large fish mobs to swim around and spear
 
-## Teleport items
-
+## Teleport items/spells (really need built cities first)
 
 # More bows
 # More wood types
@@ -55,11 +64,62 @@ Magic
 
 "Rouge" ish type skill that lets you make traps, mines, etc.  
 You can place these mines in the world, and may or may not render for other players if high enough level, blow monsters up, etc.
+Could also apply for laying traps for passive creatures
 
+Mining Minigame:
+	- Game played to increase mining level.
+	- Higher score means more xp (maybe have a base xp + bonus. e.g., set xp for clearing board, bonus for getting combos, more points, etc. Reduction for penalties, etc.)
+	- Each board clear gives an ore and may deplete the rock
+	- If a player has the game open and another player clears the ore, both players will get to play
+	- The board's complexity is determined by ore type, pickaxe bonuses are given by level(?) and pickaxe type (?)
+	- Layout of game: grid of tile with blocks.  Worthless blocks, cheap blocks, ores, gems, danger, double xp, power-ups maybe, various tiles
+	- General Concept: Clear blocks, collecting worthwhile ones while avoiding worthless/dangerous ones.
+	- Board is cleared when all tools are used/player's swaps are used
+	- Higher mining level gives more tools/moves
+	- Better pickaxe gives better tools
+	- Minimum threshold to get an ore/xp
+	
+	- Points are increased for stringing consecutive "combos" of mining ores (ore mined, followed by another one next turn)
+	- Extra combos can be done through the tools' secondary action.
+	- Different ores give different combo multiplier/point value
+	
+	- Tool option types
+		- Diagonal shoot out, can get any of the diagonals
+		- Horiz and Vert
+		- "Knight" type L movement
+		- Queen type movement
+		- 3x3 clearing on impact (TNT)
+		- 
+	
+	- Tool types:
+		- Wood:
+		- Stone:
+		- Iron:
+		- Gold:
+		- Diamond:
 
-
-
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 
