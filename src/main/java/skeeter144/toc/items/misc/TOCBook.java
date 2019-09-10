@@ -2,7 +2,6 @@ package skeeter144.toc.items.misc;
 
 import skeeter144.toc.util.Reference;
 import slimeknights.mantle.client.book.BookLoader;
-import slimeknights.mantle.client.book.BookTransformer;
 import slimeknights.mantle.client.book.data.BookData;
 import slimeknights.mantle.client.book.repository.FileRepository;
 

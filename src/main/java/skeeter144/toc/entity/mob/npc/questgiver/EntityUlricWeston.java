@@ -2,10 +2,6 @@ package skeeter144.toc.entity.mob.npc.questgiver;
 
 import java.util.UUID;
 
-import com.jcraft.jorbis.Block;
-import com.sk89q.worldedit.blocks.Blocks;
-
-import net.minecraft.block.BlockSand;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
