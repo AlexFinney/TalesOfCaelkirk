@@ -17,7 +17,7 @@ import skeeter144.toc.recipe.RecipeManager.ItemSmithedEvent;
 public class ANewAdventureQuest extends Quest{
 	
 	public ANewAdventureQuest(String name, int id) {
-		super(name, id);
+		super(id, name);
 		this.experienceRewards.put(Levels.ATTACK, 50);
 		this.experienceRewards.put(Levels.HITPOINTS, 40);
 		this.itemRewards.put(Items.DIAMOND, 1);

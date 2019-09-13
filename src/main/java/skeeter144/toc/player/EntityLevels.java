@@ -1,8 +1,10 @@
 package skeeter144.toc.player;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class EntityLevels implements Serializable{
 	
@@ -29,6 +31,24 @@ public class EntityLevels implements Serializable{
 		levelsMap.put(Levels.FISHING, new Level("Fishing"));
 		levelsMap.put(Levels.WOODCUTTING, new Level("Woodcutting"));
 		levelsMap.put(Levels.CRAFTING, new Level("Crafting"));
+		
+		initBooks();
+	}
+	
+	public EntityLevels(ArrayList<Integer> levelsXp) {
+		levelsMap = new LinkedHashMap<Levels, Level>();
+		
+		levelsMap.put(Levels.ATTACK, new Level("Attack", levelsXp.get((0))));
+		levelsMap.put(Levels.STRENGTH, new Level("Strength", levelsXp.get((1))));
+		levelsMap.put(Levels.DEFENSE, new Level("Defense", levelsXp.get((2))));
+		levelsMap.put(Levels.MAGIC, new Level("Magic", levelsXp.get((3))));
+		levelsMap.put(Levels.WOODCUTTING, new Level("Woodcutting", levelsXp.get((4))));
+		levelsMap.put(Levels.MINING, new Level("Mining", levelsXp.get((5))));
+		levelsMap.put(Levels.SMITHING, new Level("Smithing", levelsXp.get((6))));
+		levelsMap.put(Levels.CRAFTING, new Level("Crafting", levelsXp.get((7))));
+		levelsMap.put(Levels.HITPOINTS, new Level("Hitpoints", levelsXp.get((8))));
+		levelsMap.put(Levels.FISHING, new Level("Fishing", levelsXp.get((9))));
+		levelsMap.put(Levels.RANGED, new Level("Ranged", levelsXp.get((10))));
 		
 		initBooks();
 	}

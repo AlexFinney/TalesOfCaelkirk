@@ -39,7 +39,7 @@ public class TOCPlayer extends TOCEntity{
 		
 	}
 	
-	public TOCPlayer(EntityPlayer mcPlayer, EntityLevels levels, int curHealth, int maxHealth, int curMana, int maxMana) {
+	public TOCPlayer(EntityPlayer mcPlayer, EntityLevels levels, int curHealth, int curMana) {
 		super(mcPlayer, levels);
 		this.maxHealth = getMaxHealth();
 		this.maxMana = getMaxMana();

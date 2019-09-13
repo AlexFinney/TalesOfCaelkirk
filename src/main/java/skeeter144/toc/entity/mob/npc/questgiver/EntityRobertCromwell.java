@@ -28,11 +28,12 @@ public class EntityRobertCromwell extends EntityNPCInteractable{
 		if(player.world.isRemote)
 			return true;
 		
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), QuestManager.aNewAdventure);
-		if(!qp.started)
-			sendDialog("introduction", player);
-		else
-			sendDialog("player_returned", player);
+		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), "A New Adventure");
+		
+		//if(!qp.started)
+		//	sendDialog("introduction", player);
+		//else
+		//	sendDialog("player_returned", player);
 		
 		return true;
 	}
@@ -40,8 +41,7 @@ public class EntityRobertCromwell extends EntityNPCInteractable{
 	
 	public void startPlayerOnQuest(UUID playerUUID) {
 		EntityPlayer pl = this.world.getPlayerEntityByUUID(playerUUID);
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(pl.getUniqueID(), QuestManager.aNewAdventure);
-		qp.started = true;
+		QuestProgress qp = QuestManager.getQuestProgressForPlayer(pl.getUniqueID(), "A New Adventure");
 		qp.stage = 1;
 		pl.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.aNewAdventure.name + "] " + TextFormatting.GREEN + "[New Task] " + TextFormatting.WHITE + "Go talk to Ulric Weston about woodcutting"));
 	

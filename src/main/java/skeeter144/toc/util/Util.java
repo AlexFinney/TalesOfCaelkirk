@@ -138,4 +138,16 @@ public class Util {
 		return (float)Math.toRadians(degrees);
 	}
 	
+	public static boolean inRange(int a, int min, int max)	{
+		return a >= min && a <= max;
+	}
+	
+	public static boolean inRange(float a, float min, float max)	{
+		return a >= min && a <= max;
+	}
+	
+	public static boolean inRange(double a, double min, double max)	{
+		return a >= min && a <= max;
+	}
+	
 }

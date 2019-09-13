@@ -11,28 +11,31 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import jline.internal.Log;
 import net.minecraftforge.common.MinecraftForge;
+import skeeter144.toc.data.Database;
 import skeeter144.toc.quest.quests.ANewAdventureQuest;
 
 public class QuestManager{
 
 	public static Quest aNewAdventure;
-	
 	public static final HashMap<Integer, Quest> quests = new HashMap<Integer, Quest>();
 	public static HashMap<UUID, HashMap<Integer, QuestProgress>> playerQuestProgresses = new HashMap<UUID, HashMap<Integer, QuestProgress>>();
 	
 	public static void initQuests() {
 		loadQuestProgress();
 	
-		aNewAdventure = new ANewAdventureQuest("a_new_adventure", getNextId());
-		
-		addQuest(aNewAdventure);
+		ArrayList<ArrayList<String>> rows = Database.executeQuery("select * from Quests");
+		for(ArrayList<String> row : rows)
+		{
+			Quest q = new Quest(Integer.parseInt(row.get(0)), row.get(1));
+			addQuest(q);
+		}		
 	}
 	
 	private static void addQuest(Quest q) {
 		quests.put(q.id, q);
 		MinecraftForge.EVENT_BUS.register(q);
-		
 	}
 	
 	public static int getIdFromQuestClass(Class<? extends Quest> questClass) {
@@ -113,8 +116,8 @@ public class QuestManager{
 		
 
 		QuestProgress qp = map.get(q.id);
-		if(qp == null)
-			map.put(q.id, new QuestProgress());
+	//	if(qp == null)
+	//		map.put(q.id, new QuestProgress());
 	}
 	
 	/**
@@ -123,18 +126,24 @@ public class QuestManager{
 	 * @param theQuest The Quest in question
 	 * @return Returns the QuestProgress for the Player/Quest if it exists. Creates new instance if player hasn't started quest
 	 */
-	public static QuestProgress getQuestProgressForPlayer(UUID uuid, Quest theQuest) {
-		HashMap<Integer, QuestProgress> map = playerQuestProgresses.get(uuid);
-		if(map == null) {
-			playerQuestProgresses.put(uuid, new HashMap<Integer, QuestProgress>());
-			map = playerQuestProgresses.get(uuid);
-		}
+	public static QuestProgress getQuestProgressForPlayer(UUID uuid, String questName) {
 		
-		if(map.get(theQuest.id) == null) {
-			map.put(theQuest.id, theQuest.getNewQuestProgressInstance());
-		}
+		ArrayList<ArrayList<String>> rows = Database.executeQuery(String.format("select * from QuestProgress join Quests ON QuestProgress.QuestID = Quests.ID and Quests.Name = %s",
+				questName));
 		
-		return (QuestProgress)map.get(theQuest.id);
+		if(rows.size() == 0) {
+			rows = Database.executeQuery(String.format("select * from Quests where Name = %s", questName));
+			if(rows.size() == 0) Log.error("Unable to find quest entry in database with name \"" + questName + "\"");
+			
+			return null;
+		}else {
+			ArrayList<String> row = rows.get(0);
+			return new QuestProgress(uuid, Integer.parseInt(row.get(1)), 
+										   Integer.parseInt(row.get(2)), 
+										   Integer.parseInt(row.get(3)),
+										   Integer.parseInt(row.get(4)),
+										   Integer.parseInt(row.get(5)));
+		}
 	}
 	
 	private static int nextId = 0;

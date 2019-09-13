@@ -24,7 +24,6 @@ public abstract class EntityQuestGiver extends EntityNPCInteractable{
 		
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100);
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0);
-		
 		this.setSize(1f, 1f);
 		this.setHealth(100f);
 	}

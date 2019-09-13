@@ -18,7 +18,7 @@ public class PlayerLoginHandler {
 		   return;
 	   }
 	   
-	   if(TOCMain.pm.hasPlayerPreviouslyPlayed(event.player.getUniqueID())) {
+	   if(TOCMain.pm.hasPlayerPreviouslyPlayed(event.player)) {
 		   event.player.sendMessage(new TextComponentTranslation("Welcome back, traveller.  I see you haven't been eaten by a monster yet.  This is good..."));
 	   }else {
 		   event.player.sendMessage(new TextComponentTranslation("Welome to the Land of Caelkirk, traveller.  So now, here begins your tale..."));

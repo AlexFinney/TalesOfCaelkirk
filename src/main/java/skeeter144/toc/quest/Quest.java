@@ -1,96 +1,29 @@
 package skeeter144.toc.quest;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import skeeter144.toc.TOCMain;
-import skeeter144.toc.client.gui.NpcDialogResponse;
 import skeeter144.toc.network.AddLevelXpMessage;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.player.EntityLevels;
 import skeeter144.toc.player.EntityLevels.Levels;
-import skeeter144.toc.proxy.CommonProxy;
 import skeeter144.toc.player.TOCPlayer;
 
-public abstract class Quest implements Serializable{
+public class Quest {
 	public String name;
 	public final int id;
 	protected Map<Levels, Integer> experienceRewards = new HashMap<Levels, Integer>();
 	protected Map<Item, Integer> itemRewards = new HashMap<Item, Integer>();
 	public final Map<String, NpcDialog> questDialogs = new HashMap<String, NpcDialog>();
 
-	public Quest(String questFile, int id) {
+	public Quest(int id, String name) {
 		this.id = id;
-		
-		parseQuestFile(questFile + ".json");
+		this.name = name;
 	}
 	
-	private void parseQuestFile(String questFileName) {
-		InputStream is = CommonProxy.class.getResourceAsStream("/assets/toc/quests/" + questFileName);
-		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-		
-		String s = "";
-		try {
-			while(reader.ready()) {
-				s += reader.readLine();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		JsonParser parser = new JsonParser();
-		JsonObject obj = (JsonObject) parser.parse(s);
-		
-		String questName = obj.get("name").getAsString();
-		
-		name = questName;
-		
-		JsonObject dialogues = (JsonObject)obj.get("dialogues");
-		for(Entry<String, JsonElement> entry : dialogues.entrySet()) {
-			String dialogueName = entry.getKey();
-			
-			JsonObject dialogue = (JsonObject)entry.getValue();
-			String text = dialogue.get("text").getAsString();
-			
-			JsonObject responses = (JsonObject)dialogue.get("responses");
-			
-			ArrayList<NpcDialogResponse> dialogResponses = new ArrayList<NpcDialogResponse>();
-			for(Entry<String, JsonElement> responseEntry : responses.entrySet()) {
-				String responseName = responseEntry.getKey();
-				String dialogTransition = ((JsonObject)responseEntry.getValue()).get("name").getAsString();
-				
-				JsonElement element = ((JsonObject)responseEntry.getValue()).get("event");
-				String serverFunc = "";
-				if(element != null)
-					serverFunc = element.getAsString();
-				
-				dialogResponses.add(new NpcDialogResponse(responseName, dialogTransition, serverFunc));
-			}
-			
-			NpcDialog npcDialog = new NpcDialog(dialogueName, text, dialogResponses);
-			questDialogs.put(npcDialog.dialogName, npcDialog);
-		}
-		
-		for(NpcDialog dialog : questDialogs.values()) {
-			for(NpcDialogResponse response : dialog.playerResponses) {
-				response.transitionDialog = questDialogs.get(response.dialogueTransition);
-			}
-		}
-	}
 
 	public void onQuestFinished(EntityPlayerMP player) {
 		EntityLevels l = TOCMain.pm.getPlayer(player).levels;
@@ -109,8 +42,6 @@ public abstract class Quest implements Serializable{
 		}
 		
 		
-		
-		
 		for(Map.Entry<Item, Integer> pair : itemRewards.entrySet()) {
 			player.addItemStackToInventory(new ItemStack(pair.getKey(), pair.getValue()));
 		}
@@ -118,9 +49,8 @@ public abstract class Quest implements Serializable{
 		questFinished(player);
 	}
 	
+	public boolean canPlayerStartQuest(TOCPlayer player) {return false;}
+	public QuestProgress getNewQuestProgressInstance() {return null;}
+	protected void questFinished(EntityPlayerMP player) {}
 	
-	
-	public abstract boolean canPlayerStartQuest(TOCPlayer player);
-	public abstract QuestProgress getNewQuestProgressInstance();
-	protected abstract void questFinished(EntityPlayerMP player);
 }

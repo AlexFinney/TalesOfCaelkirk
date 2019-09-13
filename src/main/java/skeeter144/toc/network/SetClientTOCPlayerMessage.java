@@ -94,7 +94,7 @@ public class SetClientTOCPlayerMessage implements IMessage{
 		public IMessage onMessage(SetClientTOCPlayerMessage message, MessageContext ctx) {
 			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
 				public void run() {
-					TOCMain.localPlayer = new TOCPlayer(Minecraft.getMinecraft().player, message.pl, message.health, message.mHealth, message.mana, message.mMana);
+					TOCMain.localPlayer = new TOCPlayer(Minecraft.getMinecraft().player, message.pl, message.health, message.mana);
 				}
 			});
 			

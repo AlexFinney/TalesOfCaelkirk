@@ -18,6 +18,12 @@ public class Level implements Serializable{
 		iconName =  "toc:textures/icons/levels/" + name.toLowerCase() + "_icon.png";
 	}
 	
+	public Level(String name, int xp) {
+		this.name = name;
+		iconName =  "toc:textures/icons/levels/" + name.toLowerCase() + "_icon.png";
+		setXp(xp);
+	}
+	
 	
 	public String getName() {
 		return name;
