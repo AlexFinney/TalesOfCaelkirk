@@ -24,7 +24,7 @@ public class EntityMarlinMonroe extends EntityNPCInteractable{
 			return true;
 		}
 		
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.aNewAdventure);
+		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.A_NEW_ADVENTURE);
 
 		if(qp.stage == 7) {
 			sendDialog("intro", player);
@@ -34,7 +34,7 @@ public class EntityMarlinMonroe extends EntityNPCInteractable{
 	
 	public void marlinFinished(UUID playerUUID) {
 		EntityPlayer player = world.getPlayerEntityByUUID(playerUUID);
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.aNewAdventure);
+		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.A_NEW_ADVENTURE);
 		qp.incStage();
 	}
 	

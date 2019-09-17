@@ -17,7 +17,7 @@ import skeeter144.toc.recipe.RecipeManager.ItemSmithedEvent;
 public class ANewAdventureQuest extends Quest{
 	
 	public ANewAdventureQuest(String name, int id) {
-		super(id, name);
+		super(id, name, 0);
 		this.experienceRewards.put(Levels.ATTACK, 50);
 		this.experienceRewards.put(Levels.HITPOINTS, 40);
 		this.itemRewards.put(Items.DIAMOND, 1);
@@ -137,7 +137,7 @@ public class ANewAdventureQuest extends Quest{
 	
 	@Override
 	public QuestProgress getNewQuestProgressInstance() {
-		return new QuestProgress();
+		return null;
 	}
 	
 	

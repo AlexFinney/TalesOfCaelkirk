@@ -8,13 +8,23 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 import skeeter144.toc.TOCMain;
+import skeeter144.toc.combat.CombatManager.DamageType;
+import skeeter144.toc.entity.TOCEntities;
 import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.items.armor.CustomArmor;
+import skeeter144.toc.items.magic.BasicWand;
+import skeeter144.toc.items.weapons.TOCBow;
+import skeeter144.toc.items.weapons.TOCGreatAxe;
+import skeeter144.toc.items.weapons.TOCGreatSword;
+import skeeter144.toc.items.weapons.TOCSword;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.SpawnBlockedMessage;
 import skeeter144.toc.player.EntityLevels;
 import skeeter144.toc.player.EntityLevels.Levels;
+import skeeter144.toc.player.Level;
+import skeeter144.toc.player.TOCPlayer;
 
 public class CombatManager {
 	
@@ -141,6 +151,55 @@ public class CombatManager {
 	
 	public float entityHurtAnother(EntityLiving attacker, EntityLiving attacked, float amount, DamageSource source) {
 		return calcEntityDamage(attacked, amount, source);
+	}
+	
+	public static Levels levelForHeldItem(EntityPlayer pl) {
+		Levels level = Levels.ATTACK;
+		if (pl.getHeldItemMainhand().getItem() instanceof TOCGreatSword) {
+			level = Levels.ATTACK;
+		} else if (pl.getHeldItemMainhand().getItem() instanceof TOCGreatAxe) {
+			level = Levels.STRENGTH;
+		} else if (pl.getHeldItemMainhand().getItem() instanceof TOCSword) {
+			TOCSword sword = (TOCSword) pl.getHeldItemMainhand().getItem();
+			level = sword.xpLeveled;
+		} else if (pl.getHeldItemMainhand().getItem() instanceof TOCBow) {
+			level = Levels.RANGED;
+		} else if (pl.getHeldItemMainhand().getItem() instanceof BasicWand) {
+			level = Levels.MAGIC;
+		}
+		return level;
+	}
+	
+	public static Levels levelForDamageSource(TOCDamageSource src) {
+		Levels level = Levels.ATTACK;
+		if (src.type == DamageType.PHYSICAL) {
+			EntityPlayer pl = (EntityPlayer) src.source;
+			if (pl.getHeldItemMainhand().getItem() instanceof TOCGreatSword) {
+				level = Levels.ATTACK;
+			} else if (pl.getHeldItemMainhand().getItem() instanceof TOCGreatAxe) {
+				level = Levels.STRENGTH;
+			} else if (pl.getHeldItemMainhand().getItem() instanceof TOCSword) {
+				TOCSword sword = (TOCSword) pl.getHeldItemMainhand().getItem();
+				level = sword.xpLeveled;
+			}
+		} else if (src.type == DamageType.RANGED) {
+			level = Levels.RANGED;
+		} else if (src.type == DamageType.MAGICAL) {
+			level = Levels.MAGIC;
+		} else if (src.type == DamageType.PHYSICAL_MAGIC) {
+		} else if (src.type == DamageType.RANGED_MAGIC) {
+		}
+		
+		return level;
+	}
+	
+	public static int getXpForEntity(EntityLivingBase e) {
+		if(e instanceof CustomMob) {
+			CustomMob m = (CustomMob) e;
+			return m.xpGiven;
+		}else {
+			return TOCEntities.getXpFroVanillaMob(EntityRegistry.getEntry(e.getClass()).getRegistryName().toString());
+		}
 	}
 	
 	public static enum DamageType{

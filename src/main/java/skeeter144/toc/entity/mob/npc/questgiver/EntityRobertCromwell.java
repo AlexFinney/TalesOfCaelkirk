@@ -30,10 +30,10 @@ public class EntityRobertCromwell extends EntityNPCInteractable{
 		
 		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), "A New Adventure");
 		
-		//if(!qp.started)
-		//	sendDialog("introduction", player);
-		//else
-		//	sendDialog("player_returned", player);
+		if(qp.stage == 0)
+			sendDialog("introduction", player);
+		else
+			sendDialog("player_returned", player);
 		
 		return true;
 	}
@@ -41,9 +41,10 @@ public class EntityRobertCromwell extends EntityNPCInteractable{
 	
 	public void startPlayerOnQuest(UUID playerUUID) {
 		EntityPlayer pl = this.world.getPlayerEntityByUUID(playerUUID);
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(pl.getUniqueID(), "A New Adventure");
-		qp.stage = 1;
-		pl.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.aNewAdventure.name + "] " + TextFormatting.GREEN + "[New Task] " + TextFormatting.WHITE + "Go talk to Ulric Weston about woodcutting"));
+		pl.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.A_NEW_ADVENTURE + "] " + TextFormatting.GREEN + "[New Task] " + TextFormatting.WHITE + "Go talk to Ulric Weston about woodcutting"));
+		
+		QuestProgress qp = QuestManager.startPlayerOnQuest(playerUUID, "A New Adventure");
+		qp.incStage();
 	
 		//TOCUtils.addIconMarkerToMap("Ulric Weston", new ResourceLocation(Reference.MODID, "toc:textures/icons/map/quest_objective"), new BlockPos(720, 42, 815), this.world.provider.getDimension());
 	}

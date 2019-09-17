@@ -33,11 +33,11 @@ public class EntityUlricWeston extends EntityNPCInteractable{
 			return true;
 		}
 		
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.aNewAdventure);
+		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.A_NEW_ADVENTURE);
 		
-		if(qp.started && qp.stage == 1) {
+		if(qp.stage == 1) {
 			sendDialog("intro", player);
-		}else if(!qp.started) {
+		}else if(qp.stage == 0) {
 			sendDialog("refuse", player);
 		}else if(qp.stage == 2) {
 			if(TOCUtils.getItemCountInInventory(Item.getItemFromBlock(TOCBlocks.oak_log), player.inventory) >= 10) {
@@ -54,7 +54,7 @@ public class EntityUlricWeston extends EntityNPCInteractable{
 	
 	public void ulricFinished(UUID playerUUID) {
 		EntityPlayer player = this.world.getPlayerEntityByUUID(playerUUID);
-	    QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.aNewAdventure);
+	    QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.A_NEW_ADVENTURE);
 	    if(qp.stage == 2) {
 	    	player.addItemStackToInventory(new ItemStack(TOCItems.copper_coin, 20));
 			TOCUtils.removeItemsFromInventory(new ItemStack(TOCBlocks.oak_log).getItem(), 5, player.inventory);
@@ -67,11 +67,11 @@ public class EntityUlricWeston extends EntityNPCInteractable{
 	public void beginLogChopping(UUID playerUUID) {
 		
 		EntityPlayer player = this.world.getPlayerEntityByUUID(playerUUID);
-	    QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.aNewAdventure);
+	    QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.A_NEW_ADVENTURE);
 	    qp.incStage();
 
 		
-		player.sendMessage(new TextComponentString(TextFormatting.GREEN  + "[" +  QuestManager.aNewAdventure.name + "] [New Task]" + TextFormatting.BLUE +" Chop down 10 Oak Logs."));
+		player.sendMessage(new TextComponentString(TextFormatting.GREEN  + "[" +  QuestManager.A_NEW_ADVENTURE + "] [New Task]" + TextFormatting.BLUE +" Chop down 10 Oak Logs."));
 		
 		player.addItemStackToInventory(new ItemStack(TOCItems.axe_bronze));
 //		//mark point on map

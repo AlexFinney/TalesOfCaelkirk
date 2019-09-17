@@ -3,8 +3,13 @@ package skeeter144.toc.player;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.UUID;
+
+import skeeter144.toc.data.Database;
+import skeeter144.toc.util.DelegateHashMap;
 
 public class EntityLevels implements Serializable{
 	
@@ -14,7 +19,9 @@ public class EntityLevels implements Serializable{
 	public static int MANA_PER_LEVEL = 7;
 	public static float MANA_REGEN_PER_MAGIC_LEVEL = 1f;
 	public static float STRENGTH_MULT_PER_LEVEL = .03f;
+	public UUID uuid;
 	
+	// linked hashmap to preserve order of levels
 	LinkedHashMap<Levels, Level> levelsMap;
 	
 	public EntityLevels() {
@@ -23,20 +30,39 @@ public class EntityLevels implements Serializable{
 		levelsMap.put(Levels.ATTACK, new Level("Attack"));
 		levelsMap.put(Levels.STRENGTH, new Level("Strength"));
 		levelsMap.put(Levels.DEFENSE, new Level("Defense"));
-		levelsMap.put(Levels.HITPOINTS, new Level("Hitpoints"));
 		levelsMap.put(Levels.MAGIC, new Level("Magic"));
-		levelsMap.put(Levels.RANGED, new Level("Ranged"));
+		levelsMap.put(Levels.WOODCUTTING, new Level("Woodcutting"));
 		levelsMap.put(Levels.MINING, new Level("Mining"));
 		levelsMap.put(Levels.SMITHING, new Level("Smithing"));
-		levelsMap.put(Levels.FISHING, new Level("Fishing"));
-		levelsMap.put(Levels.WOODCUTTING, new Level("Woodcutting"));
 		levelsMap.put(Levels.CRAFTING, new Level("Crafting"));
+		levelsMap.put(Levels.HITPOINTS, new Level("Hitpoints"));
+		levelsMap.put(Levels.RANGED, new Level("Ranged"));
+		levelsMap.put(Levels.FISHING, new Level("Fishing"));
+	}
+	
+	public EntityLevels(UUID uuid) {
+		levelsMap =  new LinkedHashMap<Levels, Level>();
+		
+		this.uuid = uuid;
+		
+		levelsMap.put(Levels.ATTACK, new Level("Attack"));
+		levelsMap.put(Levels.STRENGTH, new Level("Strength"));
+		levelsMap.put(Levels.DEFENSE, new Level("Defense"));
+		levelsMap.put(Levels.MAGIC, new Level("Magic"));
+		levelsMap.put(Levels.WOODCUTTING, new Level("Woodcutting"));
+		levelsMap.put(Levels.MINING, new Level("Mining"));
+		levelsMap.put(Levels.SMITHING, new Level("Smithing"));
+		levelsMap.put(Levels.CRAFTING, new Level("Crafting"));
+		levelsMap.put(Levels.HITPOINTS, new Level("Hitpoints"));
+		levelsMap.put(Levels.RANGED, new Level("Ranged"));
+		levelsMap.put(Levels.FISHING, new Level("Fishing"));
 		
 		initBooks();
 	}
 	
-	public EntityLevels(ArrayList<Integer> levelsXp) {
-		levelsMap = new LinkedHashMap<Levels, Level>();
+	public EntityLevels(ArrayList<Integer> levelsXp, UUID uuid) {
+		levelsMap =  new LinkedHashMap<Levels, Level>();
+		this.uuid = uuid;
 		
 		levelsMap.put(Levels.ATTACK, new Level("Attack", levelsXp.get((0))));
 		levelsMap.put(Levels.STRENGTH, new Level("Strength", levelsXp.get((1))));
@@ -59,12 +85,14 @@ public class EntityLevels implements Serializable{
 
 	public boolean addExp(Levels level, int amt) {
 		Level l = levelsMap.get(level);
+		Database.updatePlayerLevels(this);
 		return l.addExp(amt);
 	}
 	
 	//only called on mobs for their creation. They dont have exp
-	public void setLevelFor(Levels l, int level) {
+	public void setLevelFor(Levels l, int level, boolean updateDatabase) {
 		levelsMap.get(l).setXp(getExpForLevel(level));
+		if(updateDatabase) Database.updatePlayerLevels(this);
 	}
 	
 	public int getLevelFor(Levels l) {
@@ -83,6 +111,14 @@ public class EntityLevels implements Serializable{
 			expForLevels[i] = sum + expForLevels[i-1];
 		}
 		
+	}
+	
+	public ArrayList<Integer> getXps(){
+		ArrayList<Integer> xps = new ArrayList<Integer>();
+		for(Map.Entry<Levels, Level> l : levelsMap.entrySet()) {
+			xps.add(l.getValue().getXp());
+		}
+		return xps;
 	}
 	
 	public static int getExpForLevel(int level)	{

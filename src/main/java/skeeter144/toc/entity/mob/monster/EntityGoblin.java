@@ -25,7 +25,7 @@ public class EntityGoblin extends CustomMob{
 		this.hpLevel = 4;
 		this.defenseLevel = 1;
 		this.magicLevel = 1;
-		this.xpGiven = 32;
+		this.xpGiven = 12;
 		
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(2, new EntityAIAttackMelee(this, 1, false));

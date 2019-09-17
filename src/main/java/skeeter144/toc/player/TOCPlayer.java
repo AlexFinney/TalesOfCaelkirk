@@ -29,7 +29,7 @@ public class TOCPlayer extends TOCEntity{
 	
 	public TOCPlayer(EntityPlayer mcPlayer)
 	{
-		super(mcPlayer, new EntityLevels());
+		super(mcPlayer, new EntityLevels(mcPlayer.getUniqueID()));
 		curHealth = maxHealth = getMaxHealth();
 		curMana = maxMana = getMaxMana();
 		

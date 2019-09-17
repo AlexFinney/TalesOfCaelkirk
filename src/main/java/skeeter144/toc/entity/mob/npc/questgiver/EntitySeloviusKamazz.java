@@ -26,7 +26,7 @@ public class EntitySeloviusKamazz extends EntityNPCInteractable{
 		if(player.world.isRemote)
 			return true;
 		
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), QuestManager.aNewAdventure);
+		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), QuestManager.A_NEW_ADVENTURE);
 		if(qp.stage == 13)
 			sendDialog("intro", player);
 		else if(qp.stage >= 14)
@@ -38,17 +38,16 @@ public class EntitySeloviusKamazz extends EntityNPCInteractable{
 	
 	public void chickenKilling(UUID playerUUID) {
 		EntityPlayer pl = this.world.getPlayerEntityByUUID(playerUUID);
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(pl.getUniqueID(), QuestManager.aNewAdventure);
+		QuestProgress qp = QuestManager.getQuestProgressForPlayer(pl.getUniqueID(), QuestManager.A_NEW_ADVENTURE);
 		qp.incStage();
 		pl.addItemStackToInventory(new ItemStack(TOCItems.wand_basic));
 	}
 	
 	public void tutorialFinished(UUID playerUUID) {
 		EntityPlayer pl = this.world.getPlayerEntityByUUID(playerUUID);
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(pl.getUniqueID(), QuestManager.aNewAdventure);
-		qp.completed = true;
+		QuestProgress qp = QuestManager.getQuestProgressForPlayer(pl.getUniqueID(), QuestManager.A_NEW_ADVENTURE);
 		qp.incStage();
-		QuestManager.aNewAdventure.onQuestFinished((EntityPlayerMP) pl);
+		// QuestManager.A_NEW_ADVENTURE.onQuestFinished((EntityPlayerMP) pl);
 	}
 	
 }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 import jline.internal.Log;
@@ -18,7 +19,7 @@ import skeeter144.toc.quest.quests.ANewAdventureQuest;
 
 public class QuestManager{
 
-	public static Quest aNewAdventure;
+	public static final String A_NEW_ADVENTURE = "A New Adventure";
 	public static final HashMap<Integer, Quest> quests = new HashMap<Integer, Quest>();
 	public static HashMap<UUID, HashMap<Integer, QuestProgress>> playerQuestProgresses = new HashMap<UUID, HashMap<Integer, QuestProgress>>();
 	
@@ -28,13 +29,14 @@ public class QuestManager{
 		ArrayList<ArrayList<String>> rows = Database.executeQuery("select * from Quests");
 		for(ArrayList<String> row : rows)
 		{
-			Quest q = new Quest(Integer.parseInt(row.get(0)), row.get(1));
+			Quest q = new Quest(Integer.parseInt(row.get(0)), row.get(1), Integer.parseInt(row.get(2)));
 			addQuest(q);
 		}		
 	}
 	
 	private static void addQuest(Quest q) {
 		quests.put(q.id, q);
+		Log.info("Quest Registered: " + q.name);
 		MinecraftForge.EVENT_BUS.register(q);
 	}
 	
@@ -52,20 +54,36 @@ public class QuestManager{
 		return quests.get(id);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static void loadQuestProgress() {
-		File f = new File("quest_progress.bin");
-		if(f.exists()) {
-			try {
-				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-				
-				playerQuestProgresses = (HashMap<UUID, HashMap<Integer, QuestProgress>>) ois.readObject();
-				
-				ois.close();
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
+		
+		ArrayList<ArrayList<String>> rows = Database.executeQuery("select * from QuestProgress");
+		for(ArrayList<String> row : rows) {
+			HashMap<Integer, QuestProgress> progress = new HashMap<>();
+			progress.put(Integer.parseInt(row.get(1)), 
+					new QuestProgress(UUID.fromString(row.get(0)), 
+							Integer.parseInt(row.get(1)),
+							Integer.parseInt(row.get(2)),
+							Integer.parseInt(row.get(3)), 
+							Integer.parseInt(row.get(4)), 
+							Integer.parseInt(row.get(5))));
+			
+			playerQuestProgresses.put(UUID.fromString(row.get(0)), progress);
 		}
+		
+		
+		
+//		File f = new File("quest_progress.bin");
+//		if(f.exists()) {
+//			try {
+//				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+//				
+//				playerQuestProgresses = (HashMap<UUID, HashMap<Integer, QuestProgress>>) ois.readObject();
+//				
+//				ois.close();
+//			}catch(Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 	}
 	
 	public static void saveQuestProgress() {
@@ -107,17 +125,36 @@ public class QuestManager{
 		}
 	}
 	
-	public static void startPlayerOnQuest(UUID uuid, Quest q) {
+	public static QuestProgress startPlayerOnQuest(UUID uuid, String questName) {
+		Quest q = null;
 		HashMap<Integer, QuestProgress> map = playerQuestProgresses.get(uuid);
 		if(map == null) {
 			playerQuestProgresses.put(uuid, new HashMap<Integer, QuestProgress>());
 			map = playerQuestProgresses.get(uuid);
 		}
+		q = questByName(questName);
 		
 
 		QuestProgress qp = map.get(q.id);
-	//	if(qp == null)
-	//		map.put(q.id, new QuestProgress());
+		if(qp == null) {
+			qp = new QuestProgress(uuid, q.id, q.initialStep, 0, 0, 0);
+			map.put(q.id, qp);
+			Database.executeUpdate(String.format("insert into QuestProgress values ( \"%s\", %s, %s, %s, %s, %s )", 
+					uuid.toString(),
+					q.id,
+					q.initialStep,
+					0, 0, 0));
+		}
+		return qp;
+	}
+	
+	public static Quest questByName(String questName) {
+		for(Map.Entry<Integer, Quest> pair : quests.entrySet()) {
+			if(pair.getValue().name.equalsIgnoreCase(questName))
+				return pair.getValue();
+		}
+		Log.error("Quest " + questName + " not found when requested!");
+		return null;
 	}
 	
 	/**
@@ -128,26 +165,34 @@ public class QuestManager{
 	 */
 	public static QuestProgress getQuestProgressForPlayer(UUID uuid, String questName) {
 		
-		ArrayList<ArrayList<String>> rows = Database.executeQuery(String.format("select * from QuestProgress join Quests ON QuestProgress.QuestID = Quests.ID and Quests.Name = %s",
-				questName));
-		
-		if(rows.size() == 0) {
-			rows = Database.executeQuery(String.format("select * from Quests where Name = %s", questName));
-			if(rows.size() == 0) Log.error("Unable to find quest entry in database with name \"" + questName + "\"");
-			
-			return null;
-		}else {
-			ArrayList<String> row = rows.get(0);
-			return new QuestProgress(uuid, Integer.parseInt(row.get(1)), 
-										   Integer.parseInt(row.get(2)), 
-										   Integer.parseInt(row.get(3)),
-										   Integer.parseInt(row.get(4)),
-										   Integer.parseInt(row.get(5)));
+		HashMap<Integer, QuestProgress> qps = playerQuestProgresses.get(uuid);
+		if(qps == null) {
+			playerQuestProgresses.put(uuid, new HashMap<Integer, QuestProgress>());
+			qps = playerQuestProgresses.get(uuid);
 		}
+		
+		Quest q = null;
+		for(Entry<Integer, Quest> quests : quests.entrySet()) {
+			if(quests.getValue().name.equalsIgnoreCase(questName)) {
+				q = quests.getValue();
+				break;
+			}
+		}
+		
+		if(q == null) {Log.error("Quest " + questName + " is not a registered quest!"); return null;}
+		
+		QuestProgress progress = qps.get(q.id);
+		if(progress == null) progress = new QuestProgress(uuid, q.id, q.initialStep, 0, 0, 0);
+		return progress;
 	}
-	
-	private static int nextId = 0;
-	private static int getNextId() {
-		return nextId++;
+
+	public static void updateQuestProgressForPlayer(UUID playerUUID, QuestProgress qp) {
+		Database.executeUpdate(String.format("update QuestProgress set QuestID = %s, "
+				+ "CurrentStep = %s, Counter1 = %s, "
+				+ "Counter2 = %s, Counter3 = %s where UUID = \"%s\"", 
+				qp.questId,
+				qp.stage,
+				qp.qp1, qp.qp2, qp.qp3, 
+				playerUUID.toString()));
 	}
 }

@@ -23,6 +23,7 @@ public class QuestProgress {
 		++stage;
 		qp1 = 0;
 		qp2 = 0; 
-		qp3 = 0; 
+		qp3 = 0;
+		QuestManager.updateQuestProgressForPlayer(playerId, this);
 	}
 }

@@ -15,13 +15,15 @@ import skeeter144.toc.player.TOCPlayer;
 public class Quest {
 	public String name;
 	public final int id;
+	public int initialStep;
 	protected Map<Levels, Integer> experienceRewards = new HashMap<Levels, Integer>();
 	protected Map<Item, Integer> itemRewards = new HashMap<Item, Integer>();
 	public final Map<String, NpcDialog> questDialogs = new HashMap<String, NpcDialog>();
 
-	public Quest(int id, String name) {
+	public Quest(int id, String name, int initialStep) {
 		this.id = id;
 		this.name = name;
+		this.initialStep = initialStep;
 	}
 	
 

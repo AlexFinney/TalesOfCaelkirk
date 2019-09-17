@@ -32,7 +32,7 @@ public class EntityEvaTeffan extends EntityNPCInteractable{
 		if(player.world.isRemote) {
 			return true;
 		}
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.aNewAdventure);
+		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.A_NEW_ADVENTURE);
 		
 		if(qp.stage == 3) {
 			sendDialog("intro", player);
@@ -68,24 +68,24 @@ public class EntityEvaTeffan extends EntityNPCInteractable{
 	
 	public void beginShearSheep(UUID playerUUID) {
 		EntityPlayer player = this.world.getPlayerEntityByUUID(playerUUID);
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.aNewAdventure);
+		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.A_NEW_ADVENTURE);
 
 //		//TODO: `mark map for sheep
-		player.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.aNewAdventure.name + "] " + TextFormatting.GREEN + "[New Task]" + TextFormatting.WHITE + "Shear a sheep and collect its wool."));
+		player.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.A_NEW_ADVENTURE + "] " + TextFormatting.GREEN + "[New Task]" + TextFormatting.WHITE + "Shear a sheep and collect its wool."));
 		player.inventory.addItemStackToInventory(new ItemStack(TOCItems.shears));
 		qp.incStage();
 	}
 	
 	public void evaFinished(UUID playerUUID) {
 		EntityPlayer player = this.world.getPlayerEntityByUUID(playerUUID);
-		player.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.aNewAdventure.name + "] " + TextFormatting.GREEN + "[New Task]" + TextFormatting.WHITE + "Go across the bridge and talk to Marlin Monroe."));
+		player.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.A_NEW_ADVENTURE + "] " + TextFormatting.GREEN + "[New Task]" + TextFormatting.WHITE + "Go across the bridge and talk to Marlin Monroe."));
 	}
 	
 	public void beginCrafting(UUID playerUUID) {
 		EntityPlayer player = world.getPlayerEntityByUUID(playerUUID);
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.aNewAdventure);
+		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.A_NEW_ADVENTURE);
 
-		player.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.aNewAdventure.name + "] " + TextFormatting.GREEN + "[New Task]" + TextFormatting.WHITE + "Craft at least 3 sticks and two strings, then return to Eva."));
+		player.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.A_NEW_ADVENTURE + "] " + TextFormatting.GREEN + "[New Task]" + TextFormatting.WHITE + "Craft at least 3 sticks and two strings, then return to Eva."));
 		qp.incStage();
 	}
 	

@@ -1,7 +1,11 @@
 package skeeter144.toc.entity;
 
+import java.util.HashMap;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.passive.EntityChicken;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.init.Biomes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
@@ -29,6 +33,17 @@ import skeeter144.toc.util.Reference;
 
 public class TOCEntities {
 
+	static HashMap<String, Integer> vanillaMobXp = new HashMap<>();
+	public static void initVanillaMobXp() {
+		vanillaMobXp.put(EntityRegistry.getEntry(EntityChicken.class).getRegistryName().toString(), 5);
+		vanillaMobXp.put(EntityRegistry.getEntry(EntitySheep.class).getRegistryName().toString(), 5);
+	}
+	
+	public static int getXpFroVanillaMob(String className) {
+		Integer xp = vanillaMobXp.get(className);
+		return  xp != null ? xp : 0;
+	}
+	
 	public static void registerEntities() {
 		//monsters
 		registerEntity(EntityViking.class, "viking", 80, 3, true, 0xC4C4C4, 0x684242);

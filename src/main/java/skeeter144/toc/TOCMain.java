@@ -24,11 +24,12 @@ import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import skeeter144.toc.banking.BankManager;
 import skeeter144.toc.combat.CombatManager;
-import skeeter144.toc.commands.CommandMiningMinigame;
+//import skeeter144.toc.commands.CommandMiningMinigame;
 import skeeter144.toc.commands.CommandRegions;
 import skeeter144.toc.commands.CommandSetXp;
 import skeeter144.toc.commands.CommandSummonNpc;
 import skeeter144.toc.data.Database;
+import skeeter144.toc.entity.TOCEntities;
 import skeeter144.toc.event.Events;
 import skeeter144.toc.items.misc.TOCBook;
 import skeeter144.toc.player.TOCPlayer;
@@ -109,10 +110,10 @@ public class TOCMain
 		event.registerServerCommand(new CommandSetXp());
 		event.registerServerCommand(new CommandRegions());
 		event.registerServerCommand(new CommandSummonNpc());
-		event.registerServerCommand(new CommandMiningMinigame());
+		//event.registerServerCommand(new CommandMiningMinigame());
 
 		
-		
+		TOCEntities.initVanillaMobXp();
 		BankManager.loadInventories();
 		
 		QuestManager.loadQuestProgress();
