@@ -55,8 +55,9 @@ public class QuestManager{
 	}
 	
 	public static void loadQuestProgress() {
-		
 		ArrayList<ArrayList<String>> rows = Database.executeQuery("select * from QuestProgress");
+		if(rows == null) { System.err.println("Unable to retrieve rows from quest progress table"); return;}
+		
 		for(ArrayList<String> row : rows) {
 			HashMap<Integer, QuestProgress> progress = new HashMap<>();
 			progress.put(Integer.parseInt(row.get(1)), 

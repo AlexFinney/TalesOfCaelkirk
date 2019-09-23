@@ -1,17 +1,22 @@
 package skeeter144.toc.util;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import skeeter144.toc.combat.TOCDamageSource;
 
 public class Util {
@@ -142,6 +147,28 @@ public class Util {
 		return a >= min && a <= max;
 	}
 	
+	public static BlockPos getRandomBlockPosAround(BlockPos pos, int height, int range) {
+		Random r = new Random(System.currentTimeMillis());
+		int rx = r.nextInt(range) - (range / 2);
+		int ry = r.nextInt(height) - (height / 2);
+		int rz = r.nextInt(range) - (range / 2);
+		
+		return new BlockPos(pos.getX() + rx,
+							pos.getY() + ry,
+							pos.getZ() + rz);
+	}
+	
+	public static BlockPos getRandomBlockPosAround(BlockPos pos, int height, int range, World w, Block type) {
+		Random r = new Random(System.currentTimeMillis());
+		int rx = r.nextInt(range) - (range / 2);
+		int ry = r.nextInt(height) - (height / 2);
+		int rz = r.nextInt(range) - (range / 2);
+
+		BlockPos p = new BlockPos(pos.getX() + rx, pos.getY() + .5D + ry, pos.getZ() + rz);
+		
+		return w.getBlockState(p) == type.getDefaultState() ? p : pos;
+	}
+	
 	public static boolean inRange(float a, float min, float max)	{
 		return a >= min && a <= max;
 	}
@@ -150,4 +177,32 @@ public class Util {
 		return a >= min && a <= max;
 	}
 	
+	public static void LookAt(double px, double py, double pz , EntityLiving e)
+	{
+	    double dirx = e.getPosition().getX() - px;
+	    double diry = e.getPosition().getY() - py;
+	    double dirz = e.getPosition().getZ() - pz;
+
+	    double len = Math.sqrt(e.getPosition().distanceSq(px, py, pz));
+
+	    dirx /= len;
+	    diry /= len;
+	    dirz /= len;
+
+	    double pitch = Math.asin(diry);
+	    double yaw = Math.atan2(dirz, dirx);
+
+	    //to degree
+	    pitch = pitch * 180.0 / Math.PI;
+	    yaw = yaw * 180.0 / Math.PI;
+	    
+	    yaw += 90f;
+	    e.rotationPitch = (float)pitch;
+	    e.rotationYaw = (float)yaw;
+	}
+	
+	public static Vec3d getMovementVectorTo(BlockPos from, BlockPos to) {
+		BlockPos fromTo = from.subtract(to);
+		return new Vec3d(fromTo).normalize();
+	}
 }

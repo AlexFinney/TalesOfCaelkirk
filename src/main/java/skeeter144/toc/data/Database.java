@@ -79,12 +79,13 @@ public class Database {
 	}
 
 	public static ArrayList<ArrayList<String>> executeQuery(String query) {
+		Connection con = null;
+		ResultSet rs = null;
 		try {
-			Connection con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/ZkCYQE6thv", user, pass);
+			con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/ZkCYQE6thv", user, pass);
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-			con.close();
-			
+			rs = stmt.executeQuery(query);
+
 			ArrayList<ArrayList<String>> returnObjects = new ArrayList<ArrayList<String>>();
 			int colCount = rs.getMetaData().getColumnCount();
 			while (rs.next()) {
@@ -94,6 +95,10 @@ public class Database {
 					row.add(rs.getString(i++));
 				returnObjects.add(row);
 			}
+			
+			if(con != null) con.close();
+			if(rs != null) rs.close();
+			
 			return returnObjects;
 		} catch (Exception e) {
 			e.printStackTrace();

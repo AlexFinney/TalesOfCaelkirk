@@ -3,13 +3,11 @@ package skeeter144.toc.player;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
 import skeeter144.toc.data.Database;
-import skeeter144.toc.util.DelegateHashMap;
 
 public class EntityLevels implements Serializable{
 	

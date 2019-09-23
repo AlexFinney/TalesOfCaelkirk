@@ -15,6 +15,8 @@ import skeeter144.toc.entity.mob.monster.EntityGiantScorpian;
 import skeeter144.toc.entity.mob.monster.EntityGiantSpider;
 import skeeter144.toc.entity.mob.monster.EntityGoblin;
 import skeeter144.toc.entity.mob.monster.EntityRat;
+import skeeter144.toc.entity.mob.monster.EntitySalmon;
+import skeeter144.toc.entity.mob.monster.EntitySiren;
 import skeeter144.toc.entity.mob.monster.EntityViking;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityDonkeyMount;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityMuleMount;
@@ -52,7 +54,8 @@ public class TOCEntities {
 		registerEntity(EntityGiantScorpian.class, "giant_scorpian", 80, 3, true, 0x00AA0E, 0x87BD36);
 		registerEntity(EntityGiantSpider.class, "giant_spider", 80, 3, true, 0xFF0000, 0x000000);
 		registerEntity(EntityGhost.class, "ghost", 80, 3, true, 0xFFFFFF, 0x000000);
-		
+		registerEntity(EntitySiren.class, "siren", 80, 3, true, 0xFFFFFF, 0x000000);
+		registerEntity(EntitySalmon.class, "salmon", 80, 3, true, 0xFFFFFF, 0x000000);
 		
 		//mounts
 			//horse-like
@@ -78,7 +81,8 @@ public class TOCEntities {
 			registerEntity(EntitySeloviusKamazz.class, "selovius_kamazz", 80, 3, true, 0xFFFFFFFF, 0xFFFFFFFF);
 			
 			
-			//swords
+			//shop keepers
+			// swords
 			registerEntity(EntityHumanShopKeeper.class, "sam_derric", 80, 3, true, 0xFFFFFFFF, 0xFFFFFFFF);
 			
 		registerEntitySpawns();
