@@ -3,19 +3,17 @@ package skeeter144.toc.client.entity.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.entity.Entity;
 import skeeter144.toc.client.entity.animation.Animation;
-import skeeter144.toc.client.entity.animation.Animation.ANIMATION_STATE;
+import skeeter144.toc.client.entity.animation.Animation.AnimationState;
 import skeeter144.toc.client.entity.animation.Animations;
 import skeeter144.toc.client.entity.animation.KeyFrame;
 import skeeter144.toc.client.entity.animation.PartOrientation;
+import skeeter144.toc.client.entity.renderer.AdvancedModelRenderer;
 import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.network.AnimationEventMessage;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.util.CustomRunnable;
-import skeeter144.toc.util.Util;
 
 /**
  * GiantScorpian - Undefined
@@ -415,10 +413,10 @@ public class ModelGiantScorpian extends AdvancedModelBase {
     	}
     	
     	if(currentAnim != null) {
-    		ANIMATION_STATE state = currentAnim.render(customMob, customMob.animationStartTime, ageInTicks);
-    		if(state == ANIMATION_STATE.FINISHED) {
+    		AnimationState state = currentAnim.render(customMob, customMob.animationStartTime, ageInTicks);
+    		if(state == AnimationState.FINISHED) {
     			customMob.currentAnim = null;
-    		}else if(state == ANIMATION_STATE.NOT_RUNNING) {
+    		}else if(state == AnimationState.NOT_RUNNING) {
     			customMob.animationStartTime = ageInTicks;
     		}
     		return;

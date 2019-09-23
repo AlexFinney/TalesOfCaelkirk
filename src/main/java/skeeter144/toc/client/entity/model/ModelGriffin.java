@@ -1,8 +1,7 @@
 package skeeter144.toc.client.entity.model;
 
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.entity.Entity;
+import skeeter144.toc.client.entity.renderer.AdvancedModelRenderer;
 
 
 public class ModelGriffin extends AdvancedModelBase {

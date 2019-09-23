@@ -6,21 +6,20 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import skeeter144.toc.util.Reference;
 
 public abstract class BlockTileEntity<TE extends TileEntity> extends Block{
 
-	public BlockTileEntity(Material materialIn, String name) {
-		super(materialIn);
-		this.setUnlocalizedName(name);
+	public BlockTileEntity(Properties props, String name) {
+		super(props);
 		this.setRegistryName(new ResourceLocation(Reference.MODID, name));
 	}
 
 	public abstract Class<TE> getTileEntityClass();
 	
-	public TE getTileEntity(IBlockAccess world, BlockPos pos) {
+	public TE getTileEntity(IWorld world, BlockPos pos) {
 		return (TE)world.getTileEntity(pos);
 	}
 

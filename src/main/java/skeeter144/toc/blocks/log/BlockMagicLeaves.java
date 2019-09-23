@@ -14,7 +14,7 @@ public class BlockMagicLeaves extends CustomBlockLeaves{
 	}
 	
 	@Override
-	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+	public void tick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 		if(worldIn.rand.nextInt(5) != 0)
 			return;
 		

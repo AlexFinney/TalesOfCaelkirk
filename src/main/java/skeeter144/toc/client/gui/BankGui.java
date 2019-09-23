@@ -17,9 +17,9 @@ public class BankGui extends GuiContainer{
     
     public BankGui(IInventory playerInv, IInventory bankInv)
     {
-        super(new ContainerBank(playerInv, bankInv, Minecraft.getMinecraft().player));
+        super(new ContainerBank(playerInv, bankInv, Minecraft.getInstance().player));
         
-        Minecraft.getMinecraft().player.openContainer = this.inventorySlots;
+        Minecraft.getInstance().player.openContainer = this.inventorySlots;
         this.ySize = 114 + this.bankInventoryRows * 18;
     }
 
@@ -29,7 +29,6 @@ public class BankGui extends GuiContainer{
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
-        super.drawScreen(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
     }
 
@@ -47,7 +46,7 @@ public class BankGui extends GuiContainer{
      */
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(CHEST_GUI_TEXTURE);
         int i = (this.width - this.xSize) / 2;
         int j = (this.height - this.ySize) / 2 - 3;

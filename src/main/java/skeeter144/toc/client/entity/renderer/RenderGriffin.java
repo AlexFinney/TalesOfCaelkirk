@@ -1,8 +1,8 @@
 package skeeter144.toc.client.entity.renderer;
 
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.model.ModelBase;
 import net.minecraft.util.ResourceLocation;
 import skeeter144.toc.entity.mob.mount.flying.EntityGriffin;
 import skeeter144.toc.util.Reference;

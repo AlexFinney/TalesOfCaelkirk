@@ -3,12 +3,10 @@ package skeeter144.toc.client.entity.animation;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
-import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.renderer.entity.model.ModelBase;
+import skeeter144.toc.client.entity.renderer.AdvancedModelRenderer;
 import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.event.AnimationEvent;
-import skeeter144.toc.network.AnimationEventMessage;
-import skeeter144.toc.network.Network;
 
 public class Animation {
 
@@ -28,18 +26,18 @@ public class Animation {
 	
 	
 	
-	public ANIMATION_STATE render(CustomMob mob, float tickStartTime, float newTickTime) {
+	public AnimationState render(CustomMob mob, float tickStartTime, float newTickTime) {
 		float currentTick = newTickTime - tickStartTime;
-		ANIMATION_STATE currentState = ANIMATION_STATE.NOT_RUNNING;
+		AnimationState currentState = AnimationState.NOT_RUNNING;
 		
 		if(currentTick > durationTicks) {
-			currentState = ANIMATION_STATE.FINISHED;
+			currentState = AnimationState.FINISHED;
 			if(keyFrames.get(keyFrames.size() - 1).onFrameChanged != null)
 				keyFrames.get(keyFrames.size() - 1).onFrameChanged.run(mob);
 			
 			if(doesLoop) {
 				mob.animationTicks = 0;
-				currentState = ANIMATION_STATE.NOT_RUNNING;
+				currentState = AnimationState.NOT_RUNNING;
 			}
 			return currentState;
 		}
@@ -61,10 +59,10 @@ public class Animation {
 		}
 		
 		if(targetFrame == null) {
-			return ANIMATION_STATE.FINISHED;
+			return AnimationState.FINISHED;
 		}
 		
-		currentState = ANIMATION_STATE.RUNNING;
+		currentState = AnimationState.RUNNING;
 		float ratio = 0;
 		if(lastFrame != null) {
 			ratio = (currentTick - lastFrame.whenOccurs) / ( targetFrame.whenOccurs - lastFrame.whenOccurs);
@@ -110,7 +108,7 @@ public class Animation {
 		this.keyFrames.add(frame);
 	}
 	
-	public enum ANIMATION_STATE{
+	public enum AnimationState{
 		RUNNING,
 		NOT_RUNNING,
 		FINISHED

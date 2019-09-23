@@ -1,25 +1,24 @@
 package skeeter144.toc.client.entity.renderer;
 
-
 import java.util.Map;
 
 import com.google.common.collect.Maps;
 
-import net.minecraft.client.model.ModelHorse;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.model.ModelHorseArmorBase;
 import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.passive.EntitySkeletonHorse;
 import net.minecraft.entity.passive.EntityZombieHorse;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityDonkeyMount;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityMuleMount;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityVariableHorseMount;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class RenderCustomAbstractHorse extends RenderLiving<AbstractHorse>
 {
     private static final Map <Class<?>, ResourceLocation> DONKEY_MAP = Maps.newHashMap();
@@ -33,7 +32,7 @@ public class RenderCustomAbstractHorse extends RenderLiving<AbstractHorse>
 
     public RenderCustomAbstractHorse(RenderManager rm, float scale)
     {
-        super(rm, new ModelHorse(), 0.75F);
+        super(rm, new ModelHorseArmorBase(), 0.75F);
         this.scale = scale;
     }
 
@@ -42,7 +41,7 @@ public class RenderCustomAbstractHorse extends RenderLiving<AbstractHorse>
      */
     protected void preRenderCallback(AbstractHorse entitylivingbaseIn, float partialTickTime)
     {
-        GlStateManager.scale(this.scale, this.scale, this.scale);
+        GlStateManager.scalef(this.scale, this.scale, this.scale);
         super.preRenderCallback(entitylivingbaseIn, partialTickTime);
     }
 

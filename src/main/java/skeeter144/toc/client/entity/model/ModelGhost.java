@@ -1,12 +1,11 @@
 package skeeter144.toc.client.entity.model;
 
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 import skeeter144.toc.TOCMain;
+import skeeter144.toc.client.entity.renderer.AdvancedModelRenderer;
 import skeeter144.toc.entity.mob.monster.EntityGhost;
 import skeeter144.toc.entity.mob.monster.EntityGhost.AIGhostDiveAttack.DiveStage;
 import skeeter144.toc.particles.particle.BasicParticle;
@@ -62,7 +61,7 @@ public class ModelGhost extends AdvancedModelBase {
     	float speed = .2f;
         float degree =  1.5f;
     	
-        int stage = (int)ghost.getEntityAttribute(EntityGhost.DIVE_STAGE).getBaseValue();
+        int stage = (int)ghost.getAttribute(EntityGhost.DIVE_STAGE).getBaseValue();
         
         
         if(ghost.world.rand.nextInt(20) == 0) {
@@ -71,8 +70,7 @@ public class ModelGhost extends AdvancedModelBase {
 					TOCMain.rand.nextFloat() * .25f + .125f, 
 					TOCMain.rand.nextFloat() * .5f - .25f, 
 					true);
-			
-			Minecraft.getMinecraft().effectRenderer.addEffect(p);
+			Minecraft.getInstance().particles.addEffect(p);
 		}
         
         if(stage == DiveStage.IDLE.ordinal()) {
@@ -99,10 +97,10 @@ public class ModelGhost extends AdvancedModelBase {
 	        
 	        this.head.rotateAngleX = (float) Math.toRadians(-45);
 	           
-	        this.left_arm.walk(.8f, .3f, false, 0, 0, f, f1);
-	        this.left_arm_1.walk(.8f, .3f, true, 0, 0, f, f1);
+	        walk(left_arm, .8f, .3f, false, 0, 0, f, f1);
+	        walk(left_arm_1, .8f, .3f, true, 0, 0, f, f1);
 	        
-	        this.head.swing(.5f, .3f, false, 0, 0, f, f1);
+	        swing(head, .5f, .3f, false, 0, 0, f, f1);
 	        
 	        if(ghost.world.rand.nextInt(2) == 0) {
 				Particle p = new BasicParticle(ghost.world, ghost.posX, ghost.posY + 1, ghost.posZ, 1, 0x000000, 
@@ -111,7 +109,7 @@ public class ModelGhost extends AdvancedModelBase {
 						TOCMain.rand.nextFloat() * .5f - .25f, 
 						true);
 				
-				Minecraft.getMinecraft().effectRenderer.addEffect(p);
+				Minecraft.getInstance().particles.addEffect(p);
 			}
 	        
         }else if(stage == DiveStage.DIVING.ordinal()) {
@@ -141,8 +139,8 @@ public class ModelGhost extends AdvancedModelBase {
             
             this.head.rotateAngleX = (float) Math.toRadians(-60);
             
-            this.left_arm.walk(.1f, .3f, false, 0, 0, f, f1);
-            this.left_arm_1.walk(.1f, .3f, true, 0, 0, f, f1);
+            walk(left_arm, .1f, .3f, false, 0, 0, f, f1);
+            walk(left_arm_1, .1f, .3f, true, 0, 0, f, f1);
             
             if(ghost.world.rand.nextInt(2) == 0) {
 				Particle p = new BasicParticle(ghost.world, ghost.posX, ghost.posY + 1, ghost.posZ, 1, 0x000000, 
@@ -151,7 +149,7 @@ public class ModelGhost extends AdvancedModelBase {
 						TOCMain.rand.nextFloat() * .5f - .25f, 
 						true);
 				
-				Minecraft.getMinecraft().effectRenderer.addEffect(p);
+				Minecraft.getInstance().particles.addEffect(p);
 			}
         }
     }

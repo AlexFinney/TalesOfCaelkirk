@@ -3,17 +3,26 @@ package skeeter144.toc.blocks;
 import java.lang.reflect.Field;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.Block.Properties;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.ForgeRegistries;
 import skeeter144.toc.blocks.log.BlockMagicLeaves;
 import skeeter144.toc.blocks.log.CustomBlockLeaves;
 import skeeter144.toc.blocks.log.CustomBlockLog;
+import skeeter144.toc.entity.tile.TileEntityAnvil;
+import skeeter144.toc.entity.tile.TileEntityHarvestedOre;
+import skeeter144.toc.entity.tile.TileEntityHarvestedTree;
+import skeeter144.toc.entity.tile.TileEntityMobSpawner;
 import skeeter144.toc.items.TOCItems;
+import skeeter144.toc.util.Reference;
 
 public class TOCBlocks {
 
@@ -33,7 +42,7 @@ public class TOCBlocks {
 	public static Block harvested_tree = new BlockHarvestedTree(Material.WOOD, "harvested_tree");
 	public static Block blockAnvil = new BlockAnvil("anvil");
 	public static Block blockMobSpawnerInvis = new BlockMobSpawner("mob_spawner");
-	public static Block blockMobSpawner = new CustomBlock("mob_spawner_model", Material.AIR);
+	public static Block blockMobSpawner = new CustomBlock(Properties.create(Material.ROCK), "mob_spawner_model");
 	
 	public static Block oak_log = new CustomBlockLog("oak_log");
 	public static Block birch_log = new CustomBlockLog("birch_log");
@@ -59,14 +68,15 @@ public class TOCBlocks {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	public static void registerAllTileEntities() {
-		GameRegistry.registerTileEntity(((BlockHarvestedOre)harvested_ore).getTileEntityClass(), harvested_ore.getRegistryName().toString());
-		GameRegistry.registerTileEntity(((BlockAnvil)blockAnvil).getTileEntityClass(), blockAnvil.getRegistryName().toString());
-		GameRegistry.registerTileEntity(((BlockHarvestedTree)harvested_tree).getTileEntityClass(), harvested_tree.getRegistryName().toString());
-		GameRegistry.registerTileEntity(((BlockMobSpawner)blockMobSpawnerInvis).getTileEntityClass(), blockMobSpawnerInvis.getRegistryName().toString());
-	}
+	@SubscribeEvent
+	public static void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> evt) {
+		TileEntityType.register(Reference.MODID + ":harvested_ore", TileEntityType.Builder.create(TileEntityHarvestedOre::new));
+		TileEntityType.register(Reference.MODID + ":anvil", TileEntityType.Builder.create(TileEntityAnvil::new));
+		TileEntityType.register(Reference.MODID + ":harvested_tree", TileEntityType.Builder.create(TileEntityHarvestedTree::new));
+		TileEntityType.register(Reference.MODID + ":mob_spawner", TileEntityType.Builder.create(TileEntityMobSpawner::new));
 
+	}
+	
 	public static void registerAllBlocks() {
 		try {
 			for (Field f : TOCBlocks.class.getFields()) {
@@ -81,36 +91,16 @@ public class TOCBlocks {
 	
 	private static void register(Block block) {
 		ForgeRegistries.BLOCKS.register(block);
-		ForgeRegistries.ITEMS.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
-		
-		if(block.equals(oak_log)) {
-			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
-			block.setHardness(-1);
-		} else if(block.equals(birch_log)) {
-			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
-			block.setHardness(-1);
-		}else if(block.equals(maple_log)) {
-			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
-			block.setHardness(-1);
-		}else if(block.equals(yew_log)) {
-			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
-			block.setHardness(-1);
-		}else if(block.equals(orc_log)) {
-			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
-			block.setHardness(-1);
-		}else if(block.equals(magic_log)) {
-			ForgeRegistries.ITEMS.getValue(block.getRegistryName()).setMaxStackSize(1);
-			block.setHardness(-1);
-		}
+		ForgeRegistries.ITEMS.register(new ItemBlock(block, new Item.Properties()).setRegistryName(block.getRegistryName()));
 	}
 	
 	private static void registerBlockItemRender(Block block) {
 		if(block == blockMobSpawnerInvis) {
-			ModelLoader.setCustomModelResourceLocation(ForgeRegistries.ITEMS.getValue(blockMobSpawnerInvis.getRegistryName()), 0, 
-					new ModelResourceLocation(blockMobSpawner.getRegistryName(), "inventory"));
+		//	ModelLoader.setCustomModelResourceLocation(ForgeRegistries.ITEMS.getValue(blockMobSpawnerInvis.getRegistryName()), 0, 
+		//			new ModelResourceLocation(blockMobSpawner.getRegistryName(), "inventory"));
 		}else{
-			ModelLoader.setCustomModelResourceLocation(ForgeRegistries.ITEMS.getValue(block.getRegistryName()), 0, 
-					new ModelResourceLocation(block.getRegistryName(), "inventory"));
+	//		ModelLoader.setCustomModelResourceLocation(ForgeRegistries.ITEMS.getValue(block.getRegistryName()), 0, 
+	//				new ModelResourceLocation(block.getRegistryName(), "inventory"));
 		}
 	}
 }

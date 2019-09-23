@@ -3,10 +3,9 @@ package skeeter144.toc.client.entity.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.entity.Entity;
 import skeeter144.toc.client.entity.animation.Animation;
+import skeeter144.toc.client.entity.renderer.AdvancedModelRenderer;
 
 /**
  * GiantSpider - Undefined

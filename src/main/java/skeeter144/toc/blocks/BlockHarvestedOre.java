@@ -10,8 +10,7 @@ import skeeter144.toc.entity.tile.TileEntityHarvestedOre;
 public class BlockHarvestedOre extends BlockTileEntity<TileEntityHarvestedOre>{
 
 	public BlockHarvestedOre(Material materialIn, String name) {
-		super(materialIn, name);
-		this.setBlockUnbreakable();
+		super(Properties.create(materialIn).hardnessAndResistance(-1), name);
 	}
 
 	@Override
@@ -23,14 +22,5 @@ public class BlockHarvestedOre extends BlockTileEntity<TileEntityHarvestedOre>{
 	public TileEntityHarvestedOre createTileEntity(World world, IBlockState state) {
 		return new TileEntityHarvestedOre();
 	}
-	
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
-	}
-	
-	@Override
-	public boolean isFullBlock(IBlockState state) {
-		return false;
-	}
+
 }

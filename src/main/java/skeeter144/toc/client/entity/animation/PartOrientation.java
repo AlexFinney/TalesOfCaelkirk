@@ -1,14 +1,13 @@
 package skeeter144.toc.client.entity.animation;
 
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
-import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.entity.model.ModelRenderer;
 import skeeter144.toc.util.Util;
 
 public class PartOrientation {
 	public final float x, y, z, rotX, rotY, rotZ;
 	public final String partName;
-	public AdvancedModelRenderer part;
-	public PartOrientation(String partName, AdvancedModelRenderer part, float deltaX,    float deltaY,    float deltaZ, 
+	public ModelRenderer part;
+	public PartOrientation(String partName, ModelRenderer part, float deltaX,    float deltaY,    float deltaZ, 
 																		float deltaRotX, float deltaRotY, float deltaRotZ) {
 		
 		deltaRotX = Util.toRad(deltaRotX);
@@ -16,21 +15,21 @@ public class PartOrientation {
 		deltaRotZ = Util.toRad(deltaRotZ);
 		this.partName = partName;
 		
-		this.x = deltaX + part.defaultPositionX;
-		this.y = deltaY + part.defaultPositionY;
-		this.z = deltaZ + part.defaultPositionZ;
-		this.rotX = deltaRotX + part.defaultRotationX;
-		this.rotY = deltaRotY + part.defaultRotationY;
-		this.rotZ = deltaRotZ + part.defaultRotationZ;
+		this.x = deltaX + part.offsetX;
+		this.y = deltaY + part.offsetY;
+		this.z = deltaZ + part.offsetZ;
+		this.rotX = deltaRotX + part.rotateAngleX;
+		this.rotY = deltaRotY + part.rotateAngleY;
+		this.rotZ = deltaRotZ + part.rotateAngleZ;
 	}
 	
-	public PartOrientation(AdvancedModelRenderer m, String name) {
-		x = m.defaultPositionX;
-		y = m.defaultPositionY;
-		z = m.defaultPositionZ;
-		rotX = m.defaultRotationX;
-		rotY = m.defaultRotationY;
-		rotZ = m.defaultRotationZ;
+	public PartOrientation(ModelRenderer m, String name) {
+		x = m.offsetX;
+		y = m.offsetY;
+		z = m.offsetZ;
+		rotX = m.rotateAngleX;
+		rotY = m.rotateAngleY;
+		rotZ = m.rotateAngleZ;
 		part = m;
 		partName = name;
 	}

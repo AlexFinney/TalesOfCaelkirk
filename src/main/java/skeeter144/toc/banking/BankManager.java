@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.text.TextComponentString;
 import skeeter144.toc.banking.BankInventory.SerializableBankInventory;
 
 public class BankManager {
@@ -20,10 +21,10 @@ public class BankManager {
 	public static BankInventory getPlayerInventory(EntityPlayer player) {
 		
 		if(playerInventories.get(player.getUniqueID()) == null) 
-			playerInventories.put(player.getUniqueID(), new BankInventory("Bank Inventory", false, 54));
+			playerInventories.put(player.getUniqueID(), new BankInventory(new TextComponentString("Bank Inventory"), 54));
 		
 		
-		playerInventories.get(player.getUniqueID()).setCustomName(player.getDisplayNameString() + "'s Bank");
+		playerInventories.get(player.getUniqueID()).setCustomName(player.getDisplayName().appendText("'s Bank"));
 		return playerInventories.get(player.getUniqueID());
 	}
 	

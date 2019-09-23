@@ -8,15 +8,12 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 
 public class BankInventory extends InventoryBasic{
 
-	public BankInventory(String title, boolean customName, int slotCount) {
-		super(title, customName, slotCount);
-	}
-	
 	public BankInventory(ITextComponent title, int slotCount) {
 		super(title, slotCount);
 	}
@@ -26,7 +23,7 @@ public class BankInventory extends InventoryBasic{
 		private static final long serialVersionUID = -8104266333309720974L;
 		
 		int slots;
-		String invName;
+		ITextComponent invName;
 		List<SerializableItemStack> items = new ArrayList<SerializableItemStack>();
 		
 		public SerializableBankInventory(BankInventory inv) {
@@ -40,7 +37,7 @@ public class BankInventory extends InventoryBasic{
 		
 		
 		public BankInventory toBankInventory() {
-			BankInventory bi = new BankInventory(invName, true, slots);
+			BankInventory bi = new BankInventory(invName, slots);
 			
 			for(int i = 0; i < this.slots; ++i)
 				bi.setInventorySlotContents(i, items.get(i).toItemStack());
@@ -54,12 +51,13 @@ public class BankInventory extends InventoryBasic{
 		private static final long serialVersionUID = -2334185541927257463L;
 		
 		byte[] bytes;
-		String name;
+		ITextComponent name;
 		int count;
 		
 		public SerializableItemStack(ItemStack is) {
 			ByteBuf buf = Unpooled.buffer();
-			ByteBufUtils.writeItemStack(buf, is);
+			PacketBuffer pBuf = new PacketBuffer(buf);
+			pBuf.writeItemStack(is);
 			bytes = buf.array();
 			
 			name = is.getDisplayName();
@@ -69,8 +67,9 @@ public class BankInventory extends InventoryBasic{
 		
 		public ItemStack toItemStack() {
 			ByteBuf buf = Unpooled.buffer(bytes.length);
-			buf.writeBytes(bytes);
-			return ByteBufUtils.readItemStack(buf);
+			PacketBuffer pBuf = new PacketBuffer(buf);
+			pBuf.writeBytes(bytes);
+			return pBuf.readItemStack();
 		}
 	}
 	

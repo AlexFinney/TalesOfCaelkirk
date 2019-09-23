@@ -4,18 +4,15 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-import org.lwjgl.input.Mouse;
-
+import net.java.games.input.Mouse;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
-import skeeter144.toc.network.CraftItemMessage;
-import skeeter144.toc.network.Network;
 import skeeter144.toc.recipe.Recipe;
 
 public abstract class CraftingGui extends GuiScreen{
@@ -32,7 +29,6 @@ public abstract class CraftingGui extends GuiScreen{
 	ArrayList<Recipe> craftableRecipes = new ArrayList<Recipe>();
 	ResourceLocation backgroundImage;
 	TextureManager tm;
-	ScaledResolution sr;
 	int recipeStartX;
 	int recipeStartY;
 	int recipeSpace;
@@ -49,7 +45,7 @@ public abstract class CraftingGui extends GuiScreen{
 	public void updatePlayersInventory() {
 		craftableRecipes.clear();
 		for(Recipe r : allRecipes) {
-			if(r.canRecipeBeCrafted(Minecraft.getMinecraft().player.inventory)) {
+			if(r.canRecipeBeCrafted(Minecraft.getInstance().player.inventory)) {
 				craftableRecipes.add(r);
 			}
 		}
@@ -77,34 +73,35 @@ public abstract class CraftingGui extends GuiScreen{
 	}
 	
 	void setGuiVals() {
-		tm = Minecraft.getMinecraft().getTextureManager();
-		sr = new ScaledResolution(Minecraft.getMinecraft());
+		tm = Minecraft.getInstance().getTextureManager();
+		MainWindow mw = Minecraft.getInstance().mainWindow;
 		
 		tm.bindTexture(backgroundImage);
 		
-		guiWidth = (int)(sr.getScaledWidth() * .4f);
-		guiHeight = (int)(guiWidth * .4f);
-		guiX = sr.getScaledWidth() / 2 - guiWidth / 2;
-		guiY = (int)(sr.getScaledHeight() * .2f);
+		guiWidth = mw.getScaledWidth() / 4;
+		guiHeight = mw.getScaledHeight();
+		guiX = mw.getScaledWidth() / 2 - guiWidth / 2;
+		guiY = (int)(mw.getScaledHeight() * .2f);
 	}
 	
 	void drawRecipes() {
+		MainWindow mw = Minecraft.getInstance().mainWindow;
 		GlStateManager.pushMatrix();
 		RenderHelper.enableGUIStandardItemLighting();
 		GlStateManager.enableLighting();
 		int x = 0, y = 0;
 		int row = 0, col = 0;
-		int adjustedX = Mouse.getX() * sr.getScaledWidth() / Minecraft.getMinecraft().displayWidth;
-		int adjustedY = sr.getScaledHeight() - Mouse.getY() * sr.getScaledHeight() / Minecraft.getMinecraft().displayHeight;
+		int adjustedX = (int) (Minecraft.getInstance().mouseHelper.getMouseX() * mw.getScaledWidth() / mw.getWidth());
+		int adjustedY = (int) (mw.getScaledHeight() - Minecraft.getInstance().mouseHelper.getMouseY() * mw.getScaledHeight() / mw.getHeight());
 		 
 		for(Recipe r : allRecipes) {
 			if(!craftableRecipes.contains(r))
 				continue;
-			GlStateManager.translate(0, 0, 100);
+			GlStateManager.translated(0, 0, 100);
 			x = recipeStartX + col * iconDim + col * recipeSpace;
 			y = recipeStartY + row * iconDim;
 			Rectangle2D rect = new Rectangle2D.Double(x, y, iconDim, iconDim);
-			if(!wasMouseClicked && Mouse.isButtonDown(0)) {
+			if(!wasMouseClicked && Minecraft.getInstance().mouseHelper.isLeftDown()) {
 				if(rect.contains(new Point2D.Double(adjustedX, adjustedY))) {
 					wasMouseClicked = true;
 					selectedRecipe = r;
@@ -116,7 +113,7 @@ public abstract class CraftingGui extends GuiScreen{
 			
 			
 			this.itemRender.renderItemAndEffectIntoGUI(r.crafted, x, y);
-			GlStateManager.translate(0, 0, -100);
+			GlStateManager.translatef(0, 0, -100);
 			++col;
 			if(col >= columns) {
 				col = 0;
@@ -125,7 +122,7 @@ public abstract class CraftingGui extends GuiScreen{
 		}
 		
 		if(totalCrafting != 0) {
-			FontRenderer fr = Minecraft.getMinecraft().fontRenderer;
+			FontRenderer fr = Minecraft.getInstance().fontRenderer;
 			fr.drawString(crafted + "" + "/" + totalCrafting, (int)(guiX + guiWidth * .6f), (int)(guiY + guiHeight * .8f), 0xFFFFFFFF);
 		}
 		

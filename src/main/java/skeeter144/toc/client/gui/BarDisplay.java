@@ -42,7 +42,7 @@ public class BarDisplay extends AbstractHealthDisplay implements ToroHealthDispl
 		String name = getEntityName();
 		String health = (int) Math.ceil(entity.getHealth()) + "/" + (int) entity.getMaxHealth();
 
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		mc.getTextureManager().bindTexture(GUI_BARS_TEXTURES);
 		renderHealthBar();
 		mc.fontRenderer.drawStringWithShadow(name, barX, y + 2, 16777215);

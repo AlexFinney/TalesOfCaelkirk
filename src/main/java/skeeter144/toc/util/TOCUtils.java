@@ -54,13 +54,13 @@ public class TOCUtils {
 			}
 			Mw.getInstance().markerManager.delMarker(toDelete);
 		}
-		Mw.getInstance().markerManager.save(WorldConfig.getInstance().worldConfiguration, mapwriter.util.Reference.catMarkers);	
-		Mw.getInstance().markerManager.update();
+	//	Mw.getInstance().markerManager.save(WorldConfig.getInstance().worldConfiguration, mapwriter.util.Reference.catMarkers);	
+	//	Mw.getInstance().markerManager.update();
 	}
 	
 	public static void addIconMarkerToMap(String name, ResourceLocation texture, BlockPos pos, int dim) {
 		//Mw.getInstance().markerManager.addMarker(new IconMarker(name, texture, pos.getX(), pos.getY(), pos.getZ(), dim));
-		Mw.getInstance().markerManager.save(WorldConfig.getInstance().worldConfiguration, mapwriter.util.Reference.catMarkers);	
-		Mw.getInstance().markerManager.update();
+	//	Mw.getInstance().markerManager.save(WorldConfig.getInstance().worldConfiguration, mapwriter.util.Reference.catMarkers);	
+	//	Mw.getInstance().markerManager.update();
 	}
 }

@@ -1,11 +1,6 @@
 package skeeter144.toc.client.entity.model;
 
-import org.lwjgl.opengl.GL11;
-
-import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.Entity;
-import skeeter144.toc.entity.mob.monster.EntityViking;
+import net.minecraft.client.renderer.entity.model.ModelBiped;
 
 public class ModelViking extends ModelBiped{
 

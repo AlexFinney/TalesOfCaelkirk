@@ -1,7 +1,6 @@
 package skeeter144.toc.client.entity.model;
 
-import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.model.ModelVillager;
+import net.minecraft.client.renderer.entity.model.ModelBiped;
 
 public class ModelHumanNpc extends ModelBiped{
 

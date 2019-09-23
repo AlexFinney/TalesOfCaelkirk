@@ -1,9 +1,8 @@
 package skeeter144.toc.client.entity.model;
 
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
-import net.minecraft.client.model.ModelBox;
+import net.minecraft.client.renderer.entity.model.ModelBox;
 import net.minecraft.entity.Entity;
+import skeeter144.toc.client.entity.renderer.AdvancedModelRenderer;
 import skeeter144.toc.entity.mob.monster.EntitySiren;
 
 public class ModelSiren extends AdvancedModelBase {
@@ -105,7 +104,7 @@ public class ModelSiren extends AdvancedModelBase {
 			float headPitch, float scaleFactor, Entity entityIn) {
 		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
 		resetToDefaultPose();
-		if(entityIn.isInWater() || entityIn.isOverWater()) {
+		if(entityIn.isInWater()) {
 			walk(Tail, .25f, .2f, false, 0, 7F, entityIn.ticksExisted, .2f);
 			walk(Tail2, .25f, .5f, false, 0, .1F, entityIn.ticksExisted, .5f);
 			walk(Tail3, .25f, .5f, false, 0, .1F, entityIn.ticksExisted, .5f);

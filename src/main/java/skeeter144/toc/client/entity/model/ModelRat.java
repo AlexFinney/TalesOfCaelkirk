@@ -1,9 +1,8 @@
 package skeeter144.toc.client.entity.model;
 
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
-import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.entity.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import skeeter144.toc.client.entity.renderer.AdvancedModelRenderer;
 
 public class ModelRat extends AdvancedModelBase {
     public AdvancedModelRenderer body;

@@ -32,8 +32,7 @@ public class BlockHarvestableOre extends CustomBlock{
 	public Item item;
 	public int minSecs, maxSecs, xpGiven;
 	public BlockHarvestableOre(String name, Item ore, int xpGiven, int minSecs, int maxSecs) {
-		super(name, Material.ROCK);
-		this.setHardness(-1);
+		super(Properties.create(Material.ROCK).hardnessAndResistance(-1), name);
 		this.item = ore;
 		this.minSecs = minSecs;
 		this.maxSecs = maxSecs;
@@ -42,7 +41,7 @@ public class BlockHarvestableOre extends CustomBlock{
 	
 	
 	@Override
-	public void onBlockClicked(World world, BlockPos pos, EntityPlayer player) {
+	public void onBlockClicked(IBlockState state, World world, BlockPos pos, EntityPlayer player) {
 		if(player.getCooledAttackStrength(1) < 1)
 			return;
 		
@@ -81,16 +80,7 @@ public class BlockHarvestableOre extends CustomBlock{
 		}
 	}
 	
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
-	}
-	
-	@Override
-	public boolean isFullBlock(IBlockState state) {
-		return false;
-	}
-	
+
 	public static class BlockMinedEvent extends BlockEvent{
 		public EntityPlayer player;
 		public BlockMinedEvent(World world, BlockPos pos, IBlockState state, EntityPlayer player) {

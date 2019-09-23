@@ -1,9 +1,8 @@
 package skeeter144.toc.client.entity.model;
 
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
-import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import skeeter144.toc.client.entity.renderer.AdvancedModelRenderer;
 
 /**
  * Goblin - Skeeter144
@@ -188,8 +187,8 @@ public class ModelGoblin extends AdvancedModelBase {
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
         GlStateManager.pushMatrix();
 
-        GlStateManager.scale(.5f, .5f, .5f);
-        GlStateManager.translate(.15, 1.5, .15);
+        GlStateManager.scalef(.5f, .5f, .5f);
+        GlStateManager.translated(.15, 1.5, .15);
         this.body.render(f5);
         GlStateManager.popMatrix();
     }
