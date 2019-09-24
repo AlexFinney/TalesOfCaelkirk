@@ -61,7 +61,7 @@ public class AddLevelXpMessage implements IMessage{
 		
 		@Override
 		public IMessage onMessage(AddLevelXpMessage message, MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().addScheduledTask(new Runnable() {
 				public void run() {
 					Collection<Level> levels = TOCMain.localPlayer.getPlayerLevels().getLevels();
 					for(Level l : levels) {
@@ -77,8 +77,8 @@ public class AddLevelXpMessage implements IMessage{
 								bar.setPosition(SnackbarPosition.UP);
 								bar.setDuration(200);
 								SnackbarHandler.INSTANCE.showSnackbar(bar);
-								World w = Minecraft.getMinecraft().player.world;
-								EntityPlayer pl = Minecraft.getMinecraft().player;
+								World w = Minecraft.getInstance().player.world;
+								EntityPlayer pl = Minecraft.getInstance().player;
 								w.playSound(pl, pl.getPosition(), SoundEvents.ENTITY_FIREWORK_LARGE_BLAST, SoundCategory.MASTER, 1, 1);
 								w.playSound(pl, pl.getPosition(), SoundEvents.ENTITY_FIREWORK_TWINKLE, SoundCategory.MASTER, 1, 1);
 							}

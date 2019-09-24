@@ -78,17 +78,17 @@ public class EntityDisplay implements ToroHealthDisplay {
 		GlStateManager.enableColorMaterial();
 		GlStateManager.pushMatrix();
 
-		GlStateManager.translate(glX, glY, 50.0F);
-		GlStateManager.scale((float) (-scale), (float) scale, (float) scale);
-		GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
-		GlStateManager.rotate(135.0F, 0.0F, 1.0F, 0.0F);
-		GlStateManager.rotate(-100.0F, 0.0F, 1.0F, 0.0F);
-		GlStateManager.rotate(0.0f, 1.0F, 0.0F, 0.0F);
+		GlStateManager.translatef(glX, glY, 50.0F);
+		GlStateManager.scalef((float) (-scale), (float) scale, (float) scale);
+		GlStateManager.rotatef(180.0F, 0.0F, 0.0F, 1.0F);
+		GlStateManager.rotatef(135.0F, 0.0F, 1.0F, 0.0F);
+		GlStateManager.rotatef(-100.0F, 0.0F, 1.0F, 0.0F);
+		GlStateManager.rotatef(0.0f, 1.0F, 0.0F, 0.0F);
 
 		RenderHelper.enableStandardItemLighting();
 
-		GlStateManager.translate(0.0F, 0.0F, 0.0F);
-		RenderManager rendermanager = Minecraft.getMinecraft().getRenderManager();
+		GlStateManager.translatef(0.0F, 0.0F, 0.0F);
+		RenderManager rendermanager = Minecraft.getInstance().getRenderManager();
 		rendermanager.setPlayerViewY(180.0F);
 		rendermanager.setRenderShadow(false);
 		rendermanager.renderEntity(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
@@ -97,9 +97,9 @@ public class EntityDisplay implements ToroHealthDisplay {
 		GlStateManager.popMatrix();
 		RenderHelper.disableStandardItemLighting();
 		GlStateManager.disableRescaleNormal();
-		GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
+		//GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
 		GlStateManager.disableTexture2D();
-		GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+	//	GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
 	}
 
 	private void popEntityLeasedTo() {

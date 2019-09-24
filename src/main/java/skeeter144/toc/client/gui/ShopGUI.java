@@ -4,26 +4,27 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.util.List;
 
-import org.lwjgl.input.Mouse;
-
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.IRegistry;
 import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData;
 import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData.ItemPrice;
 import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData.ShopListing;
 import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.network.ItemTransactionMessage;
 import skeeter144.toc.network.Network;
+import skeeter144.toc.util.Mouse;
 import skeeter144.toc.util.Reference;
 
 public class ShopGUI extends GuiScreen{
@@ -36,10 +37,9 @@ public class ShopGUI extends GuiScreen{
 		this.shopData = shopData;
 	}
 	
-	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
-	    super.drawScreen(mouseX, mouseY, partialTicks);
+	    //super.drawScreen(mouseX, mouseY, partialTicks);
 	    drawBackground();
 	    drawPlayersItems();
 	    drawShopItems();
@@ -50,7 +50,7 @@ public class ShopGUI extends GuiScreen{
 	    }
 	    
 		if(this.itemToSell != -1 || this.itemToBuy != null) {    
-			buyBtn.drawButton(this.mc, mouseX, mouseY, partialTicks);
+			buyBtn.render(mouseX, mouseY, partialTicks);
 		}
 	    	
 	    
@@ -60,12 +60,12 @@ public class ShopGUI extends GuiScreen{
 	}
 	
 	private void drawSelectedItem() {
-		InventoryPlayer inv = Minecraft.getMinecraft().player.inventory;
-		TextureManager tm = Minecraft.getMinecraft().getTextureManager();
-		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+		InventoryPlayer inv = Minecraft.getInstance().player.inventory;
+		TextureManager tm = Minecraft.getInstance().getTextureManager();
+		MainWindow sr = Minecraft.getInstance().mainWindow;
 		int iconDim = (int)(bookWidth * .07f);
-	    int adjustedX = Mouse.getX() * sr.getScaledWidth() / Minecraft.getMinecraft().displayWidth;
-	    int adjustedY = sr.getScaledHeight() - Mouse.getY() * sr.getScaledHeight() / Minecraft.getMinecraft().displayHeight;
+	    int adjustedX = Mouse.getX() * sr.getScaledWidth() / sr.getWidth();
+	    int adjustedY = sr.getScaledHeight() - Mouse.getY() * sr.getScaledHeight() / sr.getHeight();
 		int x = bookX + bookWidth / 15;
 		int y =  bookY + (int)(bookHeight * .4f);
 		this.drawRect(x, y, x + (int)(iconDim * 1.1f), y + (int)(iconDim * 1.1f), 0x5F000000);
@@ -124,14 +124,15 @@ public class ShopGUI extends GuiScreen{
 
 	private void drawShopItems() {
 	    if(shopData != null) {
-	    	TextureManager tm = Minecraft.getMinecraft().getTextureManager();
-	    	ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+	    	TextureManager tm = Minecraft.getInstance().getTextureManager();
+	    	MainWindow sr = Minecraft.getInstance().mainWindow;
 	    	int iconDim = (int)(bookWidth * .07f);
-		    int adjustedX = Mouse.getX() * sr.getScaledWidth() / Minecraft.getMinecraft().displayWidth;
-		    int adjustedY = sr.getScaledHeight() - Mouse.getY() * sr.getScaledHeight() / Minecraft.getMinecraft().displayHeight;
+		    int adjustedX = Mouse.getX() * sr.getScaledWidth() / sr.getWidth();
+		    int adjustedY = sr.getScaledHeight() - Mouse.getY() * sr.getScaledHeight() / sr.getHeight();
 	    	int count = 0;
 	    	for(ShopListing il : shopData.listings) {
-	    		Item i = Item.REGISTRY.getObject(new ResourceLocation(il.itemName));
+	    		Item i = IRegistry.field_212630_s.func_212608_b(new ResourceLocation(il.itemName));
+	    		Item.registerItems();
 	    		if(i == null) {
 	    			System.out.println("WARN: " + il.itemName + " did not map to a registered item!");
 	    			continue;
@@ -143,13 +144,13 @@ public class ShopGUI extends GuiScreen{
 				ItemStack is = new ItemStack(i);
 				
 				if(itemToBuy != null && itemToBuy.getItem().equals(i)) {
-					GlStateManager.translate(0, 0, 20);
+					GlStateManager.translated(0, 0, 20);
 					this.drawRect(x, y, x + (int)(iconDim * 1.2f), y + (int)(iconDim * 1.2f), 0x70FFFF00);
-					GlStateManager.translate(0, 0, -20);
+					GlStateManager.translated(0, 0, -20);
 				}
 
 				GlStateManager.pushMatrix();	
-				GlStateManager.translate(0.0F, 0.0F, 32.0F);
+				GlStateManager.translated(0.0F, 0.0F, 32.0F);
 				RenderHelper.enableGUIStandardItemLighting();
 				GlStateManager.enableLighting();
 				
@@ -176,17 +177,17 @@ public class ShopGUI extends GuiScreen{
 	int itemToSell = -1;
 	boolean wasMouseClicked = false;
 	private void drawPlayersItems() {
-		TextureManager tm = Minecraft.getMinecraft().getTextureManager();
-		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-		InventoryPlayer inv = Minecraft.getMinecraft().player.inventory;
+		TextureManager tm = Minecraft.getInstance().getTextureManager();
+		MainWindow sr = Minecraft.getInstance().mainWindow;
+		InventoryPlayer inv = Minecraft.getInstance().player.inventory;
 		int iconDim = (int)(bookWidth * .07f);
-	    int adjustedX = Mouse.getX() * sr.getScaledWidth() / Minecraft.getMinecraft().displayWidth;
-	    int adjustedY = (int)(sr.getScaledHeight() - (0f + Mouse.getY() * sr.getScaledHeight()) / Minecraft.getMinecraft().displayHeight);
+	    int adjustedX = Mouse.getX() * sr.getScaledWidth() / sr.getWidth();
+	    int adjustedY = (int)(sr.getScaledHeight() - (0f + Mouse.getY() * sr.getScaledHeight()) / sr.getHeight());
 
 		int count = 0;
 	    int column = 0;
 		int row = 0;
-		List<ItemStack> items =  Minecraft.getMinecraft().player.inventory.mainInventory;
+		List<ItemStack> items =  Minecraft.getInstance().player.inventory.mainInventory;
 		for(ItemStack is : items) {
 			FontRenderer font = is.getItem().getFontRenderer(is);
 			if (font == null) 
@@ -214,9 +215,9 @@ public class ShopGUI extends GuiScreen{
 			RenderHelper.enableGUIStandardItemLighting();
 			GlStateManager.enableLighting();
 			this.itemRender.renderItemAndEffectIntoGUI(is, x, y);
-			GlStateManager.translate(0, 0, 200);
+			GlStateManager.translated(0, 0, 200);
 			font.drawStringWithShadow(is.getCount() + "", x + iconDim - font.getStringWidth(is.getCount() + ""), y + iconDim / 2, 0xFFFFFFFF);
-			GlStateManager.translate(0, 0, -200);
+			GlStateManager.translated(0, 0, -200);
 			GlStateManager.disableLighting();
 			
 			if(!wasMouseClicked && Mouse.isButtonDown(0)) {
@@ -229,9 +230,9 @@ public class ShopGUI extends GuiScreen{
 				}
 			}
 			if(shopData.getBuyPriceForItem(is.getItem()) == null) {
-				GlStateManager.translate(0, 0, 200);
+				GlStateManager.translated(0, 0, 200);
 				this.drawRect(x, y, x + (int)(iconDim * 1.2f), y + (int)(iconDim * 1.2f), 0xAF000000);
-				GlStateManager.translate(0, 0, -200);
+				GlStateManager.translated(0, 0, -200);
 			}
 			
 			++count;
@@ -252,10 +253,10 @@ public class ShopGUI extends GuiScreen{
 	static int bookWidth, bookHeight, bookX, bookY;
 	private void drawBackground() {
 	    GlStateManager.pushMatrix();
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		
-		TextureManager tm = Minecraft.getMinecraft().getTextureManager();
-		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+		TextureManager tm = Minecraft.getInstance().getTextureManager();
+		MainWindow sr = Minecraft.getInstance().mainWindow;
 		tm.bindTexture(shop_background);
 		
 		bookWidth = (int)(sr.getScaledWidth() * .5f);
@@ -270,16 +271,15 @@ public class ShopGUI extends GuiScreen{
 	GuiButton buyBtn;
 	public void initGui() {
 		super.initGui();
-		buyBtn = new GuiButton(0, bookX + (int)(bookWidth * .33f), (int)(bookY + bookHeight * .38f), "Buy");
+		buyBtn = new GuiButton(0, bookX + (int)(bookWidth * .33f), (int)(bookY + bookHeight * .38f), "Buy") {};
 		buyBtn.width = (int)(bookWidth * .07f) * 2;
-		this.buttonList.clear();
-		this.buttonList.add(buyBtn);
+		buttons.clear();
+		buttons.add(buyBtn);
 	}
 	
-	protected void actionPerformed(GuiButton button) throws IOException {
-		super.actionPerformed(button);
+	protected void actionPerformed(GuiButton button){
 		if(buyBtn != null && button.id == buyBtn.id) {
-			InventoryPlayer inv = Minecraft.getMinecraft().player.inventory;
+			InventoryPlayer inv = Minecraft.getInstance().player.inventory;
 			Item i = itemToBuy == null ? inv.getStackInSlot(itemToSell).getItem() : itemToBuy.getItem();
 			Network.INSTANCE.sendToServer(new ItemTransactionMessage(itemToBuy != null, i.getRegistryName().toString(), 1, shopData.keepId));
 		}

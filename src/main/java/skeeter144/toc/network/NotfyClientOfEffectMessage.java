@@ -45,7 +45,7 @@ public class NotfyClientOfEffectMessage implements IMessage	{
 
 		@Override
 		public IMessage onMessage(NotfyClientOfEffectMessage message, MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().addScheduledTask(new Runnable() {
 				public void run() {
 					if(message.newEffect)
 						HUD.activeEffects.add(message.name);

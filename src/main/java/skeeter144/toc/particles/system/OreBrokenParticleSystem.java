@@ -25,7 +25,7 @@ public class OreBrokenParticleSystem extends ParticleSystem{
 			float zOff = TOCMain.rand.nextFloat();
 			
 			particles.add(new OreParticle(this.world, this.posX + xOff, this.posY + TOCMain.rand.nextFloat(), this.posZ + zOff, xVel * 2, yVel, zVel * 2));
-			Minecraft.getMinecraft().effectRenderer.addEffect(particles.get(i));
+			Minecraft.getInstance().effectRenderer.addEffect(particles.get(i));
 		}
 	}
 }

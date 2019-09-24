@@ -22,11 +22,11 @@ public class HealEffectSystem extends ParticleSystem{
 	
 	@Override
 	public void spawnParticles() {
-		target = Minecraft.getMinecraft().player.world.getEntityByID((int)optionalParams[4]);
+		target = Minecraft.getInstance().player.world.getEntityByID((int)optionalParams[4]);
 		int duration = (int)optionalParams[5];
 		for(int i = 0; i < 60; i++) {
 			particles.add(new OrbitingEffectParticle(target, TOCMain.rand.nextFloat() / 4 + .5f, duration, 0x00FF00FF));
-			Minecraft.getMinecraft().effectRenderer.addEffect(particles.get(i));
+			Minecraft.getInstance().effectRenderer.addEffect(particles.get(i));
 		}
 	}
 }

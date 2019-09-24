@@ -50,12 +50,12 @@ public class OpenBankGUIMessage implements IMessage{
 	public static class OpenBankGUIMessageHandler implements IMessageHandler<OpenBankGUIMessage, IMessage>{
 		public IMessage onMessage(OpenBankGUIMessage message,
 				MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().addScheduledTask(new Runnable() {
 				public void run() {
 					BankInventory bankInv = new BankInventory("Bank", true, message.items.size());
 					for(ItemStack is : message.items)
 						bankInv.addItem(is);
-					Minecraft.getMinecraft().displayGuiScreen(new GuiChest(Minecraft.getMinecraft().player.inventory, bankInv));
+					Minecraft.getInstance().displayGuiScreen(new GuiChest(Minecraft.getInstance().player.inventory, bankInv));
 				}
 			});
 			return null;

@@ -19,7 +19,7 @@ public class ClientTickHandler extends TickHandler{
 		TOCMain.clientTaskManager.tickTasks(clientTicks);
 		++clientTicks;
 		
-		Minecraft mc = Minecraft.getMinecraft();
+		Minecraft mc = Minecraft.getInstance();
 		if(mc != null && mc.player != null && mc.player.isRiding()) 
 		{
 			if(mc.player.getRidingEntity() instanceof EntityAbstractFlyingMount) 

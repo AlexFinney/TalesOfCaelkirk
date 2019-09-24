@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraftforge.fml.common.registry.EntityEntry;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraft.entity.EntityType;
+import net.minecraftforge.registries.ForgeRegistries;
 import skeeter144.toc.entity.tile.TileEntityMobSpawner;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.SetMobSpawnerSettingsMessage;
@@ -27,7 +27,7 @@ public class MobSpawnerGUI extends GuiScreen{
 	int minMobsPerSpawn;
 	int maxMobsPersSpawn;
 	
-	List<EntityEntry> mobList = new ArrayList<EntityEntry>();
+	List<EntityType<?> > mobList = new ArrayList<EntityType<?> >();
 	
 	public MobSpawnerGUI(TileEntityMobSpawner spawner) {
 		this.spawner = spawner;
@@ -41,8 +41,8 @@ public class MobSpawnerGUI extends GuiScreen{
 		this.maxMobsPersSpawn = spawner.mobs_per_spawn_max;
 		
 		int i = 0;
-		for(EntityEntry entry :ForgeRegistries.ENTITIES) {
-			if(entry.getEgg() != null) {
+		for(EntityType<?> entry : ForgeRegistries.ENTITIES) {
+			if(entry.isSummonable()) {
 				mobList.add(entry);
 				if(entry.getEntityClass().getName().equals(spawner.mob_name)) {
 					mobIndex = i;
@@ -53,10 +53,9 @@ public class MobSpawnerGUI extends GuiScreen{
 		
 	} 
 	
-	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
-	    super.drawScreen(mouseX, mouseY, partialTicks);
+	   // super.drawScreen(mouseX, mouseY, partialTicks);
 	   
 	    drawBackground();
 	}
@@ -65,12 +64,12 @@ public class MobSpawnerGUI extends GuiScreen{
 	static int bookWidth, bookHeight, bookX, bookY;
 	private void drawBackground() {
 		
-		TextureManager tm = Minecraft.getMinecraft().getTextureManager();
-		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+		TextureManager tm = Minecraft.getInstance().getTextureManager();
+		MainWindow sr = Minecraft.getInstance().mainWindow;
 		
-		this.buttonList.clear();
+		super.buttons.clear();
 		
-		this.drawString(this.fontRenderer, "Mob Type: " + mobList.get(mobIndex).getName(), 65, 5, 0XFFFFFF);
+		this.drawString(this.fontRenderer, "Mob Type: " + mobList.get(mobIndex).getRegistryName(), 65, 5, 0XFFFFFF);
 		this.drawString(this.fontRenderer, "Spawn Radius: " + spawnRadius, 65, 25, 0XFFFFFF);
 		this.drawString(this.fontRenderer, "Average Spawns/Min: " + spawnsPerMin, 65, 45, 0XFFFFFF);
 		this.drawString(this.fontRenderer, "Mob Spawn Limit: " + mobSpawnLimit, 65, 65, 0XFFFFFF);
@@ -80,10 +79,20 @@ public class MobSpawnerGUI extends GuiScreen{
 		
 		int buttonId = 0;
 		for(int i = 0; i < 7; ++i) {
-			GuiButton b = new GuiButton(buttonId, 0, i * 20, "<-");
+			GuiButton b = new GuiButton(buttonId, 0, i * 20, "<-") {
+				@Override
+				public void onClick(double mouseX, double mouseY) {
+					mouseClicked(mouseX, mouseY, id);
+				}
+			};
 			b.setWidth(30);
 			
-			GuiButton b2 = new GuiButton(buttonId + 1, 30, i * 20, "->");
+			GuiButton b2 = new GuiButton(buttonId + 1, 30, i * 20, "->") {
+				@Override
+				public void onClick(double mouseX, double mouseY) {
+					handleButtonClicked(mouseX, mouseY, id);
+				}
+			};
 			b2.setWidth(30);
 			
 			this.addButton(b);
@@ -92,18 +101,18 @@ public class MobSpawnerGUI extends GuiScreen{
 			buttonId += 2;
 		}
 		
-		GuiButton b = new GuiButton(buttonId, 30, 160, "Save Spawner Settings");
+		GuiButton b = new GuiButton(buttonId, 30, 160, "Save Spawner Settings") {
+			@Override
+			public void onClick(double mouseX, double mouseY) {
+				handleButtonClicked(mouseX, mouseY, id);
+			}
+		};
 		this.addButton(b);
 	}
 	
-	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-		super.mouseClicked(mouseX, mouseY, mouseButton);
-
-		if(this.selectedButton == null)
-			return;
-		
-		switch(this.selectedButton.id) {
+	  
+	public boolean handleButtonClicked(double mouseX, double mouseY, int buttonId){
+		switch(buttonId) {
 		case 0:
 			--mobIndex;
 			break;
@@ -185,6 +194,8 @@ public class MobSpawnerGUI extends GuiScreen{
 			mobSpawnLimit = 1;
 		if(mobSpawnLimit > 50)
 			mobSpawnLimit = 50;
+		
+		return true;
 	}
 	
 	@Override

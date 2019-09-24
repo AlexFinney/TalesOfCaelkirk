@@ -87,7 +87,7 @@ import skeeter144.toc.util.Util;
 public class ClientProxy extends CommonProxy
 {
 	GuiEntityStatus entityStatusGUI;
-	private Minecraft mc = Minecraft.getMinecraft();
+	private Minecraft mc = Minecraft.getInstance();
 	private Entity pointedEntity;
 	
 	public void preInit(FMLPreInitializationEvent event)
@@ -123,7 +123,7 @@ public class ClientProxy extends CommonProxy
 	}
 	
 	public void registerEntityRenders() {
-		RenderManager rm = Minecraft.getMinecraft().getRenderManager();
+		RenderManager rm = Minecraft.getInstance().getRenderManager();
 		
 		
 		rm.entityRenderMap.put(EntityRobertCromwell.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
@@ -204,7 +204,7 @@ public class ClientProxy extends CommonProxy
 		double motionZ = world.rand.nextGaussian() * 100;
 		Particle damageIndicator = new DamageParticle(damage + "", world, entity.posX, entity.posY + entity.height, entity.posZ, motionX, motionY,
 				motionZ);
-		Minecraft.getMinecraft().effectRenderer.addEffect(damageIndicator);
+		Minecraft.getInstance().effectRenderer.addEffect(damageIndicator);
 	}
 	
 	public static void displayParticle(Entity entity, String str) {
@@ -214,7 +214,7 @@ public class ClientProxy extends CommonProxy
 		double motionZ = world.rand.nextGaussian() * 100;
 		Particle damageIndicator = new DamageParticle(str, world, entity.posX, entity.posY + entity.height, entity.posZ, motionX, motionY,
 				motionZ);
-		Minecraft.getMinecraft().effectRenderer.addEffect(damageIndicator);
+		Minecraft.getInstance().effectRenderer.addEffect(damageIndicator);
 	}
 
 	static int maxUpdatesToWait = 40;
@@ -222,7 +222,7 @@ public class ClientProxy extends CommonProxy
 	@Override
 	public void setEntityInCrosshairs() {
 		maxUpdatesToWait = 20;
-		Entity e = Util.getPointedEntity(Minecraft.getMinecraft().player, 1, 50);
+		Entity e = Util.getPointedEntity(Minecraft.getInstance().player, 1, 50);
 		if (e != null) {
 			entityStatusGUI.setEntity((EntityLivingBase) e);
 			updatesLeft = maxUpdatesToWait;
@@ -236,9 +236,9 @@ public class ClientProxy extends CommonProxy
 
 	@Override
 	public void cancelSwing() {
-		Minecraft.getMinecraft().player.swingProgress = 0;
-		Minecraft.getMinecraft().player.swingProgressInt = 0;
-		Minecraft.getMinecraft().player.isSwingInProgress = false;
+		Minecraft.getInstance().player.swingProgress = 0;
+		Minecraft.getInstance().player.swingProgressInt = 0;
+		Minecraft.getInstance().player.isSwingInProgress = false;
 	}
 	
 	@Override
@@ -253,11 +253,11 @@ public class ClientProxy extends CommonProxy
 			e.printStackTrace();
 		}
 		
-		Minecraft.getMinecraft().effectRenderer.addEffect(p);
+		Minecraft.getInstance().effectRenderer.addEffect(p);
 	}
 	
 	public void showDialogToPlayer(EntityLivingBase ent, NpcDialog dialog) {
-		Minecraft.getMinecraft().displayGuiScreen(new DialogGui(ent, dialog));
+		Minecraft.getInstance().displayGuiScreen(new DialogGui(ent, dialog));
 	}
 	
 	

@@ -31,17 +31,17 @@ public class PlayerInputHandler {
 	@SubscribeEvent
 	public void keyPressed(KeyPressedEvent e) {
 		if(Keybindings.SPELLBOOK_KEYBIND.isPressed()) {
-			Minecraft.getMinecraft().displayGuiScreen(null);
-			Minecraft.getMinecraft().player.openGui(TOCMain.instance, Guis.SPELL_BOOK_GUI, Minecraft.getMinecraft().player.world, 0, 0, 0);
+			Minecraft.getInstance().displayGuiScreen(null);
+			Minecraft.getInstance().player.openGui(TOCMain.instance, Guis.SPELL_BOOK_GUI, Minecraft.getInstance().player.world, 0, 0, 0);
 			return;
 		}else if(Keybindings.LEVELS_KEYBIND.isPressed()) {
-			Minecraft.getMinecraft().displayGuiScreen(new LevelsGui());
+			Minecraft.getInstance().displayGuiScreen(new LevelsGui());
 			return;
 		}else if(Keybindings.INVENTORY_KEYBIND.isPressed()) {
-			if(Minecraft.getMinecraft().currentScreen instanceof CustomPlayerGui)
-				 Minecraft.getMinecraft().displayGuiScreen(null);
+			if(Minecraft.getInstance().currentScreen instanceof CustomPlayerGui)
+				 Minecraft.getInstance().displayGuiScreen(null);
 			else 
-				Minecraft.getMinecraft().displayGuiScreen(new CustomPlayerGui(Minecraft.getMinecraft().player));
+				Minecraft.getInstance().displayGuiScreen(new CustomPlayerGui(Minecraft.getInstance().player));
 		}
 	}
 	

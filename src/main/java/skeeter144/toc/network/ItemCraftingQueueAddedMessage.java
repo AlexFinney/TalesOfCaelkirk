@@ -15,10 +15,10 @@ public class ItemCraftingQueueAddedMessage implements IMessage{
 	
 	public static class ItemCraftingQueueAddedMessageHandler implements IMessageHandler<ItemCraftingQueueAddedMessage, IMessage>{
 		public IMessage onMessage(ItemCraftingQueueAddedMessage message, MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().addScheduledTask(new Runnable() {
 				public void run() {
-					if(Minecraft.getMinecraft().currentScreen instanceof SmeltingGui) {
-						((SmeltingGui)Minecraft.getMinecraft().currentScreen).incrementTotalCrafted();
+					if(Minecraft.getInstance().currentScreen instanceof SmeltingGui) {
+						((SmeltingGui)Minecraft.getInstance().currentScreen).incrementTotalCrafted();
 					}
 				}
 			});

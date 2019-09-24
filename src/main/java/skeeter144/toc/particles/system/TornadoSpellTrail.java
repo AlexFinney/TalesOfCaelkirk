@@ -22,7 +22,7 @@ public class TornadoSpellTrail extends ParticleSystem{
 	public void spawnParticles() {
 		for(int i = 0; i < 3; ++i) {
 			BasicSpellTrailParticle stp = new BasicSpellTrailParticle(world, posX, posY, posZ, 3, 0x9F9F9F, .3f, false);
-			Minecraft.getMinecraft().effectRenderer.addEffect(stp);
+			Minecraft.getInstance().effectRenderer.addEffect(stp);
 		}
 	}
 }

@@ -89,7 +89,7 @@ public class RecipeManager {
 	
 	public void craftRecipes() {
 		for(Map.Entry<UUID, List<Recipe>> entry : playerCraftingQueue.entrySet()) {
-			EntityPlayerMP player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(entry.getKey());
+			EntityPlayerMP player = FMLCommonHandler.instance().getInstanceServerInstance().getPlayerList().getPlayerByUUID(entry.getKey());
 			
 			Recipe r = entry.getValue().get(0);
 			if(r.canRecipeBeCrafted(player.inventory)) {

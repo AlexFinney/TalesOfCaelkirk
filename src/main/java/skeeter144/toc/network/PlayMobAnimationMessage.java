@@ -53,10 +53,10 @@ public class PlayMobAnimationMessage implements IMessage{
 
 		@Override
 		public IMessage onMessage(PlayMobAnimationMessage message, MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().addScheduledTask(new Runnable() {
 				public void run() {
 					UUID uuid = message.uuid;
-					for(Entity e : Minecraft.getMinecraft().world.loadedEntityList) {
+					for(Entity e : Minecraft.getInstance().world.loadedEntityList) {
 						if(e.getUniqueID().equals(uuid)) {
 							((CustomMob)e).playAnimation(Animations.get(message.animationName));
 							break;

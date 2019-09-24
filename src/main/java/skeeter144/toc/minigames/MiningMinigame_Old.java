@@ -41,10 +41,10 @@ public class MiningMinigame_Old {
 			return;
 		
 		if(board.tileAt(x, y).tileItem == null) {
-			ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+			ScaledResolution sr = new ScaledResolution(Minecraft.getInstance());
 			
-			int adjustedMouseX = Mouse.getX() * sr.getScaledWidth() / Minecraft.getMinecraft().displayWidth;
-			int adjustedMouseY = sr.getScaledHeight() - Mouse.getY() * sr.getScaledHeight() / Minecraft.getMinecraft().displayHeight;
+			int adjustedMouseX = Mouse.getX() * sr.getScaledWidth() / Minecraft.getInstance().displayWidth;
+			int adjustedMouseY = sr.getScaledHeight() - Mouse.getY() * sr.getScaledHeight() / Minecraft.getInstance().displayHeight;
 			
 			draggedTile = board.tileAt(x, y);
 			dragOffsetX = adjustedMouseX - x * 17;
@@ -103,7 +103,7 @@ public class MiningMinigame_Old {
 		public int score = 0;
 		public GameBoard(int sizeX, int sizeY) {
 			tiles = new GameTile[sizeX][sizeY];
-			Random rand = Minecraft.getMinecraft().world.rand;
+			Random rand = Minecraft.getInstance().world.rand;
 			
 			//generate tiles
 			for(int i = 0; i < sizeX; ++i) {
@@ -161,7 +161,7 @@ public class MiningMinigame_Old {
 		}
 		
 		void generateTileAt(int i, int j) {
-			Random rand = Minecraft.getMinecraft().world.rand;
+			Random rand = Minecraft.getInstance().world.rand;
 			
 			OreBlock block = DIRT;
 			float roll = rand.nextFloat();

@@ -38,10 +38,10 @@ public class SpawnBlockedMessage implements IMessage {
 
 		@Override
 		public IMessage onMessage(SpawnBlockedMessage message, MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().addScheduledTask(new Runnable() {
 				public void run() {
 					UUID uuid = new UUID(message.msb, message.lsb);
-					for(Entity e : Minecraft.getMinecraft().world.loadedEntityList) {
+					for(Entity e : Minecraft.getInstance().world.loadedEntityList) {
 						if(e.getUniqueID().equals(uuid)) {
 							ClientProxy.displayParticle(e, "Blocked!");
 						}

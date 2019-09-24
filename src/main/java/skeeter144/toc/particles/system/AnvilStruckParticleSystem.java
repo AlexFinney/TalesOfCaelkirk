@@ -14,7 +14,7 @@ public class AnvilStruckParticleSystem extends ParticleSystem{
 	public void spawnParticles() {
 		for(int i = 0; i < 10; ++i) {
 			particles.add(new FireSpellTrailParticle(world, posX + .5f, posY + 1, posZ + .5f, .5f, 0xFFFF00, .3f));
-			Minecraft.getMinecraft().effectRenderer.addEffect(particles.get(i));
+			Minecraft.getInstance().effectRenderer.addEffect(particles.get(i));
 		}
 	}
 

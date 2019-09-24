@@ -34,7 +34,7 @@ public class PlayerVitalsUpdateMessage implements IMessage {
 
 		@Override
 		public IMessage onMessage(PlayerVitalsUpdateMessage message, MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().addScheduledTask(new Runnable() {
 
 				@Override
 				public void run() {

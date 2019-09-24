@@ -5,16 +5,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -24,6 +20,7 @@ import skeeter144.toc.magic.Spell;
 import skeeter144.toc.magic.Spells;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.WandEmbueMessage;
+import skeeter144.toc.util.Mouse;
 import skeeter144.toc.util.Reference;
 
 public class SpellBookGUI extends GuiScreen {
@@ -32,10 +29,9 @@ public class SpellBookGUI extends GuiScreen {
 	ResourceLocation spellBookImage = new ResourceLocation(Reference.MODID, "textures/gui/magic_book_background.png");
 	ResourceLocation selectedIconImage = new ResourceLocation(Reference.MODID, "textures/spells/selected_icon.png");
 
-	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
-		super.drawScreen(mouseX, mouseY, partialTicks);
+		//super.drawScreen(mouseX, mouseY, partialTicks);
 
 		drawBookBackground();
 		drawSpellIcons();
@@ -53,18 +49,18 @@ public class SpellBookGUI extends GuiScreen {
 		if (spellIcons == null)
 			spellIcons = new HashMap<String, Rectangle2D>();
 
-		GlStateManager.pushAttrib();
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.pushMatrix();
+		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-		TextureManager tm = Minecraft.getMinecraft().getTextureManager();
-		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-		FontRenderer fr = Minecraft.getMinecraft().fontRenderer;
+		TextureManager tm = Minecraft.getInstance().getTextureManager();
+		MainWindow sr = Minecraft.getInstance().mainWindow;
+		FontRenderer fr = Minecraft.getInstance().fontRenderer;
 
-		int adjustedX = Mouse.getX() * sr.getScaledWidth() / Minecraft.getMinecraft().displayWidth;
+		int adjustedX = Mouse.getX() * sr.getScaledWidth() / sr.getWidth();
 		int adjustedY = sr.getScaledHeight()
-				- Mouse.getY() * sr.getScaledHeight() / Minecraft.getMinecraft().displayHeight;
+				- Mouse.getY() * sr.getScaledHeight() / sr.getHeight();
 
-		this.drawRect(adjustedX - 2, adjustedY - 2, adjustedX + 2, adjustedY + 2, 0xFFFFFFFF);
+		drawRect(adjustedX - 2, adjustedY - 2, adjustedX + 2, adjustedY + 2, 0xFFFFFFFF);
 
 		int baseX = bookX + bookWidth / 20;
 		int baseY = bookY + 10;
@@ -108,7 +104,7 @@ public class SpellBookGUI extends GuiScreen {
 			
 			if (rect.contains(adjustedX, adjustedY)) {
 				String str = s.getName();
-				fr.drawString(str, buttonX + buttonWidth / 2 - fr.getStringWidth(str) / 2, buttonY - fr.FONT_HEIGHT * .8f, 0xFFFF0000, false);
+				fr.drawString(str, buttonX + buttonWidth / 2 - fr.getStringWidth(str) / 2, buttonY - fr.FONT_HEIGHT * .8f, 0xFFFF0000);
 				fr.drawString("", 0, 0, 0xFFFFFFFF);
 			}
 
@@ -141,8 +137,8 @@ public class SpellBookGUI extends GuiScreen {
 			if (!wasMouseClicked && Mouse.isButtonDown(0) && selectedIcon >= 0) {
 				wasMouseClicked = true;
 
-				ItemStack right = Minecraft.getMinecraft().player.getHeldItemMainhand();
-				ItemStack left = Minecraft.getMinecraft().player.getHeldItemOffhand();
+				ItemStack right = Minecraft.getInstance().player.getHeldItemMainhand();
+				ItemStack left = Minecraft.getInstance().player.getHeldItemOffhand();
 
 				ItemStack held = null;
 
@@ -155,20 +151,20 @@ public class SpellBookGUI extends GuiScreen {
 				}
 
 				if (held != null) {
-					NBTTagCompound nbt = held.getTagCompound();
+					NBTTagCompound nbt = held.getTag();
 					if (nbt == null) {
 						nbt = new NBTTagCompound();
-						held.setTagCompound(nbt);
+						held.setTag(nbt);
 					}
 
-					nbt.setInteger("embued_spell", selectedIcon);
-					nbt.setString("owner", Minecraft.getMinecraft().player.getUniqueID().toString());
+					nbt.setInt("embued_spell", selectedIcon);
+					nbt.setString("owner", Minecraft.getInstance().player.getUniqueID().toString());
 					int hand = held == right ? 1 : 0;
 
 					Network.INSTANCE
-							.sendToServer(new WandEmbueMessage(Minecraft.getMinecraft().player, hand, selectedIcon));
+							.sendToServer(new WandEmbueMessage(Minecraft.getInstance().player, hand, selectedIcon));
 				} else {
-					Minecraft.getMinecraft().player
+					Minecraft.getInstance().player
 							.sendChatMessage("You must be holding a wand to embue a spell onto it!");
 				}
 			}
@@ -184,11 +180,11 @@ public class SpellBookGUI extends GuiScreen {
 	static int bookWidth, bookHeight, bookX, bookY;
 
 	private void drawBookBackground() {
-		GlStateManager.pushAttrib();
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.pushMatrix();
+		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-		TextureManager tm = Minecraft.getMinecraft().getTextureManager();
-		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+		TextureManager tm = Minecraft.getInstance().getTextureManager();
+		MainWindow sr = Minecraft.getInstance().mainWindow;
 
 		tm.bindTexture(spellBookImage);
 
@@ -203,10 +199,10 @@ public class SpellBookGUI extends GuiScreen {
 	}
 
 	@Override
-	protected void keyTyped(char typedChar, int keyCode) throws IOException {
-		if (keyCode == Keybindings.SPELLBOOK_KEYBIND.getKeyCode())
-			Minecraft.getMinecraft().displayGuiScreen(null);
-		super.keyTyped(typedChar, keyCode);
+	public boolean charTyped(char typedChar, int keyCode){
+		if (keyCode == Keybindings.SPELLBOOK_KEYBIND.getKey().getKeyCode())
+			Minecraft.getInstance().displayGuiScreen(null);
+		return super.charTyped(typedChar, keyCode);
 	}
 
 }

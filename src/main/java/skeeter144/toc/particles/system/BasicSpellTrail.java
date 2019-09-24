@@ -21,7 +21,7 @@ public class BasicSpellTrail extends ParticleSystem{
 	public void spawnParticles() {
 		for(int i = 0; i < pNum; ++i) {
 			Particle stp = new BasicSpellTrailParticle(world, posX, posY, posZ, pSize, pColor, pVel, false);
-			Minecraft.getMinecraft().effectRenderer.addEffect(stp);
+			Minecraft.getInstance().effectRenderer.addEffect(stp);
 		}
 	}
 	

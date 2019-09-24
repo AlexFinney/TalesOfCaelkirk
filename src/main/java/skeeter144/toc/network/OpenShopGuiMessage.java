@@ -53,9 +53,9 @@ public class OpenShopGuiMessage implements IMessage{
 	
 	public static class OpenShopGuiMessageHandler implements IMessageHandler<OpenShopGuiMessage, IMessage>{
 		public IMessage onMessage(OpenShopGuiMessage message, MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().addScheduledTask(new Runnable() {
 				public void run() {
-					Minecraft.getMinecraft().displayGuiScreen(new ShopGUI(message.data));
+					Minecraft.getInstance().displayGuiScreen(new ShopGUI(message.data));
 				}
 			});
 			return null;

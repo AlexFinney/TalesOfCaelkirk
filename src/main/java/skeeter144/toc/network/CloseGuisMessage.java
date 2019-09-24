@@ -20,9 +20,9 @@ public class CloseGuisMessage implements IMessage{
 	
 	public static class CloseGuisMessageHandler implements IMessageHandler<CloseGuisMessage, IMessage>{
 		public IMessage onMessage(CloseGuisMessage message, MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().addScheduledTask(new Runnable() {
 				public void run() {
-					Minecraft.getMinecraft().displayGuiScreen(null);
+					Minecraft.getInstance().displayGuiScreen(null);
 				}
 			});
 			return null;

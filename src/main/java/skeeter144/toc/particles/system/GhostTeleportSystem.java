@@ -18,7 +18,7 @@ public class GhostTeleportSystem extends ParticleSystem {
 					r.nextFloat() * 3 - 1.5f, 
 					false);
 					   
-			Minecraft.getMinecraft().effectRenderer.addEffect(p);
+			Minecraft.getInstance().effectRenderer.addEffect(p);
 		}
 	}
 }

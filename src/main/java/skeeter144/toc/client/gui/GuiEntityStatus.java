@@ -1,12 +1,12 @@
 package skeeter144.toc.client.gui;
 
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class GuiEntityStatus extends Gui {
 
@@ -31,7 +31,7 @@ public class GuiEntityStatus extends Gui {
 	int x, y;
 
 	public GuiEntityStatus() {
-		this(Minecraft.getMinecraft());
+		this(Minecraft.getInstance());
 	}
 
 	public GuiEntityStatus(Minecraft mc) {
@@ -125,7 +125,7 @@ public class GuiEntityStatus extends Gui {
 //			displayWidth = 100;
 	//	}
 
-		ScaledResolution viewport = new ScaledResolution(mc);
+		MainWindow viewport = mc.mainWindow;
 		String displayPosition = "TOPLEFT";//ConfigurationHandler.statusDisplayPosition;
 
 		int sh = viewport.getScaledHeight();

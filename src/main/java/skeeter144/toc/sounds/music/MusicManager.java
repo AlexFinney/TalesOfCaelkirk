@@ -24,7 +24,7 @@ public class MusicManager {
 				track = Sounds.creepy_music;
 				break;
 		}
-		Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getRecord(track, 1, 1));
+		Minecraft.getInstance().getSoundHandler().playSound(PositionedSoundRecord.getRecord(track, 1, 1));
 	}
 
 }

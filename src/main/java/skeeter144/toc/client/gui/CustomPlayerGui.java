@@ -17,11 +17,11 @@ import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import skeeter144.toc.items.armor.CustomArmor;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class CustomPlayerGui extends InventoryEffectRenderer
 {
     /** The old x position of the mouse pointer */
@@ -54,7 +54,7 @@ public class CustomPlayerGui extends InventoryEffectRenderer
      */
     public void initGui()
     {
-        this.buttonList.clear();
+        buttons.clear();
 
         if (this.mc.playerController.isInCreativeMode())
         {
@@ -85,13 +85,13 @@ public class CustomPlayerGui extends InventoryEffectRenderer
     	  int gap = 3;
     	  
     	  GlStateManager.pushMatrix();
-    	  GlStateManager.scale(.75, .75, .75);
+    	  GlStateManager.scaled(.75, .75, .75);
     	  this.drawString(this.fontRenderer, "Physical Resistance:", 107, 12, 0xffffffff);
     	  this.drawString(this.fontRenderer, "Magical Resistance:",  107, 12 + this.fontRenderer.FONT_HEIGHT + gap, 0xffffffff);
     	  this.drawString(this.fontRenderer, "Ranged Resistance:",   107, 12 + (this.fontRenderer.FONT_HEIGHT + gap) * 2, 0xffffffff);
     	  
     	  float physRes = 0, magRes = 0, rangedRes = 0;
-    	  for(ItemStack s : Minecraft.getMinecraft().player.getArmorInventoryList()) {
+    	  for(ItemStack s : Minecraft.getInstance().player.getArmorInventoryList()) {
     		  if(s.getItem() instanceof CustomArmor) {
     			  physRes += ((CustomArmor)s.getItem()).physicalResistance;
     			  magRes += ((CustomArmor)s.getItem()).magicalResistance;
@@ -121,7 +121,8 @@ public class CustomPlayerGui extends InventoryEffectRenderer
         }
         else
         {
-            super.drawScreen(mouseX, mouseY, partialTicks);
+        	//TODO:
+            //super.drawScreen(mouseX, mouseY, partialTicks);
         }
 
         this.renderHoveredToolTip(mouseX, mouseY);
@@ -134,7 +135,7 @@ public class CustomPlayerGui extends InventoryEffectRenderer
 
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(INVENTORY_BACKGROUND);
         int i = this.guiLeft;
         int j = this.guiTop;
@@ -150,25 +151,25 @@ public class CustomPlayerGui extends InventoryEffectRenderer
     {
         GlStateManager.enableColorMaterial();
         GlStateManager.pushMatrix();
-        GlStateManager.translate((float)posX, (float)posY, 50.0F);
-        GlStateManager.scale((float)(-scale), (float)scale, (float)scale);
-        GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
+        GlStateManager.translatef((float)posX, (float)posY, 50.0F);
+        GlStateManager.scalef((float)(-scale), (float)scale, (float)scale);
+        GlStateManager.rotatef(180.0F, 0.0F, 0.0F, 1.0F);
         float f = ent.renderYawOffset;
         float f1 = ent.rotationYaw;
         float f2 = ent.rotationPitch;
         float f3 = ent.prevRotationYawHead;
         float f4 = ent.rotationYawHead;
-        GlStateManager.rotate(135.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotatef(135.0F, 0.0F, 1.0F, 0.0F);
         RenderHelper.enableStandardItemLighting();
-        GlStateManager.rotate(-135.0F, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(-((float)Math.atan((double)(mouseY / 40.0F))) * 20.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotatef(-135.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotatef(-((float)Math.atan((double)(mouseY / 40.0F))) * 20.0F, 1.0F, 0.0F, 0.0F);
         ent.renderYawOffset = (float)Math.atan((double)(mouseX / 40.0F)) * 20.0F;
         ent.rotationYaw = (float)Math.atan((double)(mouseX / 40.0F)) * 40.0F;
         ent.rotationPitch = -((float)Math.atan((double)(mouseY / 40.0F))) * 20.0F;
         ent.rotationYawHead = ent.rotationYaw;
         ent.prevRotationYawHead = ent.rotationYaw;
-        GlStateManager.translate(0.0F, 0.0F, 0.0F);
-        RenderManager rendermanager = Minecraft.getMinecraft().getRenderManager();
+        GlStateManager.translatef(0.0F, 0.0F, 0.0F);
+        RenderManager rendermanager = Minecraft.getInstance().getRenderManager();
         rendermanager.setPlayerViewY(180.0F);
         rendermanager.setRenderShadow(false);
         rendermanager.renderEntity(ent, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
@@ -181,9 +182,9 @@ public class CustomPlayerGui extends InventoryEffectRenderer
         GlStateManager.popMatrix();
         RenderHelper.disableStandardItemLighting();
         GlStateManager.disableRescaleNormal();
-        GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
+        //GlStateManager.setActiveTexture(OpenGlHelper.);
         GlStateManager.disableTexture2D();
-        GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+        //GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
     }
 
     /**
@@ -242,7 +243,7 @@ public class CustomPlayerGui extends InventoryEffectRenderer
      */
     protected void keyTyped(char typedChar, int keyCode) throws IOException
     {
-            super.keyTyped(typedChar, keyCode);
+            super.charTyped(typedChar, keyCode);
     }
 
     /**

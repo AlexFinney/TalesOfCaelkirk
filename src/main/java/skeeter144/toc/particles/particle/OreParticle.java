@@ -10,7 +10,7 @@ public class OreParticle extends Particle{
 	public OreParticle(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn,
 			double ySpeedIn, double zSpeedIn) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
-		this.setParticleTexture(Minecraft.getMinecraft().getBlockRendererDispatcher()
+		this.setParticleTexture(Minecraft.getInstance().getBlockRendererDispatcher()
 				.getBlockModelShapes().getTexture(worldIn.getBlockState(new BlockPos(xCoordIn, (int)yCoordIn, zCoordIn))));
 	
 		this.particleScale /= 4;

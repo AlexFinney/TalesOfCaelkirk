@@ -4,28 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.lwjgl.opengl.GL11;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.items.weapons.ISpecialAttackWeapon;
 import skeeter144.toc.player.Level;
@@ -75,8 +69,8 @@ public class HUD extends Gui {
 	public void fogRenderEvent(EntityViewRenderEvent.RenderFogEvent event) {
 		if (activeEffects.contains("reduced_vision")) {
 			ItemStack torch = new ItemStack(Blocks.TORCH);
-			if (Minecraft.getMinecraft().player.getHeldItemMainhand().getItem().equals(torch.getItem())
-					|| Minecraft.getMinecraft().player.getHeldItemOffhand().getItem().equals(torch.getItem())) {
+			if (Minecraft.getInstance().player.getHeldItemMainhand().getItem().equals(torch.getItem())
+					|| Minecraft.getInstance().player.getHeldItemOffhand().getItem().equals(torch.getItem())) {
 
 				if (!wasHoldingTorch) {
 					float startR = fogR, startG = fogG, startB = fogB, startStart = fogStart, startEnd = fogEnd;
@@ -100,7 +94,7 @@ public class HUD extends Gui {
 				if (wasHoldingTorch) {
 					float startR = fogR, startG = fogG, startB = fogB, startStart = fogStart, startEnd = fogEnd;
 					float endR = .1f, endG = 0f, endB = 0f, endStart = 3, endEnd = 10;
-					Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+					Minecraft.getInstance().addScheduledTask(new Runnable() {
 						public void run() {
 							TOCMain.clientTaskManager.addTask(new TickableTask(40) {
 								public void tick(int worldTick) {
@@ -121,8 +115,8 @@ public class HUD extends Gui {
 					wasHoldingTorch = false;
 				}
 			}
-			GlStateManager.setFogStart(fogStart);
-			GlStateManager.setFogEnd(fogEnd);
+			GlStateManager.fogStart(fogStart);
+			GlStateManager.fogEnd(fogEnd);
 		}
 	}
 
@@ -153,7 +147,7 @@ public class HUD extends Gui {
 		if (pl == null)
 			return;
 
-		if(Minecraft.getMinecraft().player.capabilities.isCreativeMode)
+		if(Minecraft.getInstance().player.isCreative())
 			return;
 		
 		drawHealthBar(pl.getHealth(), pl.getMaxHealth());
@@ -163,8 +157,8 @@ public class HUD extends Gui {
 	}
 
 	void drawLightBlock() {
-		TextureManager tm = Minecraft.getMinecraft().getTextureManager();
-		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+		TextureManager tm = Minecraft.getInstance().getTextureManager();
+		MainWindow sr = Minecraft.getInstance().mainWindow;
 		int screenWidth = sr.getScaledWidth();
 		int screenHeight = sr.getScaledHeight();
 		Byte light = new Byte((byte) (lightBlockedPct * 255));
@@ -174,10 +168,10 @@ public class HUD extends Gui {
 	void drawEffectIcons() {
 		if (activeEffects.size() > 0) {
 			GlStateManager.pushMatrix();
-			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+			GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-			TextureManager tm = Minecraft.getMinecraft().getTextureManager();
-			ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+			TextureManager tm = Minecraft.getInstance().getTextureManager();
+			MainWindow sr = Minecraft.getInstance().mainWindow;
 
 			int screenWidth = sr.getScaledWidth();
 			int screenHeight = sr.getScaledHeight();
@@ -199,12 +193,12 @@ public class HUD extends Gui {
 
 	void drawHealthBar(int curHealth, int maxhealth) {
 		float scale = curHealth / (float) maxhealth;
-		GlStateManager.pushAttrib();
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.pushMatrix();
+		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-		TextureManager tm = Minecraft.getMinecraft().getTextureManager();
-		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-
+		TextureManager tm = Minecraft.getInstance().getTextureManager();
+		MainWindow sr = Minecraft.getInstance().mainWindow;
+		
 		int screenWidth = sr.getScaledWidth();
 		int screenHeight = sr.getScaledHeight();
 
@@ -212,7 +206,7 @@ public class HUD extends Gui {
 		int barY = (screenHeight - 41 - barHeight);
 
 		drawRect(barX, barY, barX + barWidth, barY + barHeight, 0xFF000000);
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		tm.bindTexture(healthBar);
 		drawScaledCustomSizeModalRect(barX, barY, 0, 0, barWidth, barHeight, (int) (barWidth * scale), barHeight,
 				barWidth, barHeight);
@@ -220,13 +214,13 @@ public class HUD extends Gui {
 		drawModalRectWithCustomSizedTexture(barX, barY, 0, 0, barWidth, barHeight, barWidth, barHeight);
 
 		String s = curHealth + "/" + maxhealth;
-		drawString(Minecraft.getMinecraft().fontRenderer, s, barX + barWidth / 2 - 20, barY + barHeight / 2 - 4,
+		drawString(Minecraft.getInstance().fontRenderer, s, barX + barWidth / 2 - 20, barY + barHeight / 2 - 4,
 				0xFFFFFF);
 
-		GlStateManager.scale(.75, .75, .75);
-		drawString(Minecraft.getMinecraft().fontRenderer, String.format("%.2f", TOCMain.localPlayer.getHealthRegen()),
+		GlStateManager.scaled(.75, .75, .75);
+		drawString(Minecraft.getInstance().fontRenderer, String.format("%.2f", TOCMain.localPlayer.getHealthRegen()),
 				(int) ((barX + barWidth - 23) * 1.333f), (int) ((barY + barHeight / 2 - 3) * 1.333f), 0xFFFFFF);
-		GlStateManager.scale(1.333f, 1.333f, 1.333f);
+		GlStateManager.scalef(1.333f, 1.333f, 1.333f);
 
 		GlStateManager.enableRescaleNormal();
 		GlStateManager.enableBlend();
@@ -235,7 +229,7 @@ public class HUD extends Gui {
 		if (((EntityPlayer) TOCMain.localPlayer.mcEntity).getHeldItem(EnumHand.MAIN_HAND)
 				.getItem() instanceof ISpecialAttackWeapon) {
 			GlStateManager.pushMatrix();
-			GlStateManager.scale(.25, .25, .25);
+			GlStateManager.scaled(.25, .25, .25);
 
 			scale = .5f;
 			String name = ((EntityPlayer) TOCMain.localPlayer.mcEntity).getHeldItem(EnumHand.MAIN_HAND).getItem()
@@ -267,11 +261,11 @@ public class HUD extends Gui {
 
 	void drawManaBar(int curMana, int maxMana) {
 		float scale = curMana / (float) maxMana;
-		GlStateManager.pushAttrib();
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.pushMatrix();
+		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-		TextureManager tm = Minecraft.getMinecraft().getTextureManager();
-		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+		TextureManager tm = Minecraft.getInstance().getTextureManager();
+		MainWindow sr = Minecraft.getInstance().mainWindow;
 
 		int screenWidth = sr.getScaledWidth();
 		int screenHeight = sr.getScaledHeight();
@@ -280,7 +274,7 @@ public class HUD extends Gui {
 		int barY = (screenHeight - 41);
 
 		drawRect(barX, barY, barX + barWidth, barY + barHeight, 0xFF000000);
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		tm.bindTexture(manaBar);
 		drawScaledCustomSizeModalRect(barX, barY, 0, 0, barWidth, barHeight, (int) (barWidth * scale), barHeight,
 				barWidth, barHeight);
@@ -288,14 +282,14 @@ public class HUD extends Gui {
 		drawModalRectWithCustomSizedTexture(barX, barY, 0, 0, barWidth, barHeight, barWidth, barHeight);
 
 		String s = curMana + "/" + maxMana;
-		int stringWidth = Minecraft.getMinecraft().fontRenderer.getStringWidth(s);
-		drawString(Minecraft.getMinecraft().fontRenderer, s, barX + barWidth / 2 - 20, barY + barHeight / 2 - 4,
+		int stringWidth = Minecraft.getInstance().fontRenderer.getStringWidth(s);
+		drawString(Minecraft.getInstance().fontRenderer, s, barX + barWidth / 2 - 20, barY + barHeight / 2 - 4,
 				0xFFFFFF);
 
-		GlStateManager.scale(.75, .75, .75);
-		drawString(Minecraft.getMinecraft().fontRenderer, String.format("%.2f", TOCMain.localPlayer.getManaRegen()),
+		GlStateManager.scaled(.75, .75, .75);
+		drawString(Minecraft.getInstance().fontRenderer, String.format("%.2f", TOCMain.localPlayer.getManaRegen()),
 				(int) ((barX + barWidth - 23) * 1.333f), (int) ((barY + barHeight / 2 - 2) * 1.333f), 0xFFFFFF);
-		GlStateManager.scale(1.333f, 1.333f, 1.333f);
+		GlStateManager.scalef(1.333f, 1.333f, 1.333f);
 
 		GlStateManager.enableRescaleNormal();
 		GlStateManager.enableBlend();
@@ -305,18 +299,18 @@ public class HUD extends Gui {
 	float xpMessageSpeed = -1;
 
 	void drawXpMessages() {
-		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+		MainWindow sr = Minecraft.getInstance().mainWindow;
 		int screenWidth = sr.getScaledWidth();
 		int screenHeight = sr.getScaledHeight();
 
 		int iconDim = (int) (screenWidth / 40);
 
-		FontRenderer fr = Minecraft.getMinecraft().fontRenderer;
-		TextureManager tm = Minecraft.getMinecraft().getTextureManager();
+		FontRenderer fr = Minecraft.getInstance().fontRenderer;
+		TextureManager tm = Minecraft.getInstance().getTextureManager();
 		for (XpMessage msg : xpMessages) {
 			fr.drawString(msg.string, msg.x, msg.y, 0x000000);
 			tm.bindTexture(new ResourceLocation(msg.icon));
-			GlStateManager.color(1, 1, 1);
+			GlStateManager.color3f(1f, 1f, 1f);
 			drawModalRectWithCustomSizedTexture(msg.x - iconDim, (int) (msg.y - iconDim / 4f), iconDim, iconDim,
 					iconDim, iconDim, iconDim, iconDim);
 			msg.y += xpMessageSpeed;
@@ -325,7 +319,7 @@ public class HUD extends Gui {
 	}
 
 	public static void addNewXpMessage(Level level, int amount) {
-		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+		MainWindow sr = Minecraft.getInstance().mainWindow;
 		int screenWidth = sr.getScaledWidth();
 		int screenHeight = sr.getScaledHeight();
 

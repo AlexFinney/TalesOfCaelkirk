@@ -24,7 +24,7 @@ public class TornadoSystem extends ParticleSystem{
 		for(float i = 0; i <= particles; ++i)
 		{
 			float curHeight = i / height;
-			Minecraft.getMinecraft().effectRenderer.addEffect(new TornadoParticle(world, posX, posY + curHeight * 2, posZ, getRadiusForheight(curHeight), TornadoEffect.getDurationForLevel(level)));
+			Minecraft.getInstance().effectRenderer.addEffect(new TornadoParticle(world, posX, posY + curHeight * 2, posZ, getRadiusForheight(curHeight), TornadoEffect.getDurationForLevel(level)));
 		}
 	}
 

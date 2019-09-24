@@ -33,7 +33,7 @@ public class FlameSmolderSpell extends ElementalSpell {
 		}
 		//TODO client code on server
 		/*if(proj.getThrower().world.isRemote) {
-			Minecraft mc = Minecraft.getMinecraft();
+			Minecraft mc = Minecraft.getInstance();
 			for(int i = 0; i < 20; ++i) {
 				FireSpellTrailParticle p = new FireSpellTrailParticle(mc.world, res.hitVec.x, res.hitVec.y + (res.entityHit != null ? 1 : 0), res.hitVec.z,
 						(float)(TOCMain.rand.nextGaussian() + 1f) * .75f, 0xFFFFFF,  .75f);

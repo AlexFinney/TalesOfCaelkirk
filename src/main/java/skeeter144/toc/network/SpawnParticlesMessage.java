@@ -52,9 +52,9 @@ public class SpawnParticlesMessage implements IMessage {
 		@Override
 		public IMessage onMessage(SpawnParticlesMessage message, MessageContext ctx) {
 			int id = (int) message.data[0];
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().addScheduledTask(new Runnable() {
 				public void run() {
-					World w = Minecraft.getMinecraft().player.world;
+					World w = Minecraft.getInstance().player.world;
 					ParticleSystem system = ParticleSystem.getNewParticleSystem(id);
 					system.updatePosition(w, message.data[1], message.data[2], message.data[3]);
 					system.setOptionalParams(message.data);

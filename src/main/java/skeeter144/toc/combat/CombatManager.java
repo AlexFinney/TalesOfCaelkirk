@@ -2,15 +2,11 @@ package skeeter144.toc.combat;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityArmorStand;
-import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
 import skeeter144.toc.TOCMain;
-import skeeter144.toc.combat.CombatManager.DamageType;
 import skeeter144.toc.entity.TOCEntities;
 import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.items.armor.CustomArmor;
@@ -23,8 +19,6 @@ import skeeter144.toc.network.Network;
 import skeeter144.toc.network.SpawnBlockedMessage;
 import skeeter144.toc.player.EntityLevels;
 import skeeter144.toc.player.EntityLevels.Levels;
-import skeeter144.toc.player.Level;
-import skeeter144.toc.player.TOCPlayer;
 
 public class CombatManager {
 	
@@ -49,14 +43,14 @@ public class CombatManager {
 		if(e instanceof EntityPlayer) {
 			defenderLevels = TOCMain.pm.getPlayer((EntityPlayer) e).getPlayerLevels();
 		}else if(e instanceof CustomMob) {
-			defenderLevels = TOCMain.mm.getMob(e.getPersistentID()).levels;
+			defenderLevels = TOCMain.mm.getMob(e.getUniqueID()).levels;
 		}
 		
 		if(source.getTrueSource() != null) {
 			if(source.getTrueSource() instanceof EntityPlayer) {
 				attackerLevels = TOCMain.pm.getPlayer((EntityPlayer) source.getTrueSource()).getPlayerLevels();
 			}else if(source.getTrueSource() instanceof CustomMob) {
-				attackerLevels = TOCMain.mm.getMob(source.getTrueSource().getPersistentID()).levels;
+				attackerLevels = TOCMain.mm.getMob(source.getTrueSource().getUniqueID()).levels;
 			}
 		}else {
 			return amount;

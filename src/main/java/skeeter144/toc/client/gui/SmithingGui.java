@@ -1,7 +1,6 @@
 package skeeter144.toc.client.gui;
 
-import org.lwjgl.input.Mouse;
-
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -10,6 +9,7 @@ import skeeter144.toc.network.Network;
 import skeeter144.toc.network.SetAnvilRecipeMessage;
 import skeeter144.toc.recipe.Recipe;
 import skeeter144.toc.recipe.RecipeManager;
+import skeeter144.toc.util.Mouse;
 import skeeter144.toc.util.Reference;
 
 public class SmithingGui extends CraftingGui{
@@ -18,10 +18,9 @@ public class SmithingGui extends CraftingGui{
 	public SmithingGui(BlockPos pos) {
 		backgroundImage = new ResourceLocation(Reference.MODID, "textures/gui/smithing_gui.png");
 		allRecipes = RecipeManager.instance().SMITHING_RECIPES;
-		this.anvil = (TileEntityAnvil) Minecraft.getMinecraft().world.getTileEntity(pos);
+		this.anvil = (TileEntityAnvil) Minecraft.getInstance().world.getTileEntity(pos);
 	}
 	
-	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
 		this.setGuiVals();
@@ -44,6 +43,7 @@ public class SmithingGui extends CraftingGui{
 	@Override
 	void setGuiVals() {
 		 super.setGuiVals();
+		 MainWindow sr = Minecraft.getInstance().mainWindow;
 		 guiWidth = (int)(sr.getScaledWidth() * .5f);
 		 guiHeight = (int)(guiWidth * .5f);
 		 guiX = sr.getScaledWidth() / 2 - guiWidth / 2;

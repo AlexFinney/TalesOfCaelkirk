@@ -25,14 +25,14 @@ public class PunishUndeadSystem extends ParticleSystem {
 			float spacing = .08f * i;
 			PunishUndeadTrailParticle particle = new PunishUndeadTrailParticle(world, pos.x + relRight.x * spacing, pos.y + .07f, pos.z + relRight.z * spacing, forwardVec);
 			crossParticles.add(particle);
-			Minecraft.getMinecraft().effectRenderer.addEffect(particle);
+			Minecraft.getInstance().effectRenderer.addEffect(particle);
 		}
 		
 		for(int i = -6; i < 5; ++i) {
 			float spacing = .05f * i;
 			PunishUndeadTrailParticle particle = new PunishUndeadTrailParticle(world, pos.x, pos.y + relUp.y * spacing, pos.z, forwardVec);
 			crossParticles.add(particle);
-			Minecraft.getMinecraft().effectRenderer.addEffect(particle);
+			Minecraft.getInstance().effectRenderer.addEffect(particle);
 		}
 	}
 	

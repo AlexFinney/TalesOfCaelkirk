@@ -61,7 +61,7 @@ public class BasicWand extends Item
 			}
 			
 		}else {
-			if(TOCMain.localPlayer.getMana() < embuedSpell.getManaCost() && !Minecraft.getMinecraft().player.isCreative()) {
+			if(TOCMain.localPlayer.getMana() < embuedSpell.getManaCost() && !Minecraft.getInstance().player.isCreative()) {
 				player.sendMessage(new TextComponentString("You do not have enough mana to cast " + embuedSpell.getName() + " (need " + embuedSpell.getManaCost() + ")"));
 				return new ActionResult<ItemStack>(EnumActionResult.FAIL, player.getHeldItem(hand));
 			}
@@ -78,7 +78,7 @@ public class BasicWand extends Item
 				//do special stuff for special spells down here. Kinda ugly but whatevs
 				if(embuedSpell.getName().equals(Strings.PUNISH_UNDEAD)) {
 					spell.disableRepeatedParticles();
-					((PunishUndeadSystem)system).setForwardVector(Minecraft.getMinecraft().player.getLookVec());
+					((PunishUndeadSystem)system).setForwardVector(Minecraft.getInstance().player.getLookVec());
 					
 				}
 				

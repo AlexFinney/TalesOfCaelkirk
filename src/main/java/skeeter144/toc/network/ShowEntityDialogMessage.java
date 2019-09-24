@@ -40,10 +40,10 @@ public class ShowEntityDialogMessage implements IMessage{
 	
 	public static class ShowQuestDialogMessageHandler implements IMessageHandler<ShowEntityDialogMessage, IMessage>{
 		public IMessage onMessage(ShowEntityDialogMessage message, MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().addScheduledTask(new Runnable() {
 				public void run() {
 					EntityLivingBase ent = null;
-					for(Entity e : Minecraft.getMinecraft().world.loadedEntityList) {
+					for(Entity e : Minecraft.getInstance().world.loadedEntityList) {
 						if(e.getUniqueID().equals(message.uuid)) {
 							ent = (EntityLivingBase)e;
 							break;
@@ -55,7 +55,7 @@ public class ShowEntityDialogMessage implements IMessage{
 						return;
 					}
 					
-					Minecraft.getMinecraft().displayGuiScreen(new DialogGui(ent, ((EntityNPCInteractable)ent).getDialog(message.dialogName)));
+					Minecraft.getInstance().displayGuiScreen(new DialogGui(ent, ((EntityNPCInteractable)ent).getDialog(message.dialogName)));
 				}
 			});
 			return null;

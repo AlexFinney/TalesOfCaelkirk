@@ -16,9 +16,9 @@ public class ItemCraftedMessage implements IMessage{
 	
 	public static class ItemCraftedMessageHandler implements IMessageHandler<ItemCraftedMessage, IMessage>{
 		public IMessage onMessage(ItemCraftedMessage message, MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().addScheduledTask(new Runnable() {
 				public void run() {
-					GuiScreen screen = Minecraft.getMinecraft().currentScreen;;
+					GuiScreen screen = Minecraft.getInstance().currentScreen;;
 					if(screen instanceof SmeltingGui)
 						((SmeltingGui)screen).incrementCrafted();
 				}

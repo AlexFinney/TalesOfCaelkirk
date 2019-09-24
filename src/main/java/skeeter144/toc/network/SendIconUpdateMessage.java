@@ -81,7 +81,7 @@ public class SendIconUpdateMessage implements IMessage{
 		
 		@Override
 		public IMessage onMessage(SendIconUpdateMessage msg, MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().addScheduledTask(new Runnable() {
 				public void run() {
 					if(!msg.shouldRemove)
 						TOCUtils.addIconMarkerToMap(msg.name, new ResourceLocation(msg.rsLocDomain, msg.rsLocPath), new BlockPos(msg.x, msg.y, msg.z), msg.dim);

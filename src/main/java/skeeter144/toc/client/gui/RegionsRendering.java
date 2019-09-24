@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.regions.Region;
 import skeeter144.toc.regions.RegionBound;
@@ -27,7 +27,7 @@ public class RegionsRendering {
 				for(Map.Entry<String, Region> entry : TOCMain.rm.getRegions().entrySet()) {
 					Region r = entry.getValue();
 					for(RegionBound b : r.bounds) {
-						drawBoundingBox(Minecraft.getMinecraft().player.getPositionVector(),
+						drawBoundingBox(Minecraft.getInstance().player.getPositionVector(),
 								new Vec3d(b.x1, 0, b.z1), new Vec3d(b.x2, 255, b.z2), true, 5, new Color(r.r, r.g, r.b, .8f));
 					}
 				}

@@ -2,7 +2,7 @@ package skeeter144.toc.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lwjgl.input.Keyboard;
+import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
@@ -21,11 +21,11 @@ public class Keybindings {
 		keyBinds = new ArrayList<CustomKey>();
 		
 		// instantiate the key bindings
-		SPELLBOOK_KEYBIND = new CustomKey("key.magic.opengui", Keyboard.KEY_M, "key.toc.category");
-		LEVELS_KEYBIND = new CustomKey("key.levels.opengui", Keyboard.KEY_L, "key.toc.category");
-		INVENTORY_KEYBIND = new CustomKey("key.inventory.opengui", Keyboard.KEY_E, "key.toc.category");
-		MOUNT_FLY_UP = new CustomKey("key.mount_controls.fly_up", Keyboard.KEY_R, "key.toc.category");
-		MOUNT_FLY_DOWN = new CustomKey("key.mount_controls.fly_down", Keyboard.KEY_F, "key.toc.category");
+		SPELLBOOK_KEYBIND = new CustomKey("key.magic.opengui", GLFW.GLFW_KEY_M, "key.toc.category");
+		LEVELS_KEYBIND = new CustomKey("key.levels.opengui", GLFW.GLFW_KEY_L, "key.toc.category");
+		INVENTORY_KEYBIND = new CustomKey("key.inventory.opengui", GLFW.GLFW_KEY_E, "key.toc.category");
+		MOUNT_FLY_UP = new CustomKey("key.mount_controls.fly_up", GLFW.GLFW_KEY_R, "key.toc.category");
+		MOUNT_FLY_DOWN = new CustomKey("key.mount_controls.fly_down", GLFW.GLFW_KEY_F, "key.toc.category");
 		
 		
 		keyBinds.add(SPELLBOOK_KEYBIND);
@@ -39,14 +39,14 @@ public class Keybindings {
 			ClientRegistry.registerKeyBinding(c);
 		
 		int i = 0;
-		for(KeyBinding kb : Minecraft.getMinecraft().gameSettings.keyBindings) {
-			if(kb.equals(Minecraft.getMinecraft().gameSettings.keyBindInventory)) {
-				Minecraft.getMinecraft().gameSettings.keyBindInventory = new KeyBinding("key.inventory", Keyboard.KEY_V, "key.categories.inventory");
-				Minecraft.getMinecraft().gameSettings.keyBindings[i] = Minecraft.getMinecraft().gameSettings.keyBindInventory;
+		for(KeyBinding kb : Minecraft.getInstance().gameSettings.keyBindings) {
+			if(kb.equals(Minecraft.getInstance().gameSettings.keyBindInventory)) {
+				Minecraft.getInstance().gameSettings.keyBindInventory = new KeyBinding("key.inventory", GLFW.GLFW_KEY_V, "key.categories.inventory");
+				Minecraft.getInstance().gameSettings.keyBindings[i] = Minecraft.getInstance().gameSettings.keyBindInventory;
 				break;
-			}else if(kb.equals(Minecraft.getMinecraft().gameSettings.keyBindAdvancements)) {
-				Minecraft.getMinecraft().gameSettings.keyBindInventory = new KeyBinding("key.advancements", Keyboard.KEY_F18, "key.categories.misc");
-				Minecraft.getMinecraft().gameSettings.keyBindings[i] = Minecraft.getMinecraft().gameSettings.keyBindInventory;
+			}else if(kb.equals(Minecraft.getInstance().gameSettings.keyBindAdvancements)) {
+				Minecraft.getInstance().gameSettings.keyBindInventory = new KeyBinding("key.advancements", GLFW.GLFW_KEY_F18, "key.categories.misc");
+				Minecraft.getInstance().gameSettings.keyBindings[i] = Minecraft.getInstance().gameSettings.keyBindInventory;
 				break;
 			}
 			++i;

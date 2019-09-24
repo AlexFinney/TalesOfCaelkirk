@@ -29,7 +29,7 @@ public class AdjustPlayersScreenDim implements IMessage{
 		public IMessage onMessage(AdjustPlayersScreenDim message, MessageContext ctx) {
 			float startingLight = HUD.lightBlockedPct;
 			float endingLight = message.pct;
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().addScheduledTask(new Runnable() {
 				public void run() {
 					TOCMain.clientTaskManager.addTask(new TickableTask(40) {
 						public void tick(int worldTick) {

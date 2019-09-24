@@ -1,15 +1,12 @@
 package skeeter144.toc.client.gui;
 
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.texture.TextureManager;
-import scala.tools.nsc.GlobalSymbolLoaders;
 import skeeter144.toc.minigames.MiningMinigame_Old;
 import skeeter144.toc.minigames.MiningMinigame_Old.GameTile;
+import skeeter144.toc.util.Mouse;
 import skeeter144.toc.util.Util;
 
 public class MiningGameGui extends GuiScreen{
@@ -29,9 +26,9 @@ public class MiningGameGui extends GuiScreen{
 	
 	
 	void handleMouseClicks() {
-		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-		int adjustedMouseX = Mouse.getX() * sr.getScaledWidth() / Minecraft.getMinecraft().displayWidth;
-		int adjustedMouseY = sr.getScaledHeight() - Mouse.getY() * sr.getScaledHeight() / Minecraft.getMinecraft().displayHeight;
+		MainWindow mw = Minecraft.getInstance().mainWindow;
+		int adjustedMouseX = Mouse.getX() * mw.getScaledWidth() / mw.getWidth();
+		int adjustedMouseY = (int) (mw.getScaledHeight() - Minecraft.getInstance().mouseHelper.getMouseY() * mw.getScaledHeight() / Minecraft.getInstance().mainWindow.getHeight());
 		
 		//row/column in the puzzle
 		int x = adjustedMouseX / 17;
@@ -61,11 +58,11 @@ public class MiningGameGui extends GuiScreen{
 	
 	
 	void drawBlockIcons() {
-		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-		int adjustedMouseX = Mouse.getX() * sr.getScaledWidth() / Minecraft.getMinecraft().displayWidth;
-		int adjustedMouseY = sr.getScaledHeight() - Mouse.getY() * sr.getScaledHeight() / Minecraft.getMinecraft().displayHeight;
+		MainWindow sr = Minecraft.getInstance().mainWindow;
+		int adjustedMouseX = Mouse.getX() * sr.getScaledWidth() / sr.getWidth();
+		int adjustedMouseY = sr.getScaledHeight() - Mouse.getY() * sr.getScaledHeight() / sr.getHeight();
 		
-		TextureManager tm = Minecraft.getMinecraft().getTextureManager();
+		TextureManager tm = Minecraft.getInstance().getTextureManager();
 		
 		int mouseTileX = adjustedMouseX / 17;
 		int mouseTileY = adjustedMouseY / 17;
