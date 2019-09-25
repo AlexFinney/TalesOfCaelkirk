@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.registry.IRegistry;
 import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.TOCEntities;
@@ -75,7 +76,7 @@ public class CombatManager {
 			if(attackRoll < defenseRoll) {
 				if(TOCMain.rand.nextFloat() < .65f) {
 					Network.INSTANCE.sendToAllAround(new SpawnBlockedMessage(e), 
-							new TargetPoint(e.getEntityWorld().provider.getDimension(), e.posX, e.posY, e.posZ, 50));
+							e.getEntityWorld().getChunk(e.getPosition()));
 					return -1;
 				}
 			}
@@ -192,7 +193,7 @@ public class CombatManager {
 			CustomMob m = (CustomMob) e;
 			return m.xpGiven;
 		}else {
-			return TOCEntities.getXpFroVanillaMob(EntityRegistry.getEntry(e.getClass()).getRegistryName().toString());
+			return TOCEntities.getXpFroVanillaMob((e.getClass().toString()));
 		}
 	}
 	

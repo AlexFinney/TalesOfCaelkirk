@@ -27,7 +27,7 @@ import skeeter144.toc.regions.Point;
 import skeeter144.toc.regions.Region;
 import skeeter144.toc.regions.RegionBound;
 
-public class CommandMiningMinigame implements ICommand {
+public class CommandMiningMinigame{
 	
 	List<String> aliases;
 	public CommandMiningMinigame() {

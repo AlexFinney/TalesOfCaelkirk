@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -38,6 +39,9 @@ public class Network {
 		
 		public <MSG> void sendToAll(MSG msg) {
 			channel.send(PacketDistributor.ALL.noArg(), msg);
+		}
+		public <MSG> void sendToAllAround(MSG msg, Chunk chunk) {
+			channel.send(PacketDistributor.TRACKING_CHUNK.with(() -> chunk), msg);
 		}
 
 		public <MSG> void sendTo(MSG msg, EntityPlayerMP player) {
