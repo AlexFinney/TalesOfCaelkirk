@@ -1,5 +1,6 @@
 package skeeter144.toc.entity.mob.npc.questgiver;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
@@ -13,8 +14,8 @@ import skeeter144.toc.quest.Quest;
 public abstract class EntityQuestGiver extends EntityNPCInteractable{
 
 	Quest[] quests;
-	public EntityQuestGiver(World worldIn, Quest... quests) {
-		super(worldIn);
+	public EntityQuestGiver(EntityType<?> type, World worldIn, Quest... quests) {
+		super(type, worldIn);
 		this.quests = quests;
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(3, new  EntityAIMoveTowardsRestriction(this, .5f));
@@ -22,8 +23,8 @@ public abstract class EntityQuestGiver extends EntityNPCInteractable{
 		this.tasks.addTask(6, new EntityAILookIdle(this));
 		
 		
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0);
+		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0);
 		this.setSize(1f, 1f);
 		this.setHealth(100f);
 	}

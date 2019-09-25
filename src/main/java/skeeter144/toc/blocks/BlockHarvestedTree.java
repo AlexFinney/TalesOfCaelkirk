@@ -22,7 +22,8 @@ public class BlockHarvestedTree extends BlockTileEntity<TileEntityHarvestedTree>
 
 	@Override
 	public TileEntityHarvestedTree createTileEntity(World world, IBlockState state) {
-		return new TileEntityHarvestedTree();
+		//TODO: create tileentity types
+		return new TileEntityHarvestedTree(null);
 	}
 
 	@Override

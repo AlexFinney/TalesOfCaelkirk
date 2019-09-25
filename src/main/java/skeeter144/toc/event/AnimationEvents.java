@@ -21,7 +21,7 @@ public class AnimationEvents {
 		
 		if(Util.isEntityWithinViewCone(cm.getAttackTarget(), cm, -20, 20)) {
 			//cm.getAttackTarget().attackEntityFrom(new TOCDamageSource(DamageType.PHYSICAL), 
-			//		(float) cm.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue() * 2);
+			//		(float) cm.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue() * 2);
 			ServerEffectHandler.attemptAddNewEffect(cm.getAttackTarget().getUniqueID(), new PoisonEffect(cm.getAttackTarget(), 10, 160));
 			cm.playSound(Sounds.scorpian_sting, 2, 1);
 		}
@@ -30,7 +30,7 @@ public class AnimationEvents {
 	
 	public static void giantScorpianStingStart(Entity e) {
 		CustomMob cm = (CustomMob)e;
-		cm.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0);
+		cm.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0);
 		
 		double dx =  cm.getAttackTarget().posX - cm.posX;
 		double dz =  cm.getAttackTarget().posZ - cm.posZ;
@@ -42,7 +42,7 @@ public class AnimationEvents {
 	
 	public static void giantScorpianStingFinish(Entity e) {
 		CustomMob cm = (CustomMob)e;
-		cm.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.3f);
+		cm.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.3f);
 		cm.currentAnim = null;
 	}
 	

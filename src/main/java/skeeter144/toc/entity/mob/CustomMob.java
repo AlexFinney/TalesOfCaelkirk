@@ -1,5 +1,6 @@
 package skeeter144.toc.entity.mob;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.world.World;
 import skeeter144.toc.client.entity.animation.Animation;
@@ -18,8 +19,8 @@ public class CustomMob extends EntityMob{
 	public float animationTicks;
 	public float animationStartTime;
 	
-	public CustomMob(World worldIn) {
-		super(worldIn);
+	public CustomMob(EntityType<?> type, World worldIn) {
+		super(type, worldIn);
 	}
 	
 	public KeyFrame lastFrame = null;

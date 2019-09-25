@@ -131,8 +131,7 @@ public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
 			if(isServer) {
 				worldIn.playSound(null, pos, Sounds.anvil_strike, SoundCategory.MASTER, 1, TOCMain.rand.nextFloat() / 5 + 1);
 				anvil.hammerStruck(playerIn);
-				Network.INSTANCE.sendToAll(new SpawnParticlesMessage(ParticleSystem.ANVIL_STRUCK_PARTICLE_SYSTEM, 
-						pos.getX(), pos.getY(), pos.getZ()));
+				Network.INSTANCE.sendToAll(new SpawnParticlesMessage(ParticleSystem.ANVIL_STRUCK_PARTICLE_SYSTEM, pos));
 			}else{
 				worldIn.playSound(null, pos, Sounds.anvil_strike, SoundCategory.MASTER, 1, TOCMain.rand.nextFloat() / 5 + 1);
 			}
@@ -186,6 +185,7 @@ public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
 
 	@Override
 	public TileEntityAnvil createTileEntity(World world, IBlockState state) {
-		return new TileEntityAnvil();
+		//TODO: create tileentity types
+		return new TileEntityAnvil(null);
 	}
 }

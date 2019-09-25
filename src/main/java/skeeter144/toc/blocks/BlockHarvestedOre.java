@@ -20,7 +20,8 @@ public class BlockHarvestedOre extends BlockTileEntity<TileEntityHarvestedOre>{
 
 	@Override
 	public TileEntityHarvestedOre createTileEntity(World world, IBlockState state) {
-		return new TileEntityHarvestedOre();
+		//TODO: create tileentity types
+		return new TileEntityHarvestedOre(null);
 	}
 
 }

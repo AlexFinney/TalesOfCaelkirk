@@ -14,12 +14,22 @@ import skeeter144.toc.entity.mob.monster.EntityGoblin;
 import skeeter144.toc.util.Reference;
 
 public class TOCEntityType {
-	public static final EntityType<EntityGoblin> GOBLIN;
-	
+	public static EntityType<EntityGoblin> GOBLIN;
+	public static EntityType<?> VIKING;
+	public static EntityType<?> RAT;
+	public static EntityType<?> GIANT_SCORPIAN;
+	public static EntityType<?> GIANT_SPIDER;
+	public static EntityType<?> GHOST;
+	public static EntityType<?> SIREN;
+	public static EntityType<?> MULE;
+	public static EntityType<?> DONKEY;
+	public static EntityType<?> HORSE;
+	public static EntityType<?> PEGASUS;
+	public static EntityType<?> GRIFFIN;
 	private static final List<EntityType<?>> ENTITY_TYPES = new LinkedList<>();
 	
 	static {
-		GOBLIN = createEntityType("goblin", EntityGoblin.class, EntityGoblin::new, 64, 1, false);
+		//GOBLIN = createEntityType("goblin", EntityGoblin.class, EntityGoblin::new, 64, 1, false);
 	}
 	
 	private static <T extends Entity> EntityType<T> createEntityType(String id, Class<? extends T> entityClass, Function<? super World, ? extends T> factory, int range, int updateFrequency, boolean sendsVelocityUpdates)
@@ -31,7 +41,7 @@ public class TOCEntityType {
 
 	public static void register()
 	{
-		ENTITY_TYPES.add(GOBLIN);
+		//ENTITY_TYPES.add(GOBLIN);
 	}
 	
 	@SubscribeEvent

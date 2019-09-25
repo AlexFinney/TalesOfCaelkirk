@@ -1,5 +1,6 @@
 package skeeter144.toc.entity.mob.monster;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -7,19 +8,17 @@ import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import skeeter144.toc.entity.AI.EntityAIScorpianSting;
 import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.sounds.Sounds;
 
 public class EntityGiantSpider extends CustomMob{
 
-	public EntityGiantSpider(World worldIn) {
-		super(worldIn);
+	public EntityGiantSpider(EntityType<?> type, World worldIn) {
+		super(type, worldIn);
 
 		this.attackLevel = 40;
 		this.strengthLevel = 60;
@@ -38,19 +37,15 @@ public class EntityGiantSpider extends CustomMob{
 		
 		
 		this.setSize(2f, 2f);
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(75);
-		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.5f);
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(15);
-		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(.2f);
+		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(75);
+		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.5f);
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(15);
+		this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(.2f);
 	
 		this.setHealth(75f);
 	}
 	
-	@Override
-	public boolean isEntityInvulnerable(DamageSource source) {
-		return super.isEntityInvulnerable(source) && source.equals(DamageSource.FALL);
-	}
 	
 	@Override
 	protected SoundEvent getAmbientSound() {

@@ -2,10 +2,8 @@ package skeeter144.toc.entity.mob.monster;
 
 import java.util.Random;
 
-
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
@@ -15,7 +13,6 @@ import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityFlyHelper;
 import net.minecraft.entity.ai.EntityMoveHelper;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -26,14 +23,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.entity.mob.monster.EntityGhost.AIGhostDiveAttack.DiveStage;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.SpawnParticlesMessage;
-import skeeter144.toc.particles.particle.BasicParticle;
 import skeeter144.toc.particles.system.ParticleSystem;
 import skeeter144.toc.sounds.Sounds;
 
@@ -48,8 +42,8 @@ public class EntityGhost extends CustomMob{
 		public IAttribute getParent() {	return null;}
 	};
 	
-	public EntityGhost(World worldIn) {
-		super(worldIn);
+	public EntityGhost(EntityType<?> type, World worldIn) {
+		super(type, worldIn);
 		
 		this.setNoGravity(true);
 		this.attackLevel = 10;
@@ -63,24 +57,24 @@ public class EntityGhost extends CustomMob{
 		this.getAttributeMap().registerAttribute(DIVE_STAGE);
 		
 		this.setSize(1f, 2.5f);
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50);
-		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(1f);
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(10f);
-		this.getEntityAttribute(SharedMonsterAttributes.FLYING_SPEED).setBaseValue(1f);
-		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(.8f);
+		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50);
+		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(1f);
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(10f);
+		this.getAttribute(SharedMonsterAttributes.FLYING_SPEED).setBaseValue(1f);
+		this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(.8f);
 		
 		this.setHealth(50f);	
 	}
 	
 	public void setDiveStage(DiveStage stage) {
-		this.getEntityAttribute(DIVE_STAGE).setBaseValue(stage.ordinal());
+		this.getAttribute(DIVE_STAGE).setBaseValue(stage.ordinal());
 		this.ticksInCurrentStage = 0;
 	}
 	
 	@Override
-	public void onUpdate() {
-		super.onUpdate();
+	public void tick() {
+		super.tick();
 		++ticksInCurrentStage;
 	}
 	
@@ -118,7 +112,7 @@ public class EntityGhost extends CustomMob{
 
 			if (this.onGround) {
 				BlockPos underPos = new BlockPos(MathHelper.floor(this.posX),
-						MathHelper.floor(this.getEntityBoundingBox().minY) - 1, MathHelper.floor(this.posZ));
+						MathHelper.floor(this.getBoundingBox().minY) - 1, MathHelper.floor(this.posZ));
 				IBlockState underState = this.world.getBlockState(underPos);
 				f = underState.getBlock().getSlipperiness(underState, this.world, underPos, this) * 0.91F;
 			}
@@ -129,7 +123,7 @@ public class EntityGhost extends CustomMob{
 
 			if (this.onGround) {
 				BlockPos underPos = new BlockPos(MathHelper.floor(this.posX),
-						MathHelper.floor(this.getEntityBoundingBox().minY) - 1, MathHelper.floor(this.posZ));
+						MathHelper.floor(this.getBoundingBox().minY) - 1, MathHelper.floor(this.posZ));
 				IBlockState underState = this.world.getBlockState(underPos);
 				f = underState.getBlock().getSlipperiness(underState, this.world, underPos, this) * 0.91F;
 			}
@@ -216,7 +210,7 @@ public class EntityGhost extends CustomMob{
 			int max = 25;
 			int highest = 0;
 			for(int i = 0; i < max; ++i) {
-				if(!ghost.world.getBlockState(new BlockPos(ghost.posX, ghost.posY + i, ghost.posZ)).isFullBlock() ) {
+				if(!ghost.world.getBlockState(new BlockPos(ghost.posX, ghost.posY + i, ghost.posZ)).isFullCube()) {
 					highest = (int)ghost.posY + i;
 				}
 			}
@@ -225,17 +219,17 @@ public class EntityGhost extends CustomMob{
 		}
 		
 		@Override
-		public void updateTask() {
+		public void tick() {
 			if(ghost.getAttackTarget() == null)
 				return;
 			
-			int stage = (int)ghost.getEntityAttribute(EntityGhost.DIVE_STAGE).getBaseValue();
+			int stage = (int)ghost.getAttribute(EntityGhost.DIVE_STAGE).getBaseValue();
 			 
 			if(stage == DiveStage.ANGRY.ordinal()) {
 				if(ghost.ticksInCurrentStage > 30) {
 					//teleport
 					spawnTeleportParticles(ghost.getPosition());
-					ghost.world.playSound(null, ghost.getPosition(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.MASTER, 1, 1);
+					ghost.world.playSound(null, ghost.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.MASTER, 1, 1);
 					ghost.setPosition(raisePos.getX(), raisePos.getY(), raisePos.getZ());
 
 					
@@ -293,7 +287,7 @@ public class EntityGhost extends CustomMob{
 		
 		@Override
 		public boolean shouldContinueExecuting() {
-			return ((int)ghost.getEntityAttribute(EntityGhost.DIVE_STAGE).getBaseValue() != DiveStage.IDLE.ordinal());
+			return ((int)ghost.getAttribute(EntityGhost.DIVE_STAGE).getBaseValue() != DiveStage.IDLE.ordinal());
 		}
 		
 		public enum DiveStage{
@@ -304,8 +298,9 @@ public class EntityGhost extends CustomMob{
 		}
 		
 		void spawnTeleportParticles(BlockPos pos) {
-			Network.INSTANCE.sendToAllAround(new SpawnParticlesMessage(ParticleSystem.GHOST_TELEPORT_SYSTEM, 
-					pos.getX() + .5f, pos.getY() + 1.5f, pos.getZ() + .5f), new TargetPoint(ghost.world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 100));
+			Network.INSTANCE.sendToAllAround(new SpawnParticlesMessage(ParticleSystem.GHOST_TELEPORT_SYSTEM,
+																	   new BlockPos(pos.getX() + .5f, pos.getY() + 1.5f, pos.getZ() + .5f)),
+											 ghost.world.getChunk(pos));
 		}
 		
 		float limitAngle(float sourceAngle, float targetAngle, float maximumChange)

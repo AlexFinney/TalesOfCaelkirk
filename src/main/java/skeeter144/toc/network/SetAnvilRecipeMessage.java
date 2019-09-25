@@ -57,7 +57,7 @@ public class SetAnvilRecipeMessage implements IMessage{
 						TileEntityAnvil anvil = (TileEntityAnvil) ctx.getServerHandler().player.world.getTileEntity(message.pos);
 						if(anvil == null)
 							return;
-						if(anvil.anvilOwner != null && ctx.getServerHandler().player.getPersistentID().equals(anvil.anvilOwner))
+						if(anvil.anvilOwner != null && ctx.getServerHandler().player.getUniqueID().equals(anvil.anvilOwner))
 							anvil.setSelectedRecipe(message.r);
 					}
 				}

@@ -1,5 +1,6 @@
 package skeeter144.toc.entity.mob.monster;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -23,8 +24,8 @@ import skeeter144.toc.util.Util;
 
 public class EntityRat extends CustomMob{
 
-	public EntityRat(World worldIn) {
-		super(worldIn);
+	public EntityRat(EntityType<?> type, World worldIn) {
+		super(type, worldIn);
 
 		this.attackLevel = 1;
 		this.strengthLevel = 1;
@@ -43,11 +44,11 @@ public class EntityRat extends CustomMob{
 		
 		this.setSize(.5f, .5f);
 		this.setHealth(3f);
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(3);
-		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.15);
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1);
-		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(.2f);
+		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(3);
+		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.15);
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1);
+		this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(.2f);
 	}
 	
 

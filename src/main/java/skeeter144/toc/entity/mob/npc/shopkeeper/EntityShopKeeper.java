@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
@@ -24,12 +25,12 @@ public class EntityShopKeeper extends EntityNpc {
 	public ShopData shopData;
 	String shopFileData = "";
 
-	public EntityShopKeeper(World worldIn, String shopFileName) {
-		super(worldIn);
+	public EntityShopKeeper(EntityType<?> type, World worldIn, String shopFileName) {
+		super(type, worldIn);
 		if (!worldIn.isRemote) {
 			shopFileData = parseShopDataFile("shops/" + shopFileName + ".csv");
 			shopData = parseShopDataString(shopFileData);
-			shopData.keepId = this.getPersistentID();
+			shopData.keepId = this.getUniqueID();
 		}
 
 		this.tasks.addTask(1, new EntityAISwimming(this));
@@ -37,8 +38,8 @@ public class EntityShopKeeper extends EntityNpc {
 		this.tasks.addTask(5, new EntityAIWander(this, .5f));
 		this.tasks.addTask(6, new EntityAILookIdle(this));
 
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0);
+		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0);
 
 		this.setSize(1f, 1f);
 		this.setHealth(100f);

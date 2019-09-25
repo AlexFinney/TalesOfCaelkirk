@@ -56,6 +56,14 @@ public class TOCBlocks {
 	public static Block maple_leaves = new CustomBlockLeaves("maple_leaves");
 	public static Block yew_leaves = new CustomBlockLeaves("yew_leaves");
 	
+	public static TileEntityType<TileEntityHarvestedOre> te_harvested_ore;
+	public static TileEntityType<TileEntityHarvestedTree> te_harvested_tree;
+	public static TileEntityType<TileEntityAnvil> te_anvil;
+	public static TileEntityType<TileEntityMobSpawner> te_mob_spawner;
+
+
+	
+	
 	public static void registerRenders() {
 		try {
 			for (Field f : TOCBlocks.class.getFields()) {
@@ -70,10 +78,10 @@ public class TOCBlocks {
 	
 	@SubscribeEvent
 	public static void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> evt) {
-		TileEntityType.register(Reference.MODID + ":harvested_ore", TileEntityType.Builder.create(TileEntityHarvestedOre::new));
-		TileEntityType.register(Reference.MODID + ":anvil", TileEntityType.Builder.create(TileEntityAnvil::new));
-		TileEntityType.register(Reference.MODID + ":harvested_tree", TileEntityType.Builder.create(TileEntityHarvestedTree::new));
-		TileEntityType.register(Reference.MODID + ":mob_spawner", TileEntityType.Builder.create(TileEntityMobSpawner::new));
+		te_harvested_ore = TileEntityType.register(Reference.MODID + ":harvested_ore", TileEntityType.Builder.create(TileEntityHarvestedOre::new));
+		te_anvil = TileEntityType.register(Reference.MODID + ":anvil", TileEntityType.Builder.create(TileEntityAnvil::new));
+		te_harvested_tree = TileEntityType.register(Reference.MODID + ":harvested_tree", TileEntityType.Builder.create(TileEntityHarvestedTree::new));
+		te_mob_spawner = TileEntityType.register(Reference.MODID + ":mob_spawner", TileEntityType.Builder.create(TileEntityMobSpawner::new));
 
 	}
 	

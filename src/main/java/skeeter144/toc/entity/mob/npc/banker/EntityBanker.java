@@ -3,6 +3,7 @@ package skeeter144.toc.entity.mob.npc.banker;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -17,10 +18,10 @@ import skeeter144.toc.util.Reference;
 
 public class EntityBanker extends EntityNpc {
 
-	public EntityBanker(World worldIn) {
-		super(worldIn);
+	public EntityBanker(EntityType<?> type, World worldIn) {
+		super(type, worldIn);
 		
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20);
+		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20);
 		this.setHealth(50f);
 		
 		this.texture = new ResourceLocation(Reference.MODID, "textures/entity/sam_derric.png");

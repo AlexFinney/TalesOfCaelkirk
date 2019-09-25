@@ -7,51 +7,63 @@ import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistries;
 import skeeter144.toc.TOCMain;
+import skeeter144.toc.blocks.TOCBlocks;
 import skeeter144.toc.network.AddLevelXpMessage;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.recipe.Recipe;
 
 public class TileEntityAnvil extends TileEntity {
-	
+	public TileEntityAnvil() {
+		super(TOCBlocks.te_anvil);
+	}
+	public TileEntityAnvil(TileEntityType<?> tileEntityTypeIn) {
+		super(tileEntityTypeIn);
+	}
+
 	public Item ingot;
 	public ItemStack producedItem;
 	public Recipe selectedRecipe;
 	public int addedIngots;
 	public UUID anvilOwner;
 	
+	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public NBTTagCompound serializeNBT() {
+		NBTTagCompound compound = new NBTTagCompound();
 		compound.setString("ingotType", ingot != null ? ingot.getRegistryName().toString() : "");
 		compound.setString("producedItem", producedItem != null ? producedItem.getItem().getRegistryName().toString() : "");
-		compound.setInteger("producedItemCount", producedItem != null ? producedItem.getCount() : 0);
-		compound.setInteger("addedIngots", addedIngots);
+		compound.setInt("producedItemCount", producedItem != null ? producedItem.getCount() : 0);
+		compound.setInt("addedIngots", addedIngots);
 		compound.setLong("uuid1", anvilOwner != null ? anvilOwner.getMostSignificantBits() : 0);
 		compound.setLong("uuid2", anvilOwner != null ? anvilOwner.getLeastSignificantBits() : 0);
-		return super.writeToNBT(compound);
+		return compound;
 	}
 	
 	
 	@Override
-	public void readFromNBT(NBTTagCompound compound) {
+	public void deserializeNBT(NBTTagCompound compound) {
 		String ingotType = compound.getString("ingotType");
 		if(ingotType != "")
-			ingot = Item.REGISTRY.getObject(new ResourceLocation(ingotType));
+			ingot = ForgeRegistries.ITEMS.getValue(new ResourceLocation(ingotType));
 		
 		String producedItemtype = compound.getString("producedItem");
 		if(producedItemtype != "")
-			producedItem = new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(producedItemtype)), compound.getInteger("producedItemCount"));
+			producedItem = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(producedItemtype)), compound.getInt("producedItemCount"));
 		else
 			producedItem = null;
 		
-		addedIngots = compound.getInteger("addedIngots");
+		addedIngots = compound.getInt("addedIngots");
 		anvilOwner = new UUID(compound.getLong("uuid1"), compound.getLong("uuid2")); 
 	}
 	
@@ -87,7 +99,7 @@ public class TileEntityAnvil extends TileEntity {
 
 	@Override
 	public NBTTagCompound getUpdateTag() {
-		return this.writeToNBT(new NBTTagCompound());
+		return serializeNBT();
 	}
 	
 	@Override
@@ -99,7 +111,6 @@ public class TileEntityAnvil extends TileEntity {
 	public void sendUpdates() {
 		world.markBlockRangeForRenderUpdate(pos, pos);
 		world.notifyBlockUpdate(pos, getState(), getState(), 3);
-		world.scheduleBlockUpdate(pos,this.getBlockType(),0,0);
 		markDirty();
 	}
 	

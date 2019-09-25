@@ -1,6 +1,6 @@
 package skeeter144.toc.entity.mob.monster;
 
-import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -22,8 +22,8 @@ import skeeter144.toc.sounds.Sounds;
 public class EntitySiren extends CustomMob{
 
 	boolean isRapidSwim = false; 
-	public EntitySiren(World worldIn) {
-		super(worldIn);
+	public EntitySiren(EntityType<?> type, World worldIn) {
+		super(type, worldIn);
 		
 		this.attackLevel = 10;
 		this.strengthLevel = 25;
@@ -40,11 +40,11 @@ public class EntitySiren extends CustomMob{
 		this.setDropChance(EntityEquipmentSlot.MAINHAND, .05f);
 		this.setDropChance(EntityEquipmentSlot.OFFHAND, .05f);
 
-		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.25);
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(15);
-		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1);
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.hpLevel * EntityLevels.HP_PER_LEVEL);
+		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.25);
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(15);
+		this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1);
+		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.hpLevel * EntityLevels.HP_PER_LEVEL);
 		this.setHealth(this.hpLevel * EntityLevels.HP_PER_LEVEL);
 		this.setSize(0.7f, 2f);
 	}
@@ -62,12 +62,6 @@ public class EntitySiren extends CustomMob{
 
 	}
 	
-	@Override
-	protected void applyEntityAttributes() {
-		super.applyEntityAttributes();
-		
-	}
-	
 	@Override 
 	public boolean isAIDisabled() {
 		return false;
@@ -78,19 +72,11 @@ public class EntitySiren extends CustomMob{
 		return true;
 	}
 	
-	@Override
-	protected void entityInit() {
-		super.entityInit();
-	}
+	
 	
 	@Override
-	public EnumCreatureAttribute getCreatureAttribute() {
-		return EnumCreatureAttribute.UNDEAD;
-	}
-	
-	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();		
+	public void tick() {
+		super.tick();		
 		
 		isRapidSwim = getAttackTarget() != null;
 	}

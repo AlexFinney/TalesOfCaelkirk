@@ -1,6 +1,7 @@
 package skeeter144.toc.entity.projectile;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -20,8 +21,8 @@ public class EntityWandProjectile extends EntityThrowable{
 	public Vec3d movementVector;
 	boolean repeatedTrailSpawn = true;
 	boolean spawnedOnce = false;
-	public EntityWandProjectile(World worldIn, EntityLivingBase throwerIn, int spellId, ParticleSystem trail) {
-		super(worldIn, throwerIn);
+	public EntityWandProjectile(EntityType<?> type, World worldIn, EntityLivingBase throwerIn, int spellId, ParticleSystem trail) {
+		super(type, worldIn);
 		this.spellId = spellId;
 		Spells.getSpell(spellId);
 		this.thrower = throwerIn;
@@ -33,11 +34,10 @@ public class EntityWandProjectile extends EntityThrowable{
 	
 	@Override
 	protected void onImpact(RayTraceResult result) {
-		if(result.entityHit != null && result.entityHit == thrower) { //retrun on server or client if player shoots himself
+		if(result.entity != null && result.entity == thrower) { //retrun on server or client if player shoots himself
 			return;
 		}
 		((IShootableSpell)Spells.getSpell(spellId)).onProjectileImpact(result, this);
-		setDead();
 		
 		if(trail instanceof PunishUndeadSystem) {
 			((PunishUndeadSystem)trail).kill();
@@ -49,8 +49,8 @@ public class EntityWandProjectile extends EntityThrowable{
 	}
 	
 	@Override
-	public void onUpdate() {
-		super.onUpdate();		
+	public void tick() {
+		super.tick();		
 		if(world.isRemote) 
 		{
 			if(ticksExisted % 1 == 0)
@@ -73,9 +73,6 @@ public class EntityWandProjectile extends EntityThrowable{
 				}
 			}
 		}
-		
-		if(ticksExisted > 60)
-			setDead();
 	}
 	
 	public ParticleSystem getTrail() {

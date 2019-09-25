@@ -23,11 +23,11 @@ public class PlayerManager {
 	}
 	
 	public TOCPlayer getPlayer(EntityPlayer player) {
-		TOCPlayer pl = players.get(player.getPersistentID());
+		TOCPlayer pl = players.get(player.getUniqueID());
 		
 		if(pl == null)  pl = Database.getPlayer(player);
 			
-		players.put(player.getPersistentID(), pl);
+		players.put(player.getUniqueID(), pl);
 		return pl;
 	}
 	

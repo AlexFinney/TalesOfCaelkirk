@@ -51,7 +51,7 @@ public class UpdatePlayerFlyingMessage implements IMessage {
 						ep.setIsFlying(true);
 						ep.setNoGravity(true);
 						ep.motionY = .5;
-						speed = ep.getEntityAttribute(SharedMonsterAttributes.FLYING_SPEED).getBaseValue();
+						speed = ep.getAttribute(SharedMonsterAttributes.FLYING_SPEED).getBaseValue();
 					}else if(!message.isFlyingUp && message.isFlyingDown) {
 						ep.motionY = -.5;
 					}else if(!message.isFlyingUp && !message.isFlyingDown) {
@@ -59,7 +59,7 @@ public class UpdatePlayerFlyingMessage implements IMessage {
 					}
 					
 					if(!ep.isAirBorne) {
-						speed = ep.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getBaseValue();
+						speed = ep.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getBaseValue();
 					}
 					
 					ep.setAIMoveSpeed((float) speed);

@@ -4,18 +4,14 @@ import java.util.UUID;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.AbstractChestHorse;
-import net.minecraft.entity.passive.AbstractHorse;
-import net.minecraft.entity.passive.HorseArmorType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.DifficultyInstance;
@@ -27,25 +23,25 @@ public abstract class EntityAbstractHorseMount extends AbstractChestHorse{
 	public UUID horseOwner = null;
 	public EntityPlayer followTarget = null;
 	
-	public EntityAbstractHorseMount(World worldIn) {
-		super(worldIn);
+	public EntityAbstractHorseMount(EntityType<?> type, World worldIn) {
+		super(type, worldIn);
 		this.tasks.taskEntries.clear();
 		this.targetTasks.taskEntries.clear();
-		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64);
+		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64);
 	}
 	
 	
-	public EntityAbstractHorseMount(World worldIn, UUID horseOwner) {
-		super(worldIn);
+	public EntityAbstractHorseMount(EntityType<?> type, World worldIn, UUID horseOwner) {
+		super(type, worldIn);
 		this.tasks.taskEntries.clear();
 		this.targetTasks.taskEntries.clear();
 		this.horseOwner = horseOwner;
-		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64);
+		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64);
 	}
 	
 	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
+	public void tick() {
+		super.tick();
 		if(!this.world.isRemote) {
 			if(this.ticksExisted % 20 == 0) {
 				if(!this.isBeingRidden()) {
@@ -61,22 +57,22 @@ public abstract class EntityAbstractHorseMount extends AbstractChestHorse{
 				}
 
 				if(secondsSinceLastRide > 60)
-					this.setDead();
+					onDeath(DamageSource.GENERIC);
 			}
 		}
 	}
-	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public NBTTagCompound serializeNBT() {
+		NBTTagCompound compound = new NBTTagCompound();
 		if(horseOwner != null)
 			compound.setUniqueId("horseOwner", horseOwner);
-		return super.writeToNBT(compound);
+		return super.serializeNBT();
 	}
+
 	
 	@Override
-	public void readEntityFromNBT(NBTTagCompound compound) {
+	public void deserializeNBT(NBTTagCompound compound) {
 		horseOwner = compound.getUniqueId("horseOwner");
-		super.readEntityFromNBT(compound);
 	}
 	
 	@Override
@@ -85,8 +81,8 @@ public abstract class EntityAbstractHorseMount extends AbstractChestHorse{
 	}
 	
 	@Override
-	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-		IEntityLivingData data =  super.onInitialSpawn(difficulty, livingdata);
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata, NBTTagCompound compound) {
+		IEntityLivingData data =  super.onInitialSpawn(difficulty, livingdata, compound);
 		this.setGrowingAge(0);
 		return data;
 	}
@@ -136,20 +132,14 @@ public abstract class EntityAbstractHorseMount extends AbstractChestHorse{
             {
                 int i = net.minecraftforge.common.ForgeHooks.getLootingLevel(this, entity, cause);
 
-                captureDrops = true;
-                capturedDrops.clear();
-
                 if (this.canDropLoot() && this.world.getGameRules().getBoolean("doMobLoot"))
                 {
                     boolean flag = this.recentlyHit > 0;
                     this.dropLoot(flag, i, cause);
                 }
-
-                captureDrops = false;
-
-                if (!net.minecraftforge.common.ForgeHooks.onLivingDrops(this, cause, capturedDrops, i, recentlyHit > 0))
+                if (!net.minecraftforge.common.ForgeHooks.onLivingDrops(this, cause, captureDrops(), i, recentlyHit > 0))
                 {
-                    for (EntityItem item : capturedDrops)
+                    for (EntityItem item : captureDrops())
                     {
                         world.spawnEntity(item);
                     }

@@ -1,6 +1,6 @@
 package skeeter144.toc.entity.mob.monster;
 
-import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
@@ -13,12 +13,15 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import skeeter144.toc.TOCMain;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.player.EntityLevels;
@@ -28,9 +31,12 @@ public class EntityViking extends CustomMob{
 
 	public boolean isVikingElite = false;
 	
+	public EntityViking(World world) {
+		this(TOCEntityType.VIKING, world);
+	}
 	
-	public EntityViking(World worldIn) {
-		super(worldIn);
+	public EntityViking(EntityType<?> type, World worldIn) {
+		super(type, worldIn);
 		
 		this.attackLevel = 10;
 		this.strengthLevel = 25;
@@ -69,34 +75,13 @@ public class EntityViking extends CustomMob{
 			this.defenseLevel = 13;
 			this.magicLevel = 1;
 		}
-		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(isVikingElite ? .25 : .25);
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(isVikingElite ? 20 : 15);
-		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(isVikingElite ? 2 : 1);
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.hpLevel * EntityLevels.HP_PER_LEVEL);
+		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(isVikingElite ? .25 : .25);
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(isVikingElite ? 20 : 15);
+		this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(isVikingElite ? 2 : 1);
+		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.hpLevel * EntityLevels.HP_PER_LEVEL);
 		this.setHealth(this.hpLevel * EntityLevels.HP_PER_LEVEL);
 		this.setSize(0.7f, 2f);
-	}
-
-	@Override
-	protected void applyEntityAttributes() {
-		super.applyEntityAttributes();
-		
-	}
-	
-	@Override
-	protected void entityInit() {
-		super.entityInit();
-	}
-	
-	@Override
-	public EnumCreatureAttribute getCreatureAttribute() {
-		return EnumCreatureAttribute.UNDEAD;
-	}
-	
-	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();		
 	}
 
 
@@ -110,9 +95,10 @@ public class EntityViking extends CustomMob{
 	}
 	
 	@Override
-	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData entityLivingData,
+			NBTTagCompound itemNbt) {
 		if(isVikingElite) {
-			this.setCustomNameTag("Viking Elite");
+			this.setCustomName(new TextComponentString("Viking Elite"));
 			this.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(TOCItems.viking_helmet));
 			this.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(TOCItems.viking_chestplate));
 			this.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(TOCItems.viking_leggings));
@@ -133,9 +119,8 @@ public class EntityViking extends CustomMob{
 			this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(TOCItems.getRandomWeaponForClass(weaponType, .05f)));
 		}
 		
-		return super.onInitialSpawn(difficulty, livingdata);
+		return super.onInitialSpawn(difficulty, entityLivingData, itemNbt);
 	}
-
 	
 	@Override
 	protected SoundEvent getDeathSound() {

@@ -1,6 +1,7 @@
 package skeeter144.toc.entity.mob;
 
 import net.minecraft.entity.EntityFlying;
+import net.minecraft.entity.EntityType;
 import net.minecraft.world.World;
 import skeeter144.toc.client.entity.animation.Animation;
 import skeeter144.toc.client.entity.animation.KeyFrame;
@@ -18,8 +19,8 @@ public class CustomFlyingMob extends EntityFlying{
 	public float animationTicks;
 	public float animationStartTime;
 	
-	public CustomFlyingMob(World worldIn) {
-		super(worldIn);
+	public CustomFlyingMob(EntityType<?> type, World worldIn) {
+		super(type, worldIn);
 	}
 	
 	public KeyFrame lastFrame = null;

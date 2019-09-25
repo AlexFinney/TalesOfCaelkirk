@@ -1,5 +1,6 @@
 package skeeter144.toc.entity.mob.monster;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -17,8 +18,8 @@ import skeeter144.toc.sounds.Sounds;
 
 public class EntityGoblin extends CustomMob{
 
-	public EntityGoblin(World worldIn) {
-		super(worldIn);
+	public EntityGoblin(EntityType<?> type, World worldIn) {
+		super(type, worldIn);
 		
 		this.attackLevel = 3;
 		this.strengthLevel = 5;
@@ -36,11 +37,11 @@ public class EntityGoblin extends CustomMob{
 		
 		this.setSize(.5f, 1.5f);
 		this.setHealth(10f);
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10);
-		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.25);
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(5);
-		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(.4f);
+		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10);
+		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.25);
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(5);
+		this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(.4f);
 	}
 	
 	@Override

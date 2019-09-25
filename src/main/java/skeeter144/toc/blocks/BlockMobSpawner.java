@@ -46,7 +46,7 @@ public class BlockMobSpawner extends BlockTileEntity<TileEntityMobSpawner> {
 
 	@Override
 	public TileEntityMobSpawner createTileEntity(World world, IBlockState state) {
-		return new TileEntityMobSpawner();
+		return new TileEntityMobSpawner(null);
 	}
 
 }

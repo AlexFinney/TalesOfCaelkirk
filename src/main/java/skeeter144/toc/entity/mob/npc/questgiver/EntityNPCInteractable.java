@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumHand;
@@ -19,8 +20,8 @@ import skeeter144.toc.quest.QuestManager;
 
 public abstract class EntityNPCInteractable extends EntityNpc{
 	protected Map<String, NpcDialog> dialogs;
-	public EntityNPCInteractable(World worldIn) {
-		super(worldIn);
+	public EntityNPCInteractable(EntityType<?> type, World worldIn) {
+		super(type, worldIn);
 		String s = this.getClass().getName();
 		String[] split = s.split("\\.");
 		dialogs = DialogManager.npcDialogs.get(split[split.length - 1] + ".class");

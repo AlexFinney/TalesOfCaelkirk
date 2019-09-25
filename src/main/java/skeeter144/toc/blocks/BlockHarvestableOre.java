@@ -53,11 +53,11 @@ public class BlockHarvestableOre extends CustomBlock{
 		if(world.isRemote)
 			return;
 		
-		 Network.INSTANCE.sendToAll(new SpawnParticlesMessage(ParticleSystem.ORE_MINING_PARTICLE_SYSTEM, pos.getX(), pos.getY(), pos.getZ()));
+		 Network.INSTANCE.sendToAll(new SpawnParticlesMessage(ParticleSystem.ORE_MINING_PARTICLE_SYSTEM, pos));
 		
 		float chance = ((TOCPickaxe)player.getHeldItemMainhand().getItem()).getMineChanceForOre(this);
 		if(TOCMain.rand.nextFloat() < chance) {
-			 Network.INSTANCE.sendToAll(new SpawnParticlesMessage(ParticleSystem.ORE_BROKEN_PARTICLE_SYSTEM, pos.getX(), pos.getY(), pos.getZ()));
+			 Network.INSTANCE.sendToAll(new SpawnParticlesMessage(ParticleSystem.ORE_BROKEN_PARTICLE_SYSTEM, pos));
 			 
 				if(player.inventory.getFirstEmptyStack() == -1) {
 					player.sendMessage(new TextComponentString("Your inventory is too full to hold any more ore!"));

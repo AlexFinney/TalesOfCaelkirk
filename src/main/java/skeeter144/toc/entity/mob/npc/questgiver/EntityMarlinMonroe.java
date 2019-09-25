@@ -2,6 +2,7 @@ package skeeter144.toc.entity.mob.npc.questgiver;
 
 import java.util.UUID;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
@@ -11,8 +12,8 @@ import skeeter144.toc.quest.QuestProgress;
 
 public class EntityMarlinMonroe extends EntityNPCInteractable{
 	
-	public EntityMarlinMonroe(World worldIn) {
-		super(worldIn);
+	public EntityMarlinMonroe(EntityType<?> type, World worldIn) {
+		super(type, worldIn);
 		this.setSize(.75f, 2f);
 		if(texture == null)
 			texture = new ResourceLocation("toc:textures/entity/marlin_monroe.png");
@@ -24,7 +25,7 @@ public class EntityMarlinMonroe extends EntityNPCInteractable{
 			return true;
 		}
 		
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.A_NEW_ADVENTURE);
+		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), QuestManager.A_NEW_ADVENTURE);
 
 		if(qp.stage == 7) {
 			sendDialog("intro", player);
@@ -34,7 +35,7 @@ public class EntityMarlinMonroe extends EntityNPCInteractable{
 	
 	public void marlinFinished(UUID playerUUID) {
 		EntityPlayer player = world.getPlayerEntityByUUID(playerUUID);
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.A_NEW_ADVENTURE);
+		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), QuestManager.A_NEW_ADVENTURE);
 		qp.incStage();
 	}
 	

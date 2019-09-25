@@ -2,6 +2,7 @@ package skeeter144.toc.entity.mob.npc.questgiver;
 
 import java.util.UUID;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
@@ -16,8 +17,8 @@ import skeeter144.toc.util.TOCUtils;
 
 public class EntityRobertCromwell extends EntityNPCInteractable{
 	
-	public EntityRobertCromwell(World worldIn) {
-		super(worldIn);
+	public EntityRobertCromwell(EntityType<?> type, World worldIn) {
+		super(type, worldIn);
 		this.setSize(.75f, 2f);
 		if(texture == null)
 			texture = new ResourceLocation("toc:textures/entity/bob_rat_man.png");

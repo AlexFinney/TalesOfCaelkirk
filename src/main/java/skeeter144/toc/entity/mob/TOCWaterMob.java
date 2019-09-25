@@ -1,5 +1,6 @@
 package skeeter144.toc.entity.mob;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.init.Blocks;
@@ -13,14 +14,14 @@ public class TOCWaterMob extends CustomMob {
 	int breath = 60;
 	int ticksSinceDrown = 0;
 
-	public TOCWaterMob(World worldIn) {
-		super(worldIn);
+	public TOCWaterMob(EntityType<?> type, World worldIn) {
+		super(type, worldIn);
 		this.tasks.addTask(0, new AIMoveRandom(this));
 	}
 
 	@Override
-	public void onEntityUpdate() {
-		super.onEntityUpdate();
+	public void tick() {
+		super.tick();
 
 		if (!isInWater()) {
 			--breath;

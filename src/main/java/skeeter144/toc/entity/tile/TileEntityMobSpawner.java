@@ -6,18 +6,28 @@ import javax.annotation.Nullable;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.EntityEntry;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistries;
+import skeeter144.toc.blocks.TOCBlocks;
 
 public class TileEntityMobSpawner extends TileEntity implements ITickable {
+
+	public TileEntityMobSpawner() {
+		super(TOCBlocks.te_mob_spawner);
+	}
+	
+	public TileEntityMobSpawner(TileEntityType<?> tileEntityTypeIn) {
+		super(tileEntityTypeIn);
+	}
 
 	public String mob_name = "";
 	public int spawn_radius = 10;
@@ -28,31 +38,31 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable {
 	public int mobs_per_spawn_max = 3;
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public NBTTagCompound serializeNBT() {
+		NBTTagCompound compound = new NBTTagCompound();
 		compound.setString("mob_name", mob_name);
-		compound.setInteger("spawn_radius", spawn_radius);
-		compound.setInteger("avg_spawns_per_min", avg_spawns_per_min);
-		compound.setInteger("mob_spawn_limit", mob_spawn_limit);
-		compound.setInteger("mob_spawn_search_radius", mob_spawn_search_radius);
-		compound.setInteger("mobs_per_spawn_min", mobs_per_spawn_min);
-		compound.setInteger("mobs_per_spawn_max", mobs_per_spawn_max);
-		return super.writeToNBT(compound);
+		compound.setInt("spawn_radius", spawn_radius);
+		compound.setInt("avg_spawns_per_min", avg_spawns_per_min);
+		compound.setInt("mob_spawn_limit", mob_spawn_limit);
+		compound.setInt("mob_spawn_search_radius", mob_spawn_search_radius);
+		compound.setInt("mobs_per_spawn_min", mobs_per_spawn_min);
+		compound.setInt("mobs_per_spawn_max", mobs_per_spawn_max);
+		return compound;
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound compound) {
+	public void deserializeNBT(NBTTagCompound compound) {
 		mob_name = compound.getString("mob_name");
-		spawn_radius = compound.getInteger("spawn_radius");
-		avg_spawns_per_min = compound.getInteger("avg_spawns_per_min");
-		mob_spawn_limit = compound.getInteger("mob_spawn_limit");
-		mob_spawn_search_radius = compound.getInteger("mob_spawn_search_radius");
-		mobs_per_spawn_min = compound.getInteger("mobs_per_spawn_min");
-		mobs_per_spawn_max = compound.getInteger("mobs_per_spawn_max");
-		super.readFromNBT(compound);
+		spawn_radius = compound.getInt("spawn_radius");
+		avg_spawns_per_min = compound.getInt("avg_spawns_per_min");
+		mob_spawn_limit = compound.getInt("mob_spawn_limit");
+		mob_spawn_search_radius = compound.getInt("mob_spawn_search_radius");
+		mobs_per_spawn_min = compound.getInt("mobs_per_spawn_min");
+		mobs_per_spawn_max = compound.getInt("mobs_per_spawn_max");
 	}
 
 	@Override
-	public void update() {
+	public void tick() {
 		if(this.world.isRemote)
 			return;
 		
@@ -60,7 +70,7 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable {
 			
 			float chance = avg_spawns_per_min / 60f;
 			if(this.world.rand.nextFloat() < chance) {
-				for(EntityEntry entry : ForgeRegistries.ENTITIES) {
+				for(EntityType<?> entry : ForgeRegistries.ENTITIES) {
 					if(entry.getEntityClass().getName().equals(mob_name)) {
 						AxisAlignedBB bb = new AxisAlignedBB(pos.getX() - mob_spawn_search_radius / 2,
 															 pos.getY() - 5, 
@@ -119,7 +129,7 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable {
 
 	@Override
 	public NBTTagCompound getUpdateTag() {
-		return this.writeToNBT(new NBTTagCompound());
+		return serializeNBT();
 	}
 
 	@Override
@@ -131,7 +141,6 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable {
 	public void sendUpdates() {
 		world.markBlockRangeForRenderUpdate(pos, pos);
 		world.notifyBlockUpdate(pos, getState(), getState(), 3);
-		world.scheduleBlockUpdate(pos, this.getBlockType(), 0, 0);
 		markDirty();
 	}
 

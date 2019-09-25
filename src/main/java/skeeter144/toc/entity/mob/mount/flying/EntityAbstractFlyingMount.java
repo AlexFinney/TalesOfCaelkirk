@@ -2,6 +2,7 @@ package skeeter144.toc.entity.mob.mount.flying;
 
 import java.util.UUID;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -15,12 +16,12 @@ public class EntityAbstractFlyingMount extends EntityAbstractHorseMount{
 	private static final DataParameter<Boolean> IS_FLYING = EntityDataManager.<Boolean>createKey(EntityAbstractHorseMount.class, DataSerializers.BOOLEAN);
 	
 	public boolean isFlying = false;
-	public EntityAbstractFlyingMount(World worldIn) {
-		this(worldIn, null);
+	public EntityAbstractFlyingMount(EntityType<?> type, World worldIn) {
+		this(type, worldIn, null);
 	}
 	
-	public EntityAbstractFlyingMount(World worldIn, UUID uuid) {
-		super(worldIn, uuid);
+	public EntityAbstractFlyingMount(EntityType<?> type, World worldIn, UUID uuid) {
+		super(type, worldIn, uuid);
 		
 		if(!worldIn.isRemote)
 			this.dataManager.set(IS_FLYING, isFlying);
@@ -28,8 +29,8 @@ public class EntityAbstractFlyingMount extends EntityAbstractHorseMount{
 
 	
 	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
+	public void tick() {
+		super.tick();
 		if(this.onGround) {
 			this.dataManager.set(IS_FLYING, false);
 			this.setNoGravity(false);
@@ -38,15 +39,14 @@ public class EntityAbstractFlyingMount extends EntityAbstractHorseMount{
 	
 	
 	@Override
-	public void writeEntityToNBT(NBTTagCompound compound) {
-		super.writeEntityToNBT(compound);
+	public NBTTagCompound serializeNBT() {
+		NBTTagCompound compound = new NBTTagCompound();
 		compound.setBoolean("isFlying", isFlying);
-		
+		return compound;
 	}
 	
 	@Override
-	public void readEntityFromNBT(NBTTagCompound compound) {
-		super.readEntityFromNBT(compound);
+	public void deserializeNBT(NBTTagCompound compound) {
 		this.isFlying = compound.getBoolean("isFlying");
 		this.dataManager.set(IS_FLYING, isFlying);
 	}
@@ -59,16 +59,4 @@ public class EntityAbstractFlyingMount extends EntityAbstractHorseMount{
 		return this.dataManager.get(IS_FLYING);
 	}
 	
-	protected void entityInit()
-    {
-        super.entityInit();
-        this.dataManager.register(IS_FLYING, isFlying);
-    }
-	
-	@Override
-	public boolean isEntityInvulnerable(DamageSource source) {
-		if(source.equals(DamageSource.FALL))
-			return true;
-		return super.isEntityInvulnerable(source);
-	}
 }

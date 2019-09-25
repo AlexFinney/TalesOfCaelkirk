@@ -4,41 +4,50 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistries;
 import skeeter144.toc.TOCMain;
+import skeeter144.toc.blocks.TOCBlocks;
 
 public class TileEntityHarvestedTree extends TileEntity implements ITickable{
 	
+	public TileEntityHarvestedTree() {
+		super(TOCBlocks.te_harvested_tree);
+	}
+	
+	public TileEntityHarvestedTree(TileEntityType<?> tileEntityTypeIn) {
+		super(tileEntityTypeIn);
+	}
+
 	public Map<BlockPos, IBlockState> treeBlocks = new HashMap<BlockPos, IBlockState>();
 	public int minSecs, maxSecs;
+	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		compound.setInteger("secsRemaining", secsRemaining);
-		compound.setInteger("numTreeBlocks", treeBlocks.size());
+	public NBTTagCompound serializeNBT() {
+		NBTTagCompound compound = new NBTTagCompound();
+		compound.setInt("secsRemaining", secsRemaining);
+		compound.setInt("numTreeBlocks", treeBlocks.size());
 		
 		int counter = 0;
 		for(Map.Entry<BlockPos, IBlockState> entry : treeBlocks.entrySet()) {
 			String blockName = entry.getValue().getBlock().getRegistryName().toString();
-			String blockMeta = entry.getValue().getBlock().getMetaFromState(entry.getValue()) + "";
-			compound.setString("Block:" + counter , entry.getKey().getX() + "_" + entry.getKey().getY() + "_" + entry.getKey().getZ()  + " " + blockName + "_" + blockMeta);
+			compound.setString("Block:" + counter , entry.getKey().getX() + "_" + entry.getKey().getY() + "_" + entry.getKey().getZ()  + " " + blockName);
 			++counter;
 		}
 		
-		return super.writeToNBT(compound);
+		return compound;
 	}
 	
 	@Override
-	public void readFromNBT(NBTTagCompound compound) {
-		super.readFromNBT(compound);
+	public void deserializeNBT(NBTTagCompound compound) {
 		treeBlocks.clear();
-		secsRemaining = compound.getInteger("secsRemaining");
-		int numBlocks = compound.getInteger("numTreeBlocks");
+		secsRemaining = compound.getInt("secsRemaining");
+		int numBlocks = compound.getInt("numTreeBlocks");
 		for(int i = 0; i < numBlocks; ++i) {
 			String str = compound.getString("Block:" + i);
 			
@@ -52,10 +61,9 @@ public class TileEntityHarvestedTree extends TileEntity implements ITickable{
 			int z = Integer.parseInt(posTokens[2]);
 			
 			
-			String blockName = block.split("_")[0];
-			int blockMeta = Integer.parseInt(block.split("_")[1]);
+			String blockName = block;
 			
-			treeBlocks.put(new BlockPos(x,y,z), ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockName)).getStateFromMeta(blockMeta));
+			treeBlocks.put(new BlockPos(x,y,z), ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockName)).getDefaultState());
 		}
 		
 	}
@@ -63,7 +71,7 @@ public class TileEntityHarvestedTree extends TileEntity implements ITickable{
 	private int ticksAlive = 1;
 	private int secsRemaining = -1;
 	@Override
-	public void update() {
+	public void tick() {
 		if(this.world.isRemote)
 			return;
 

@@ -2,6 +2,7 @@ package skeeter144.toc.entity.mob.npc.questgiver;
 
 import java.util.UUID;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -14,8 +15,8 @@ import skeeter144.toc.quest.QuestProgress;
 
 public class EntitySeloviusKamazz extends EntityNPCInteractable{
 	
-	public EntitySeloviusKamazz(World worldIn) {
-		super(worldIn);
+	public EntitySeloviusKamazz(EntityType<?> type, World worldIn) {
+		super(type, worldIn);
 		this.setSize(.75f, 2f);
 		if(texture == null)
 			texture = new ResourceLocation("toc:textures/entity/selovius_kamazz.png");

@@ -1,7 +1,6 @@
 package skeeter144.toc.entity.mob.monster;
 
-import java.util.ArrayList;
-
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -12,16 +11,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import skeeter144.toc.client.entity.animation.Animations;
 import skeeter144.toc.entity.AI.EntityAIScorpianSting;
 import skeeter144.toc.entity.mob.CustomMob;
-import skeeter144.toc.event.AnimationEvent;
 import skeeter144.toc.sounds.Sounds;
 
 public class EntityGiantScorpian extends CustomMob{
 
-	public EntityGiantScorpian(World worldIn) {
-		super(worldIn);
+	public EntityGiantScorpian(EntityType<?> type, World worldIn) {
+		super(type, worldIn);
 
 		this.attackLevel = 10;
 		this.strengthLevel = 20;
@@ -40,11 +37,11 @@ public class EntityGiantScorpian extends CustomMob{
 		
 		
 		this.setSize(1f, 1f);
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50);
-		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.3f);
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(9);
-		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(.8f);
+		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50);
+		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.3f);
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(9);
+		this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(.8f);
 		this.setHealth(50f);
 	}
 	

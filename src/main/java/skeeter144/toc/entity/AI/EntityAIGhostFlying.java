@@ -22,8 +22,8 @@ public class EntityAIGhostFlying extends EntityAIBase{
 	}
 	
 	@Override
-	public void updateTask() {
-		super.updateTask();
+	public void tick() {
+		super.tick();
 		
 		if(++ticksSinceLastTarget > 100) {
 			ticksSinceLastTarget = 0;

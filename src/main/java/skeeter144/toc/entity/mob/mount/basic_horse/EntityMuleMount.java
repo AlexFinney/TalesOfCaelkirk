@@ -2,33 +2,24 @@ package skeeter144.toc.entity.mob.mount.basic_horse;
 
 import java.util.UUID;
 
-import javax.annotation.Nullable;
-
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.passive.AbstractChestHorse;
-import net.minecraft.entity.passive.EntityMule;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.loot.LootTableList;
 
 public class EntityMuleMount extends EntityAbstractHorseMount {
-	public EntityMuleMount(World worldIn) {
-		this(worldIn, null);
+	public EntityMuleMount(EntityType<?> type, World worldIn) {
+		this(type, worldIn, null);
 	}
 
-	public EntityMuleMount(World worldIn, UUID uuid) {
-		super(worldIn, uuid);
+	public EntityMuleMount(EntityType<?> type, World worldIn, UUID uuid) {
+		super(type, worldIn, uuid);
 		this.tasks.taskEntries.clear();
 		this.targetTasks.taskEntries.clear();
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.11F);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.11F);
 	}
 
 	protected ResourceLocation getLootTable() {

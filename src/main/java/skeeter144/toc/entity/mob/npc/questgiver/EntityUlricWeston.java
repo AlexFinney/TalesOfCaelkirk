@@ -2,6 +2,7 @@ package skeeter144.toc.entity.mob.npc.questgiver;
 
 import java.util.UUID;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,8 +19,8 @@ import skeeter144.toc.util.TOCUtils;
 
 public class EntityUlricWeston extends EntityNPCInteractable{
 	
-	public EntityUlricWeston(World worldIn) {
-		super(worldIn);
+	public EntityUlricWeston(EntityType<?> type, World worldIn) {
+		super(type, worldIn);
 		this.setSize(.75f, 2f);
 		if(texture == null)
 			texture = new ResourceLocation("toc:textures/entity/ulric_weston.png");
@@ -33,7 +34,7 @@ public class EntityUlricWeston extends EntityNPCInteractable{
 			return true;
 		}
 		
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.A_NEW_ADVENTURE);
+		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), QuestManager.A_NEW_ADVENTURE);
 		
 		if(qp.stage == 1) {
 			sendDialog("intro", player);
@@ -54,7 +55,7 @@ public class EntityUlricWeston extends EntityNPCInteractable{
 	
 	public void ulricFinished(UUID playerUUID) {
 		EntityPlayer player = this.world.getPlayerEntityByUUID(playerUUID);
-	    QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.A_NEW_ADVENTURE);
+	    QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), QuestManager.A_NEW_ADVENTURE);
 	    if(qp.stage == 2) {
 	    	player.addItemStackToInventory(new ItemStack(TOCItems.copper_coin, 20));
 			TOCUtils.removeItemsFromInventory(new ItemStack(TOCBlocks.oak_log).getItem(), 5, player.inventory);
@@ -67,7 +68,7 @@ public class EntityUlricWeston extends EntityNPCInteractable{
 	public void beginLogChopping(UUID playerUUID) {
 		
 		EntityPlayer player = this.world.getPlayerEntityByUUID(playerUUID);
-	    QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getPersistentID(), QuestManager.A_NEW_ADVENTURE);
+	    QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), QuestManager.A_NEW_ADVENTURE);
 	    qp.incStage();
 
 		
