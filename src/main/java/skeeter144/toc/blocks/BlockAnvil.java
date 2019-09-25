@@ -28,7 +28,7 @@ import skeeter144.toc.entity.tile.BlockTileEntity;
 import skeeter144.toc.entity.tile.TileEntityAnvil;
 import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.network.Network;
-import skeeter144.toc.network.SpawnParticlesMessage;
+import skeeter144.toc.network.SpawnParticlesPKT;
 import skeeter144.toc.particles.system.ParticleSystem;
 import skeeter144.toc.sounds.Sounds;
 
@@ -131,7 +131,7 @@ public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
 			if(isServer) {
 				worldIn.playSound(null, pos, Sounds.anvil_strike, SoundCategory.MASTER, 1, TOCMain.rand.nextFloat() / 5 + 1);
 				anvil.hammerStruck(playerIn);
-				Network.INSTANCE.sendToAll(new SpawnParticlesMessage(ParticleSystem.ANVIL_STRUCK_PARTICLE_SYSTEM, pos));
+				Network.INSTANCE.sendToAll(new SpawnParticlesPKT(ParticleSystem.ANVIL_STRUCK_PARTICLE_SYSTEM, pos));
 			}else{
 				worldIn.playSound(null, pos, Sounds.anvil_strike, SoundCategory.MASTER, 1, TOCMain.rand.nextFloat() / 5 + 1);
 			}

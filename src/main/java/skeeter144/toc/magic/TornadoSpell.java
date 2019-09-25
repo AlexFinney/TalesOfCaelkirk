@@ -11,7 +11,7 @@ import skeeter144.toc.entityeffect.ServerEffectHandler;
 import skeeter144.toc.entityeffect.ServerEffectHandler.EffectAddResult;
 import skeeter144.toc.entityeffect.effects.TornadoEffect;
 import skeeter144.toc.network.Network;
-import skeeter144.toc.network.SpawnParticlesMessage;
+import skeeter144.toc.network.SpawnParticlesPKT;
 import skeeter144.toc.particles.system.ParticleSystem;
 
 public class TornadoSpell extends ShootableSpell{
@@ -36,7 +36,7 @@ public class TornadoSpell extends ShootableSpell{
 				EntityLivingBase el = (EntityLivingBase)e;
 				EffectAddResult effRes = ServerEffectHandler.attemptAddNewEffect(e.getUniqueID(), new TornadoEffect(e, 1));
 				if(effRes == EffectAddResult.SUCCESS) {
-					Network.INSTANCE.sendToAllAround(new SpawnParticlesMessage(ParticleSystem.TORNADO_SYSTEM, el.posX, el.posY, el.posZ), 
+					Network.INSTANCE.sendToAllAround(new SpawnParticlesPKT(ParticleSystem.TORNADO_SYSTEM, el.posX, el.posY, el.posZ), 
 							new TargetPoint(el.dimension, el.posX, el.posY, el.posZ, 200));
 				}
 					

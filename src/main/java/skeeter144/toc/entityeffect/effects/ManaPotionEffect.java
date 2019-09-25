@@ -6,7 +6,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.TOCEntity;
 import skeeter144.toc.network.Network;
-import skeeter144.toc.network.SpawnParticlesMessage;
+import skeeter144.toc.network.SpawnParticlesPKT;
 import skeeter144.toc.particles.system.ParticleSystem;
 import skeeter144.toc.player.TOCPlayer;
 
@@ -25,7 +25,7 @@ public class ManaPotionEffect extends EntityEffect {
 	protected void onEffectStart() {
 		player.setHealthAndManaRegen(player.getHealthRegen(), player.getManaRegen() + addedRegen);
 		
-		Network.INSTANCE.sendToAllAround(new SpawnParticlesMessage(ParticleSystem.MANA_REGEN_EFFECT_ID, effected.posX, 
+		Network.INSTANCE.sendToAllAround(new SpawnParticlesPKT(ParticleSystem.MANA_REGEN_EFFECT_ID, effected.posX, 
 				effected.posY, effected.posZ, effected.getEntityId(), duration), 
 				new NetworkRegistry.TargetPoint(effected.world.provider.getDimension(), effected.posX, effected.posY, effected.posZ, 100));
 	}

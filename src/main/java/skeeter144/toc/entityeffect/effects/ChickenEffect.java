@@ -12,6 +12,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ChickenEffect extends EntityEffect{
 	
@@ -27,11 +28,11 @@ public class ChickenEffect extends EntityEffect{
 		chicken = new EntityChicken(effected.world);
 		chicken.setPosition(effected.posX, effected.posY + 1.5f, effected.posZ);
 		effected.world.spawnEntity(chicken);
-		effected.setEntityInvulnerable(true);
+		effected.setInvulnerable(true);
 		
 		if(effected instanceof EntityPlayer) {
-			((EntityPlayer) effected).addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(new ResourceLocation("slowness")), 1000, 1000));
-			((EntityPlayer) effected).addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(new ResourceLocation("invisibility")), 1000, 1000));
+			((EntityPlayer) effected).addPotionEffect(new PotionEffect(ForgeRegistries.POTIONS.getValue(new ResourceLocation("slowness")), 1000, 1000));
+			((EntityPlayer) effected).addPotionEffect(new PotionEffect(ForgeRegistries.POTIONS.getValue(new ResourceLocation("invisibility")), 1000, 1000));
 		
 			copyTaskSetTo(((EntityLiving)chicken).tasks.taskEntries, tasksCopy);
 			copyTaskSetTo(((EntityLiving)chicken).targetTasks.taskEntries, targetTasksCopy);
@@ -54,20 +55,18 @@ public class ChickenEffect extends EntityEffect{
 	@Override
 	protected void onEffectEnd(EffectEndType type) {
 		effected.setInvisible(false);
-		effected.setEntityInvulnerable(false);
+		effected.setInvulnerable(false);
 		effected.setPositionAndUpdate(chicken.posX, chicken.posY, chicken.posZ);
 		effected.noClip = false;
 		effected.setNoGravity(false);
 		
 		if(effected instanceof EntityPlayer) {
-			((EntityPlayer) effected).removePotionEffect(Potion.REGISTRY.getObject(new ResourceLocation("slowness")));
-			((EntityPlayer) effected).removePotionEffect(Potion.REGISTRY.getObject(new ResourceLocation("invisibility")));
+			((EntityPlayer) effected).removePotionEffect(ForgeRegistries.POTIONS.getValue(new ResourceLocation("slowness")));
+			((EntityPlayer) effected).removePotionEffect(ForgeRegistries.POTIONS.getValue(new ResourceLocation("invisibility")));
 		}else {
 			copyTaskSetTo(tasksCopy, ((EntityLiving)effected).tasks.taskEntries);
 			copyTaskSetTo(targetTasksCopy, ((EntityLiving)effected).targetTasks.taskEntries);
 		}
-		
-		chicken.setDead();
 	}
 
 	Entity chicken;

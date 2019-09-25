@@ -1,29 +1,32 @@
 package skeeter144.toc.network;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import skeeter144.toc.client.gui.SmeltingGui;
+import java.util.function.Supplier;
 
-public class ItemCraftedMessage implements IMessage{
+import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.fml.network.NetworkEvent;
 
-	public ItemCraftedMessage() {}
-	public void toBytes(ByteBuf buf) {}
-	public void fromBytes(ByteBuf buf) {}
-	
-	public static class ItemCraftedMessageHandler implements IMessageHandler<ItemCraftedMessage, IMessage>{
-		public IMessage onMessage(ItemCraftedMessage message, MessageContext ctx) {
-			Minecraft.getInstance().addScheduledTask(new Runnable() {
-				public void run() {
-					GuiScreen screen = Minecraft.getInstance().currentScreen;;
-					if(screen instanceof SmeltingGui)
-						((SmeltingGui)screen).incrementCrafted();
-				}
-			});
-			return null;
-		}
+public class ItemCraftedMessage{
+	public static void encode(ItemCraftedMessage pkt, PacketBuffer buf) {}
+	public static ItemCraftedMessage decode(PacketBuffer buf) {return null;}
+	public static class Handler
+	{
+		public static void handle(final ItemCraftedMessage message, Supplier<NetworkEvent.Context> ctx){}
 	}
+	
+//	public ItemCraftedMessage() {}
+//	public void toBytes(ByteBuf buf) {}
+//	public void fromBytes(ByteBuf buf) {}
+//	
+//	public static class ItemCraftedMessageHandlerHandler<ItemCraftedMessage, IMessage>{
+//		public IMessage onMessage(ItemCraftedMessage message, MessageContext ctx) {
+//			Minecraft.getInstance().addScheduledTask(new Runnable() {
+//				public void run() {
+//					GuiScreen screen = Minecraft.getInstance().currentScreen;;
+//					if(screen instanceof SmeltingGui)
+//						((SmeltingGui)screen).incrementCrafted();
+//				}
+//			});
+//			return null;
+//		}
+//	}
 }

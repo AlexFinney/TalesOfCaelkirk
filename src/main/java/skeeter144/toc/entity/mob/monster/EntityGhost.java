@@ -27,7 +27,7 @@ import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.entity.mob.monster.EntityGhost.AIGhostDiveAttack.DiveStage;
 import skeeter144.toc.network.Network;
-import skeeter144.toc.network.SpawnParticlesMessage;
+import skeeter144.toc.network.SpawnParticlesPKT;
 import skeeter144.toc.particles.system.ParticleSystem;
 import skeeter144.toc.sounds.Sounds;
 
@@ -298,7 +298,7 @@ public class EntityGhost extends CustomMob{
 		}
 		
 		void spawnTeleportParticles(BlockPos pos) {
-			Network.INSTANCE.sendToAllAround(new SpawnParticlesMessage(ParticleSystem.GHOST_TELEPORT_SYSTEM,
+			Network.INSTANCE.sendToAllAround(new SpawnParticlesPKT(ParticleSystem.GHOST_TELEPORT_SYSTEM,
 																	   new BlockPos(pos.getX() + .5f, pos.getY() + 1.5f, pos.getZ() + .5f)),
 											 ghost.world.getChunk(pos));
 		}

@@ -1,30 +1,35 @@
 package skeeter144.toc.network;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import skeeter144.toc.client.gui.SmeltingGui;
+import java.util.function.Supplier;
 
-public class ItemCraftingQueueAddedMessage implements IMessage{
+import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.fml.network.NetworkEvent;
 
-	public ItemCraftingQueueAddedMessage() {}
-	public void fromBytes(ByteBuf buf) {}
-	public void toBytes(ByteBuf buf) {}
-	
-	public static class ItemCraftingQueueAddedMessageHandler implements IMessageHandler<ItemCraftingQueueAddedMessage, IMessage>{
-		public IMessage onMessage(ItemCraftingQueueAddedMessage message, MessageContext ctx) {
-			Minecraft.getInstance().addScheduledTask(new Runnable() {
-				public void run() {
-					if(Minecraft.getInstance().currentScreen instanceof SmeltingGui) {
-						((SmeltingGui)Minecraft.getInstance().currentScreen).incrementTotalCrafted();
-					}
-				}
-			});
-			return null;
-		}
-		
+public class ItemCraftingQueueAddedMessage{
+
+	public static void encode(ItemCraftingQueueAddedMessage pkt, PacketBuffer buf) {}
+	public static ItemCraftingQueueAddedMessage decode(PacketBuffer buf) {return null;}
+	public static class Handler
+	{
+		public static void handle(final ItemCraftingQueueAddedMessage message, Supplier<NetworkEvent.Context> ctx){}
 	}
+	
+//	public ItemCraftingQueueAddedMessage() {}
+//	public void fromBytes(ByteBuf buf) {}
+//	public void toBytes(ByteBuf buf) {}
+//	
+//	public static class ItemCraftingQueueAddedMessageHandlerHandler<ItemCraftingQueueAddedMessage, IMessage>{
+//		public IMessage onMessage(ItemCraftingQueueAddedMessage message, MessageContext ctx) {
+//			Minecraft.getInstance().addScheduledTask(new Runnable() {
+//				public void run() {
+//					if(Minecraft.getInstance().currentScreen instanceof SmeltingGui) {
+//						((SmeltingGui)Minecraft.getInstance().currentScreen).incrementTotalCrafted();
+//					}
+//				}
+//			});
+//			return null;
+//		}
+//		
+//	}
 	
 }

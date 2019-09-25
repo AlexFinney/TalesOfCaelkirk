@@ -21,7 +21,7 @@ import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.items.tools.TOCPickaxe;
 import skeeter144.toc.network.AddLevelXpMessage;
 import skeeter144.toc.network.Network;
-import skeeter144.toc.network.SpawnParticlesMessage;
+import skeeter144.toc.network.SpawnParticlesPKT;
 import skeeter144.toc.particles.system.ParticleSystem;
 import skeeter144.toc.player.EntityLevels.Levels;
 import skeeter144.toc.sounds.Sounds;
@@ -53,11 +53,11 @@ public class BlockHarvestableOre extends CustomBlock{
 		if(world.isRemote)
 			return;
 		
-		 Network.INSTANCE.sendToAll(new SpawnParticlesMessage(ParticleSystem.ORE_MINING_PARTICLE_SYSTEM, pos));
+		 Network.INSTANCE.sendToAll(new SpawnParticlesPKT(ParticleSystem.ORE_MINING_PARTICLE_SYSTEM, pos));
 		
 		float chance = ((TOCPickaxe)player.getHeldItemMainhand().getItem()).getMineChanceForOre(this);
 		if(TOCMain.rand.nextFloat() < chance) {
-			 Network.INSTANCE.sendToAll(new SpawnParticlesMessage(ParticleSystem.ORE_BROKEN_PARTICLE_SYSTEM, pos));
+			 Network.INSTANCE.sendToAll(new SpawnParticlesPKT(ParticleSystem.ORE_BROKEN_PARTICLE_SYSTEM, pos));
 			 
 				if(player.inventory.getFirstEmptyStack() == -1) {
 					player.sendMessage(new TextComponentString("Your inventory is too full to hold any more ore!"));

@@ -75,8 +75,8 @@ import skeeter144.toc.network.ShowEntityDialogMessage;
 import skeeter144.toc.network.ShowEntityDialogMessage.ShowQuestDialogMessageHandler;
 import skeeter144.toc.network.SpawnBlockedMessage;
 import skeeter144.toc.network.SpawnBlockedMessage.SpawnBlockedMessageHandler;
-import skeeter144.toc.network.SpawnParticlesMessage;
-import skeeter144.toc.network.SpawnParticlesMessage.SpawnParticlesMessageHandler;
+import skeeter144.toc.network.SpawnParticlesPKT;
+import skeeter144.toc.network.SpawnParticlesPKT.SpawnParticlesMessageHandler;
 import skeeter144.toc.network.SpecialAttackCooldownMessage;
 import skeeter144.toc.network.SpecialAttackCooldownMessage.SpecialAttackCooldownMessageHandler;
 import skeeter144.toc.network.UpdatePlayerFlyingMessage;
@@ -123,7 +123,7 @@ public class CommonProxy
 		
 		Network.INSTANCE.registerMessage(PlayerVitalsUpdateMessageHandler.class, PlayerVitalsUpdateMessage.class, Network.getNextId(), Side.CLIENT);
 		Network.INSTANCE.registerMessage(SetClientTOCPlayerMessageHandler.class, SetClientTOCPlayerMessage.class, Network.getNextId(), Side.CLIENT);
-		Network.INSTANCE.registerMessage(SpawnParticlesMessageHandler.class, SpawnParticlesMessage.class, Network.getNextId(), Side.CLIENT);
+		Network.INSTANCE.registerMessage(SpawnParticlesMessageHandler.class, SpawnParticlesPKT.class, Network.getNextId(), Side.CLIENT);
 		Network.INSTANCE.registerMessage(HealthManaRegenUpdateHandler.class, HealthManaRegenUpdateMessage.class, Network.getNextId(), Side.CLIENT);
 		Network.INSTANCE.registerMessage(SpecialAttackCooldownMessageHandler.class, SpecialAttackCooldownMessage.class, Network.getNextId(), Side.CLIENT);
 		Network.INSTANCE.registerMessage(UpdateLevelXpMessageHandler.class, AddLevelXpMessage.class, Network.getNextId(), Side.CLIENT);

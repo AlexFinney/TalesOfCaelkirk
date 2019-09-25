@@ -35,7 +35,7 @@ import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.items.tools.TOCAxe;
 import skeeter144.toc.network.AddLevelXpMessage;
 import skeeter144.toc.network.Network;
-import skeeter144.toc.network.SpawnParticlesMessage;
+import skeeter144.toc.network.SpawnParticlesPKT;
 import skeeter144.toc.particles.system.ParticleSystem;
 import skeeter144.toc.player.EntityLevels.Levels;
 import skeeter144.toc.skills.Woodcutting;
@@ -142,7 +142,7 @@ public class PlayerInteractHandler {
 		float pitchOffset = TOCMain.rand.nextFloat() / .3f - .15f;
 		world.playSound(null, pos, SoundEvents.BLOCK_WOOD_HIT, SoundCategory.MASTER, 1, 1 + pitchOffset);
 
-		Network.INSTANCE.sendToAll(new SpawnParticlesMessage(ParticleSystem.ORE_MINING_PARTICLE_SYSTEM, pos.getX(), pos.getY(), pos.getZ()));
+		Network.INSTANCE.sendToAll(new SpawnParticlesPKT(ParticleSystem.ORE_MINING_PARTICLE_SYSTEM, pos.getX(), pos.getY(), pos.getZ()));
 		
 		BlockLog log = (BlockLog) world.getBlockState(pos).getBlock();
 
