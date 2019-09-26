@@ -12,14 +12,14 @@ public class HealthManaRegenUpdateMessage {
 	{
 		public static void handle(final HealthManaRegenUpdateMessage message, Supplier<NetworkEvent.Context> ctx){}
 	}
-//	
-//	public HealthManaRegenUpdateMessage() {}
-//	
-//	float mana, health;
-//	public HealthManaRegenUpdateMessage(float health, float mana) {
-//	this.health = health;
-//	this.mana = mana;
-//	}
+	
+	public HealthManaRegenUpdateMessage() {}
+	
+	float mana, health;
+	public HealthManaRegenUpdateMessage(float health, float mana) {
+	this.health = health;
+	this.mana = mana;
+	}
 //	
 //	@Override
 //	public void fromBytes(ByteBuf buf) {

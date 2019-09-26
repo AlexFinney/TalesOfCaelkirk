@@ -1,7 +1,5 @@
 package skeeter144.toc.network;
 
-import java.util.function.Supplier;
-
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.chunk.Chunk;

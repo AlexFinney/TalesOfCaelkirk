@@ -1,10 +1,5 @@
 package skeeter144.toc.util;
 
-import mapwriter.Mw;
-import mapwriter.config.WorldConfig;
-import mapwriter.map.IconMarker;
-import mapwriter.map.Marker;
-import mapwriter.map.MarkerManager;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -44,16 +39,16 @@ public class TOCUtils {
 	}
 	
 	public static void removeIconMarkerFromMap(String name, BlockPos pos, int dim) {
-		if(!Mw.getInstance().markerManager.delMarker(name, "all")) {
-			Marker toDelete = null;
-			for(Marker m : Mw.getInstance().markerManager.markerList) {
-				if(m.x == pos.getX() && m.z == pos.getZ()) {
-					toDelete = m;
-					break;
-				}
-			}
-			Mw.getInstance().markerManager.delMarker(toDelete);
-		}
+//		if(!Mw.getInstance().markerManager.delMarker(name, "all")) {
+//			Marker toDelete = null;
+//			for(Marker m : Mw.getInstance().markerManager.markerList) {
+//				if(m.x == pos.getX() && m.z == pos.getZ()) {
+//					toDelete = m;
+//					break;
+//				}
+//			}
+//			Mw.getInstance().markerManager.delMarker(toDelete);
+//		}
 	//	Mw.getInstance().markerManager.save(WorldConfig.getInstance().worldConfiguration, mapwriter.util.Reference.catMarkers);	
 	//	Mw.getInstance().markerManager.update();
 	}

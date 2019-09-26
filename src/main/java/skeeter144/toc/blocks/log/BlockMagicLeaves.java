@@ -17,8 +17,8 @@ public class BlockMagicLeaves extends CustomBlockLeaves{
 	public void tick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 		if(worldIn.rand.nextInt(5) != 0)
 			return;
-		
-		TOCMain.proxy.magicLeavesParticle(stateIn, worldIn, pos, rand);
+		//TODO
+		//TOCMain.proxy.magicLeavesParticle(stateIn, worldIn, pos, rand);
 	}
 
 }

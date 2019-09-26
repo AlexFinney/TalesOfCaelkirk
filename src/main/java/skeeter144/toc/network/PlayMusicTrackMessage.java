@@ -14,11 +14,11 @@ public class PlayMusicTrackMessage{
 		public static void handle(final PlayMusicTrackMessage message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
-//	int id;
-//	public PlayMusicTrackMessage() {}
-//	public PlayMusicTrackMessage(int id) {
-//		this.id = id;
-//	}
+	int id;
+	public PlayMusicTrackMessage() {}
+	public PlayMusicTrackMessage(int id) {
+		this.id = id;
+	}
 //	
 //	@Override
 //	public void fromBytes(ByteBuf buf) {

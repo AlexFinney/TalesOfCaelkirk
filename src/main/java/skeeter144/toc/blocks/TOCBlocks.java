@@ -3,25 +3,16 @@ package skeeter144.toc.blocks;
 import java.lang.reflect.Field;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.Block.Properties;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.ForgeRegistries;
-import skeeter144.toc.blocks.log.BlockMagicLeaves;
-import skeeter144.toc.blocks.log.CustomBlockLeaves;
-import skeeter144.toc.blocks.log.CustomBlockLog;
 import skeeter144.toc.entity.tile.TileEntityAnvil;
 import skeeter144.toc.entity.tile.TileEntityHarvestedOre;
 import skeeter144.toc.entity.tile.TileEntityHarvestedTree;
 import skeeter144.toc.entity.tile.TileEntityMobSpawner;
-import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.util.Reference;
 
 public class TOCBlocks {

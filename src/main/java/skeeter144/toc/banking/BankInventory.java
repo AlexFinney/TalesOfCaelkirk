@@ -10,7 +10,6 @@ import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 
 public class BankInventory extends InventoryBasic{
 

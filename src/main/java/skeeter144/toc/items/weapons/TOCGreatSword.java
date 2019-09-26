@@ -18,7 +18,6 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
@@ -27,8 +26,6 @@ import net.minecraft.world.World;
 import skeeter144.toc.combat.CombatManager;
 import skeeter144.toc.combat.CombatManager.DamageType;
 import skeeter144.toc.combat.TOCDamageSource;
-import skeeter144.toc.items.TOCItems;
-import skeeter144.toc.util.Reference;
 import skeeter144.toc.util.Util;
 
 public class TOCGreatSword extends ItemSword implements ISpecialAttackWeapon{

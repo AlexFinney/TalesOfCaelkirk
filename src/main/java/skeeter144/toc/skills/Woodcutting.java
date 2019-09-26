@@ -6,9 +6,6 @@ import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
-import net.minecraft.block.BlockNewLog;
-import net.minecraft.block.BlockOldLog;
-import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
@@ -28,82 +25,82 @@ public class Woodcutting {
 	
 	public static void init() {
 		
-		treeLevelRequirements.put((CustomBlockLog) TOCBlocks.oak_log,     1);
-		treeLevelRequirements.put((CustomBlockLog) TOCBlocks.birch_log,  15);
-		treeLevelRequirements.put((CustomBlockLog) TOCBlocks.maple_log,  30);
-		treeLevelRequirements.put((CustomBlockLog) TOCBlocks.yew_log,    45);
-		treeLevelRequirements.put((CustomBlockLog) TOCBlocks.orc_log,    60);
-		treeLevelRequirements.put((CustomBlockLog) TOCBlocks.magic_log,  75);
-		
-		
-		HashMap<TOCAxe, Float> oak_harvest_chances = new HashMap<TOCAxe, Float>();
-		oak_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, .2f);
-		oak_harvest_chances.put((TOCAxe) TOCItems.axe_iron, .25f);
-		oak_harvest_chances.put((TOCAxe) TOCItems.axe_steel, .35f);
-		oak_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, .45f);
-		oak_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .55f);
-		oak_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .65f);
-		oak_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .75f);
-		
-		HashMap<TOCAxe, Float> birch_harvest_chances = new HashMap<TOCAxe, Float>();
-		birch_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, 0f);
-		birch_harvest_chances.put((TOCAxe) TOCItems.axe_iron, .15f);
-		birch_harvest_chances.put((TOCAxe) TOCItems.axe_steel, .2f);
-		birch_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, .3f);
-		birch_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .4f);
-		birch_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .5f);
-		birch_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .6f);
-		
-		HashMap<TOCAxe, Float> maple_harvest_chances = new HashMap<TOCAxe, Float>();
-		maple_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, 0f);
-		maple_harvest_chances.put((TOCAxe) TOCItems.axe_iron, 0f);
-		maple_harvest_chances.put((TOCAxe) TOCItems.axe_steel, 0f);
-		maple_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, .17f);
-		maple_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .24f);
-		maple_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .31f);
-		maple_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .38f);
-		
-		HashMap<TOCAxe, Float> yew_harvest_chances = new HashMap<TOCAxe, Float>();
-		yew_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, 0f);
-		yew_harvest_chances.put((TOCAxe) TOCItems.axe_iron, 0f);
-		yew_harvest_chances.put((TOCAxe) TOCItems.axe_steel, 0f);
-		yew_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, .1f);
-		yew_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .18f);
-		yew_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .25f);
-		yew_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .35f);
-		
-		
-		HashMap<TOCAxe, Float>  orc_harvest_chances = new HashMap<TOCAxe, Float>();
-		orc_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, 0f);
-		orc_harvest_chances.put((TOCAxe) TOCItems.axe_iron, 0f);
-		orc_harvest_chances.put((TOCAxe) TOCItems.axe_steel, 0f);
-		orc_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, 0f);
-		orc_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .0f);
-		orc_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .1f);
-		orc_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .2f);
-		
-		HashMap<TOCAxe, Float>  magic_harvest_chances = new HashMap<TOCAxe, Float>();
-		magic_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, 0f);
-		magic_harvest_chances.put((TOCAxe) TOCItems.axe_iron, 0f);
-		magic_harvest_chances.put((TOCAxe) TOCItems.axe_steel, 0f);
-		magic_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, 0f);
-		magic_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .0f);
-		magic_harvest_chances.put((TOCAxe) TOCItems.axe_runite, 0f);
-		magic_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .1f);
-		
-		logHarvestChances.put((CustomBlockLog) TOCBlocks.oak_log, oak_harvest_chances);
-		logHarvestChances.put((CustomBlockLog) TOCBlocks.birch_log, birch_harvest_chances);
-		logHarvestChances.put((CustomBlockLog) TOCBlocks.maple_log, maple_harvest_chances);
-		logHarvestChances.put((CustomBlockLog) TOCBlocks.yew_log, yew_harvest_chances);
-		logHarvestChances.put((CustomBlockLog) TOCBlocks.magic_log, magic_harvest_chances);
-		logHarvestChances.put((CustomBlockLog) TOCBlocks.orc_log, orc_harvest_chances);
-
-		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.oak_log, .3f);
-		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.birch_log, .25f);
-		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.maple_log, .2f);
-		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.yew_log, .15f);
-		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.orc_log, .13f);
-		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.magic_log, .1f);
+//		treeLevelRequirements.put((CustomBlockLog) TOCBlocks.oak_log,     1);
+//		treeLevelRequirements.put((CustomBlockLog) TOCBlocks.birch_log,  15);
+//		treeLevelRequirements.put((CustomBlockLog) TOCBlocks.maple_log,  30);
+//		treeLevelRequirements.put((CustomBlockLog) TOCBlocks.yew_log,    45);
+//		treeLevelRequirements.put((CustomBlockLog) TOCBlocks.orc_log,    60);
+//		treeLevelRequirements.put((CustomBlockLog) TOCBlocks.magic_log,  75);
+//		
+//		
+//		HashMap<TOCAxe, Float> oak_harvest_chances = new HashMap<TOCAxe, Float>();
+//		oak_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, .2f);
+//		oak_harvest_chances.put((TOCAxe) TOCItems.axe_iron, .25f);
+//		oak_harvest_chances.put((TOCAxe) TOCItems.axe_steel, .35f);
+//		oak_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, .45f);
+//		oak_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .55f);
+//		oak_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .65f);
+//		oak_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .75f);
+//		
+//		HashMap<TOCAxe, Float> birch_harvest_chances = new HashMap<TOCAxe, Float>();
+//		birch_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, 0f);
+//		birch_harvest_chances.put((TOCAxe) TOCItems.axe_iron, .15f);
+//		birch_harvest_chances.put((TOCAxe) TOCItems.axe_steel, .2f);
+//		birch_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, .3f);
+//		birch_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .4f);
+//		birch_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .5f);
+//		birch_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .6f);
+//		
+//		HashMap<TOCAxe, Float> maple_harvest_chances = new HashMap<TOCAxe, Float>();
+//		maple_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, 0f);
+//		maple_harvest_chances.put((TOCAxe) TOCItems.axe_iron, 0f);
+//		maple_harvest_chances.put((TOCAxe) TOCItems.axe_steel, 0f);
+//		maple_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, .17f);
+//		maple_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .24f);
+//		maple_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .31f);
+//		maple_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .38f);
+//		
+//		HashMap<TOCAxe, Float> yew_harvest_chances = new HashMap<TOCAxe, Float>();
+//		yew_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, 0f);
+//		yew_harvest_chances.put((TOCAxe) TOCItems.axe_iron, 0f);
+//		yew_harvest_chances.put((TOCAxe) TOCItems.axe_steel, 0f);
+//		yew_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, .1f);
+//		yew_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .18f);
+//		yew_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .25f);
+//		yew_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .35f);
+//		
+//		
+//		HashMap<TOCAxe, Float>  orc_harvest_chances = new HashMap<TOCAxe, Float>();
+//		orc_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, 0f);
+//		orc_harvest_chances.put((TOCAxe) TOCItems.axe_iron, 0f);
+//		orc_harvest_chances.put((TOCAxe) TOCItems.axe_steel, 0f);
+//		orc_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, 0f);
+//		orc_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .0f);
+//		orc_harvest_chances.put((TOCAxe) TOCItems.axe_runite, .1f);
+//		orc_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .2f);
+//		
+//		HashMap<TOCAxe, Float>  magic_harvest_chances = new HashMap<TOCAxe, Float>();
+//		magic_harvest_chances.put((TOCAxe) TOCItems.axe_bronze, 0f);
+//		magic_harvest_chances.put((TOCAxe) TOCItems.axe_iron, 0f);
+//		magic_harvest_chances.put((TOCAxe) TOCItems.axe_steel, 0f);
+//		magic_harvest_chances.put((TOCAxe) TOCItems.axe_mithril, 0f);
+//		magic_harvest_chances.put((TOCAxe) TOCItems.axe_adamantite, .0f);
+//		magic_harvest_chances.put((TOCAxe) TOCItems.axe_runite, 0f);
+//		magic_harvest_chances.put((TOCAxe) TOCItems.axe_dragonstone, .1f);
+//		
+//		logHarvestChances.put((CustomBlockLog) TOCBlocks.oak_log, oak_harvest_chances);
+//		logHarvestChances.put((CustomBlockLog) TOCBlocks.birch_log, birch_harvest_chances);
+//		logHarvestChances.put((CustomBlockLog) TOCBlocks.maple_log, maple_harvest_chances);
+//		logHarvestChances.put((CustomBlockLog) TOCBlocks.yew_log, yew_harvest_chances);
+//		logHarvestChances.put((CustomBlockLog) TOCBlocks.magic_log, magic_harvest_chances);
+//		logHarvestChances.put((CustomBlockLog) TOCBlocks.orc_log, orc_harvest_chances);
+//
+//		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.oak_log, .3f);
+//		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.birch_log, .25f);
+//		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.maple_log, .2f);
+//		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.yew_log, .15f);
+//		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.orc_log, .13f);
+//		treeDestroyChancesPerHarvest.put((CustomBlockLog) TOCBlocks.magic_log, .1f);
 	}
 	
 	public static float getChopChanceForWood(TOCAxe axe, IBlockState wood) {

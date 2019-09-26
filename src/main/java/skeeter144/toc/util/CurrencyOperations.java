@@ -69,12 +69,13 @@ public class CurrencyOperations {
 		plItems.addAll(pl.inventory.offHandInventory);
 		
 		for(ItemStack is : plItems) {
-			if(is.getItem().equals(TOCItems.gold_coin))
-				plG += is.getCount();
-			if(is.getItem().equals(TOCItems.silver_coin))
-				plS += is.getCount();
-			if(is.getItem().equals(TOCItems.copper_coin))
-				plC += is.getCount();
+			//TODO
+//			if(is.getItem().equals(TOCItems.gold_coin))
+//				plG += is.getCount();
+//			if(is.getItem().equals(TOCItems.silver_coin))
+//				plS += is.getCount();
+//			if(is.getItem().equals(TOCItems.copper_coin))
+//				plC += is.getCount();
 		}
 		
 		int playerTotal = plG * 2500 + plS * 50 + plC;
@@ -91,17 +92,17 @@ public class CurrencyOperations {
 		plItems.addAll(pl.inventory.mainInventory);
 		plItems.addAll(pl.inventory.offHandInventory);
 		for(ItemStack is : plItems) {
-			if(is.getItem().equals(TOCItems.gold_coin) || is.getItem().equals(TOCItems.silver_coin) || is.getItem().equals(TOCItems.copper_coin))
-				plCoins.add(is);
+//			if(is.getItem().equals(TOCItems.gold_coin) || is.getItem().equals(TOCItems.silver_coin) || is.getItem().equals(TOCItems.copper_coin))
+//				plCoins.add(is);
 		}
 		
 		for(ItemStack is : plCoins) {
-			if(is.getItem().equals(TOCItems.gold_coin))
-				plG += is.getCount();
-			if(is.getItem().equals(TOCItems.silver_coin))
-				plS += is.getCount();
-			if(is.getItem().equals(TOCItems.copper_coin))
-				plC += is.getCount();
+//			if(is.getItem().equals(TOCItems.gold_coin))
+//				plG += is.getCount();
+//			if(is.getItem().equals(TOCItems.silver_coin))
+//				plS += is.getCount();
+//			if(is.getItem().equals(TOCItems.copper_coin))
+//				plC += is.getCount();
 			is.setCount(0);
 		}
 		

@@ -6,11 +6,7 @@ import java.util.Map;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPickaxe;
-import net.minecraft.util.ResourceLocation;
 import skeeter144.toc.blocks.BlockHarvestableOre;
-import skeeter144.toc.blocks.TOCBlocks;
-import skeeter144.toc.items.TOCItems;
-import skeeter144.toc.util.Reference;
 
 public class TOCPickaxe extends ItemPickaxe{
 

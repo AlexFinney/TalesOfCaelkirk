@@ -7,10 +7,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import skeeter144.toc.TOCMain;
 
 public class Events {
-
+//TODO
 	@SubscribeEvent
 	public void displayDamage(LivingUpdateEvent event) {
-		TOCMain.proxy.displayDamageDealt(event.getEntityLiving());
+		//TOCMain.proxy.displayDamageDealt(event.getEntityLiving());
 	}
 
 	@SubscribeEvent
@@ -18,7 +18,7 @@ public class Events {
 		if (event.getType() != ElementType.CHAT) {
 			return;
 		}
-		TOCMain.proxy.setEntityInCrosshairs();
+		//TOCMain.proxy.setEntityInCrosshairs();
 	}
 	
 }

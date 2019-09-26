@@ -14,13 +14,13 @@ public class PlayerVitalsUpdateMessage {
 		public static void handle(final OpenShopGuiMessage message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
-//	public PlayerVitalsUpdateMessage() {}
-//	
-//	int health, mana;
-//	public PlayerVitalsUpdateMessage(int health, int mana) {
-//		this.health = health;
-//		this.mana = mana;
-//	}
+	public PlayerVitalsUpdateMessage() {}
+	
+	int health, mana;
+	public PlayerVitalsUpdateMessage(int health, int mana) {
+		this.health = health;
+		this.mana = mana;
+	}
 //	
 //	@Override
 //	public void toBytes(ByteBuf buf) {

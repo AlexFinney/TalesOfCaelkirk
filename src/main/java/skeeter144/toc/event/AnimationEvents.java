@@ -1,13 +1,7 @@
 package skeeter144.toc.event;
 
-import java.awt.geom.Rectangle2D;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.Vec3d;
-import skeeter144.toc.combat.CombatManager.DamageType;
-import skeeter144.toc.combat.TOCDamageSource;
 import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.entityeffect.ServerEffectHandler;
 import skeeter144.toc.entityeffect.effects.PoisonEffect;

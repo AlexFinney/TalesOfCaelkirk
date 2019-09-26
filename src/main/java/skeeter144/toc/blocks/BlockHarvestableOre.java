@@ -1,7 +1,6 @@
 package skeeter144.toc.blocks;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.block.material.Material;
@@ -17,7 +16,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BlockEvent;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.tile.TileEntityHarvestedOre;
-import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.items.tools.TOCPickaxe;
 import skeeter144.toc.player.EntityLevels.Levels;
 import skeeter144.toc.sounds.Sounds;

@@ -2,7 +2,6 @@ package skeeter144.toc.entityeffect.effects;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.network.NetworkRegistry;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.SpawnParticlesPKT;

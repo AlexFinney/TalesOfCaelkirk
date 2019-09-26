@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import skeeter144.toc.util.Reference;
 
 public class Sounds {

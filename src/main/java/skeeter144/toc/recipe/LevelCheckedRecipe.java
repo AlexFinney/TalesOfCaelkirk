@@ -1,6 +1,5 @@
 package skeeter144.toc.recipe;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,22 +7,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ContainerPlayer;
-import net.minecraft.inventory.ContainerWorkbench;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
-import skeeter144.toc.TOCMain;
-import skeeter144.toc.player.EntityLevels.Levels;
 import skeeter144.toc.util.Reference;
 
 public class LevelCheckedRecipe implements IRecipe {
@@ -42,8 +35,6 @@ public class LevelCheckedRecipe implements IRecipe {
 		this.output = output;
 		this.levelReq = levelRequired;
 		this.xpGiven = xpGiven;
-		this.setRegistryName(new ResourceLocation(Reference.MODID,
-				output.getItem().getRegistryName().toString()));
 	}
 
 	
@@ -61,8 +52,6 @@ public class LevelCheckedRecipe implements IRecipe {
 		this.output = output;
 		this.levelReq = levelRequired;
 		this.xpGiven = xpGiven;
-		this.setRegistryName(new ResourceLocation(Reference.MODID,
-				output.getItem().getRegistryName().toString()));
 		System.out.println();
 	}
 
@@ -96,31 +85,6 @@ public class LevelCheckedRecipe implements IRecipe {
 		return items;
 	}
 
-	@Override
-	public IRecipe setRegistryName(ResourceLocation name) {
-		this.registryName = name;
-		return this;
-	}
-
-	@Override
-	public ResourceLocation getRegistryName() {
-		return registryName;
-	}
-
-	@Override
-	public Class<IRecipe> getRegistryType() {
-		return null;
-	}
-
-	@Override
-	public boolean matches(InventoryCrafting inv, World worldIn) {
-		return playerMeetsLevelReq(inv) && itemPatternMatches(inv);
-	}
-
-	@Override
-	public ItemStack getCraftingResult(InventoryCrafting inv) {
-		return new ItemStack(output.getItem(), output.getCount());
-	}
 
 	@Override
 	public boolean canFit(int width, int height) {
@@ -128,7 +92,7 @@ public class LevelCheckedRecipe implements IRecipe {
 	}
 
 	
-	boolean playerMeetsLevelReq(InventoryCrafting inv) {
+	boolean playerMeetsLevelReq(IInventory inv) {
 		//TODO: Make this work with released code
 		
 		
@@ -145,7 +109,7 @@ public class LevelCheckedRecipe implements IRecipe {
 	}
 
 	
-	boolean itemPatternMatches(InventoryCrafting inv) {
+	boolean itemPatternMatches(IInventory inv) {
 		if(shapeless)
 			return itemPatternMatchesShapeless(inv);
 		else 
@@ -153,7 +117,7 @@ public class LevelCheckedRecipe implements IRecipe {
 	}
 	
 	
-	boolean itemPatternMatchesShapeless(InventoryCrafting inv) {
+	boolean itemPatternMatchesShapeless(IInventory inv) {
 		List<Item> stacksInInv = new ArrayList<Item>(); 
 		
 		for(int i = 0; i < inv.getSizeInventory(); ++i) {
@@ -169,7 +133,7 @@ public class LevelCheckedRecipe implements IRecipe {
 		return invSet.equals(shapelessInput);
 	}
 	
-	boolean itemPatternMatchesShaped(InventoryCrafting inv) {
+	boolean itemPatternMatchesShaped(IInventory inv) {
 		
 		int firstItemIndex = -1, lastItemIndex = -1, counter = 0;
 		for(Item item : shapedInput) {
@@ -215,9 +179,37 @@ public class LevelCheckedRecipe implements IRecipe {
 	}
 	
 	*/
+	
+
 	@Override
 	public ItemStack getRecipeOutput() {
-		return output;
+		return new ItemStack(output.getItem(), output.getCount());
+	}
+
+	@Override
+	public boolean matches(IInventory inv, World worldIn) {
+		return playerMeetsLevelReq(inv) && itemPatternMatches(inv);
+	}
+
+
+	@Override
+	public ItemStack getCraftingResult(IInventory inv) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ResourceLocation getId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public IRecipeSerializer<?> getSerializer() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

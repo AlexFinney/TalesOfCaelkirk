@@ -8,17 +8,11 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
-import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.AI.EntityAICrazyRunIdle;
 import skeeter144.toc.entity.mob.CustomMob;
-import skeeter144.toc.handlers.PlayerInventoryHandler.ItemAddedToInventoryEvent;
-import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.sounds.Sounds;
 import skeeter144.toc.util.Util;
 

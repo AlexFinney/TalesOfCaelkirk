@@ -22,12 +22,12 @@ public class PunishUndeadTrailParticle extends Particle{
 	}
 
 	@Override
-	public void onUpdate() {
+	public void tick() {
 		this.prevPosX = this.posX;
 	    this.prevPosY = this.posY;
 	    this.prevPosZ = this.posZ;
 
-	     if (this.particleAge++ >= this.particleMaxAge)
+	     if (this.age++ >= this.maxAge)
 	     {
 	    	 this.setExpired();
 	     }

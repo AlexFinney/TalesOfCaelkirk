@@ -3,10 +3,7 @@ package skeeter144.toc.particles.system;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.vecmath.Vector3d;
-
 import net.minecraft.client.Minecraft;
-import skeeter144.toc.particles.particle.OrbitingEffectParticle;
 import skeeter144.toc.particles.particle.BasicSpellTrailParticle;
 
 public class TornadoSpellTrail extends ParticleSystem{
@@ -22,7 +19,7 @@ public class TornadoSpellTrail extends ParticleSystem{
 	public void spawnParticles() {
 		for(int i = 0; i < 3; ++i) {
 			BasicSpellTrailParticle stp = new BasicSpellTrailParticle(world, posX, posY, posZ, 3, 0x9F9F9F, .3f, false);
-			Minecraft.getInstance().effectRenderer.addEffect(stp);
+			Minecraft.getInstance().particles.addEffect(stp);
 		}
 	}
 }

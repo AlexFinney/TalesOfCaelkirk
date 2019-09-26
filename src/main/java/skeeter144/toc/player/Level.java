@@ -3,7 +3,6 @@ package skeeter144.toc.player;
 import java.io.Serializable;
 
 import net.minecraft.item.ItemBook;
-import net.minecraft.util.ResourceLocation;
 
 public class Level implements Serializable{
 	int curXp = 0;

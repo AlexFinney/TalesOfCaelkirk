@@ -1,7 +1,6 @@
 package skeeter144.toc.handlers;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -22,18 +21,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.event.world.BlockEvent.EntityPlaceEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import skeeter144.toc.TOCMain;
-import skeeter144.toc.blocks.BlockHarvestableOre;
-import skeeter144.toc.blocks.TOCBlocks;
 import skeeter144.toc.blocks.log.CustomBlockLog;
-import skeeter144.toc.client.gui.Guis;
 import skeeter144.toc.entity.tile.TileEntityAnvil;
 import skeeter144.toc.entity.tile.TileEntityHarvestedTree;
 import skeeter144.toc.handlers.PlayerInventoryHandler.ItemAddedToInventoryEvent;
-import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.items.tools.TOCAxe;
 import skeeter144.toc.network.AddLevelXpMessage;
 import skeeter144.toc.network.Network;
@@ -82,7 +75,7 @@ public class PlayerInteractHandler {
 			public void tick(int worldTick) {
 				p.swingProgress = 0;
 				p.isSwingInProgress = false;
-				TOCMain.proxy.cancelSwing();
+				//TOCMain.proxy.cancelSwing();
 			}
 		});
 	}

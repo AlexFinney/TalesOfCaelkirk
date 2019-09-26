@@ -6,7 +6,6 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.util.math.Vec3d;
-import skeeter144.toc.particles.particle.BasicSpellTrailParticle;
 import skeeter144.toc.particles.particle.PunishUndeadTrailParticle;
 
 public class PunishUndeadSystem extends ParticleSystem {
@@ -25,14 +24,14 @@ public class PunishUndeadSystem extends ParticleSystem {
 			float spacing = .08f * i;
 			PunishUndeadTrailParticle particle = new PunishUndeadTrailParticle(world, pos.x + relRight.x * spacing, pos.y + .07f, pos.z + relRight.z * spacing, forwardVec);
 			crossParticles.add(particle);
-			Minecraft.getInstance().effectRenderer.addEffect(particle);
+			Minecraft.getInstance().particles.addEffect(particle);
 		}
 		
 		for(int i = -6; i < 5; ++i) {
 			float spacing = .05f * i;
 			PunishUndeadTrailParticle particle = new PunishUndeadTrailParticle(world, pos.x, pos.y + relUp.y * spacing, pos.z, forwardVec);
 			crossParticles.add(particle);
-			Minecraft.getInstance().effectRenderer.addEffect(particle);
+			Minecraft.getInstance().particles.addEffect(particle);
 		}
 	}
 	

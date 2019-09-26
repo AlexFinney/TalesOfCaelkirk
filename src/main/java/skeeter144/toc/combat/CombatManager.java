@@ -5,8 +5,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.registry.IRegistry;
-import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.TOCEntities;
 import skeeter144.toc.entity.mob.CustomMob;

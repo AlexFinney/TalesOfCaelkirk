@@ -3,17 +3,12 @@ package skeeter144.toc.magic;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.AbstractSkeleton;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntityWitherSkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.monster.EntityZombieVillager;
-import net.minecraft.entity.passive.EntitySkeletonHorse;
 import net.minecraft.entity.passive.EntityZombieHorse;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.RayTraceResult;
-import skeeter144.toc.combat.TOCDamageSource;
 import skeeter144.toc.combat.CombatManager.DamageType;
+import skeeter144.toc.combat.TOCDamageSource;
 import skeeter144.toc.entity.projectile.EntityWandProjectile;
 
 public class PunishUndeadSpell extends ShootableSpell {

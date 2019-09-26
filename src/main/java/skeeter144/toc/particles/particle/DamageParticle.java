@@ -1,18 +1,17 @@
 package skeeter144.toc.particles.particle;
 
 
-import net.minecraft.client.renderer.BufferBuilder;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class DamageParticle extends Particle {
@@ -34,7 +33,7 @@ public class DamageParticle extends Particle {
 		particleTextureJitterY = 0.0F;
 		particleGravity = GRAVITY;
 		particleScale = SIZE;
-		particleMaxAge = LIFESPAN;
+		maxAge = LIFESPAN;
 		this.damage = damage;
 		this.text = (damage);
 	}
@@ -67,7 +66,7 @@ public class DamageParticle extends Particle {
 		GL11.glScaled(this.particleScale * 0.008D, this.particleScale * 0.008D, this.particleScale * 0.008D);
 		GL11.glScaled(this.scale, this.scale, this.scale);
 
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0F, 0.003662109F);
+		//OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0F, 0.003662109F);
 		GL11.glEnable(3553);
 		GL11.glDisable(3042);
 		GL11.glDepthMask(true);
@@ -86,7 +85,7 @@ public class DamageParticle extends Particle {
 		}
 
 		final FontRenderer fontRenderer = Minecraft.getInstance().fontRenderer;
-		fontRenderer.drawString(this.text, -MathHelper.floor(fontRenderer.getStringWidth(this.text) / 2.0F) + 1, -MathHelper.floor(fontRenderer.FONT_HEIGHT / 2.0F) + 1, color, color == 0xFF0000);
+		fontRenderer.drawString(this.text, -MathHelper.floor(fontRenderer.getStringWidth(this.text) / 2.0F) + 1, -MathHelper.floor(fontRenderer.FONT_HEIGHT / 2.0F) + 1, color);
 		
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glDepthFunc(515);

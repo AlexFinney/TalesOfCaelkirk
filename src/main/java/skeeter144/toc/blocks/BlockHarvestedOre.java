@@ -2,7 +2,6 @@ package skeeter144.toc.blocks;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import skeeter144.toc.entity.tile.BlockTileEntity;
 import skeeter144.toc.entity.tile.TileEntityHarvestedOre;

@@ -1,7 +1,6 @@
 package skeeter144.toc.client.gui;
 
 import java.awt.geom.Rectangle2D;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 

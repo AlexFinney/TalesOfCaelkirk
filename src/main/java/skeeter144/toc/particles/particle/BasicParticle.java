@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import net.minecraft.client.particle.Particle;
 import net.minecraft.world.World;
-import skeeter144.toc.TOCMain;
 
 public class BasicParticle extends Particle {
 	
@@ -21,7 +20,7 @@ public class BasicParticle extends Particle {
 		this.setParticleTextureIndex(5);
 		
 		Color c = new Color(color);
-		this.setRBGColorF((float) c.getRed() / 255, (float)c.getGreen() / 255, (float)c.getBlue() / 255);
+		this.setColor((float) c.getRed() / 255, (float)c.getGreen() / 255, (float)c.getBlue() / 255);
 		this.particleGravity = useGravity ? 1 : 0;
 	}
 	

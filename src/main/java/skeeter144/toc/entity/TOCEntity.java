@@ -1,7 +1,6 @@
 package skeeter144.toc.entity;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.EntityMob;
 import skeeter144.toc.player.EntityLevels;
 
 public class TOCEntity{

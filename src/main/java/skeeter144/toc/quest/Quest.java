@@ -2,6 +2,7 @@ package skeeter144.toc.quest;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

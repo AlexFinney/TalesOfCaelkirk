@@ -26,13 +26,13 @@ public class BasicSpellTrailParticle extends Particle{
 		this.setParticleTextureIndex(5);
 		
 		Color c = new Color(color);
-		this.setRBGColorF((float) c.getRed() / 255, (float)c.getGreen() / 255, (float)c.getBlue() / 255);
+		this.setColor((float) c.getRed() / 255, (float)c.getGreen() / 255, (float)c.getBlue() / 255);
 	}
 	
 	@Override
-	public void onUpdate() {
-		super.onUpdate();
-		float i = ((float)particleAge) / (particleMaxAge) * (7);
+	public void tick() {
+		super.tick();
+		float i = ((float)age) / (maxAge) * (7);
 		if(fizzleOut)
 			this.setParticleTextureIndex((int)(7-i));
 	}

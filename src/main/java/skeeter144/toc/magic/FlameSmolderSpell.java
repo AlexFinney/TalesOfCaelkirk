@@ -1,16 +1,13 @@
 package skeeter144.toc.magic;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.RayTraceResult;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.combat.CombatManager.DamageType;
 import skeeter144.toc.combat.TOCDamageSource;
 import skeeter144.toc.entity.projectile.EntityWandProjectile;
-import skeeter144.toc.particles.particle.FireSpellTrailParticle;
 
 public class FlameSmolderSpell extends ElementalSpell {
 
@@ -39,7 +36,7 @@ public class FlameSmolderSpell extends ElementalSpell {
 						(float)(TOCMain.rand.nextGaussian() + 1f) * .75f, 0xFFFFFF,  .75f);
 				
 				p.setVectorMovementBias(null, .75f);
-				mc.effectRenderer.addEffect(p);
+				mc.particles.addEffect(p);
 			}	
 		}
 		*/

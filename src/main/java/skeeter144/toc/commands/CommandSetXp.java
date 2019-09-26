@@ -7,9 +7,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import skeeter144.toc.player.EntityLevels.Levels;
 
 public class CommandSetXp{
 	public static void register(CommandDispatcher<CommandSource> dispatcher) {

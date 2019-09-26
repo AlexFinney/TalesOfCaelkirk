@@ -3,23 +3,13 @@ package skeeter144.toc.data;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
-
-import javax.management.AttributeNotFoundException;
-import javax.management.InstanceNotFoundException;
-import javax.management.InvalidAttributeValueException;
-import javax.management.MBeanException;
-import javax.management.MalformedObjectNameException;
-import javax.management.ReflectionException;
 
 import net.minecraft.entity.player.EntityPlayer;
 import skeeter144.toc.player.EntityLevels;
 import skeeter144.toc.player.TOCPlayer;
-import skeeter144.toc.player.EntityLevels.Levels;
 
 public class Database {
 

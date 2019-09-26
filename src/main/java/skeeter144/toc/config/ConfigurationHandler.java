@@ -4,7 +4,6 @@ import java.io.File;
 
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import skeeter144.toc.util.Reference;
 
 public class ConfigurationHandler {
 

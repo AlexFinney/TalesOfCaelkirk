@@ -1,16 +1,9 @@
 package skeeter144.toc.entity;
 
 import java.util.HashMap;
-import java.util.function.Function;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-import skeeter144.toc.util.Reference;
 
 public class TOCEntities {
 	

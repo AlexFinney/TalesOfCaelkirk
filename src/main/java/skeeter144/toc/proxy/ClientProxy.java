@@ -6,30 +6,22 @@ import java.util.Random;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.model.ModelBase;
+import net.minecraft.client.renderer.entity.model.ModelBiped;
+import net.minecraft.client.renderer.entity.model.ModelSalmon;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntitySalmon;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import skeeter144.toc.blocks.TOCBlocks;
-import skeeter144.toc.blocks.TOCClientBlockRenderers;
-import skeeter144.toc.client.Keybindings;
 import skeeter144.toc.client.entity.model.ModelGhost;
 import skeeter144.toc.client.entity.model.ModelGiantScorpian;
 import skeeter144.toc.client.entity.model.ModelGiantSpider;
@@ -38,7 +30,6 @@ import skeeter144.toc.client.entity.model.ModelGriffin;
 import skeeter144.toc.client.entity.model.ModelHumanNpc;
 import skeeter144.toc.client.entity.model.ModelPegasus;
 import skeeter144.toc.client.entity.model.ModelRat;
-import skeeter144.toc.client.entity.model.ModelSalmon;
 import skeeter144.toc.client.entity.model.ModelSiren;
 import skeeter144.toc.client.entity.model.ModelViking;
 import skeeter144.toc.client.entity.renderer.RenderCustomAbstractHorse;
@@ -49,14 +40,11 @@ import skeeter144.toc.client.entity.renderer.RenderPegasus;
 import skeeter144.toc.client.entity.renderer.RenderViking;
 import skeeter144.toc.client.gui.DialogGui;
 import skeeter144.toc.client.gui.GuiEntityStatus;
-import skeeter144.toc.client.gui.HUD;
-import skeeter144.toc.client.gui.RegionsRendering;
 import skeeter144.toc.entity.mob.monster.EntityGhost;
 import skeeter144.toc.entity.mob.monster.EntityGiantScorpian;
 import skeeter144.toc.entity.mob.monster.EntityGiantSpider;
 import skeeter144.toc.entity.mob.monster.EntityGoblin;
 import skeeter144.toc.entity.mob.monster.EntityRat;
-import skeeter144.toc.entity.mob.monster.EntitySalmon;
 import skeeter144.toc.entity.mob.monster.EntitySiren;
 import skeeter144.toc.entity.mob.monster.EntityViking;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityDonkeyMount;
@@ -64,7 +52,6 @@ import skeeter144.toc.entity.mob.mount.basic_horse.EntityMuleMount;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityVariableHorseMount;
 import skeeter144.toc.entity.mob.mount.flying.EntityGriffin;
 import skeeter144.toc.entity.mob.mount.flying.EntityPegasus;
-import skeeter144.toc.entity.mob.npc.DialogManager;
 import skeeter144.toc.entity.mob.npc.banker.EntityBanker;
 import skeeter144.toc.entity.mob.npc.questgiver.EntityEvaTeffan;
 import skeeter144.toc.entity.mob.npc.questgiver.EntityKelvinWhitestone;
@@ -73,10 +60,6 @@ import skeeter144.toc.entity.mob.npc.questgiver.EntityRobertCromwell;
 import skeeter144.toc.entity.mob.npc.questgiver.EntitySeloviusKamazz;
 import skeeter144.toc.entity.mob.npc.questgiver.EntityUlricWeston;
 import skeeter144.toc.entity.mob.npc.shopkeeper.EntityHumanShopKeeper;
-import skeeter144.toc.handlers.ItemTooltipHandler;
-import skeeter144.toc.handlers.PlayerInputHandler;
-import skeeter144.toc.handlers.tick.ClientTickHandler;
-import skeeter144.toc.items.TOCItemsClientRegistration;
 import skeeter144.toc.models.ModelVikingHelm;
 import skeeter144.toc.particles.particle.BasicSpellTrailParticle;
 import skeeter144.toc.particles.particle.DamageParticle;
@@ -90,37 +73,37 @@ public class ClientProxy extends CommonProxy
 	private Minecraft mc = Minecraft.getInstance();
 	private Entity pointedEntity;
 	
-	public void preInit(FMLPreInitializationEvent event)
-	{
-		super.preInit(event);
-		MinecraftForge.EVENT_BUS.register(new TOCItemsClientRegistration());
-		TOCClientBlockRenderers.registerAll();
-		TOCBlocks.registerRenders();
-		entityStatusGUI = new GuiEntityStatus();
-		Keybindings.registerKeybinds();
-		DialogManager.init();
-	}
-	
-	public void init(FMLInitializationEvent event){
-		super.init(event);
-		registerEntityRenders();
-		MinecraftForge.EVENT_BUS.register(new HUD());
-		MinecraftForge.EVENT_BUS.register(new RegionsRendering());
-		MinecraftForge.EVENT_BUS.register(new PlayerInputHandler());
-		MinecraftForge.EVENT_BUS.register(new ClientTickHandler());
-		MinecraftForge.EVENT_BUS.register(new ItemTooltipHandler());
-	}
-	
-	public void postInit(FMLPostInitializationEvent event)
-	{
-		super.postInit(event);
-		MinecraftForge.EVENT_BUS.register(entityStatusGUI);
-	}
-	
-	@Override
-	public void renderInit(Item item, int meta, String name) {
-		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(Reference.MODID + ":" + name, "inventory"));
-	}
+//	public void preInit(FMLPreInitializationEvent event)
+//	{
+//		super.preInit(event);
+//		MinecraftForge.EVENT_BUS.register(new TOCItemsClientRegistration());
+//		TOCClientBlockRenderers.registerAll();
+//		TOCBlocks.registerRenders();
+//		entityStatusGUI = new GuiEntityStatus();
+//		Keybindings.registerKeybinds();
+//		DialogManager.init();
+//	}
+//	
+//	public void init(FMLInitializationEvent event){
+//		super.init(event);
+//		registerEntityRenders();
+//		MinecraftForge.EVENT_BUS.register(new HUD());
+//		MinecraftForge.EVENT_BUS.register(new RegionsRendering());
+//		MinecraftForge.EVENT_BUS.register(new PlayerInputHandler());
+//		MinecraftForge.EVENT_BUS.register(new ClientTickHandler());
+//		MinecraftForge.EVENT_BUS.register(new ItemTooltipHandler());
+//	}
+//	
+//	public void postInit(FMLPostInitializationEvent event)
+//	{
+//		super.postInit(event);
+//		MinecraftForge.EVENT_BUS.register(entityStatusGUI);
+//	}
+//	
+//	@Override
+//	public void renderInit(Item item, int meta, String name) {
+//		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(Reference.MODID + ":" + name, "inventory"));
+//	}
 	
 	public void registerEntityRenders() {
 		RenderManager rm = Minecraft.getInstance().getRenderManager();
@@ -204,7 +187,7 @@ public class ClientProxy extends CommonProxy
 		double motionZ = world.rand.nextGaussian() * 100;
 		Particle damageIndicator = new DamageParticle(damage + "", world, entity.posX, entity.posY + entity.height, entity.posZ, motionX, motionY,
 				motionZ);
-		Minecraft.getInstance().effectRenderer.addEffect(damageIndicator);
+		Minecraft.getInstance().particles.addEffect(damageIndicator);
 	}
 	
 	public static void displayParticle(Entity entity, String str) {
@@ -214,7 +197,7 @@ public class ClientProxy extends CommonProxy
 		double motionZ = world.rand.nextGaussian() * 100;
 		Particle damageIndicator = new DamageParticle(str, world, entity.posX, entity.posY + entity.height, entity.posZ, motionX, motionY,
 				motionZ);
-		Minecraft.getInstance().effectRenderer.addEffect(damageIndicator);
+		Minecraft.getInstance().particles.addEffect(damageIndicator);
 	}
 
 	static int maxUpdatesToWait = 40;
@@ -253,7 +236,7 @@ public class ClientProxy extends CommonProxy
 			e.printStackTrace();
 		}
 		
-		Minecraft.getInstance().effectRenderer.addEffect(p);
+		Minecraft.getInstance().particles.addEffect(p);
 	}
 	
 	public void showDialogToPlayer(EntityLivingBase ent, NpcDialog dialog) {

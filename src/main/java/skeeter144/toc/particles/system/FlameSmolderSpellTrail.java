@@ -14,7 +14,7 @@ public class FlameSmolderSpellTrail extends BasicSpellTrail{
 	public void spawnParticles() {
 		for(int i = 0; i < pNum; ++i) {
 			Particle stp = new FireSpellTrailParticle(world, posX, posY, posZ, pSize, pColor, pVel);
-			Minecraft.getInstance().effectRenderer.addEffect(stp);
+			Minecraft.getInstance().particles.addEffect(stp);
 		}
 	}
 	

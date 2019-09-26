@@ -1,9 +1,6 @@
 package skeeter144.toc.items.quest;
 
 import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
-import skeeter144.toc.items.TOCItems;
-import skeeter144.toc.util.Reference;
 
 public class QuestItem extends Item{
 	public final boolean droppable;

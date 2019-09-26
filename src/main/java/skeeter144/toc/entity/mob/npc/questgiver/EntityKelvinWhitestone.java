@@ -4,19 +4,13 @@ import java.util.UUID;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
-import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData.ItemPrice;
-import skeeter144.toc.handlers.PlayerInventoryHandler.CoinsAddedToInventoryEvent;
-import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.QuestProgress;
-import skeeter144.toc.util.TOCUtils;
 
 public class EntityKelvinWhitestone extends EntityNPCInteractable{
 	

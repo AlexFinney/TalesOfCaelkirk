@@ -1,13 +1,9 @@
 package skeeter144.toc.particles.particle;
 
-import javax.vecmath.Matrix4f;
 import javax.vecmath.Vector3d;
-
-import org.lwjgl.util.vector.Quaternion;
 
 import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.Entity;
-import net.minecraft.world.World;
 import skeeter144.toc.TOCMain;
 
 public class OrbitingEffectParticle extends Particle{
@@ -21,7 +17,7 @@ public class OrbitingEffectParticle extends Particle{
 	double rotateSpeed = 1;
 	public OrbitingEffectParticle(Entity target, float radius, int duration, int color) {
 		super(target.world, target.posX, target.posY, target.posZ);
-		this.particleMaxAge = duration;
+		this.maxAge = duration;
 		this.radius = radius;
 		this.target = target;
 		
@@ -29,8 +25,8 @@ public class OrbitingEffectParticle extends Particle{
 		this.setParticleTextureIndex(144);
 		
 		ageOffset = TOCMain.rand.nextInt() % 200;
-		int usedAge = particleAge * 2 + ageOffset;
-		this.setRBGColorF((color << 24 & 0xFF) / 255, (color >> 16 & 0xFF) / 255, (color >> 8 & 0xFF) / 255);
+		int usedAge = age * 2 + ageOffset;
+		this.setColor((color << 24 & 0xFF) / 255, (color >> 16 & 0xFF) / 255, (color >> 8 & 0xFF) / 255);
 		heightOffset = (float)TOCMain.rand.nextDouble() * target.getEyeHeight() + .2f;
 		this.posY = target.posY +  heightOffset;
 		this.particleGravity = 0;
@@ -42,9 +38,9 @@ public class OrbitingEffectParticle extends Particle{
 	}
 
 	@Override
-	public void onUpdate() {
-		super.onUpdate();
-		int usedAge = particleAge * 2 + ageOffset;
+	public void tick() {
+		super.tick();
+		int usedAge = age * 2 + ageOffset;
 		double x = target.posX + radius * Math.cos((usedAge / 2f) / (2 * Math.PI));
 		double z = target.posZ + radius * Math.sin((usedAge / 2f) / (2 * Math.PI));
 		this.setPosition(x,  target.posY + heightOffset,  z);

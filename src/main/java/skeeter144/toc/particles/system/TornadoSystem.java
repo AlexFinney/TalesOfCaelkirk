@@ -3,8 +3,6 @@ package skeeter144.toc.particles.system;
 import java.util.Random;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.world.World;
 import skeeter144.toc.entityeffect.effects.TornadoEffect;
 import skeeter144.toc.particles.particle.TornadoParticle;
 
@@ -24,7 +22,7 @@ public class TornadoSystem extends ParticleSystem{
 		for(float i = 0; i <= particles; ++i)
 		{
 			float curHeight = i / height;
-			Minecraft.getInstance().effectRenderer.addEffect(new TornadoParticle(world, posX, posY + curHeight * 2, posZ, getRadiusForheight(curHeight), TornadoEffect.getDurationForLevel(level)));
+			Minecraft.getInstance().particles.addEffect(new TornadoParticle(world, posX, posY + curHeight * 2, posZ, getRadiusForheight(curHeight), TornadoEffect.getDurationForLevel(level)));
 		}
 	}
 

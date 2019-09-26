@@ -21,18 +21,19 @@ public class ArmorVikingHelmet extends CustomArmor{
 	@OnlyIn(Dist.CLIENT)
 	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped defaultModel) {
 		if (itemStack != null && itemStack.getItem() instanceof ItemArmor) {
-			ModelBiped model = TOCMain.proxy.getModelForId(0);
+			//TODO
+			//ModelBiped model = TOCMain.proxy.getModelForId(0);
 			
-			model.bipedHead.showModel = true;
-			
-			model.isSneak = defaultModel.isSneak;
-			model.isRiding = defaultModel.isRiding;
-			model.isChild = defaultModel.isChild;
-			
-			
-			model.setModelAttributes(defaultModel);
-			
-			return model;
+//			model.bipedHead.showModel = true;
+//			
+//			model.isSneak = defaultModel.isSneak;
+//			model.isRiding = defaultModel.isRiding;
+//			model.isChild = defaultModel.isChild;
+//			
+//			
+//			model.setModelAttributes(defaultModel);
+//			
+//			return model;
 		}
 		return null;
 	}

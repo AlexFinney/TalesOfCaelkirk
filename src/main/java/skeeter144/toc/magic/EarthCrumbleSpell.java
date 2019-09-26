@@ -3,11 +3,9 @@ package skeeter144.toc.magic;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.RayTraceResult;
-import skeeter144.toc.combat.TOCDamageSource;
 import skeeter144.toc.combat.CombatManager.DamageType;
+import skeeter144.toc.combat.TOCDamageSource;
 import skeeter144.toc.entity.projectile.EntityWandProjectile;
 
 public class EarthCrumbleSpell extends ElementalSpell {

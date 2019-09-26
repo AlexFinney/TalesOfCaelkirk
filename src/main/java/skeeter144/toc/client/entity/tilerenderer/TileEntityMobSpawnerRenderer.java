@@ -19,7 +19,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.model.ModelDataManager;
 import net.minecraftforge.client.model.data.IModelData;
-import skeeter144.toc.blocks.TOCBlocks;
 import skeeter144.toc.entity.tile.TileEntityMobSpawner;
 
 public class TileEntityMobSpawnerRenderer extends TileEntityRenderer<TileEntityMobSpawner> {

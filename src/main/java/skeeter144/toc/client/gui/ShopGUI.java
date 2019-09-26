@@ -1,7 +1,6 @@
 package skeeter144.toc.client.gui;
 
 import java.awt.geom.Rectangle2D;
-import java.io.IOException;
 import java.util.List;
 
 import net.minecraft.client.MainWindow;
@@ -12,7 +11,6 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,7 +19,6 @@ import net.minecraft.util.registry.IRegistry;
 import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData;
 import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData.ItemPrice;
 import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData.ShopListing;
-import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.network.ItemTransactionMessage;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.util.Mouse;

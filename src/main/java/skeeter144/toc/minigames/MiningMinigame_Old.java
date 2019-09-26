@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.lwjgl.input.Mouse;
-
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
+import skeeter144.toc.util.Mouse;
 import skeeter144.toc.util.Reference;
 import skeeter144.toc.util.Util;
 
@@ -41,10 +40,9 @@ public class MiningMinigame_Old {
 			return;
 		
 		if(board.tileAt(x, y).tileItem == null) {
-			ScaledResolution sr = new ScaledResolution(Minecraft.getInstance());
-			
-			int adjustedMouseX = Mouse.getX() * sr.getScaledWidth() / Minecraft.getInstance().displayWidth;
-			int adjustedMouseY = sr.getScaledHeight() - Mouse.getY() * sr.getScaledHeight() / Minecraft.getInstance().displayHeight;
+			MainWindow sr = Minecraft.getInstance().mainWindow;
+			int adjustedMouseX = Mouse.getX() * sr.getScaledWidth() / Minecraft.getInstance().mainWindow.getWidth();
+			int adjustedMouseY = sr.getScaledHeight() - Mouse.getY() * sr.getScaledHeight() / sr.getHeight();
 			
 			draggedTile = board.tileAt(x, y);
 			dragOffsetX = adjustedMouseX - x * 17;

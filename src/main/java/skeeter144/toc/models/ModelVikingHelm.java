@@ -1,10 +1,8 @@
 package skeeter144.toc.models;
 
-import java.lang.reflect.Field;
-
-import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.model.ModelBiped;
+import net.minecraft.client.renderer.entity.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 /**
@@ -78,15 +76,15 @@ public class ModelVikingHelm extends ModelBiped{
     
     private void renderHelmet(float scale) {
     	 GlStateManager.pushMatrix();
-    	 GlStateManager.enableAlpha();
+    	 GlStateManager.enableAlphaTest();
     	 GlStateManager.enableBlend();
     	 
     	 if (bipedHead.rotateAngleZ != 0.0F)
-             GlStateManager.rotate(bipedHead.rotateAngleZ * (180F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
+             GlStateManager.rotatef(bipedHead.rotateAngleZ * (180F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
          if (bipedHead.rotateAngleY != 0.0F)
-             GlStateManager.rotate(bipedHead.rotateAngleY * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
+             GlStateManager.rotatef(bipedHead.rotateAngleY * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
          if (bipedHead.rotateAngleX != 0.0F)
-             GlStateManager.rotate(bipedHead.rotateAngleX * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
+             GlStateManager.rotatef(bipedHead.rotateAngleX * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
 
          this.helmBase.render(scale);
          GlStateManager.popMatrix();

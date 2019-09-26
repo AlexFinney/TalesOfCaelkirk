@@ -7,8 +7,6 @@ import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.world.World;
-import skeeter144.toc.entity.mob.CustomMob;
-import skeeter144.toc.entity.mob.npc.EntityNpc;
 import skeeter144.toc.quest.Quest;
 
 public abstract class EntityQuestGiver extends EntityNPCInteractable{

@@ -26,7 +26,7 @@ public class ManaEffectSystem extends ParticleSystem{
 		int duration = (int)optionalParams[5];
 		for(int i = 0; i < 60; i++) {
 			particles.add(new OrbitingEffectParticle(target, TOCMain.rand.nextFloat() / 4 + .5f, duration, 0x0000FFFF));
-			Minecraft.getInstance().effectRenderer.addEffect(particles.get(i));
+			Minecraft.getInstance().particles.addEffect(particles.get(i));
 		}
 	}
 }

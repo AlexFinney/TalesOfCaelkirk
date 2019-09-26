@@ -1,7 +1,5 @@
 package skeeter144.toc.sounds.music;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.util.SoundEvent;
 import skeeter144.toc.sounds.Sounds;
 
@@ -24,7 +22,7 @@ public class MusicManager {
 				track = Sounds.creepy_music;
 				break;
 		}
-		Minecraft.getInstance().getSoundHandler().playSound(PositionedSoundRecord.getRecord(track, 1, 1));
+		//Minecraft.getInstance().getSoundHandler().playSound(ForgeRegistries. R.getRecord(track, 1, 1));
 	}
 
 }

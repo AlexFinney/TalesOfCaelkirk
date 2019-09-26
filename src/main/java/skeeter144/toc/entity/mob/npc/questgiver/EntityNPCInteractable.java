@@ -16,7 +16,6 @@ import skeeter144.toc.entity.mob.npc.EntityNpc;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.ShowEntityDialogMessage;
 import skeeter144.toc.quest.NpcDialog;
-import skeeter144.toc.quest.QuestManager;
 
 public abstract class EntityNPCInteractable extends EntityNpc{
 	protected Map<String, NpcDialog> dialogs;

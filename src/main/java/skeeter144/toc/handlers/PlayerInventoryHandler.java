@@ -11,7 +11,6 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData.ItemPrice;
-import skeeter144.toc.items.TOCItems;
 
 public class PlayerInventoryHandler {
 

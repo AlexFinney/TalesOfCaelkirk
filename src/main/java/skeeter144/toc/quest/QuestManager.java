@@ -1,21 +1,18 @@
 package skeeter144.toc.quest;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
-import jline.internal.Log;
+import org.jline.utils.Log;
+
 import net.minecraftforge.common.MinecraftForge;
 import skeeter144.toc.data.Database;
-import skeeter144.toc.quest.quests.ANewAdventureQuest;
 
 public class QuestManager{
 

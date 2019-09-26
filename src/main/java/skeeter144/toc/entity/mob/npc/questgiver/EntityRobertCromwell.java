@@ -6,14 +6,11 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.QuestProgress;
-import skeeter144.toc.util.Reference;
-import skeeter144.toc.util.TOCUtils;
 
 public class EntityRobertCromwell extends EntityNPCInteractable{
 	

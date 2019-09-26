@@ -3,7 +3,7 @@ package skeeter144.toc.quest.quests;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import skeeter144.toc.blocks.BlockHarvestableOre.BlockMinedEvent;
 import skeeter144.toc.handlers.PlayerInventoryHandler.ItemAddedToInventoryEvent;
@@ -55,7 +55,7 @@ public class ANewAdventureQuest extends Quest{
 	
 	@SubscribeEvent
 	public void itemCrafted(ItemCraftedEvent e) {
-		if(e.player.world.isRemote)
+		if(e.getPlayer().world.isRemote)
 			return;
 		
 	/*	ANewAdventureQuestProgress qp = (ANewAdventureQuestProgress)QuestManager.getQuestProgressForPlayer(e.player.getUniqueID(), this);

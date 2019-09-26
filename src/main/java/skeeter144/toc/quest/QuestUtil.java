@@ -5,7 +5,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import skeeter144.toc.combat.TOCDamageSource;
-import skeeter144.toc.util.Reference;
 
 public class QuestUtil {
 //public static final ResourceLocation quest_objective_icon = new ResourceLocation (Reference.MODID, "textures/icons");

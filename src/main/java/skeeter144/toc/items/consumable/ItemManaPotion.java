@@ -12,7 +12,6 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import skeeter144.toc.entityeffect.ServerEffectHandler;
 import skeeter144.toc.entityeffect.effects.ManaPotionEffect;
-import skeeter144.toc.items.TOCItems;
 
 public class ItemManaPotion extends ItemBucketMilk {
 

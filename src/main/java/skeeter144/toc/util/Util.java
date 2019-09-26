@@ -36,7 +36,7 @@ public class Util {
 		Entity pointedEntity = null;;
 		objectMouseOver = rayTrace(observer, reachDistance, partialTicks);
 
-		Vec3d observerPositionEyes = observer.getPositionEyes(partialTicks);
+		Vec3d observerPositionEyes = observer.getEyePosition(partialTicks);
 
 		double distance = reachDistance;
 
@@ -45,12 +45,12 @@ public class Util {
 		}
 
 		Vec3d lookVector = observer.getLook(partialTicks);
-		Vec3d lookVectorFromEyePosition = observerPositionEyes.addVector(lookVector.x * reachDistance, lookVector.y * reachDistance,
+		Vec3d lookVectorFromEyePosition = observerPositionEyes.add(lookVector.x * reachDistance, lookVector.y * reachDistance,
 				lookVector.z * reachDistance);
 		//this.pointedEntity = null;
 		Vec3d hitVector = null;
 		List<Entity> list = observer.world.getEntitiesInAABBexcluding(observer,
-				observer.getEntityBoundingBox()
+				observer.getBoundingBox()
 						.expand(lookVector.x * reachDistance, lookVector.y * reachDistance, lookVector.z * reachDistance)
 						.expand(1.0D, 1.0D, 1.0D),
 				EntitySelectors.NOT_SPECTATING);
@@ -58,7 +58,7 @@ public class Util {
 
 		for (int j = 0; j < list.size(); ++j) {
 			Entity entity1 = (Entity) list.get(j);
-			AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().grow((double) entity1.getCollisionBorderSize());
+			AxisAlignedBB axisalignedbb = entity1.getBoundingBox().grow((double) entity1.getCollisionBorderSize());
 			RayTraceResult raytraceresult = axisalignedbb.calculateIntercept(observerPositionEyes, lookVectorFromEyePosition);
 
 			if (axisalignedbb.contains(observerPositionEyes)) {
@@ -97,10 +97,10 @@ public class Util {
 	
 	@Nullable
 	public static RayTraceResult rayTrace(Entity e, double blockReachDistance, float partialTicks) {
-		Vec3d vec3d = e.getPositionEyes(partialTicks);
+		Vec3d vec3d = e.getEyePosition(partialTicks);
 		Vec3d vec3d1 = e.getLook(partialTicks);
-		Vec3d vec3d2 = vec3d.addVector(vec3d1.x * blockReachDistance, vec3d1.y * blockReachDistance, vec3d1.z * blockReachDistance);
-		return e.world.rayTraceBlocks(vec3d, vec3d2, false, true, true);
+		Vec3d vec3d2 = vec3d.add(vec3d1.x * blockReachDistance, vec3d1.y * blockReachDistance, vec3d1.z * blockReachDistance);
+		return e.world.rayTraceBlocks(vec3d, vec3d2);
 	}
 	
 	
