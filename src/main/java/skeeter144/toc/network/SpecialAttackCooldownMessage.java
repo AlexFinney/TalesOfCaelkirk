@@ -13,16 +13,16 @@ public class SpecialAttackCooldownMessage {
 	{
 		public static void handle(final SpecialAttackCooldownMessage message, Supplier<NetworkEvent.Context> ctx){}
 	}
-//	
-//	public SpecialAttackCooldownMessage(){}
-//
-//	String name;
-//	byte cooldown, maxCooldown;
-//	public SpecialAttackCooldownMessage(String name, byte cooldown, byte maxCooldown) {
-//		this.cooldown = cooldown;
-//		this.maxCooldown = maxCooldown;
-//		this.name = name;
-//	}
+	
+	public SpecialAttackCooldownMessage(){}
+
+	String name;
+	byte cooldown, maxCooldown;
+	public SpecialAttackCooldownMessage(String name, byte cooldown, byte maxCooldown) {
+		this.cooldown = cooldown;
+		this.maxCooldown = maxCooldown;
+		this.name = name;
+	}
 //	
 //	
 //	@Override

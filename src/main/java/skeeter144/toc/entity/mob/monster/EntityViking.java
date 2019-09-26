@@ -99,21 +99,22 @@ public class EntityViking extends CustomMob{
 			NBTTagCompound itemNbt) {
 		if(isVikingElite) {
 			this.setCustomName(new TextComponentString("Viking Elite"));
-			this.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(TOCItems.viking_helmet));
-			this.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(TOCItems.viking_chestplate));
-			this.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(TOCItems.viking_leggings));
-			this.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(TOCItems.viking_boots));
+			//TODO
+//			this.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(TOCItems.viking_helmet));
+//			this.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(TOCItems.viking_chestplate));
+//			this.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(TOCItems.viking_leggings));
+//			this.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(TOCItems.viking_boots));
 			this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(TOCItems.getRandomWeaponForClass("steel", 1)));
 			
 		}else {
-			if(TOCMain.rand.nextInt(5) == 0)
-				this.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(TOCItems.viking_helmet));
-			if(TOCMain.rand.nextInt(5) == 0)
-				this.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(TOCItems.viking_chestplate));
-			if(TOCMain.rand.nextInt(5) == 0)
-				this.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(TOCItems.viking_leggings));
-			if(TOCMain.rand.nextInt(5) == 0)
-				this.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(TOCItems.viking_boots));
+//			if(TOCMain.rand.nextInt(5) == 0)
+//				this.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(TOCItems.viking_helmet));
+//			if(TOCMain.rand.nextInt(5) == 0)
+//				this.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(TOCItems.viking_chestplate));
+//			if(TOCMain.rand.nextInt(5) == 0)
+//				this.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(TOCItems.viking_leggings));
+//			if(TOCMain.rand.nextInt(5) == 0)
+//				this.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(TOCItems.viking_boots));
 			
 			String weaponType = TOCMain.rand.nextFloat() < .4f ? "steel" : "iron";
 			this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(TOCItems.getRandomWeaponForClass(weaponType, .05f)));

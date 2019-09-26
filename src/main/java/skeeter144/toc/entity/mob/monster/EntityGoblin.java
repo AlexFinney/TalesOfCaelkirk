@@ -61,7 +61,8 @@ public class EntityGoblin extends CustomMob{
 	@Override
 	protected void dropLoot(boolean wasRecentlyHit, int lootingModifier, DamageSource source) {
 		super.dropLoot(wasRecentlyHit, lootingModifier, source);
-		this.entityDropItem(new ItemStack(TOCItems.goblin_ear), 0);
+		//TODO:
+//		this.entityDropItem(new ItemStack(TOCItems.goblin_ear), 0);
 	}
 
 }

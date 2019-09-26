@@ -7,11 +7,8 @@ import skeeter144.toc.util.Reference;
 
 public class QuestItem extends Item{
 	public final boolean droppable;
-	public QuestItem(String name, boolean droppable, int maxStackSize){
-		this.setRegistryName(new ResourceLocation(Reference.MODID, name));
-		this.setUnlocalizedName(name);
-		setMaxStackSize(maxStackSize);
-		this.setCreativeTab(TOCItems.quest_items_tab);
+	public QuestItem(Item.Properties builder, boolean droppable, int maxStackSize){
+		super(builder);
 		this.droppable = droppable;
 	}
 }

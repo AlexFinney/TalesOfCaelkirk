@@ -41,7 +41,7 @@ public class EntitySeloviusKamazz extends EntityNPCInteractable{
 		EntityPlayer pl = this.world.getPlayerEntityByUUID(playerUUID);
 		QuestProgress qp = QuestManager.getQuestProgressForPlayer(pl.getUniqueID(), QuestManager.A_NEW_ADVENTURE);
 		qp.incStage();
-		pl.addItemStackToInventory(new ItemStack(TOCItems.wand_basic));
+		//pl.addItemStackToInventory(new ItemStack(TOCItems.wand_basic));
 	}
 	
 	public void tutorialFinished(UUID playerUUID) {

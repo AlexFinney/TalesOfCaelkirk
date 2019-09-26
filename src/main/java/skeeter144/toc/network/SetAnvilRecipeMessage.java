@@ -3,7 +3,9 @@ package skeeter144.toc.network;
 import java.util.function.Supplier;
 
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent;
+import skeeter144.toc.recipe.Recipe;
 
 public class SetAnvilRecipeMessage{
 	
@@ -14,13 +16,13 @@ public class SetAnvilRecipeMessage{
 		public static void handle(final SetAnvilRecipeMessage message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
-//	Recipe r;
-//	BlockPos pos;
-//	public SetAnvilRecipeMessage() {}
-//	public SetAnvilRecipeMessage(Recipe r, BlockPos pos) {
-//		this.r = r;
-//		this.pos = pos;
-//	}
+	Recipe r;
+	BlockPos pos;
+	public SetAnvilRecipeMessage() {}
+	public SetAnvilRecipeMessage(Recipe r, BlockPos pos) {
+		this.r = r;
+		this.pos = pos;
+	}
 //	
 //	@Override
 //	public void toBytes(ByteBuf buf) {

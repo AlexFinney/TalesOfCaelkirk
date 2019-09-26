@@ -19,9 +19,8 @@ import skeeter144.toc.util.Reference;
 
 public class ItemTOCBook extends Item {
 
-	public ItemTOCBook(String name) {
-		super((new Properties()).group(ItemGroup.MISC).maxStackSize(1));
-		this.setRegistryName(new ResourceLocation(Reference.MODID, name));
+	public ItemTOCBook(Item.Properties builder) {
+		super(builder);
 	}
 
 	@Nonnull
@@ -29,7 +28,7 @@ public class ItemTOCBook extends Item {
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		ItemStack itemStack = playerIn.getHeldItem(handIn);
 		if (worldIn.isRemote) {
-			TOCBook.INSTANCE.openGui(itemStack);
+		//	TOCBook.INSTANCE.openGui(itemStack);
 		}
 		return new ActionResult<>(EnumActionResult.SUCCESS, itemStack);
 	}

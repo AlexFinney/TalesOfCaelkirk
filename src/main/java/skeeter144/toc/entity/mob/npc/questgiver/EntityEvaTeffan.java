@@ -47,13 +47,14 @@ public class EntityEvaTeffan extends EntityNPCInteractable{
 				sendDialog("returned", player);
 			}
 		}else if (qp.stage == 5) {
-			if(TOCUtils.getItemCountInInventory(Items.STRING, player.inventory) >= 2 &&
-			   TOCUtils.getItemCountInInventory(TOCItems.stick_oak, player.inventory) >= 3) {
-				sendDialog("tutorial_9", player);
-				qp.incStage();
-			}else {
-				sendDialog("tutorial_7", player);
-			}
+			//TODO
+//			if(TOCUtils.getItemCountInInventory(Items.STRING, player.inventory) >= 2 &&
+//			   TOCUtils.getItemCountInInventory(TOCItems.stick_oak, player.inventory) >= 3) {
+//				sendDialog("tutorial_9", player);
+//				qp.incStage();
+//			}else {
+//				sendDialog("tutorial_7", player);
+//			}
 		}
 		else if (qp.stage == 6) {
 			if(TOCUtils.getItemCountInInventory(Items.FISHING_ROD, player.inventory) >= 1) {
@@ -74,7 +75,7 @@ public class EntityEvaTeffan extends EntityNPCInteractable{
 
 //		//TODO: `mark map for sheep
 		player.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.A_NEW_ADVENTURE + "] " + TextFormatting.GREEN + "[New Task]" + TextFormatting.WHITE + "Shear a sheep and collect its wool."));
-		player.inventory.addItemStackToInventory(new ItemStack(TOCItems.shears));
+		//player.inventory.addItemStackToInventory(new ItemStack(TOCItems.shears));
 		qp.incStage();
 	}
 	

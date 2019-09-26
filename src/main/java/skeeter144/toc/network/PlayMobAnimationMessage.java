@@ -1,7 +1,9 @@
 package skeeter144.toc.network;
 
+import java.util.UUID;
 import java.util.function.Supplier;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -13,15 +15,15 @@ public class PlayMobAnimationMessage{
 	{
 		public static void handle(final PlayMobAnimationMessage message, Supplier<NetworkEvent.Context> ctx){}
 	}
-//	
-//	public PlayMobAnimationMessage() {}
-//	
-//	UUID uuid;
-//	String animationName;
-//	public PlayMobAnimationMessage(Entity entity, String animationName) {
-//		this.uuid = entity.getUniqueID();
-//		this.animationName = animationName;
-//	}
+	
+	public PlayMobAnimationMessage() {}
+	
+	UUID uuid;
+	String animationName;
+	public PlayMobAnimationMessage(Entity entity, String animationName) {
+		this.uuid = entity.getUniqueID();
+		this.animationName = animationName;
+	}
 //	
 //	@Override
 //	public void toBytes(ByteBuf buf) {
@@ -37,7 +39,7 @@ public class PlayMobAnimationMessage{
 //	
 //	
 //	ByteBuf buf;
-//	@SideOnly(Side.CLIENT)
+//	@OnlyIn(Dist.CLIENT)
 //	public void fromBytes(ByteBuf buf) {
 //		uuid = new UUID(buf.readLong(), buf.readLong());
 //		char[] chars = new char[buf.readInt()];

@@ -1,24 +1,18 @@
 package skeeter144.toc.items.tools;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import skeeter144.toc.util.Reference;
 
 public class TOCShears extends ItemShears
 {
-    public TOCShears()
+    public TOCShears(Item.Properties builder)
     {
-        this.setMaxStackSize(1);
-        this.setMaxDamage(-1);
-        this.setCreativeTab(CreativeTabs.TOOLS);
-        this.setRegistryName(new ResourceLocation(Reference.MODID, "shears"));
-        this.setUnlocalizedName("shears");
+    	super(builder);
     }
 
     @Override

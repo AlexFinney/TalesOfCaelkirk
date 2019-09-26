@@ -1,5 +1,6 @@
 package skeeter144.toc.network;
 
+import java.util.UUID;
 import java.util.function.Supplier;
 
 import net.minecraft.network.PacketBuffer;
@@ -14,13 +15,13 @@ public class QuestDialogResponseMessage{
 		public static void handle(final QuestDialogResponseMessage message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
-//	UUID questGiverUUID;
-//	String dialogResponse;
-//	public QuestDialogResponseMessage() {}
-//	public QuestDialogResponseMessage(UUID questGiverUUID, String dialogResponse) {
-//		this.questGiverUUID = questGiverUUID;
-//		this.dialogResponse = dialogResponse;
-//	}
+	UUID questGiverUUID;
+	String dialogResponse;
+	public QuestDialogResponseMessage() {}
+	public QuestDialogResponseMessage(UUID questGiverUUID, String dialogResponse) {
+		this.questGiverUUID = questGiverUUID;
+		this.dialogResponse = dialogResponse;
+	}
 //	
 //	@Override
 //	public void fromBytes(ByteBuf buf) {

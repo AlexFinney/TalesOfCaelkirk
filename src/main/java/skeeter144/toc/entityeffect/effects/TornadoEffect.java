@@ -41,7 +41,7 @@ public class TornadoEffect extends EntityEffect {
 		initialZ = effected.posZ;
 		effected.addVelocity(0, .65, 0);
 		if(effected instanceof EntityPlayerMP) {
-			((EntityPlayerMP)effected).capabilities.allowFlying = true;
+			((EntityPlayerMP)effected).abilities.allowFlying = true;
 		}
 	}
 
@@ -63,7 +63,7 @@ public class TornadoEffect extends EntityEffect {
 	@Override
 	protected void onEffectEnd(EffectEndType type) {
 		if(effected instanceof EntityPlayerMP) {
-			((EntityPlayerMP)effected).capabilities.allowFlying = false;
+			((EntityPlayerMP)effected).abilities.allowFlying = false;
 		}
 		effected.setNoGravity(false);
 		

@@ -20,7 +20,7 @@ public class WaterRippleSpell extends ElementalSpell{
 	
 	@Override
 	public void onProjectileImpact(RayTraceResult res, EntityWandProjectile proj) {
-		Entity e = res.entityHit;
+		Entity e = res.entity;
 		if(e != null  && !e.world.isRemote) {
 			if(e instanceof EntityLivingBase){
 				((EntityLivingBase)e).attackEntityFrom(new TOCDamageSource(DamageType.MAGICAL, proj.getThrower()), damage);

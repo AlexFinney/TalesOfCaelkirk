@@ -14,16 +14,16 @@ public class AddLevelXpMessage{
 	{
 		public static void handle(final AddLevelXpMessage message, Supplier<NetworkEvent.Context> ctx){}
 	}
-//
-//	public AddLevelXpMessage() {}
-//	
-//	int xp;
-//	int nameLen;
-//	String name = "";
-//	public AddLevelXpMessage(String name, int xp) {
-//		this.name = name;
-//		this.xp = xp;
-//	}
+
+	public AddLevelXpMessage() {}
+	
+	int xp;
+	int nameLen;
+	String name = "";
+	public AddLevelXpMessage(String name, int xp) {
+		this.name = name;
+		this.xp = xp;
+	}
 //
 //	@Override
 //	public void toBytes(ByteBuf buf) {

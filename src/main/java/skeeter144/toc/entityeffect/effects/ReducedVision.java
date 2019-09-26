@@ -1,10 +1,7 @@
 package skeeter144.toc.entityeffect.effects;
 
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import skeeter144.toc.network.AdjustPlayersScreenDim;
 import skeeter144.toc.network.Network;
 

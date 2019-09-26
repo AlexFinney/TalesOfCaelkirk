@@ -2,7 +2,7 @@ package skeeter144.toc.handlers;
 
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.client.Keybindings;
@@ -32,7 +32,8 @@ public class PlayerInputHandler {
 	public void keyPressed(KeyPressedEvent e) {
 		if(Keybindings.SPELLBOOK_KEYBIND.isPressed()) {
 			Minecraft.getInstance().displayGuiScreen(null);
-			Minecraft.getInstance().player.openGui(TOCMain.instance, Guis.SPELL_BOOK_GUI, Minecraft.getInstance().player.world, 0, 0, 0);
+			//TODO: open gui
+			//Minecraft.getInstance().player.openGui(TOCMain.instance, Guis.SPELL_BOOK_GUI, Minecraft.getInstance().player.world, 0, 0, 0);
 			return;
 		}else if(Keybindings.LEVELS_KEYBIND.isPressed()) {
 			Minecraft.getInstance().displayGuiScreen(new LevelsGui());

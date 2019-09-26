@@ -15,9 +15,9 @@ public class AdjustPlayersScreenDim{
 		public static void handle(final AdjustPlayersScreenDim message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
-//	float pct;
-//	public AdjustPlayersScreenDim() {}
-//	public AdjustPlayersScreenDim(float pct) {this.pct = pct;}
+	float pct;
+	public AdjustPlayersScreenDim() {}
+	public AdjustPlayersScreenDim(float pct) {this.pct = pct;}
 //	
 //	@Override
 //	public void fromBytes(ByteBuf buf) {

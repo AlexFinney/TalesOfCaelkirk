@@ -1,12 +1,11 @@
 package skeeter144.toc.items.misc;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
@@ -15,14 +14,13 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityAbstractHorseMount;
-import skeeter144.toc.entity.mob.mount.basic_horse.EntityVariableHorseMount;
 import skeeter144.toc.items.CustomItem;
 
 public class VariableHorseSummoner extends CustomItem {
 
 	int type_summoned;
-	public VariableHorseSummoner(String name, int type_summoned) {
-		super(name, 1, CreativeTabs.MISC);
+	public VariableHorseSummoner(Item.Properties builder, int type_summoned) {
+		super(builder, 1);
 		this.type_summoned = type_summoned;
 	}
 
@@ -31,12 +29,12 @@ public class VariableHorseSummoner extends CustomItem {
 		if(world.isRemote)
 			return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
 		
-		if(player.getHeldItem(hand).getTagCompound() == null) {
-			player.getHeldItem(hand).setTagCompound(new NBTTagCompound());
+		if(player.getHeldItem(hand).getTag() == null) {
+			player.getHeldItem(hand).setTag(new NBTTagCompound());
 		}
 		
-		int type = player.getHeldItem(hand).getTagCompound().getInteger("mount_type");
-		UUID horseId = player.getHeldItem(hand).getTagCompound().getUniqueId("mount_uuid");
+		int type = player.getHeldItem(hand).getTag().getInt("mount_type");
+		UUID horseId = player.getHeldItem(hand).getTag().getUniqueId("mount_uuid");
 		
 		
 		
@@ -45,7 +43,8 @@ public class VariableHorseSummoner extends CustomItem {
 			
 			EntityAbstractHorseMount horse = null;
 			try {
-				horse = new EntityVariableHorseMount(world, player.getUniqueID(), type_summoned);
+				//TODO
+				//horse = new EntityVariableHorseMount(world, player.getUniqueID(), type_summoned);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -55,7 +54,7 @@ public class VariableHorseSummoner extends CustomItem {
 			
 			horse.setPosition(player.posX, player.posY + 2, player.posZ);
 			world.spawnEntity(horse);
-			player.getHeldItem(hand).getTagCompound().setUniqueId("mount_uuid", horse.getUniqueID());
+			player.getHeldItem(hand).getTag().setUniqueId("mount_uuid", horse.getUniqueID());
 		}else {
 			Entity foundHorse = null;
 			for(Entity e : world.loadedEntityList) {
@@ -71,7 +70,8 @@ public class VariableHorseSummoner extends CustomItem {
 			if(foundHorse == null) {
 				EntityAbstractHorseMount horse = null;
 				try {
-					horse = new EntityVariableHorseMount(world, player.getUniqueID(), type_summoned);
+					//TODO
+					//horse = new EntityVariableHorseMount(world, player.getUniqueID(), type_summoned);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -79,7 +79,7 @@ public class VariableHorseSummoner extends CustomItem {
 				horse.world = player.world;
 				horse.horseOwner = player.getUniqueID();
 				
-				player.getHeldItem(hand).getTagCompound().setUniqueId("mount_uuid", horse.getUniqueID());
+				player.getHeldItem(hand).getTag().setUniqueId("mount_uuid", horse.getUniqueID());
 				moveHorseNearPlayerAndWalkTo(horse, player);
 				world.spawnEntity(horse);
 			}

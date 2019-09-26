@@ -1,7 +1,7 @@
 package skeeter144.toc.handlers.tick;
 
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 import skeeter144.toc.TOCMain;
@@ -20,7 +20,7 @@ public class ClientTickHandler extends TickHandler{
 		++clientTicks;
 		
 		Minecraft mc = Minecraft.getInstance();
-		if(mc != null && mc.player != null && mc.player.isRiding()) 
+		if(mc != null && mc.player != null && mc.player.isRidingHorse()) 
 		{
 			if(mc.player.getRidingEntity() instanceof EntityAbstractFlyingMount) 
 			{

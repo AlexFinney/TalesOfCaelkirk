@@ -30,7 +30,7 @@ public class ZoneEntangleSpell extends ShootableSpell{
 						BlockPos pos = new BlockPos(res.hitVec.x + i,  res.hitVec.y + k, res.hitVec.z + j);
 						if(proj.world.getBlockState(pos).equals(Blocks.AIR.getDefaultState())) {
 							webs.add(pos);
-							proj.world.setBlockState(pos, Blocks.WEB.getDefaultState());
+							proj.world.setBlockState(pos, Blocks.COBWEB.getDefaultState());
 						}
 					}
 				}

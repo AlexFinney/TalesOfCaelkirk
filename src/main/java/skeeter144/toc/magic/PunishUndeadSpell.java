@@ -25,7 +25,7 @@ public class PunishUndeadSpell extends ShootableSpell {
 
 	@Override
 	public void onProjectileImpact(RayTraceResult res, EntityWandProjectile proj) {
-		Entity e = res.entityHit;
+		Entity e = res.entity;
 		if(e != null  && !e.world.isRemote) {
 			if(e instanceof EntityLiving){
 				if(e instanceof EntityZombie || e instanceof EntityZombieHorse || e instanceof EntityZombieVillager || e instanceof AbstractSkeleton) {

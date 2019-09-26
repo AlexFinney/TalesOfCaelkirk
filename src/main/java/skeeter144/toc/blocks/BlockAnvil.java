@@ -44,14 +44,14 @@ public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
 	public BlockAnvil(String name) {
 		super(Properties.create(Material.ANVIL).hardnessAndResistance(1000, 1000), name);
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, EnumFacing.NORTH));
-		ingots.add(TOCItems.ingot_bronze);
-		ingots.add(TOCItems.ingot_iron);
-		ingots.add(TOCItems.ingot_steel);
-		ingots.add(TOCItems.ingot_gold);
-		ingots.add(TOCItems.ingot_mithril);
-		ingots.add(TOCItems.ingot_adamantite);
-		ingots.add(TOCItems.ingot_runite);
-		ingots.add(TOCItems.ingot_dragonstone);
+//		ingots.add(TOCItems.ingot_bronze);
+//		ingots.add(TOCItems.ingot_iron);
+//		ingots.add(TOCItems.ingot_steel);
+//		ingots.add(TOCItems.ingot_gold);
+//		ingots.add(TOCItems.ingot_mithril);
+//		ingots.add(TOCItems.ingot_adamantite);
+//		ingots.add(TOCItems.ingot_runite);
+//		ingots.add(TOCItems.ingot_dragonstone);
 	}
 
 	@Override
@@ -107,7 +107,8 @@ public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
 		if(playerIn.getCooledAttackStrength(1) < 1)
 			return;
 		
-		boolean holdingHammer = playerIn.getHeldItemMainhand().getItem().equals(TOCItems.blacksmith_hammer);
+		//TODO
+		boolean holdingHammer = false;//playerIn.getHeldItemMainhand().getItem().equals(TOCItems.blacksmith_hammer);
 		
 		if(anvil.anvilOwner == null && holdingHammer) {
 			if(!isServer)
@@ -131,7 +132,7 @@ public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
 			if(isServer) {
 				worldIn.playSound(null, pos, Sounds.anvil_strike, SoundCategory.MASTER, 1, TOCMain.rand.nextFloat() / 5 + 1);
 				anvil.hammerStruck(playerIn);
-				Network.INSTANCE.sendToAll(new SpawnParticlesPKT(ParticleSystem.ANVIL_STRUCK_PARTICLE_SYSTEM, pos));
+				//Network.INSTANCE.sendToAll(new SpawnParticlesPKT(ParticleSystem.ANVIL_STRUCK_PARTICLE_SYSTEM, pos));
 			}else{
 				worldIn.playSound(null, pos, Sounds.anvil_strike, SoundCategory.MASTER, 1, TOCMain.rand.nextFloat() / 5 + 1);
 			}

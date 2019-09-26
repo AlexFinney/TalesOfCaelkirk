@@ -12,7 +12,7 @@ public interface IShootableSpell {
 		World worldIn = caster.world;
 		EntityPlayer playerIn = (EntityPlayer)caster;
 		
-		EntityWandProjectile spell = new EntityWandProjectile(worldIn, playerIn, spellId, null);
+		EntityWandProjectile spell = new EntityWandProjectile(null, worldIn, playerIn, spellId, null);
 		spell.shoot(caster, caster.rotationPitch, caster.rotationYaw, 0, 2.0f, 0);
 		caster.world.spawnEntity(spell);	
 	}

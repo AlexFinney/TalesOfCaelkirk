@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
+import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData;
 
 public class OpenShopGuiMessage{
 
@@ -14,11 +15,11 @@ public class OpenShopGuiMessage{
 		public static void handle(final OpenShopGuiMessage message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
-//	public ShopData data;
-//	public OpenShopGuiMessage() {}
-//	public OpenShopGuiMessage(ShopData data) {
-//		this.data = data;
-//	}
+	public ShopData data;
+	public OpenShopGuiMessage() {}
+	public OpenShopGuiMessage(ShopData data) {
+		this.data = data;
+	}
 //	
 //	@Override
 //	public void toBytes(ByteBuf buf) {

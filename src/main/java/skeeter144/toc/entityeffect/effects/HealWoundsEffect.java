@@ -2,7 +2,6 @@ package skeeter144.toc.entityeffect.effects;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.SpawnParticlesPKT;
@@ -33,8 +32,8 @@ public class HealWoundsEffect extends EntityEffect{
 		
 		pl.setHealthAndManaRegen(pl.getHealthRegen() + addedRegen, pl.getManaRegen());
 		
-		Network.INSTANCE.sendToAllAround(new SpawnParticlesPKT(ParticleSystem.HEAL_WOUNDS_EFFECT_ID, effected.posX, 
-				effected.posY, effected.posZ, effected.getEntityId(), ticksRemaining),	pl.mcEntity.world.getChunk(pl.mcEntity.getPosition()));
+		Network.INSTANCE.sendToAllAround(new SpawnParticlesPKT(ParticleSystem.HEAL_WOUNDS_EFFECT_ID, effected.getPosition(),
+				effected.getEntityId(), ticksRemaining),	pl.mcEntity.world.getChunk(pl.mcEntity.getPosition()));
 		
 	}
 

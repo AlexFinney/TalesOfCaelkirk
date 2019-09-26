@@ -8,8 +8,8 @@ import java.util.UUID;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import skeeter144.toc.entityeffect.effects.EntityEffect;
 import skeeter144.toc.entityeffect.effects.EntityEffect.EffectEndType;
 

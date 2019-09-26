@@ -2,6 +2,7 @@ package skeeter144.toc.network;
 
 import java.util.function.Supplier;
 
+import net.minecraft.item.Item;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -13,13 +14,13 @@ public class CraftItemMessage{
 		public static void handle(final CraftItemMessage message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
-//	Item item;
-//	int numToCraft;
-//	public CraftItemMessage() {}
-//	public CraftItemMessage(Item item, int numToCraft) {
-//		this.item = item;
-//		this.numToCraft = numToCraft;
-//	}
+	Item item;
+	int numToCraft;
+	public CraftItemMessage() {}
+	public CraftItemMessage(Item item, int numToCraft) {
+		this.item = item;
+		this.numToCraft = numToCraft;
+	}
 //	
 //	
 //	@Override

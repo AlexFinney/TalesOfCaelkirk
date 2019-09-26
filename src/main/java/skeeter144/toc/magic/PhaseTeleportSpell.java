@@ -3,7 +3,7 @@ package skeeter144.toc.magic;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.init.Particles;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
@@ -22,13 +22,13 @@ public class PhaseTeleportSpell extends ShootableSpell {
 		if (hitPos.distanceTo(proj.getThrower().getPositionVector()) < 100) {
 			
 			for (int i = 0; i < 32; ++i) {
-				proj.world.spawnParticle(EnumParticleTypes.PORTAL, proj.getThrower().posX, proj.getThrower().posY + TOCMain.rand.nextDouble() * 2.0D,
+				proj.world.spawnParticle(Particles.PORTAL, proj.getThrower().posX, proj.getThrower().posY + TOCMain.rand.nextDouble() * 2.0D,
 						 proj.getThrower().posZ, TOCMain.rand.nextGaussian(), 0.0D, TOCMain.rand.nextGaussian());
 			}
 			
-			if(res.entityHit != null && (res.entityHit instanceof EntityLiving || res.entityHit instanceof EntityLivingBase)) {
-				res.entityHit.setPositionAndUpdate(proj.getThrower().posX, proj.getThrower().posY, proj.getThrower().posZ);
-				res.entityHit.fallDistance = 0;
+			if(res.entity != null && (res.entity instanceof EntityLiving || res.entity instanceof EntityLivingBase)) {
+				res.entity.setPositionAndUpdate(proj.getThrower().posX, proj.getThrower().posY, proj.getThrower().posZ);
+				res.entity.fallDistance = 0;
 			}
 			
 			if(!proj.world.isRemote) {
@@ -37,7 +37,7 @@ public class PhaseTeleportSpell extends ShootableSpell {
 			}
 			
 			for (int i = 0; i < 32; ++i) {
-				proj.world.spawnParticle(EnumParticleTypes.PORTAL, proj.getThrower().posX, proj.getThrower().posY + TOCMain.rand.nextDouble() * 2.0D,
+				proj.world.spawnParticle(Particles.PORTAL, proj.getThrower().posX, proj.getThrower().posY + TOCMain.rand.nextDouble() * 2.0D,
 						 proj.getThrower().posZ, TOCMain.rand.nextGaussian(), 0.0D, TOCMain.rand.nextGaussian());
 			}
 		} else {

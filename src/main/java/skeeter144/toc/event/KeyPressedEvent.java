@@ -1,6 +1,6 @@
 package skeeter144.toc.event;
 
-import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.eventbus.api.Event;
 import skeeter144.toc.util.CustomKey;
 
 public class KeyPressedEvent extends Event{

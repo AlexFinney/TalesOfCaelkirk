@@ -59,7 +59,8 @@ public class EntityRat extends CustomMob{
 			return; 
 		EntityPlayer pl = Util.getPlayerFromDamageSource(cause);
 		if(pl != null) {
-			pl.addItemStackToInventory(new ItemStack(TOCItems.rat_tail));
+			//TODO
+			//pl.addItemStackToInventory(new ItemStack(TOCItems.rat_tail));
 			//int coins = TOCMain.rand.nextInt(5) + 1;
 			//ItemStack is = new ItemStack(TOCItems.copper_coin, coins);
 			//MinecraftForge.EVENT_BUS.post(new ItemAddedToInventoryEvent(pl, is));

@@ -1,6 +1,5 @@
 package skeeter144.toc.client.gui;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +11,6 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.EntityType;
 import net.minecraftforge.registries.ForgeRegistries;
 import skeeter144.toc.entity.tile.TileEntityMobSpawner;
-import skeeter144.toc.network.Network;
-import skeeter144.toc.network.SetMobSpawnerSettingsMessage;
 
 public class MobSpawnerGUI extends GuiScreen{
 	
@@ -158,7 +155,7 @@ public class MobSpawnerGUI extends GuiScreen{
 			++maxMobsPersSpawn;
 			break;
 		case 14:
-			Network.INSTANCE.sendToServer(new SetMobSpawnerSettingsMessage(
+			/*Network.INSTANCE.sendToServer(new SetMobSpawnerSettingsMessage(
 								    mobList.get(mobIndex).getEntityClass().getName(),
 									spawnRadius,
 									spawnsPerMin,
@@ -168,7 +165,7 @@ public class MobSpawnerGUI extends GuiScreen{
 									maxMobsPersSpawn, 
 									spawner.getPos().getX(), 
 									spawner.getPos().getY(), 
-									spawner.getPos().getZ()));
+									spawner.getPos().getZ()));*/
 			break;
 		}
 		

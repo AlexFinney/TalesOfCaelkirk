@@ -36,7 +36,8 @@ public class TileEntityMobSpawnerRenderer extends TileEntityRenderer<TileEntityM
 			blockRenderer = Minecraft.getInstance().getBlockRendererDispatcher(); 
 		
 		BlockPos blockpos = te.getPos();
-		IBlockState iblockstate = TOCBlocks.blockMobSpawner.getDefaultState();
+		//TODO
+		IBlockState iblockstate = null;//TOCBlocks.blockMobSpawner.getDefaultState();
 
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();

@@ -1,9 +1,11 @@
 package skeeter144.toc.network;
 
+import java.util.UUID;
 import java.util.function.Supplier;
 
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
+import skeeter144.toc.entity.mob.CustomMob;
 
 public class AnimationEventMessage{
 	public static void encode(AdjustPlayersScreenDim pkt, PacketBuffer buf) {}
@@ -14,14 +16,14 @@ public class AnimationEventMessage{
 		public static void handle(final AdjustPlayersScreenDim message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
-//	public AnimationEventMessage() {}
-//	
-//	UUID uuid;
-//	String functionName;
-//	public AnimationEventMessage(String functionName, CustomMob mob) {
-//		uuid = mob.getUniqueID();
-//		this.functionName = functionName;
-//	}
+	public AnimationEventMessage() {}
+	
+	UUID uuid;
+	String functionName;
+	public AnimationEventMessage(String functionName, CustomMob mob) {
+		uuid = mob.getUniqueID();
+		this.functionName = functionName;
+	}
 //	
 //	@Override
 //	public void fromBytes(ByteBuf buf) {

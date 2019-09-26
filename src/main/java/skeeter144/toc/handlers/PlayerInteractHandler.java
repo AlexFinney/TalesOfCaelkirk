@@ -1,5 +1,6 @@
 package skeeter144.toc.handlers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.event.world.BlockEvent.EntityPlaceEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.blocks.BlockHarvestableOre;
 import skeeter144.toc.blocks.TOCBlocks;
@@ -52,7 +54,7 @@ public class PlayerInteractHandler {
 		if(e.getWorld().isRemote)
 			return;
 		
-		if(e.getEntityPlayer().capabilities.isCreativeMode)
+		if(e.getEntityPlayer().abilities.isCreativeMode)
 			return;
 		
 		if(e.getEntityPlayer().getCooledAttackStrength(1) != 1) {
@@ -87,50 +89,37 @@ public class PlayerInteractHandler {
 	
 	@SubscribeEvent
 	public void onPlayerRightClickBlock(PlayerInteractEvent.RightClickBlock e) {
-		List<Item> ingots = Arrays.asList(TOCItems.ingot_bronze, TOCItems.ingot_iron, TOCItems.ingot_steel,
-				TOCItems.ingot_gold, TOCItems.ingot_mithril, TOCItems.ingot_runite, TOCItems.ingot_dragonstone);
+		List<Item> ingots = new ArrayList<Item>(); // Arrays.asList(TOCItems.ingot_bronze, TOCItems.ingot_iron, TOCItems.ingot_steel,
+				//TOCItems.ingot_gold, TOCItems.ingot_mithril, TOCItems.ingot_runite, TOCItems.ingot_dragonstone);
 
 		IBlockState bs = e.getWorld().getBlockState(e.getPos()).getBlock().getDefaultState();
 		if (e.getWorld().isRemote) {
-			if (bs.getBlock().equals(Blocks.NETHER_BRICK))
-				e.getEntityPlayer().openGui(TOCMain.instance, Guis.SMELTING_GUI, e.getWorld(), 0, 0, 0);
-
-			if (bs.getBlock().getDefaultState().equals(TOCBlocks.blockAnvil.getDefaultState())) {
-				TileEntityAnvil anvil = (TileEntityAnvil) e.getWorld().getTileEntity(e.getPos());
-				if (!ingots.contains(e.getEntityPlayer().getHeldItemMainhand().getItem()) && anvil.producedItem == null) {
-					e.getEntityPlayer().openGui(TOCMain.instance, Guis.SMITHING_GUI, e.getWorld(), e.getPos().getX(),
-							e.getPos().getY(), e.getPos().getZ());
-				}
-			}
+			//if (bs.getBlock().equals(Blocks.NETHER_BRICKS))
+				//e.getEntityPlayer().openGui(TOCMain.instance, Guis.SMELTING_GUI, e.getWorld(), 0, 0, 0);
+//TODO
+//			if (bs.getBlock().getDefaultState().equals(TOCBlocks.blockAnvil.getDefaultState())) {
+//				TileEntityAnvil anvil = (TileEntityAnvil) e.getWorld().getTileEntity(e.getPos());
+//				if (!ingots.contains(e.getEntityPlayer().getHeldItemMainhand().getItem()) && anvil.producedItem == null) {
+//				//	e.getEntityPlayer().openGui(TOCMain.instance, Guis.SMITHING_GUI, e.getWorld(), e.getPos().getX(),
+//				//			e.getPos().getY(), e.getPos().getZ());
+//				}
+//			}
 		} else {
 			if(!(e.getWorld().getTileEntity(e.getPos()) instanceof TileEntityAnvil))
 				return;
 			
 			TileEntityAnvil anvil = (TileEntityAnvil)e.getWorld().getTileEntity(e.getPos());
-			if (bs.getBlock().getDefaultState().equals(TOCBlocks.blockAnvil.getDefaultState())) {
-				if (anvil != null && anvil.producedItem != null) {
-					e.getEntityPlayer().addItemStackToInventory(anvil.producedItem);
-					anvil.anvilOwner = null;
-					anvil.producedItem = null;
-					anvil.sendUpdates();
-				}
-			}
+//			if (bs.getBlock().getDefaultState().equals(TOCBlocks.blockAnvil.getDefaultState())) {
+//				if (anvil != null && anvil.producedItem != null) {
+//					e.getEntityPlayer().addItemStackToInventory(anvil.producedItem);
+//					anvil.anvilOwner = null;
+//					anvil.producedItem = null;
+//					anvil.sendUpdates();
+//				}
+//			}
 		}
 	}
 		
-	@SubscribeEvent
-	public void onBlockPlace(BlockEvent.PlaceEvent e) {
-		if(e.getPlacedBlock().getBlock() instanceof BlockHarvestableOre) {
-		}
-	}
-	
-	@SubscribeEvent
-	public void onBlockBreak(BlockEvent.BreakEvent e){
-		if(e.getState().getBlock() instanceof BlockHarvestableOre) {
-			
-		}
-	}
-	
 	private void processLogChopped(PlayerInteractEvent e) {
 		World world = e.getWorld();
 		EntityPlayer player = e.getEntityPlayer();
@@ -142,20 +131,20 @@ public class PlayerInteractHandler {
 		float pitchOffset = TOCMain.rand.nextFloat() / .3f - .15f;
 		world.playSound(null, pos, SoundEvents.BLOCK_WOOD_HIT, SoundCategory.MASTER, 1, 1 + pitchOffset);
 
-		Network.INSTANCE.sendToAll(new SpawnParticlesPKT(ParticleSystem.ORE_MINING_PARTICLE_SYSTEM, pos.getX(), pos.getY(), pos.getZ()));
+		Network.INSTANCE.sendToAll(new SpawnParticlesPKT(ParticleSystem.ORE_MINING_PARTICLE_SYSTEM, pos));
 		
 		BlockLog log = (BlockLog) world.getBlockState(pos).getBlock();
 
 		if(TOCMain.pm.getPlayer(e.getEntityPlayer()).getPlayerLevels().getLevel(Levels.WOODCUTTING).getLevel() < 
 				Woodcutting.getLevelRequirementForWood(log)) {
 			player.sendMessage(new TextComponentString("You need at least Woodcutting level " + Woodcutting.getLevelRequirementForWood(log)
-					+ " to cut down " + log.getLocalizedName()));
+					+ " to cut down " + log.getNameTextComponent()));
 			return;
 		}
 		
 		float chance = Woodcutting.getChopChanceForWood((TOCAxe) e.getEntityPlayer().getHeldItemMainhand().getItem(), world.getBlockState(pos));
 		if(chance == 0) {
-			player.sendMessage(new TextComponentString("Your axe is not strong enough to chop down " + log.getLocalizedName()));
+			player.sendMessage(new TextComponentString("Your axe is not strong enough to chop down " + log.getNameTextComponent()));
 			return;
 		}
 		
@@ -199,7 +188,8 @@ public class PlayerInteractHandler {
 				}
 				world.setBlockState(lowestPos, lowestBlock);
 			
-				world.setBlockState(pos, TOCBlocks.harvested_tree.getDefaultState());
+				//TODO
+				//world.setBlockState(pos, TOCBlocks.harvested_tree.getDefaultState());
 				TileEntityHarvestedTree tree = (TileEntityHarvestedTree)world.getTileEntity(pos);
 				tree.minSecs = Woodcutting.getMinRespawnSecsForWood(log);
 				tree.maxSecs = Woodcutting.getMaxRespawnSecsForWood(log);

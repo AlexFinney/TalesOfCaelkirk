@@ -2,20 +2,15 @@ package skeeter144.toc.items.tools;
 
 import com.google.common.collect.Multimap;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import skeeter144.toc.util.Reference;
 
 public class BlacksmithHammer extends Item{
-	public BlacksmithHammer() {
-		this.setUnlocalizedName("blacksmith_hammer");
-		this.setRegistryName(new ResourceLocation(Reference.MODID, "blacksmith_hammer"));
-		this.setCreativeTab(CreativeTabs.TOOLS);
+	public BlacksmithHammer(Item.Properties builder) {
+		super(builder);
 	}
 	
 	@Override

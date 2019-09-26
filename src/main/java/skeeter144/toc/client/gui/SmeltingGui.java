@@ -60,14 +60,14 @@ public class SmeltingGui extends CraftingGui{
 		EntityPlayer pl = Minecraft.getInstance().player;
 		if(button.id == 0) {//smelt 1 more
 			if(selectedRecipe.canRecipeBeCraftedNumberTimes(pl.inventory, this.totalCrafting + 1)) {
-				Network.INSTANCE.sendToServer(new CraftItemMessage(selectedRecipe.crafted.getItem(), 1));
+			//	Network.INSTANCE.sendToServer(new CraftItemMessage(selectedRecipe.crafted.getItem(), 1));
 				totalCrafting++;
 				pl.world.playSound(pl, pl.getPosition(), Sounds.anvil_strike, SoundCategory.MASTER, 1, 1);
 			}
 		}else {//smelt all
 			int num = selectedRecipe.numberCanBeCrafted(pl.inventory) - totalCrafting;
 			for(int i = 0; i < num; ++i) {
-				Network.INSTANCE.sendToServer(new CraftItemMessage(selectedRecipe.crafted.getItem(), 1));
+			//	Network.INSTANCE.sendToServer(new CraftItemMessage(selectedRecipe.crafted.getItem(), 1));
 				totalCrafting++;
 			}
 			updatePlayersInventory();

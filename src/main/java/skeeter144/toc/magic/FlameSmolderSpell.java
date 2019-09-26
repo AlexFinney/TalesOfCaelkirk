@@ -20,7 +20,7 @@ public class FlameSmolderSpell extends ElementalSpell {
 
 	@Override
 	public void onProjectileImpact(RayTraceResult res, EntityWandProjectile proj) {
-		Entity e = res.entityHit;
+		Entity e = res.entity;
 		if(e != null  && !e.world.isRemote) {
 			if(e instanceof EntityLivingBase){
 				int fireSecs = TOCMain.rand.nextInt(4) + 1;
@@ -35,7 +35,7 @@ public class FlameSmolderSpell extends ElementalSpell {
 		/*if(proj.getThrower().world.isRemote) {
 			Minecraft mc = Minecraft.getInstance();
 			for(int i = 0; i < 20; ++i) {
-				FireSpellTrailParticle p = new FireSpellTrailParticle(mc.world, res.hitVec.x, res.hitVec.y + (res.entityHit != null ? 1 : 0), res.hitVec.z,
+				FireSpellTrailParticle p = new FireSpellTrailParticle(mc.world, res.hitVec.x, res.hitVec.y + (res.entity != null ? 1 : 0), res.hitVec.z,
 						(float)(TOCMain.rand.nextGaussian() + 1f) * .75f, 0xFFFFFF,  .75f);
 				
 				p.setVectorMovementBias(null, .75f);

@@ -25,13 +25,13 @@ public class SummonWallSpell extends ShootableSpell{
 			return;
 		proj.getThrower().noClip = true;
 
-		if(res.entityHit != null)
+		if(res.entity != null)
 			return;
 		
 		if(proj.world.getBlockState(res.getBlockPos()) == Blocks.AIR.getDefaultState())
 			return;
 		
-		final Block[] blocks = new Block[] {Blocks.STONEBRICK, Blocks.COBBLESTONE, Blocks.MOSSY_COBBLESTONE};
+		final Block[] blocks = new Block[] {Blocks.STONE_BRICKS, Blocks.COBBLESTONE, Blocks.MOSSY_COBBLESTONE};
 		TOCMain.serverTaskManager.addTask(new TickableTask(500) {
 			int wallWidth = 18;
 			int wallHeight = 6;

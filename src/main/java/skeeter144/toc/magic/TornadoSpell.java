@@ -1,11 +1,8 @@
 package skeeter144.toc.magic;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import skeeter144.toc.entity.projectile.EntityWandProjectile;
 import skeeter144.toc.entityeffect.ServerEffectHandler;
 import skeeter144.toc.entityeffect.ServerEffectHandler.EffectAddResult;
@@ -30,14 +27,14 @@ public class TornadoSpell extends ShootableSpell{
 
 	@Override
 	public void onProjectileImpact(RayTraceResult res, EntityWandProjectile proj) {
-		Entity e = res.entityHit;
+		Entity e = res.entity;
 		if(e != null && !e.world.isRemote) {
 			if(e instanceof EntityLivingBase){
 				EntityLivingBase el = (EntityLivingBase)e;
 				EffectAddResult effRes = ServerEffectHandler.attemptAddNewEffect(e.getUniqueID(), new TornadoEffect(e, 1));
 				if(effRes == EffectAddResult.SUCCESS) {
-					Network.INSTANCE.sendToAllAround(new SpawnParticlesPKT(ParticleSystem.TORNADO_SYSTEM, el.posX, el.posY, el.posZ), 
-							new TargetPoint(el.dimension, el.posX, el.posY, el.posZ, 200));
+					Network.INSTANCE.sendToAllAround(new SpawnParticlesPKT(ParticleSystem.TORNADO_SYSTEM, el.getPosition()), 
+																		   el.world.getChunk(el.getPosition()));
 				}
 					
 			}

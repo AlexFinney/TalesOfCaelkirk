@@ -1,5 +1,6 @@
 package skeeter144.toc.network;
 
+import java.util.UUID;
 import java.util.function.Supplier;
 
 import net.minecraft.network.PacketBuffer;
@@ -13,14 +14,14 @@ public class ShowEntityDialogMessage{
 	{
 		public static void handle(final ShowEntityDialogMessage message, Supplier<NetworkEvent.Context> ctx){}
 	}
-//	
-//	String dialogName;
-//	UUID uuid;
-//	public ShowEntityDialogMessage() {}
-//	public ShowEntityDialogMessage(UUID entityId, String dialogName) {
-//		this.uuid = entityId;
-//		this.dialogName = dialogName;
-//	}
+	
+	String dialogName;
+	UUID uuid;
+	public ShowEntityDialogMessage() {}
+	public ShowEntityDialogMessage(UUID entityId, String dialogName) {
+		this.uuid = entityId;
+		this.dialogName = dialogName;
+	}
 //	
 //	@Override
 //	public void fromBytes(ByteBuf buf) {

@@ -13,16 +13,16 @@ public class NotfyClientOfEffectMessage	{
 	{
 		public static void handle(final NotfyClientOfEffectMessage message, Supplier<NetworkEvent.Context> ctx){}
 	}
-//	
-//	String name;
-//	int nameLength;
-//	boolean newEffect;
-//	public NotfyClientOfEffectMessage(){}
-//	public NotfyClientOfEffectMessage(String name, boolean newEffect) {
-//		this.name = name;
-//		nameLength = name.length();
-//		this.newEffect = newEffect;
-//	}
+	
+	String name;
+	int nameLength;
+	boolean newEffect;
+	public NotfyClientOfEffectMessage(){}
+	public NotfyClientOfEffectMessage(String name, boolean newEffect) {
+		this.name = name;
+		nameLength = name.length();
+		this.newEffect = newEffect;
+	}
 //	
 //	
 //	@Override

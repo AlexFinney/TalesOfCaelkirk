@@ -1,11 +1,9 @@
 package skeeter144.toc.handlers.tick;
 
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 import skeeter144.toc.TOCMain;
-import skeeter144.toc.client.Keybindings;
 import skeeter144.toc.recipe.RecipeManager;
 
 public class TickHandler {

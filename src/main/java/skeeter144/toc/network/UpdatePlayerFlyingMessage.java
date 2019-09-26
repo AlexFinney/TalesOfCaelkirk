@@ -14,13 +14,13 @@ public class UpdatePlayerFlyingMessage {
 		public static void handle(final UpdatePlayerFlyingMessage message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
-//	boolean isFlyingUp = false;
-//	boolean isFlyingDown = false;
-//	public UpdatePlayerFlyingMessage() {}
-//	public UpdatePlayerFlyingMessage(boolean flyingUp, boolean flyingDown) {
-//		this.isFlyingUp = flyingUp;
-//		this.isFlyingDown = flyingDown;
-//	}
+	boolean isFlyingUp = false;
+	boolean isFlyingDown = false;
+	public UpdatePlayerFlyingMessage() {}
+	public UpdatePlayerFlyingMessage(boolean flyingUp, boolean flyingDown) {
+		this.isFlyingUp = flyingUp;
+		this.isFlyingDown = flyingDown;
+	}
 //	
 //	public void fromBytes(ByteBuf buf) {
 //		this.isFlyingUp = buf.readBoolean();

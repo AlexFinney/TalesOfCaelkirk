@@ -2,6 +2,7 @@ package skeeter144.toc.network;
 
 import java.util.function.Supplier;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -14,13 +15,13 @@ public class SpawnBlockedMessage {
 		public static void handle(final SpawnBlockedMessage message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
-//	public SpawnBlockedMessage() {}
-//	
-//	long msb, lsb;
-//	public SpawnBlockedMessage(Entity e) {
-//		msb = e.getUniqueID().getMostSignificantBits();
-//		lsb = e.getUniqueID().getLeastSignificantBits();
-//	}
+	public SpawnBlockedMessage() {}
+	
+	long msb, lsb;
+	public SpawnBlockedMessage(Entity e) {
+		msb = e.getUniqueID().getMostSignificantBits();
+		lsb = e.getUniqueID().getLeastSignificantBits();
+	}
 //	
 //	@Override
 //	public void fromBytes(ByteBuf buf) {

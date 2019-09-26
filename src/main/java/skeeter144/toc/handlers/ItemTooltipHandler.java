@@ -3,8 +3,10 @@ package skeeter144.toc.handlers;
 import java.util.List;
 
 import net.minecraft.item.Item;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import skeeter144.toc.items.weapons.TOCBow;
 import skeeter144.toc.items.weapons.TOCGreatAxe;
 import skeeter144.toc.items.weapons.TOCGreatSword;
@@ -28,7 +30,7 @@ public class ItemTooltipHandler {
 		if(!found)
 			return;
 		
-		List<String> tooltip = e.getToolTip();
+		List<ITextComponent> tooltip = e.getToolTip();
 		tooltip.clear();
 		
 		Item item = e.getItemStack().getItem();
@@ -37,7 +39,7 @@ public class ItemTooltipHandler {
 			return;
 		
 		tooltip.add(e.getItemStack().getDisplayName());
-		tooltip.add("");
+		tooltip.add(new TextComponentString("")	);
 		
 		if(e.getItemStack().getItem() instanceof TOCSword) 
 			((TOCSword)item).addInformation(e.getItemStack(), e.getEntityPlayer().world, tooltip, e.getFlags());

@@ -6,12 +6,13 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.IItemTier;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.ActionResult;
@@ -19,12 +20,14 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import skeeter144.toc.combat.CombatManager.DamageType;
-import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.combat.CombatManager;
+import skeeter144.toc.combat.CombatManager.DamageType;
 import skeeter144.toc.combat.TOCDamageSource;
+import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.util.Reference;
 import skeeter144.toc.util.Util;
 
@@ -32,19 +35,15 @@ public class TOCGreatSword extends ItemSword implements ISpecialAttackWeapon{
 	String name;
 	float damage, speed;
 	boolean hasSpecial = false;
-	public TOCGreatSword(String name, float damage, float speed, boolean hasSpecial) {
-		super(TOCItems.STEEL);
-		setUnlocalizedName(name);
-		setRegistryName(new ResourceLocation(Reference.MODID, name));
-		setMaxStackSize(1);
+	public TOCGreatSword(IItemTier tier, Item.Properties builder, float damage, float speed, boolean hasSpecial) {
+		super(tier, (int) damage, speed, builder);
 		this.damage = damage;
 		this.speed = speed;
 		this.hasSpecial = hasSpecial;
-		this.setMaxDamage(-1);
 	}
 	
 	@Override
-	public Multimap<String, AttributeModifier> getItemAttributeModifiers(EntityEquipmentSlot equipmentSlot) {
+	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot) {
 		Multimap<String, AttributeModifier> map = HashMultimap.<String, AttributeModifier>create();
 		 if (equipmentSlot == EntityEquipmentSlot.MAINHAND)
 	     {
@@ -85,7 +84,7 @@ public class TOCGreatSword extends ItemSword implements ISpecialAttackWeapon{
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.YELLOW + "Base Damage: " + (int)(this.damage * CombatManager.LOWER_DAMAGE_PCT) + " - " + (int)this.damage);
+	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TextComponentString(TextFormatting.YELLOW + "Base Damage: " + (int)(this.damage * CombatManager.LOWER_DAMAGE_PCT) + " - " + (int)this.damage));
 	}
 }

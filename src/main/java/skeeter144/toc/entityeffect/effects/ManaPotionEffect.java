@@ -2,9 +2,8 @@ package skeeter144.toc.entityeffect.effects;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.network.NetworkRegistry;
 import skeeter144.toc.TOCMain;
-import skeeter144.toc.entity.TOCEntity;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.SpawnParticlesPKT;
 import skeeter144.toc.particles.system.ParticleSystem;
@@ -25,9 +24,8 @@ public class ManaPotionEffect extends EntityEffect {
 	protected void onEffectStart() {
 		player.setHealthAndManaRegen(player.getHealthRegen(), player.getManaRegen() + addedRegen);
 		
-		Network.INSTANCE.sendToAllAround(new SpawnParticlesPKT(ParticleSystem.MANA_REGEN_EFFECT_ID, effected.posX, 
-				effected.posY, effected.posZ, effected.getEntityId(), duration), 
-				new NetworkRegistry.TargetPoint(effected.world.provider.getDimension(), effected.posX, effected.posY, effected.posZ, 100));
+		Network.INSTANCE.sendToAllAround(new SpawnParticlesPKT(ParticleSystem.MANA_REGEN_EFFECT_ID, effected.getPosition(), effected.getEntityId(), duration), 
+				effected.world.getChunk(effected.getPosition()));
 	}
 	
 	@Override

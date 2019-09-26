@@ -1,12 +1,12 @@
 package skeeter144.toc.blocks;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
@@ -19,16 +19,12 @@ import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.tile.TileEntityHarvestedOre;
 import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.items.tools.TOCPickaxe;
-import skeeter144.toc.network.AddLevelXpMessage;
-import skeeter144.toc.network.Network;
-import skeeter144.toc.network.SpawnParticlesPKT;
-import skeeter144.toc.particles.system.ParticleSystem;
 import skeeter144.toc.player.EntityLevels.Levels;
 import skeeter144.toc.sounds.Sounds;
 
 public class BlockHarvestableOre extends CustomBlock{
-	final List<Item> picks = Arrays.asList(TOCItems.bronze_pickaxe, TOCItems.iron_pickaxe, TOCItems.steel_pickaxe, TOCItems.mithril_pickaxe,
-									 TOCItems.adamantite_pickaxe, TOCItems.runite_pickaxe, TOCItems.dragonstone_pickaxe);
+	final List<Item> picks = new ArrayList<Item>();//Arrays.asList(TOCItems.bronze_pickaxe, TOCItems.iron_pickaxe, TOCItems.steel_pickaxe, TOCItems.mithril_pickaxe,
+									 //TOCItems.adamantite_pickaxe, TOCItems.runite_pickaxe, TOCItems.dragonstone_pickaxe);
 	public Item item;
 	public int minSecs, maxSecs, xpGiven;
 	public BlockHarvestableOre(String name, Item ore, int xpGiven, int minSecs, int maxSecs) {
@@ -53,11 +49,11 @@ public class BlockHarvestableOre extends CustomBlock{
 		if(world.isRemote)
 			return;
 		
-		 Network.INSTANCE.sendToAll(new SpawnParticlesPKT(ParticleSystem.ORE_MINING_PARTICLE_SYSTEM, pos));
+		// Network.INSTANCE.sendToAll(new SpawnParticlesPKT(ParticleSystem.ORE_MINING_PARTICLE_SYSTEM, pos));
 		
 		float chance = ((TOCPickaxe)player.getHeldItemMainhand().getItem()).getMineChanceForOre(this);
 		if(TOCMain.rand.nextFloat() < chance) {
-			 Network.INSTANCE.sendToAll(new SpawnParticlesPKT(ParticleSystem.ORE_BROKEN_PARTICLE_SYSTEM, pos));
+			// Network.INSTANCE.sendToAll(new SpawnParticlesPKT(ParticleSystem.ORE_BROKEN_PARTICLE_SYSTEM, pos));
 			 
 				if(player.inventory.getFirstEmptyStack() == -1) {
 					player.sendMessage(new TextComponentString("Your inventory is too full to hold any more ore!"));
@@ -66,7 +62,8 @@ public class BlockHarvestableOre extends CustomBlock{
 					
 				IBlockState oldState = world.getBlockState(pos);
 				MinecraftForge.EVENT_BUS.post(new BlockMinedEvent(world, pos, oldState, player));
-				world.setBlockState(pos, TOCBlocks.harvested_ore.getDefaultState());
+				//TODO
+				//world.setBlockState(pos, TOCBlocks.harvested_ore.getDefaultState());
 				TileEntityHarvestedOre ore = (TileEntityHarvestedOre)world.getTileEntity(pos);
 				ore.resourceBlockState = oldState;
 				BlockHarvestableOre hOre = (BlockHarvestableOre)oldState.getBlock();
@@ -75,7 +72,7 @@ public class BlockHarvestableOre extends CustomBlock{
 				if(player != null) {
 					player.addItemStackToInventory(new ItemStack(hOre.item));
 					TOCMain.pm.getPlayer(player).levels.addExp(Levels.MINING, hOre.xpGiven);
-					Network.INSTANCE.sendTo(new AddLevelXpMessage("Mining", hOre.xpGiven), (EntityPlayerMP) player);
+					//Network.INSTANCE.sendTo(new AddLevelXpMessage("Mining", hOre.xpGiven), (EntityPlayerMP) player);
 				}
 		}
 	}

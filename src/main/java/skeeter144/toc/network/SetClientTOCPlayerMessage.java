@@ -4,6 +4,8 @@ import java.util.function.Supplier;
 
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
+import skeeter144.toc.player.EntityLevels;
+import skeeter144.toc.player.TOCPlayer;
 
 public class SetClientTOCPlayerMessage{
 
@@ -14,18 +16,18 @@ public class SetClientTOCPlayerMessage{
 		public static void handle(final SetClientTOCPlayerMessage message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
-//	public SetClientTOCPlayerMessage() {}
-//	
-//	EntityLevels pl;
-//	int health, mHealth, mana, mMana;
-//	int bytes = 0;
-//	public SetClientTOCPlayerMessage(TOCPlayer player) {
-//		pl = player.levels;
-//		health = player.getHealth();
-//		mHealth = player.getMaxHealth();
-//		mana = player.getMana();
-//		mMana = player.getMaxMana();
-//	}
+	public SetClientTOCPlayerMessage() {}
+	
+	EntityLevels pl;
+	int health, mHealth, mana, mMana;
+	int bytes = 0;
+	public SetClientTOCPlayerMessage(TOCPlayer player) {
+		pl = player.levels;
+		health = player.getHealth();
+		mHealth = player.getMaxHealth();
+		mana = player.getMana();
+		mMana = player.getMaxMana();
+	}
 //	
 //	@Override
 //	public void toBytes(ByteBuf buf) {
@@ -52,7 +54,7 @@ public class SetClientTOCPlayerMessage{
 //	
 //	
 //	ByteBuf buf;
-//	@SideOnly(Side.CLIENT)
+//	@OnlyIn(Dist.CLIENT)
 //	public void fromBytes(ByteBuf buf) {
 //		int playerLevelsSize = buf.readInt();
 //		

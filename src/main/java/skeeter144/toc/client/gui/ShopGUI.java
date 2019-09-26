@@ -73,9 +73,9 @@ public class ShopGUI extends GuiScreen{
 			ItemStack is = (itemToSell == -1 ? itemToBuy : inv.getStackInSlot(itemToSell));
 			
 			this.itemRender.renderItemAndEffectIntoGUI(is, x, y);
-			this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(TOCItems.gold_coin), (int)(bookX + bookWidth * .5f), (int)(bookY + bookHeight * .4f));
-			this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(TOCItems.silver_coin), (int)(bookX + bookWidth * .5f) + 2 * iconDim, (int)(bookY + bookHeight * .4f) );
-			this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(TOCItems.copper_coin), (int)(bookX + bookWidth * .5f) + 4 * iconDim, (int)(bookY + bookHeight * .4f));
+//			this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(TOCItems.gold_coin), (int)(bookX + bookWidth * .5f), (int)(bookY + bookHeight * .4f));
+//			this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(TOCItems.silver_coin), (int)(bookX + bookWidth * .5f) + 2 * iconDim, (int)(bookY + bookHeight * .4f) );
+//			this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(TOCItems.copper_coin), (int)(bookX + bookWidth * .5f) + 4 * iconDim, (int)(bookY + bookHeight * .4f));
 			
 			ItemPrice price;
 			boolean buying = itemToBuy != null;

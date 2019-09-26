@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -12,7 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import skeeter144.toc.TOCMain;
@@ -23,29 +22,25 @@ import skeeter144.toc.magic.Spells;
 import skeeter144.toc.particles.system.ParticleSystem;
 import skeeter144.toc.particles.system.PunishUndeadSystem;
 import skeeter144.toc.player.TOCPlayer;
-import skeeter144.toc.util.Reference;
 import skeeter144.toc.util.Strings;
 
 public class BasicWand extends Item
 {
-	public BasicWand(String name)
+	public BasicWand(Item.Properties properties)
 	{
-		setUnlocalizedName(name);
-		setRegistryName(new ResourceLocation(Reference.MODID, name));
-		setMaxStackSize(1);
-		this.setCreativeTab(CreativeTabs.COMBAT);
+		super(properties);
 	}
 	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		Spell embuedSpell = null;
 		
-		if(player.getHeldItem(hand).getTagCompound() == null) {
-			player.getHeldItem(hand).setTagCompound(new NBTTagCompound());
-			player.getHeldItem(hand).getTagCompound().setInteger("embued_spell", 0);
+		if(player.getHeldItem(hand).getTag() == null) {
+			player.getHeldItem(hand).setTag(new NBTTagCompound());
+			player.getHeldItem(hand).getTag().setInt("embued_spell", 0);
 		}
 
-		embuedSpell = Spells.getSpell(player.getHeldItem(hand).getTagCompound().getInteger("embued_spell"));
+		embuedSpell = Spells.getSpell(player.getHeldItem(hand).getTag().getInt("embued_spell"));
 		
 		if(embuedSpell == null) {
 			return new ActionResult<ItemStack>(EnumActionResult.FAIL, player.getHeldItem(hand));
@@ -72,7 +67,7 @@ public class BasicWand extends Item
 				ParticleSystem system = ParticleSystem.getNewParticleSystem(es.getSpellTrailId());
 				system.updatePosition(world, player.posX, player.posY, player.posZ);
 					
-				EntityWandProjectile spell = new EntityWandProjectile(world, player, embuedSpell.getId(), system);
+				EntityWandProjectile spell = new EntityWandProjectile(null, world, player, embuedSpell.getId(), system);
 				spell.shoot(player, player.rotationPitch, player.rotationYaw, 0, 3.0f, 0);
 				
 				//do special stuff for special spells down here. Kinda ugly but whatevs
@@ -90,7 +85,7 @@ public class BasicWand extends Item
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		
 	}
 }

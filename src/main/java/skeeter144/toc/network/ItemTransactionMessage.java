@@ -1,5 +1,6 @@
 package skeeter144.toc.network;
 
+import java.util.UUID;
 import java.util.function.Supplier;
 
 import net.minecraft.network.PacketBuffer;
@@ -14,17 +15,17 @@ public class ItemTransactionMessage{
 		public static void handle(final ItemTransactionMessage message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
-//	boolean buying;
-//	String itemName;
-//	int count;
-//	UUID shopKeeperId;
-//	public ItemTransactionMessage() {}
-//	public ItemTransactionMessage(boolean isBuying, String itemName, int count, UUID shopKeeperId) {
-//		this.buying = isBuying;
-//		this.itemName = itemName;
-//		this.count = count;
-//		this.shopKeeperId = shopKeeperId;
-//	}
+	boolean buying;
+	String itemName;
+	int count;
+	UUID shopKeeperId;
+	public ItemTransactionMessage() {}
+	public ItemTransactionMessage(boolean isBuying, String itemName, int count, UUID shopKeeperId) {
+		this.buying = isBuying;
+		this.itemName = itemName;
+		this.count = count;
+		this.shopKeeperId = shopKeeperId;
+	}
 //	
 //	public void toBytes(ByteBuf buf) {
 //		buf.writeBoolean(buying);

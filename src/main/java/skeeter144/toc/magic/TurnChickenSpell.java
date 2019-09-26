@@ -21,13 +21,13 @@ public class TurnChickenSpell extends ShootableSpell{
 		if(proj.world.isRemote)
 			return;
 		
-		if(res.entityHit == null || !(res.entityHit instanceof EntityLiving) && !(res.entityHit instanceof EntityLivingBase))
+		if(res.entity == null || !(res.entity instanceof EntityLiving) && !(res.entity instanceof EntityLivingBase))
 			return;
 		
-		if(res.entityHit instanceof EntityPlayer) {
-			turnPlayerToChicken((EntityPlayerMP)res.entityHit);
+		if(res.entity instanceof EntityPlayer) {
+			turnPlayerToChicken((EntityPlayerMP)res.entity);
 		}else {
-			turnMobToChicken((EntityLiving) res.entityHit);
+			turnMobToChicken((EntityLiving) res.entity);
 		}
 	
 	}

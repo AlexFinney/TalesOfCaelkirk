@@ -25,7 +25,7 @@ public class EntityUlricWeston extends EntityNPCInteractable{
 		if(texture == null)
 			texture = new ResourceLocation("toc:textures/entity/ulric_weston.png");
 		
-		this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(TOCItems.axe_steel));
+		//this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(TOCItems.axe_steel));
 	}
 	
 	@Override
@@ -41,11 +41,11 @@ public class EntityUlricWeston extends EntityNPCInteractable{
 		}else if(qp.stage == 0) {
 			sendDialog("refuse", player);
 		}else if(qp.stage == 2) {
-			if(TOCUtils.getItemCountInInventory(Item.getItemFromBlock(TOCBlocks.oak_log), player.inventory) >= 10) {
-				sendDialog("finished", player);
-			}else {
-				sendDialog("not_done_yet", player);
-			}
+//			if(TOCUtils.getItemCountInInventory(Item.getItemFromBlock(TOCBlocks.oak_log), player.inventory) >= 10) {
+//				sendDialog("finished", player);
+//			}else {
+//				sendDialog("not_done_yet", player);
+//			}
 		}else if(qp.stage >= 3) {
 				sendDialog("finished4", player);
 		}
@@ -57,9 +57,9 @@ public class EntityUlricWeston extends EntityNPCInteractable{
 		EntityPlayer player = this.world.getPlayerEntityByUUID(playerUUID);
 	    QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), QuestManager.A_NEW_ADVENTURE);
 	    if(qp.stage == 2) {
-	    	player.addItemStackToInventory(new ItemStack(TOCItems.copper_coin, 20));
-			TOCUtils.removeItemsFromInventory(new ItemStack(TOCBlocks.oak_log).getItem(), 5, player.inventory);
-			
+//	    	player.addItemStackToInventory(new ItemStack(TOCItems.copper_coin, 20));
+//			TOCUtils.removeItemsFromInventory(new ItemStack(TOCBlocks.oak_log).getItem(), 5, player.inventory);
+//			
 			qp.incStage();
 	    }
 		
@@ -74,7 +74,8 @@ public class EntityUlricWeston extends EntityNPCInteractable{
 		
 		player.sendMessage(new TextComponentString(TextFormatting.GREEN  + "[" +  QuestManager.A_NEW_ADVENTURE + "] [New Task]" + TextFormatting.BLUE +" Chop down 10 Oak Logs."));
 		
-		player.addItemStackToInventory(new ItemStack(TOCItems.axe_bronze));
+		//TODO
+		//player.addItemStackToInventory(new ItemStack(TOCItems.axe_bronze));
 //		//mark point on map
 //		Network.INSTANCE.sendTo(new SendIconUpdateMessage("Speak with Ulric", 719, 42, 811, player.world.provider.getDimension(), Reference.MODID, "textures/icons/map/quest_objective.png", true), (EntityPlayerMP)player);
 //		Network.INSTANCE.sendTo(new SendIconUpdateMessage("Chop down oak logs", 736, 42, 815, player.world.provider.getDimension(), Reference.MODID, "textures/icons/map/quest_objective.png"), (EntityPlayerMP)player);
