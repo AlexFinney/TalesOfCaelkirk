@@ -1,33 +1,14 @@
 package skeeter144.toc;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.HashMap;
 import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
 
-import net.minecraftforge.common.MinecraftForge;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
-import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
-import skeeter144.toc.banking.BankManager;
 import skeeter144.toc.combat.CombatManager;
-//import skeeter144.toc.commands.CommandMiningMinigame;
-import skeeter144.toc.commands.CommandRegions;
-import skeeter144.toc.commands.CommandSetXp;
-import skeeter144.toc.commands.CommandSummonNpc;
-import skeeter144.toc.entity.TOCEntities;
-import skeeter144.toc.event.Events;
 import skeeter144.toc.player.TOCPlayer;
-import skeeter144.toc.proxy.CommonProxy;
-import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.recipe.RecipeManager;
-import skeeter144.toc.regions.Region;
 import skeeter144.toc.regions.RegionManager;
 import skeeter144.toc.tasks.TaskManager;
 import skeeter144.toc.util.MobManager;
@@ -38,7 +19,7 @@ import skeeter144.toc.util.Reference;
 public class TOCMain 
 {	
 	public static float VANILLA_TO_TOC_DAMAGE_CONVERSION = 3.0f;
-	
+	public static final Logger LOGGER = LogManager.getLogger();
 	public static Random rand;
 	
 //	@Mod.Instance(Reference.MODID)

@@ -3,6 +3,7 @@ package skeeter144.toc.util;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
@@ -205,4 +206,6 @@ public class Util {
 		BlockPos fromTo = from.subtract(to);
 		return new Vec3d(fromTo).normalize();
 	}
+	
+	
 }

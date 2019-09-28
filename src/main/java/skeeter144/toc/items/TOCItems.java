@@ -1,19 +1,65 @@
  package skeeter144.toc.items;
 
-import java.lang.reflect.Field;
-import java.util.Map;
+import javax.annotation.Nonnull;
+
+import com.google.common.base.Preconditions;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.minecraftforge.registries.ObjectHolder;
 import skeeter144.toc.TOCMain;
-import skeeter144.toc.items.tools.TOCPickaxe;
+import skeeter144.toc.util.Reference;
 
+@ObjectHolder(Reference.MODID)
 public class TOCItems {
+	public static final ItemGroup MOD_GROUP = new ItemGroup(Reference.MODID) {
+		public ItemStack createIcon() {return new ItemStack(Items.CREEPER_HEAD);}
+	};
+	
+	public static final Item SHEARS = _null();
+	
+	
+	public static void registerAllItems(final RegistryEvent.Register<Item> event) {
+		final IForgeRegistry<Item> registry = event.getRegistry();
+		registry.registerAll(
+				setup(new Item(new Item.Properties().group(MOD_GROUP).maxStackSize(1)), "shears")
+		);
 
+		// We need to go over the entire registry so that we include any potential Registry Overrides
+		for (final Block block : ForgeRegistries.BLOCKS.getValues()) {
+
+			final ResourceLocation blockRegistryName = block.getRegistryName();
+			Preconditions.checkNotNull(blockRegistryName, "Registry Name of Block \"" + block + "\" is null! This is not allowed!");
+
+			// Check that the blocks is from our mod, if not, continue to the next block
+			if (!blockRegistryName.getNamespace().equals(Reference.MODID)) {
+				continue;
+			}
+
+			// If you have blocks that don't have a corresponding ItemBlock, uncomment this code and create an Interface - or even better an Annotation - called NoAutomaticItemBlock with no methods and implement it on your blocks that shouldn't have ItemBlocks
+//			if (!(block instanceof NoAutomaticItemBlock)) {
+//				continue;
+//			}
+
+			// Make the properties, and make it so that the item will be on our ItemGroup (CreativeTab)
+			final Item.Properties properties = new Item.Properties().group(TOCItems.MOD_GROUP);
+			// Create the new ItemBlock with the block and it's properties
+			final ItemBlock itemBlock = new ItemBlock(block, properties);
+			// Setup the new ItemBlock with the block's registry name and register it
+			registry.register(setup(itemBlock, blockRegistryName));
+		}
+		TOCMain.LOGGER.debug("Registered Items");
+	}
+	
 //TODO
 //	public static CreativeTabs quest_items_tab = new CreativeTabs("quest_items") {
 //		public ItemStack getTabIconItem() {
@@ -218,58 +264,78 @@ public class TOCItems {
 //	
 //	public static Item tocBook = new ItemTOCBook("info_book");
 	
-	@SubscribeEvent
-	@SuppressWarnings("unchecked")
-	public void registerItems(RegistryEvent.Register<Item> event) {
-		TOCPickaxe.initPickaxeChances();
-		final IForgeRegistry<Item> registry = event.getRegistry();
-		try {
-			for (Field f : TOCItems.class.getFields()) {
-				if (f.get(null) instanceof Item) {
-					registry.register((Item) f.get(null));
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//	@SubscribeEvent
+//	@SuppressWarnings("unchecked")
+//	public void registerItems(RegistryEvent.Register<Item> event) {
+//		TOCPickaxe.initPickaxeChances();
+//		final IForgeRegistry<Item> registry = event.getRegistry();
+//		try {
+//			for (Field f : TOCItems.class.getFields()) {
+//				if (f.get(null) instanceof Item) {
+//					registry.register((Item) f.get(null));
+//				}
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//		try {
+//			Class<Item> itemClass = Item.class;
+//			Field f = itemClass.getDeclaredField("BLOCK_TO_ITEM");
+//			f.setAccessible(true);
+//			Map<Block, Item> map = (Map<Block, Item>) f.get(null);
+//
+//			Field stackSize = itemClass.getDeclaredField("maxStackSize");
+//			stackSize.setAccessible(true);
+//
+//			stackSize.set(map.get(Blocks.OAK_LOG), 1);
+//		} catch (SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
+//			e.printStackTrace();
+//		}
+//	}
+//
+//	static String[] standard_weapons = new String[] { "club", "warhammer", "axe", "short_sword" };
+//	static String[] rare_weapons = new String[] { "great_axe", "great_sword" };
+//
+//	public static Item getRandomWeaponForClass(String weaponClass, float rarePctChance) {
+//		boolean isRare = TOCMain.rand.nextFloat() < rarePctChance;
+//
+//		String fieldName = weaponClass + "_";
+//		if (isRare) {
+//			fieldName += rare_weapons[TOCMain.rand.nextInt(rare_weapons.length)];
+//		} else {
+//			fieldName += standard_weapons[TOCMain.rand.nextInt(standard_weapons.length)];
+//		}
+//
+//		Class<TOCItems> c = TOCItems.class;
+//		try {
+//			return (Item) c.getField(fieldName).get(null);
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//		return null;
+//	}
 
-		try {
-			Class<Item> itemClass = Item.class;
-			Field f = itemClass.getDeclaredField("BLOCK_TO_ITEM");
-			f.setAccessible(true);
-			Map<Block, Item> map = (Map<Block, Item>) f.get(null);
-
-			Field stackSize = itemClass.getDeclaredField("maxStackSize");
-			stackSize.setAccessible(true);
-
-			stackSize.set(map.get(Blocks.OAK_LOG), 1);
-		} catch (SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
-			e.printStackTrace();
-		}
+	public static <T extends IForgeRegistryEntry<T>> T setup(final T entry, final String name) {
+		return setup(entry, new ResourceLocation(Reference.MODID, name));
 	}
 
-	static String[] standard_weapons = new String[] { "club", "warhammer", "axe", "short_sword" };
-	static String[] rare_weapons = new String[] { "great_axe", "great_sword" };
-
-	public static Item getRandomWeaponForClass(String weaponClass, float rarePctChance) {
-		boolean isRare = TOCMain.rand.nextFloat() < rarePctChance;
-
-		String fieldName = weaponClass + "_";
-		if (isRare) {
-			fieldName += rare_weapons[TOCMain.rand.nextInt(rare_weapons.length)];
-		} else {
-			fieldName += standard_weapons[TOCMain.rand.nextInt(standard_weapons.length)];
-		}
-
-		Class<TOCItems> c = TOCItems.class;
-		try {
-			return (Item) c.getField(fieldName).get(null);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+	public static <T extends IForgeRegistryEntry<T>> T setup(final T entry, final ResourceLocation registryName) {
+		entry.setRegistryName(registryName);
+		return entry;
+	}
+	
+	/**
+	 * Returns null, while claiming to never return null.
+	 * Useful for constants with @ObjectHolder who's values are null at compile time, but not at runtime
+	 *
+	 * @return null
+	 */
+	@Nonnull
+	public static <T> T _null() {
 		return null;
 	}
-
+	
 }

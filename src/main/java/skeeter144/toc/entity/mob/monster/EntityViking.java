@@ -104,7 +104,7 @@ public class EntityViking extends CustomMob{
 //			this.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(TOCItems.viking_chestplate));
 //			this.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(TOCItems.viking_leggings));
 //			this.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(TOCItems.viking_boots));
-			this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(TOCItems.getRandomWeaponForClass("steel", 1)));
+		//	this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(TOCItems.getRandomWeaponForClass("steel", 1)));
 			
 		}else {
 //			if(TOCMain.rand.nextInt(5) == 0)
@@ -117,7 +117,7 @@ public class EntityViking extends CustomMob{
 //				this.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(TOCItems.viking_boots));
 			
 			String weaponType = TOCMain.rand.nextFloat() < .4f ? "steel" : "iron";
-			this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(TOCItems.getRandomWeaponForClass(weaponType, .05f)));
+		//	this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(TOCItems.getRandomWeaponForClass(weaponType, .05f)));
 		}
 		
 		return super.onInitialSpawn(difficulty, entityLivingData, itemNbt);
