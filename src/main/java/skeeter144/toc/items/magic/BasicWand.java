@@ -16,6 +16,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.projectile.EntityWandProjectile;
+import skeeter144.toc.items.CustomItem;
 import skeeter144.toc.magic.ShootableSpell;
 import skeeter144.toc.magic.Spell;
 import skeeter144.toc.magic.Spells;
@@ -24,11 +25,11 @@ import skeeter144.toc.particles.system.PunishUndeadSystem;
 import skeeter144.toc.player.TOCPlayer;
 import skeeter144.toc.util.Strings;
 
-public class BasicWand extends Item
+public class BasicWand extends CustomItem
 {
-	public BasicWand(Item.Properties properties)
+	public BasicWand(Item.Properties properties, String name)
 	{
-		super(properties);
+		super(properties, name, 1);
 	}
 	
 	@Override

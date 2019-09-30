@@ -5,8 +5,11 @@ import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import skeeter144.toc.combat.CombatManager;
+import skeeter144.toc.config.ConfigHolder;
 import skeeter144.toc.player.TOCPlayer;
 import skeeter144.toc.recipe.RecipeManager;
 import skeeter144.toc.regions.RegionManager;
@@ -38,6 +41,14 @@ public class TOCMain
 	
 	public static TaskManager clientTaskManager = new TaskManager();
 	public static TaskManager serverTaskManager = new TaskManager();
+	
+	public TOCMain() {
+		LOGGER.debug("Hello from TOC Main!");
+
+		final ModLoadingContext modLoadingContext = ModLoadingContext.get();
+		modLoadingContext.registerConfig(ModConfig.Type.CLIENT, ConfigHolder.CLIENT_SPEC);
+		modLoadingContext.registerConfig(ModConfig.Type.SERVER, ConfigHolder.SERVER_SPEC);
+	}
 	
 //	static {
 //	   if(FMLCommonHandler.instance().getSide() == Side.CLIENT){

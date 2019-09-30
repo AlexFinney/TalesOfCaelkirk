@@ -1,11 +1,14 @@
  package skeeter144.toc.items;
 
+import java.lang.reflect.Field;
+
 import javax.annotation.Nonnull;
 
 import com.google.common.base.Preconditions;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemGroup;
@@ -15,24 +18,34 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-import net.minecraftforge.registries.ObjectHolder;
 import skeeter144.toc.TOCMain;
+import skeeter144.toc.items.armor.ArmorMaterialList;
+import skeeter144.toc.items.armor.CustomArmor;
+import skeeter144.toc.items.consumable.ItemHealingPotion;
+import skeeter144.toc.items.consumable.ItemManaPotion;
+import skeeter144.toc.items.magic.BasicWand;
+import skeeter144.toc.items.misc.ItemGlassVial;
+import skeeter144.toc.items.quest.QuestItem;
+import skeeter144.toc.items.tools.BlacksmithHammer;
 import skeeter144.toc.util.Reference;
 
-@ObjectHolder(Reference.MODID)
 public class TOCItems {
 	public static final ItemGroup MOD_GROUP = new ItemGroup(Reference.MODID) {
 		public ItemStack createIcon() {return new ItemStack(Items.CREEPER_HEAD);}
 	};
 	
-	public static final Item SHEARS = _null();
-	
 	
 	public static void registerAllItems(final RegistryEvent.Register<Item> event) {
 		final IForgeRegistry<Item> registry = event.getRegistry();
-		registry.registerAll(
-				setup(new Item(new Item.Properties().group(MOD_GROUP).maxStackSize(1)), "shears")
-		);
+		try {
+			for (Field f : TOCItems.class.getFields()) {
+				if (f.get(null) instanceof Item) {
+					registry.register((Item) f.get(null));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		// We need to go over the entire registry so that we include any potential Registry Overrides
 		for (final Block block : ForgeRegistries.BLOCKS.getValues()) {
@@ -51,7 +64,7 @@ public class TOCItems {
 //			}
 
 			// Make the properties, and make it so that the item will be on our ItemGroup (CreativeTab)
-			final Item.Properties properties = new Item.Properties().group(TOCItems.MOD_GROUP);
+			final Item.Properties properties = new Item.Properties().group(MOD_GROUP).group(TOCItems.MOD_GROUP);
 			// Create the new ItemBlock with the block and it's properties
 			final ItemBlock itemBlock = new ItemBlock(block, properties);
 			// Setup the new ItemBlock with the block's registry name and register it
@@ -91,34 +104,36 @@ public class TOCItems {
 //	public static ArmorMaterial RUNITE_ARMOR = EnumHelper.addArmorMaterial("runite", "toc:runite", 1, new int[] { 0, 0, 0, 0 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 1);
 //	public static ArmorMaterial DRAGONSTONE_ARMOR = EnumHelper.addArmorMaterial("dragonstone", "toc:dragonstone", 1, new int[] { 0, 0, 0, 0 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 1);
 
-//	public static Item ore_copper = new CustomItem("ore_copper", 1, resources_tab);
-//	public static Item ore_tin = new CustomItem("ore_tin", 1, resources_tab);
-//	public static Item ore_iron = new CustomItem("ore_iron", 1, resources_tab);
-//	public static Item ore_coal = new CustomItem("ore_coal", 1, resources_tab);
-//	public static Item ore_gold = new CustomItem("ore_gold", 1, resources_tab);
-//	public static Item ore_mithril = new CustomItem("ore_mithril", 1, resources_tab);
-//	public static Item ore_adamantite = new CustomItem("ore_adamantite", 1, resources_tab);
-//	public static Item ore_runite = new CustomItem("ore_runite", 1, resources_tab);
-//	public static Item ore_dragonstone = new CustomItem("ore_dragonstone", 1, resources_tab);
-//
-//	public static Item ingot_bronze = new CustomItem("ingot_bronze", 1, resources_tab);
-//	public static Item ingot_iron = new CustomItem("ingot_iron", 1, resources_tab);
-//	public static Item ingot_steel = new CustomItem("ingot_steel", 1, resources_tab);
-//	public static Item ingot_gold = new CustomItem("ingot_gold", 1, resources_tab);
-//	public static Item ingot_mithril = new CustomItem("ingot_mithril", 1, resources_tab);
-//	public static Item ingot_adamantite = new CustomItem("ingot_adamantite", 1, resources_tab);
-//	public static Item ingot_runite = new CustomItem("ingot_runite", 1, resources_tab);
-//	public static Item ingot_dragonstone = new CustomItem("ingot_dragonstone", 1, resources_tab);
-//
-//	public static Item glass_vial = new ItemGlassVial("glass_vial");
-//	public static Item potion_healing = new ItemHealingPotion("potion_healing", 200, 50f);
-//	public static Item potion_mana = new ItemManaPotion("potion_mana", 200, 70f);
-//	public static Item wand_basic = new BasicWand("wand_basic");
-//
-//	public static Item copper_coin = new CustomItem("coin_copper", 50, resources_tab);
-//	public static Item silver_coin = new CustomItem("coin_silver", 50, resources_tab);
-//	public static Item gold_coin = new CustomItem("coin_gold", 50, resources_tab);
-//
+	public static Item SHEARS = new CustomItem(new Item.Properties().group(MOD_GROUP), "shears", 1);
+	
+	public static Item ore_copper = new CustomItem(new Item.Properties().group(MOD_GROUP), "ore_copper", 1);
+	public static Item ore_tin = new CustomItem(new Item.Properties().group(MOD_GROUP), "ore_tin", 1);
+	public static Item ore_iron = new CustomItem(new Item.Properties().group(MOD_GROUP), "ore_iron", 1);
+	public static Item ore_coal = new CustomItem(new Item.Properties().group(MOD_GROUP), "ore_coal", 1);
+	public static Item ore_gold = new CustomItem(new Item.Properties().group(MOD_GROUP), "ore_gold", 1);
+	public static Item ore_mithril = new CustomItem(new Item.Properties().group(MOD_GROUP), "ore_mithril", 1);
+	public static Item ore_adamantite = new CustomItem(new Item.Properties().group(MOD_GROUP), "ore_adamantite", 1);
+	public static Item ore_runite = new CustomItem(new Item.Properties().group(MOD_GROUP), "ore_runite", 1);
+	public static Item ore_dragonstone = new CustomItem(new Item.Properties().group(MOD_GROUP), "ore_dragonstone", 1);
+
+	public static Item ingot_bronze = new CustomItem(new Item.Properties().group(MOD_GROUP), "ingot_bronze", 1);
+	public static Item ingot_iron = new CustomItem(new Item.Properties().group(MOD_GROUP), "ingot_iron", 1);
+	public static Item ingot_steel = new CustomItem(new Item.Properties().group(MOD_GROUP), "ingot_steel", 1);
+	public static Item ingot_gold = new CustomItem(new Item.Properties().group(MOD_GROUP), "ingot_gold", 1);
+	public static Item ingot_mithril = new CustomItem(new Item.Properties().group(MOD_GROUP), "ingot_mithril", 1);
+	public static Item ingot_adamantite = new CustomItem(new Item.Properties().group(MOD_GROUP), "ingot_adamantite", 1);
+	public static Item ingot_runite = new CustomItem(new Item.Properties().group(MOD_GROUP), "ingot_runite", 1);
+	public static Item ingot_dragonstone = new CustomItem(new Item.Properties().group(MOD_GROUP), "ingot_dragonstone", 1);
+
+	public static Item glass_vial = new ItemGlassVial(new Item.Properties().group(MOD_GROUP), "glass_vial");
+	public static Item potion_healing = new ItemHealingPotion(new Item.Properties().group(MOD_GROUP), "potion_healing", 200, 50f);
+	public static Item potion_mana = new ItemManaPotion(new Item.Properties().group(MOD_GROUP), "potion_mana", 200, 70f);
+	public static Item wand_basic = new BasicWand(new Item.Properties().group(MOD_GROUP), "wand_basic");
+
+	public static Item copper_coin = new CustomItem(new Item.Properties().group(MOD_GROUP), "coin_copper", 50);
+	public static Item silver_coin = new CustomItem(new Item.Properties().group(MOD_GROUP), "coin_silver", 50);
+	public static Item gold_coin = new CustomItem(new Item.Properties().group(MOD_GROUP), "coin_gold", 50);
+
 //	public static Item axe_bronze = new TOCAxe("axe_bronze", 3, -2.5f, BRONZE);
 //	public static Item axe_iron = new TOCAxe("axe_iron", 5, -2.5f, IRON);
 //	public static Item axe_steel = new TOCAxe("axe_steel", 9, -2.5f, STEEL);
@@ -180,10 +195,10 @@ public class TOCItems {
 //	public static Item viking_leggings = new CustomArmor(VIKING_STEEL_ARMOR, 2, EntityEquipmentSlot.LEGS, "viking_leggings", .05f, 0f, .12f);
 //	public static Item viking_boots = new CustomArmor(VIKING_STEEL_ARMOR, 3, EntityEquipmentSlot.FEET, "viking_boots", .03f, 0f, .08f);
 //
-//	public static Item bronze_helmet = new CustomArmor(BRONZE_ARMOR, 0, EntityEquipmentSlot.HEAD, "bronze_helmet", .02f, 0f, .06f);
-//	public static Item bronze_chestplate = new CustomArmor(BRONZE_ARMOR, 1, EntityEquipmentSlot.CHEST, "bronze_chestplate", .05f, 0f, .09f);
-//	public static Item bronze_leggings = new CustomArmor(BRONZE_ARMOR, 2, EntityEquipmentSlot.LEGS, "bronze_leggings", .03f, 0f, .05f);
-//	public static Item bronze_boots = new CustomArmor(BRONZE_ARMOR, 3, EntityEquipmentSlot.FEET, "bronze_boots", .01f, 0f, .03f);
+	public static Item bronze_helmet = new CustomArmor(ArmorMaterialList.bronze, EntityEquipmentSlot.HEAD, new Item.Properties().group(MOD_GROUP), "bronze_helmet", .02f, 0f, .06f);
+	public static Item bronze_chestplate = new CustomArmor(ArmorMaterialList.bronze, EntityEquipmentSlot.CHEST, new Item.Properties().group(MOD_GROUP), "bronze_chestplate", .05f, 0f, .09f);
+	public static Item bronze_leggings = new CustomArmor(ArmorMaterialList.bronze, EntityEquipmentSlot.LEGS, new Item.Properties().group(MOD_GROUP), "bronze_leggings", .03f, 0f, .05f);
+	public static Item bronze_boots = new CustomArmor(ArmorMaterialList.bronze, EntityEquipmentSlot.FEET, new Item.Properties().group(MOD_GROUP), "bronze_boots", .01f, 0f, .03f);
 //
 //	public static Item iron_helmet = new CustomArmor(IRON_ARMOR, 0, EntityEquipmentSlot.HEAD, "iron_helmet", .03f, 0f, .08f);
 //	public static Item iron_chestplate = new CustomArmor(IRON_ARMOR, 1, EntityEquipmentSlot.CHEST, "iron_chestplate", .07f, 0f, .12f);
@@ -215,9 +230,9 @@ public class TOCItems {
 //	public static Item dragonstone_leggings = new CustomArmor(DRAGONSTONE_ARMOR, 2, EntityEquipmentSlot.LEGS, "dragonstone_leggings", .05f, 0f, .06f);
 //	public static Item dragonstone_boots = new CustomArmor(DRAGONSTONE_ARMOR, 3, EntityEquipmentSlot.FEET, "dragonstone_boots", .02f, 0f, .06f);
 //
-//	public static Item goblin_ear = new QuestItem("goblin_ear", false, 20);
-//	public static Item rat_tail = new QuestItem("rat_tail", false, 20);
-//	public static Item blacksmith_hammer = new BlacksmithHammer();
+	public static Item goblin_ear = new QuestItem(new Item.Properties().group(MOD_GROUP), "goblin_ear", false, 20);
+	public static Item rat_tail = new QuestItem(new Item.Properties().group(MOD_GROUP), "rat_tail", false, 20);
+	public static Item blacksmith_hammer = new BlacksmithHammer(new Item.Properties().group(MOD_GROUP), "blacksmith_hammer");
 //
 //	public static Item donkey_summoner = new HorseDonkeySummoner("donkey_summoner", EntityDonkeyMount.class);
 //	public static Item mule_summoner = new HorseDonkeySummoner("mule_summoner", EntityMuleMount.class);
@@ -239,29 +254,29 @@ public class TOCItems {
 	
 //	public static Item shears = new TOCShears();
 //	
-//	public static Item bow_oak_short_unstrung = new CustomItem("bow_oak_short_unstrung", 1, CreativeTabs.MISC);
-//	public static Item bow_oak_long_unstrung =  new CustomItem("bow_oak_long_unstrung",  1, CreativeTabs.MISC);
+	public static Item bow_oak_short_unstrung = new CustomItem(new Item.Properties().group(MOD_GROUP), "bow_oak_short_unstrung", 1);
+	public static Item bow_oak_long_unstrung =  new CustomItem(new Item.Properties().group(MOD_GROUP), "bow_oak_long_unstrung",  1);
 //	
 //	public static Item bow_oak_short = new TOCBow("bow_oak_short", 5, 20, .2f);
 //	public static Item bow_oak_long = new TOCBow("bow_oak_long", 8, 30, 1.3f);
 //	
-//	public static Item bowstring = new CustomItem("bowstring", 20, CreativeTabs.MISC);
+	public static Item bowstring = new CustomItem(new Item.Properties().group(MOD_GROUP), "bowstring", 20);
 //	
-//	public static Item stick_oak = new CustomItem("stick_oak", 20, CreativeTabs.MISC);
-//	public static Item stick_birch = new CustomItem("stick_birch", 20, CreativeTabs.MISC);
-//	public static Item stick_maple = new CustomItem("stick_maple", 20, CreativeTabs.MISC);
-//	public static Item stick_yew = new CustomItem("stick_yew", 20, CreativeTabs.MISC);
-//	public static Item stick_orc = new CustomItem("stick_orc", 20, CreativeTabs.MISC);
-//	public static Item stick_magic = new CustomItem("stick_magic", 20, CreativeTabs.MISC);
-//	
-//	public static Item arrowhead_bronze      = new CustomItem("arrowhead_bronze", 40, CreativeTabs.MISC);
-//	public static Item arrowhead_iron        = new CustomItem("arrowhead_iron", 40, CreativeTabs.MISC);
-//	public static Item arrowhead_steel       = new CustomItem("arrowhead_steel", 40, CreativeTabs.MISC);
-//	public static Item arrowhead_mithril     = new CustomItem("arrowhead_mithril", 40, CreativeTabs.MISC);
-//	public static Item arrowhead_adamantite  = new CustomItem("arrowhead_adamantite", 40, CreativeTabs.MISC);
-//	public static Item arrowhead_runite      = new CustomItem("arrowhead_runite", 40, CreativeTabs.MISC);
-//	public static Item arrowhead_dragonstone = new CustomItem("arrowhead_dragonstone", 40, CreativeTabs.MISC);
-//	
+	public static Item stick_oak = new CustomItem(new Item.Properties().group(MOD_GROUP), "stick_oak", 20);
+	public static Item stick_birch = new CustomItem(new Item.Properties().group(MOD_GROUP), "stick_birch", 20);
+	public static Item stick_maple = new CustomItem(new Item.Properties().group(MOD_GROUP), "stick_maple", 20);
+	public static Item stick_yew = new CustomItem(new Item.Properties().group(MOD_GROUP), "stick_yew", 20);
+	public static Item stick_orc = new CustomItem(new Item.Properties().group(MOD_GROUP), "stick_orc", 20);
+	public static Item stick_magic = new CustomItem(new Item.Properties().group(MOD_GROUP), "stick_magic", 20);
+	
+	public static Item arrowhead_bronze      = new CustomItem(new Item.Properties().group(MOD_GROUP), "arrowhead_bronze", 40);
+	public static Item arrowhead_iron        = new CustomItem(new Item.Properties().group(MOD_GROUP), "arrowhead_iron", 40);
+	public static Item arrowhead_steel       = new CustomItem(new Item.Properties().group(MOD_GROUP), "arrowhead_steel", 40);
+	public static Item arrowhead_mithril     = new CustomItem(new Item.Properties().group(MOD_GROUP), "arrowhead_mithril", 40);
+	public static Item arrowhead_adamantite  = new CustomItem(new Item.Properties().group(MOD_GROUP), "arrowhead_adamantite", 40);
+	public static Item arrowhead_runite      = new CustomItem(new Item.Properties().group(MOD_GROUP), "arrowhead_runite", 40);
+	public static Item arrowhead_dragonstone = new CustomItem(new Item.Properties().group(MOD_GROUP), "arrowhead_dragonstone", 40);
+	
 //	public static Item tocBook = new ItemTOCBook("info_book");
 	
 //	@SubscribeEvent
