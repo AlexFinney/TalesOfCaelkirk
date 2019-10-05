@@ -20,8 +20,16 @@ import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import skeeter144.toc.blocks.TOCBlocks;
+import skeeter144.toc.blocks.TOCClientBlockRenderers;
+import skeeter144.toc.client.Keybindings;
 import skeeter144.toc.client.entity.model.ModelGhost;
 import skeeter144.toc.client.entity.model.ModelGiantScorpian;
 import skeeter144.toc.client.entity.model.ModelGiantSpider;
@@ -40,6 +48,8 @@ import skeeter144.toc.client.entity.renderer.RenderPegasus;
 import skeeter144.toc.client.entity.renderer.RenderViking;
 import skeeter144.toc.client.gui.DialogGui;
 import skeeter144.toc.client.gui.GuiEntityStatus;
+import skeeter144.toc.client.gui.HUD;
+import skeeter144.toc.client.gui.RegionsRendering;
 import skeeter144.toc.entity.mob.monster.EntityGhost;
 import skeeter144.toc.entity.mob.monster.EntityGiantScorpian;
 import skeeter144.toc.entity.mob.monster.EntityGiantSpider;
@@ -52,6 +62,7 @@ import skeeter144.toc.entity.mob.mount.basic_horse.EntityMuleMount;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityVariableHorseMount;
 import skeeter144.toc.entity.mob.mount.flying.EntityGriffin;
 import skeeter144.toc.entity.mob.mount.flying.EntityPegasus;
+import skeeter144.toc.entity.mob.npc.DialogManager;
 import skeeter144.toc.entity.mob.npc.banker.EntityBanker;
 import skeeter144.toc.entity.mob.npc.questgiver.EntityEvaTeffan;
 import skeeter144.toc.entity.mob.npc.questgiver.EntityKelvinWhitestone;
@@ -60,6 +71,10 @@ import skeeter144.toc.entity.mob.npc.questgiver.EntityRobertCromwell;
 import skeeter144.toc.entity.mob.npc.questgiver.EntitySeloviusKamazz;
 import skeeter144.toc.entity.mob.npc.questgiver.EntityUlricWeston;
 import skeeter144.toc.entity.mob.npc.shopkeeper.EntityHumanShopKeeper;
+import skeeter144.toc.handlers.ItemTooltipHandler;
+import skeeter144.toc.handlers.PlayerInputHandler;
+import skeeter144.toc.handlers.tick.ClientTickHandler;
+import skeeter144.toc.items.TOCItemsClientRegistration;
 import skeeter144.toc.models.ModelVikingHelm;
 import skeeter144.toc.particles.particle.BasicSpellTrailParticle;
 import skeeter144.toc.particles.particle.DamageParticle;
@@ -67,32 +82,42 @@ import skeeter144.toc.quest.NpcDialog;
 import skeeter144.toc.util.Reference;
 import skeeter144.toc.util.Util;
 
-public class ClientProxy extends CommonProxy
+@EventBusSubscriber(bus = Bus.MOD)
+public class ClientProxy<FMLInitializationEvent> extends CommonProxy
 {
 	GuiEntityStatus entityStatusGUI;
 	private Minecraft mc = Minecraft.getInstance();
 	private Entity pointedEntity;
 	
-//	public void preInit(FMLPreInitializationEvent event)
-//	{
-//		super.preInit(event);
-//		MinecraftForge.EVENT_BUS.register(new TOCItemsClientRegistration());
-//		TOCClientBlockRenderers.registerAll();
-//		TOCBlocks.registerRenders();
-//		entityStatusGUI = new GuiEntityStatus();
-//		Keybindings.registerKeybinds();
-//		DialogManager.init();
-//	}
-//	
-//	public void init(FMLInitializationEvent event){
-//		super.init(event);
-//		registerEntityRenders();
-//		MinecraftForge.EVENT_BUS.register(new HUD());
-//		MinecraftForge.EVENT_BUS.register(new RegionsRendering());
-//		MinecraftForge.EVENT_BUS.register(new PlayerInputHandler());
-//		MinecraftForge.EVENT_BUS.register(new ClientTickHandler());
-//		MinecraftForge.EVENT_BUS.register(new ItemTooltipHandler());
-//	}
+	public ClientProxy() {
+		System.out.println("client");
+	}
+	
+	@SubscribeEvent
+	public void setupClient(FMLClientSetupEvent e) {
+		
+	}
+	
+	@SubscribeEvent
+	public void preInit(FMLInitializationEvent event)
+	{
+		MinecraftForge.EVENT_BUS.register(new TOCItemsClientRegistration());
+		TOCClientBlockRenderers.registerAll();
+		TOCBlocks.registerRenders();
+		entityStatusGUI = new GuiEntityStatus();
+		Keybindings.registerKeybinds();
+		DialogManager.init();
+	}
+	
+	@SubscribeEvent
+	public void init(FMLInitializationEvent event){
+		registerEntityRenders();
+		MinecraftForge.EVENT_BUS.register(new HUD(mc));
+		MinecraftForge.EVENT_BUS.register(new RegionsRendering());
+		MinecraftForge.EVENT_BUS.register(new PlayerInputHandler());
+		MinecraftForge.EVENT_BUS.register(new ClientTickHandler());
+		MinecraftForge.EVENT_BUS.register(new ItemTooltipHandler());
+	}
 //	
 //	public void postInit(FMLPostInitializationEvent event)
 //	{

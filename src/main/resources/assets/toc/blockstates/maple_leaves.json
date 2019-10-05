@@ -1,5 +1,5 @@
 {
     "variants": {
-        "":  { "model": "toc:block/maple_leaves" }
+        "check_decay=false,decayable=false":  { "model": "toc:maple_leaves" }
      }
 }

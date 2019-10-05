@@ -1,12 +1,11 @@
 package skeeter144.toc.items.misc;
 
 import net.minecraft.item.Item;
-import skeeter144.toc.items.CustomItem;
 
-public class ItemGlassVial extends CustomItem{
+public class ItemGlassVial extends Item{
 
-	public ItemGlassVial(Item.Properties builder, String name) {
-		super(builder, name, 16);
+	public ItemGlassVial(Item.Properties builder) {
+		super(builder);
 	}
 	
 }

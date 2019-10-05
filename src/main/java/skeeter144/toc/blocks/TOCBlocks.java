@@ -9,9 +9,6 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-import skeeter144.toc.blocks.log.BlockMagicLeaves;
-import skeeter144.toc.blocks.log.CustomBlockLeaves;
-import skeeter144.toc.blocks.log.CustomBlockLog;
 import skeeter144.toc.entity.tile.TileEntityAnvil;
 import skeeter144.toc.entity.tile.TileEntityHarvestedOre;
 import skeeter144.toc.entity.tile.TileEntityHarvestedTree;
@@ -38,17 +35,17 @@ public class TOCBlocks {
 //	public static Block blockMobSpawnerInvis = new BlockMobSpawner("mob_spawner");
 //	public static Block blockMobSpawner = new CustomBlock(Properties.create(Material.ROCK), "mob_spawner_model");
 //	
-	public static Block oak_log = new CustomBlockLog("oak_log");
-	public static Block birch_log = new CustomBlockLog("birch_log");
-	public static Block maple_log = new CustomBlockLog("maple_log");
-	public static Block yew_log = new CustomBlockLog("yew_log");
-	public static Block orc_log = new CustomBlockLog("orc_log");
-	public static Block magic_log = new CustomBlockLog("magic_log");
+//	public static Block oak_log = new CustomBlockLog("oak_log");
+//	public static Block birch_log = new CustomBlockLog("birch_log");
+//	public static Block maple_log = new CustomBlockLog("maple_log");
+//	public static Block yew_log = new CustomBlockLog("yew_log");
+//	public static Block orc_log = new CustomBlockLog("orc_log");
+//	public static Block magic_log = new CustomBlockLog("magic_log");
 //	
-	public static Block magicLeaves = new BlockMagicLeaves("magic_leaves");
-	public static Block orc_leaves = new CustomBlockLeaves("orc_leaves");
-	public static Block maple_leaves = new CustomBlockLeaves("maple_leaves");
-	public static Block yew_leaves = new CustomBlockLeaves("yew_leaves");
+//	public static Block magicLeaves = new BlockMagicLeaves("magic_leaves");
+//	public static Block orc_leaves = new CustomBlockLeaves("orc_leaves");
+//	public static Block maple_leaves = new CustomBlockLeaves("maple_leaves");
+//	public static Block yew_leaves = new CustomBlockLeaves("yew_leaves");
 	
 	public static TileEntityType<TileEntityHarvestedOre> te_harvested_ore;
 	public static TileEntityType<TileEntityHarvestedTree> te_harvested_tree;
@@ -79,11 +76,11 @@ public class TOCBlocks {
 
 	}
 	
-	public static void registerAllBlocks(final RegistryEvent.Register<Block> event) {
+	public static void registerAllBlocks() {
 		try {
 			for (Field f : TOCBlocks.class.getFields()) {
 				if (f.get(null) instanceof Block) {
-					event.getRegistry().register((Block) f.get(null));
+					register((Block) f.get(null));
 				}
 			}
 		} catch (Exception e) {

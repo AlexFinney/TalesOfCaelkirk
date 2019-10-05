@@ -8,29 +8,60 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
+import skeeter144.toc.blocks.TOCBlocks;
+import skeeter144.toc.entity.TOCEntities;
+import skeeter144.toc.handlers.EntityHandler;
+import skeeter144.toc.handlers.PlayerInteractHandler;
+import skeeter144.toc.handlers.PlayerInventoryHandler;
+import skeeter144.toc.handlers.PlayerLoginHandler;
+import skeeter144.toc.handlers.tick.TickHandler;
+import skeeter144.toc.items.TOCItems;
+import skeeter144.toc.magic.Spells;
+import skeeter144.toc.player.EntityLevels;
 import skeeter144.toc.quest.NpcDialog;
+import skeeter144.toc.quest.QuestManager;
+import skeeter144.toc.skills.Crafting;
+import skeeter144.toc.skills.Woodcutting;
+import skeeter144.toc.sounds.Sounds;
 
+@EventBusSubscriber(bus = Bus.MOD)
 public class CommonProxy 
 {
-//	public void preInit(FMLPreInitializationEvent event)
-//	{
-//		TOCBlocks.registerAllBlocks();
-//		
-//		MinecraftForge.EVENT_BUS.register(new TOCItems());
-//		MinecraftForge.EVENT_BUS.register(new Crafting());
-//		
-//		MinecraftForge.EVENT_BUS.register(new Sounds());
-//		
-//		TOCBlocks.registerAllTileEntities();
-//		TOCEntities.registerEntities();
-//		
-//		EntityLevels.init();
-//		Woodcutting.init();
-//		
-//		QuestManager.initQuests();
-//	}
+	public CommonProxy() {
+		System.out.println("common");
+	}
 	
-//	public void init(FMLInitializationEvent event){
+	public void preInit(FMLCommonSetupEvent event)
+	{
+		TOCBlocks.registerAllBlocks();
+		
+		MinecraftForge.EVENT_BUS.register(new TOCItems());
+		MinecraftForge.EVENT_BUS.register(new Crafting());
+		
+		MinecraftForge.EVENT_BUS.register(new Sounds());
+		
+	//	TOCBlocks.registerAllTileEntities();
+		TOCEntities.registerEntities();
+		
+		EntityLevels.init();
+		Woodcutting.init();
+		
+		QuestManager.initQuests();
+	}
+	
+	@SubscribeEvent
+	public void setupClient(FMLDedicatedServerSetupEvent e) {
+		
+	}
+	
+	public void init(FMLCommonSetupEvent event){
 //		Network.INSTANCE.registerMessage(WandEmbueMessageHandler.class, WandEmbueMessage.class, Network.getNextId(), Side.SERVER);
 //		Network.INSTANCE.registerMessage(LightningBoltCastHandler.class, LightningBoltCastMessage.class, Network.getNextId(), Side.SERVER);
 //		Network.INSTANCE.registerMessage(AnimationEventMessageHandler.class, AnimationEventMessage.class, Network.getNextId(), Side.SERVER);
@@ -60,18 +91,18 @@ public class CommonProxy
 //		Network.INSTANCE.registerMessage(ItemCraftedMessageHandler.class, ItemCraftedMessage.class, Network.getNextId(), Side.CLIENT);
 //		Network.INSTANCE.registerMessage(OpenBankGUIMessageHandler.class, OpenBankGUIMessage.class, Network.getNextId(), Side.CLIENT);
 //		Network.INSTANCE.registerMessage(SendIconUpdateMessageHandler.class, SendIconUpdateMessage.class, Network.getNextId(), Side.CLIENT);
-		
+//		
 //		NetworkRegistry.INSTANCE.registerGuiHandler(TOCMain.instance, new GuiHandler());
 
-//		MinecraftForge.EVENT_BUS.register(new PlayerLoginHandler());
-//		MinecraftForge.EVENT_BUS.register(new PlayerInventoryHandler());
-//		MinecraftForge.EVENT_BUS.register(new PlayerInteractHandler());
-//		MinecraftForge.EVENT_BUS.register(new EntityHandler());
-//		MinecraftForge.EVENT_BUS.register(new TickHandler());
-//		
-//		
-//		Spells.init();
-//	}
+		MinecraftForge.EVENT_BUS.register(new PlayerLoginHandler());
+		MinecraftForge.EVENT_BUS.register(new PlayerInventoryHandler());
+		MinecraftForge.EVENT_BUS.register(new PlayerInteractHandler());
+		MinecraftForge.EVENT_BUS.register(new EntityHandler());
+		MinecraftForge.EVENT_BUS.register(new TickHandler());
+		
+		
+		Spells.init();
+	}
 	
 	//public void postInit(FMLPostInitializationEvent event) {}
 	

@@ -20,7 +20,7 @@ public class VariableHorseSummoner extends CustomItem {
 
 	int type_summoned;
 	public VariableHorseSummoner(Item.Properties builder, int type_summoned) {
-		super(builder, "vhorse_summoner", 1);
+		super(builder, 1);
 		this.type_summoned = type_summoned;
 	}
 

@@ -1,5 +1,5 @@
 {
     "variants": {
-        "":  { "model": "toc:block/yew_leaves" }
+        "check_decay=false,decayable=false":  { "model": "toc:yew_leaves" }
      }
 }

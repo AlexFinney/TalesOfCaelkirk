@@ -7,12 +7,10 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import skeeter144.toc.util.Reference;
 
 public class BlacksmithHammer extends Item{
-	public BlacksmithHammer(Item.Properties builder, String name) {
+	public BlacksmithHammer(Item.Properties builder) {
 		super(builder);
-		setRegistryName(Reference.MODID, name);
 	}
 	
 	@Override

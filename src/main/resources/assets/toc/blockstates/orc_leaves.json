@@ -1,5 +1,5 @@
 {
     "variants": {
-        "":  { "model": "toc:block/orc_leaves" }
+        "check_decay=false,decayable=false":  { "model": "toc:orc_leaves" }
      }
 }

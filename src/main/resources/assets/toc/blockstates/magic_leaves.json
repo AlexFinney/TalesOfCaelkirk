@@ -1,5 +1,9 @@
 {
     "variants": {
-        "":  { "model": "toc:block/magic_leaves" }
+        "check_decay=false,decayable=false":  { "model": "toc:magic_leaves" },
+        "check_decay=true,decayable=false":  { "model": "toc:magic_leaves" },
+        "check_decay=false,decayable=true":  { "model": "toc:magic_leaves" },
+        "decayable=false":  { "model": "toc:magic_leaves" },
+        "check_decay=false":  { "model": "toc:magic_leaves" }
      }
 }

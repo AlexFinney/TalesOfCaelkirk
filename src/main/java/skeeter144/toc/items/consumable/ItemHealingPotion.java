@@ -12,15 +12,13 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import skeeter144.toc.entityeffect.ServerEffectHandler;
 import skeeter144.toc.entityeffect.effects.HealingPotionEffect;
-import skeeter144.toc.util.Reference;
 
 public class ItemHealingPotion extends ItemBucketMilk {
 
 	int duration;
 	float totalHeal;
-	public ItemHealingPotion(Item.Properties builder, String name, int duration, float totalHeal) {
+	public ItemHealingPotion(Item.Properties builder, int duration, float totalHeal) {
 		super(builder);
-		setRegistryName(Reference.MODID, name);
 		this.duration = duration;
 		this.totalHeal = totalHeal;
 	}

@@ -13,8 +13,8 @@ import skeeter144.toc.TOCMain;
 
 public class ArmorVikingHelmet extends CustomArmor{
 
-	public ArmorVikingHelmet(ArmorMaterial materialIn, EntityEquipmentSlot equipmentSlotIn, Item.Properties builder, String name, float physR, float magicR, float rangedR) {
-		super(materialIn, equipmentSlotIn, builder, name, physR, magicR, rangedR);
+	public ArmorVikingHelmet(ArmorMaterial materialIn, EntityEquipmentSlot equipmentSlotIn, Item.Properties builder, float physR, float magicR, float rangedR) {
+		super(materialIn, equipmentSlotIn, builder, physR, magicR, rangedR);
 	}
 	
 	@Override 	
