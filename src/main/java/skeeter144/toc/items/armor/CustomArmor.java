@@ -8,13 +8,14 @@ import com.google.common.collect.Multimap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ArmorMaterial;
+import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import skeeter144.toc.util.Reference;
 
 public class CustomArmor extends ItemArmor{
 
@@ -22,9 +23,10 @@ public class CustomArmor extends ItemArmor{
 	public final float magicalResistance;
 	public final float rangedResistance;
 	
-	public CustomArmor(ArmorMaterial materialIn, EntityEquipmentSlot equipmentSlotIn, Item.Properties builder, float physicalResistance,
+	public CustomArmor(IArmorMaterial materialIn, EntityEquipmentSlot equipmentSlotIn, Item.Properties builder, String name, float physicalResistance,
 			float magicalResistance, float rangedResistance) {
 		super(materialIn, equipmentSlotIn, builder);
+		setRegistryName(Reference.MODID, name);
 		this.physicalResistance = physicalResistance;
 		this.magicalResistance = magicalResistance;
 		this.rangedResistance = rangedResistance;

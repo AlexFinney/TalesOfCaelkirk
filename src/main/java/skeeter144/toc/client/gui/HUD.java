@@ -8,7 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiIngame;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,12 +27,7 @@ import skeeter144.toc.player.TOCPlayer;
 import skeeter144.toc.tasks.TickableTask;
 import skeeter144.toc.util.Reference;
 
-public class HUD extends GuiIngame {
-
-	public HUD(Minecraft mcIn) {
-		super(mcIn);
-		
-	}
+public class HUD extends Gui {
 
 	final ResourceLocation emptyBarMana = new ResourceLocation(Reference.MODID, "textures/gui/empty_bar_mana.png");
 	final ResourceLocation emptyBarHealth = new ResourceLocation(Reference.MODID, "textures/gui/empty_bar_health.png");
@@ -125,11 +120,12 @@ public class HUD extends GuiIngame {
 		}
 	}
 
-	public void renderFog() {
+	@SubscribeEvent
+	public void fogRenderEvent(EntityViewRenderEvent.FogColors event) {
 		if (activeEffects.contains("reduced_vision")) {
-			//event.setRed(fogR);
-			//event.setBlue(fogG);
-			//event.setGreen(fogB);
+			event.setRed(fogR);
+			event.setBlue(fogG);
+			event.setGreen(fogB);
 		}
 	}
 
@@ -141,12 +137,12 @@ public class HUD extends GuiIngame {
 		drawLightBlock();
 	}
 
-  @Override
-  public void renderGameOverlay(float partialTicks) {
-	  System.out.println("render");
-  }
-	
-	public void renderExpBar(int x) {
+	@SubscribeEvent
+	public void onRenderExperienceBar(RenderGameOverlayEvent.Post event) {
+		if (event.getType() != ElementType.EXPERIENCE) {
+			return;
+		}
+
 		TOCPlayer pl = TOCMain.localPlayer;
 		if (pl == null)
 			return;

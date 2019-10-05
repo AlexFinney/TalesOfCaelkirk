@@ -5,16 +5,12 @@ import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
 import skeeter144.toc.combat.CombatManager;
+import skeeter144.toc.config.ConfigHolder;
 import skeeter144.toc.player.TOCPlayer;
-import skeeter144.toc.proxy.ClientProxy;
-import skeeter144.toc.proxy.CommonProxy;
 import skeeter144.toc.recipe.RecipeManager;
 import skeeter144.toc.regions.RegionManager;
 import skeeter144.toc.tasks.TaskManager;
@@ -28,7 +24,6 @@ public class TOCMain
 	public static float VANILLA_TO_TOC_DAMAGE_CONVERSION = 3.0f;
 	public static final Logger LOGGER = LogManager.getLogger();
 	public static Random rand;
-	public static TOCMain INSTANCE;
 	
 //	@Mod.Instance(Reference.MODID)
 //	public static TOCMain instance;
@@ -47,13 +42,12 @@ public class TOCMain
 	public static TaskManager clientTaskManager = new TaskManager();
 	public static TaskManager serverTaskManager = new TaskManager();
 	
-	public static CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
-	
 	public TOCMain() {
-		INSTANCE = this;
-		
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::client);
+		LOGGER.debug("Hello from TOC Main!");
+
+		final ModLoadingContext modLoadingContext = ModLoadingContext.get();
+		modLoadingContext.registerConfig(ModConfig.Type.CLIENT, ConfigHolder.CLIENT_SPEC);
+		modLoadingContext.registerConfig(ModConfig.Type.SERVER, ConfigHolder.SERVER_SPEC);
 	}
 	
 //	static {
@@ -108,14 +102,7 @@ public class TOCMain
 //		QuestManager.loadQuestProgress();
 //	}
 	
-	private void setup(final FMLCommonSetupEvent event) {
-		System.out.println("common");
-    }
-
-    private void client(final FMLClientSetupEvent event) {
-    	System.out.println("client");
-    }
-    
+	
 //	@EventHandler
 //	public void serverStopping(FMLServerStoppingEvent event)
 //	{	

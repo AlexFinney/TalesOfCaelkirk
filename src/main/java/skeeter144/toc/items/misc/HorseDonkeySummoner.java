@@ -20,7 +20,7 @@ public class HorseDonkeySummoner extends CustomItem {
 
 	Class<? extends EntityAbstractHorseMount> type_summoned;
 	public HorseDonkeySummoner(Item.Properties builder, Class<? extends EntityAbstractHorseMount> type_summoned) {
-		super(builder, 1);
+		super(builder, "horse_summoner", 1);
 		this.type_summoned = type_summoned;
 	}
 
