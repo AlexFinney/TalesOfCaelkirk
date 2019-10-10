@@ -2,6 +2,7 @@ package skeeter144.toc.blocks;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.world.World;
 import skeeter144.toc.entity.tile.BlockTileEntity;
 import skeeter144.toc.entity.tile.TileEntityHarvestedOre;
@@ -19,8 +20,21 @@ public class BlockHarvestedOre extends BlockTileEntity<TileEntityHarvestedOre>{
 
 	@Override
 	public TileEntityHarvestedOre createTileEntity(World world, IBlockState state) {
-		//TODO: create tileentity types
-		return new TileEntityHarvestedOre(null);
+		return new TileEntityHarvestedOre(TOCBlocks.te_harvested_ore);
+	}
+	
+	@Override
+	public boolean hasTileEntity() {
+		return true;
 	}
 
+	@Override
+	public boolean isFullCube(IBlockState state) {
+		return false;
+	}
+
+	@Override
+	public BlockRenderLayer getRenderLayer() {
+		return BlockRenderLayer.CUTOUT;
+	}
 }

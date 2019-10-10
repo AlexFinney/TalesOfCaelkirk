@@ -28,8 +28,7 @@ public class TileEntityHarvestedTree extends TileEntity implements ITickable{
 	public int minSecs, maxSecs;
 	
 	@Override
-	public NBTTagCompound serializeNBT() {
-		NBTTagCompound compound = new NBTTagCompound();
+	public NBTTagCompound write(NBTTagCompound compound) {
 		compound.setInt("secsRemaining", secsRemaining);
 		compound.setInt("numTreeBlocks", treeBlocks.size());
 		
@@ -44,7 +43,7 @@ public class TileEntityHarvestedTree extends TileEntity implements ITickable{
 	}
 	
 	@Override
-	public void deserializeNBT(NBTTagCompound compound) {
+	public void read(NBTTagCompound compound) {
 		treeBlocks.clear();
 		secsRemaining = compound.getInt("secsRemaining");
 		int numBlocks = compound.getInt("numTreeBlocks");
@@ -96,5 +95,6 @@ public class TileEntityHarvestedTree extends TileEntity implements ITickable{
 			world.setBlockState(entry.getKey(), entry.getValue());
 		}
 		world.setBlockState(this.pos, state);
+		world.markTileEntityForRemoval(this);
 	}
 }

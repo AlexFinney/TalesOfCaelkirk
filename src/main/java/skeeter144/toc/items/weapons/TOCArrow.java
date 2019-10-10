@@ -13,16 +13,19 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import skeeter144.toc.entity.projectile.EntityTOCArrow;
+import skeeter144.toc.util.Reference;
 
 public class TOCArrow extends ItemArrow {
 
 	int damage;
 	public final float destroyChance;
 	public final int color;
-	public TOCArrow(Item.Properties builder) {
+	public TOCArrow(Item.Properties builder, String name, int damage, float destroyChance) {
 		super(builder);
-		destroyChance = .5f;
+		this.destroyChance = destroyChance;
+		this.damage = damage;
 		color = 1;
+		setRegistryName(Reference.MODID, name);
 	}
 
 	@Override

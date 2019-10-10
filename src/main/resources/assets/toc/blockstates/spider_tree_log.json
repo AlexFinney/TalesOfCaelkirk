@@ -1,8 +1,8 @@
 {
     "variants": {
-        "axis=y":  { "model": "toc:spider_tree_log" },
-        "axis=z":   { "model": "toc:spider_tree_log", "x": 90 },
-        "axis=x":   { "model": "toc:spider_tree_log", "x": 90, "y": 90 },
-        "axis=none": { "model": "toc:spider_tree_log" }
+        "axis=y":  { "model": "toc:block/spider_tree_log" },
+        "axis=z":   { "model": "toc:block/spider_tree_log", "x": 90 },
+        "axis=x":   { "model": "toc:block/spider_tree_log", "x": 90, "y": 90 },
+        "axis=none": { "model": "toc:block/spider_tree_log" }
     }
 }

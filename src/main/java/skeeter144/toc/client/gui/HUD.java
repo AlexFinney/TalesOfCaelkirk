@@ -8,7 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,7 +27,11 @@ import skeeter144.toc.player.TOCPlayer;
 import skeeter144.toc.tasks.TickableTask;
 import skeeter144.toc.util.Reference;
 
-public class HUD extends Gui {
+public class HUD extends GuiIngame {
+
+	public HUD(Minecraft mcIn) {
+		super(mcIn);
+	}
 
 	final ResourceLocation emptyBarMana = new ResourceLocation(Reference.MODID, "textures/gui/empty_bar_mana.png");
 	final ResourceLocation emptyBarHealth = new ResourceLocation(Reference.MODID, "textures/gui/empty_bar_health.png");
@@ -56,13 +60,12 @@ public class HUD extends Gui {
 
 		float vert = (float) Math.sin(ticks / 20) * 40;
 		boolean drunk = false;
-		if(drunk) {
-			 event.setRoll(event.getRoll() + offset);
-			 event.setPitch(event.getPitch() + vert / 3);
-			 event.setYaw(event.getYaw() + (float) (Math.sin(ticks / 40) * 3) +
-			 event.getPitch() / 10);
+		if (drunk) {
+			event.setRoll(event.getRoll() + offset);
+			event.setPitch(event.getPitch() + vert / 3);
+			event.setYaw(event.getYaw() + (float) (Math.sin(ticks / 40) * 3) + event.getPitch() / 10);
 		}
-		
+
 	}
 
 	@SubscribeEvent
@@ -137,19 +140,16 @@ public class HUD extends Gui {
 		drawLightBlock();
 	}
 
-	@SubscribeEvent
-	public void onRenderExperienceBar(RenderGameOverlayEvent.Post event) {
-		if (event.getType() != ElementType.EXPERIENCE) {
-			return;
-		}
-
+	public void renderGameOverlay(float partialTicks) {
+		super.renderGameOverlay(partialTicks);
+		
 		TOCPlayer pl = TOCMain.localPlayer;
 		if (pl == null)
 			return;
 
-		if(Minecraft.getInstance().player.isCreative())
+		if (Minecraft.getInstance().player.isCreative())
 			return;
-		
+
 		drawHealthBar(pl.getHealth(), pl.getMaxHealth());
 		drawManaBar(pl.getMana(), pl.getMaxMana());
 		drawXpMessages();
@@ -198,7 +198,7 @@ public class HUD extends Gui {
 
 		TextureManager tm = Minecraft.getInstance().getTextureManager();
 		MainWindow sr = Minecraft.getInstance().mainWindow;
-		
+
 		int screenWidth = sr.getScaledWidth();
 		int screenHeight = sr.getScaledHeight();
 
@@ -224,7 +224,7 @@ public class HUD extends Gui {
 
 		GlStateManager.enableRescaleNormal();
 		GlStateManager.enableBlend();
-		GlStateManager.popAttrib();
+		GlStateManager.popMatrix();
 
 		if (((EntityPlayer) TOCMain.localPlayer.mcEntity).getHeldItem(EnumHand.MAIN_HAND)
 				.getItem() instanceof ISpecialAttackWeapon) {
@@ -293,7 +293,7 @@ public class HUD extends Gui {
 
 		GlStateManager.enableRescaleNormal();
 		GlStateManager.enableBlend();
-		GlStateManager.popAttrib();
+		GlStateManager.popMatrix();
 	}
 
 	float xpMessageSpeed = -1;

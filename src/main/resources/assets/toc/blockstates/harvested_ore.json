@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "toc:harvested_ore" }
+        "": { "model": "toc:block/harvested_ore" }
     }
 }

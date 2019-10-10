@@ -1,5 +1,6 @@
 package skeeter144.toc.client.gui;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -7,9 +8,15 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import skeeter144.toc.entity.tile.TileEntityMobSpawner;
 
 public class GuiHandler implements IGuiHandler {
+	
+	static GuiHandler instance;
+	public static GuiHandler Instance() {
+		if(instance == null) instance = new GuiHandler();
+		return instance;
+	}
+	
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		
 		return null;
 	}
 

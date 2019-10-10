@@ -28,15 +28,16 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import skeeter144.toc.combat.CombatManager;
 import skeeter144.toc.entity.projectile.EntityTOCArrow;
+import skeeter144.toc.util.Reference;
 
 public class TOCBow extends ItemBow {
 
 	int drawTicks;
 	int baseDamage;
 	float arrowMaxVel;
-	public TOCBow(Item.Properties builder, int baseDamage, int pullTime, float arrowMaxVel) {
+	public TOCBow(Item.Properties builder, String name, int baseDamage, int pullTime, float arrowMaxVel) {
 		super(builder);
-		
+		setRegistryName(Reference.MODID, name);
 		setBowProps();
 	}
 

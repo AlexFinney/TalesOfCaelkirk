@@ -18,7 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.blocks.TOCBlocks;
-import skeeter144.toc.network.AddLevelXpMessage;
+import skeeter144.toc.network.AddLevelXpPKT;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.recipe.Recipe;
 
@@ -38,8 +38,7 @@ public class TileEntityAnvil extends TileEntity {
 	
 	
 	@Override
-	public NBTTagCompound serializeNBT() {
-		NBTTagCompound compound = new NBTTagCompound();
+	public NBTTagCompound write (NBTTagCompound compound) {
 		compound.setString("ingotType", ingot != null ? ingot.getRegistryName().toString() : "");
 		compound.setString("producedItem", producedItem != null ? producedItem.getItem().getRegistryName().toString() : "");
 		compound.setInt("producedItemCount", producedItem != null ? producedItem.getCount() : 0);
@@ -51,7 +50,7 @@ public class TileEntityAnvil extends TileEntity {
 	
 	
 	@Override
-	public void deserializeNBT(NBTTagCompound compound) {
+	public void read(NBTTagCompound compound) {
 		String ingotType = compound.getString("ingotType");
 		if(ingotType != "")
 			ingot = ForgeRegistries.ITEMS.getValue(new ResourceLocation(ingotType));
@@ -80,7 +79,7 @@ public class TileEntityAnvil extends TileEntity {
 					
 					TOCMain.pm.getPlayer(striker).levels.addExp(selectedRecipe.level, selectedRecipe.xp);
 					
-					Network.INSTANCE.sendTo(new AddLevelXpMessage(selectedRecipe.level.name().toString(), selectedRecipe.xp), (EntityPlayerMP) striker);
+					Network.INSTANCE.sendTo(new AddLevelXpPKT(selectedRecipe.level.name().toString(), selectedRecipe.xp), (EntityPlayerMP) striker);
 					
 					addedIngots = 0;
 					ingot = null;

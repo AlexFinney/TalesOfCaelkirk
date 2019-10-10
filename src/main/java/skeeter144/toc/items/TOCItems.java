@@ -13,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTier;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -27,6 +28,15 @@ import skeeter144.toc.items.magic.BasicWand;
 import skeeter144.toc.items.misc.ItemGlassVial;
 import skeeter144.toc.items.quest.QuestItem;
 import skeeter144.toc.items.tools.BlacksmithHammer;
+import skeeter144.toc.items.tools.TOCAxe;
+import skeeter144.toc.items.tools.TOCPickaxe;
+import skeeter144.toc.items.tools.TOCShears;
+import skeeter144.toc.items.weapons.TOCArrow;
+import skeeter144.toc.items.weapons.TOCBow;
+import skeeter144.toc.items.weapons.TOCGreatAxe;
+import skeeter144.toc.items.weapons.TOCGreatSword;
+import skeeter144.toc.items.weapons.TOCSword;
+import skeeter144.toc.player.EntityLevels.Levels;
 import skeeter144.toc.util.Reference;
 
 public class TOCItems {
@@ -104,7 +114,7 @@ public class TOCItems {
 //	public static ArmorMaterial RUNITE_ARMOR = EnumHelper.addArmorMaterial("runite", "toc:runite", 1, new int[] { 0, 0, 0, 0 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 1);
 //	public static ArmorMaterial DRAGONSTONE_ARMOR = EnumHelper.addArmorMaterial("dragonstone", "toc:dragonstone", 1, new int[] { 0, 0, 0, 0 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 1);
 
-	public static Item SHEARS = new CustomItem(new Item.Properties().group(MOD_GROUP), "shears", 1);
+	//public static Item SHEARS = new CustomItem(new Item.Properties().group(MOD_GROUP), "shears", 1);
 	
 	public static Item ore_copper = new CustomItem(new Item.Properties().group(MOD_GROUP), "ore_copper", 1);
 	public static Item ore_tin = new CustomItem(new Item.Properties().group(MOD_GROUP), "ore_tin", 1);
@@ -134,67 +144,67 @@ public class TOCItems {
 	public static Item silver_coin = new CustomItem(new Item.Properties().group(MOD_GROUP), "coin_silver", 50);
 	public static Item gold_coin = new CustomItem(new Item.Properties().group(MOD_GROUP), "coin_gold", 50);
 
-//	public static Item axe_bronze = new TOCAxe("axe_bronze", 3, -2.5f, BRONZE);
-//	public static Item axe_iron = new TOCAxe("axe_iron", 5, -2.5f, IRON);
-//	public static Item axe_steel = new TOCAxe("axe_steel", 9, -2.5f, STEEL);
-//	public static Item axe_mithril = new TOCAxe("axe_mithril", 14, -2.5f, MITHRIL);
-//	public static Item axe_adamantite = new TOCAxe("axe_adamantite", 20, -2.5f, ADAMANTITE);
-//	public static Item axe_runite = new TOCAxe("axe_runite", 27, -2.5f, RUNITE);
-//	public static Item axe_dragonstone = new TOCAxe("axe_dragonstone", 35, -2.5f, DRAGONSTONE);
-//
-//	public static Item bronze_great_sword = new TOCGreatSword("great_sword_bronze", 14, -3f, false);
-//	public static Item iron_great_sword = new TOCGreatSword("great_sword_iron", 18, -3f, false);
-//	public static Item steel_great_sword = new TOCGreatSword("great_sword_steel", 26, -3f, false);
-//	public static Item mithril_great_sword = new TOCGreatSword("great_sword_mithril", 36, -3f, false);
-//	public static Item adamantite_great_sword = new TOCGreatSword("great_sword_adamantite", 48, -3f, false);
-//	public static Item runite_great_sword = new TOCGreatSword("great_sword_runite", 62, -3f, true);
-//	public static Item dragonstone_great_sword = new TOCGreatSword("great_sword_dragonstone", 78, -3f, true);
-//
-//	public static Item bronze_short_sword = new TOCSword("short_sword_bronze", 7, -1.5f, Levels.ATTACK);
-//	public static Item iron_short_sword = new TOCSword("short_sword_iron", 11, -1.5f, Levels.ATTACK);
-//	public static Item steel_short_sword = new TOCSword("short_sword_steel", 16, -1.5f, Levels.ATTACK);
-//	public static Item mithril_short_sword = new TOCSword("short_sword_mithril", 21, -1.5f, Levels.ATTACK);
-//	public static Item adamantite_short_sword = new TOCSword("short_sword_adamantite", 27, -1.5f, Levels.ATTACK);
-//	public static Item runite_short_sword = new TOCSword("short_sword_runite", 36, -1.5f, Levels.ATTACK);
-//	public static Item dragonstone_short_sword = new TOCSword("short_sword_dragonstone", 47, -1.5f, Levels.ATTACK);
-//
-//	public static Item bronze_great_axe = new TOCGreatAxe("great_axe_bronze", 14, -3f, false);
-//	public static Item iron_great_axe = new TOCGreatAxe("great_axe_iron", 18, -3f, false);
-//	public static Item steel_great_axe = new TOCGreatAxe("great_axe_steel", 26, -3f, false);
-//	public static Item mithril_great_axe = new TOCGreatAxe("great_axe_mithril", 36, -3f, false);
-//	public static Item adamantite_great_axe = new TOCGreatAxe("great_axe_adamantite", 48, -3f, false);
-//	public static Item runite_great_axe = new TOCGreatAxe("great_axe_runite", 62, -3f, true);
-//	public static Item dragonstone_great_axe = new TOCGreatAxe("great_axe_dragonstone", 78, -3f, true);
-//
-//	public static Item bronze_club = new TOCSword("club_bronze", 9, -2.5f, Levels.STRENGTH);
-//	public static Item iron_club = new TOCSword("club_iron", 13, -2.5f, Levels.STRENGTH);
-//	public static Item steel_club = new TOCSword("club_steel", 18, -2.5f, Levels.STRENGTH);
-//	public static Item mithril_club = new TOCSword("club_mithril", 23, -2.5f, Levels.STRENGTH);
-//	public static Item adamantite_club = new TOCSword("club_adamantite", 29, -2.5f, Levels.STRENGTH);
-//	public static Item runite_club = new TOCSword("club_runite", 38, -2.5f, Levels.STRENGTH);
-//	public static Item dragonstone_club = new TOCSword("club_dragonstone", 49, -2.5f, Levels.STRENGTH);
-//
-//	public static Item bronze_warhammer = new TOCSword("warhammer_bronze", 11, -2.5f, Levels.STRENGTH);
-//	public static Item iron_warhammer = new TOCSword("warhammer_iron", 15, -2.5f, Levels.STRENGTH);
-//	public static Item steel_warhammer = new TOCSword("warhammer_steel", 20, -2.5f, Levels.STRENGTH);
-//	public static Item mithril_warhammer = new TOCSword("warhammer_mithril", 25, -2.5f, Levels.STRENGTH);
-//	public static Item adamantite_warhammer = new TOCSword("warhammer_adamantite", 31, -2.5f, Levels.STRENGTH);
-//	public static Item runite_warhammer = new TOCSword("warhammer_runite", 40, -2.5f, Levels.STRENGTH);
-//	public static Item dragonstone_warhammer = new TOCSword("warhammer_dragonstone", 51, -2.5f, Levels.STRENGTH);
-//
-//	public static Item bronze_pickaxe = new TOCPickaxe("pickaxe_bronze", BRONZE);
-//	public static Item iron_pickaxe = new TOCPickaxe("pickaxe_iron", IRON);
-//	public static Item steel_pickaxe = new TOCPickaxe("pickaxe_steel", STEEL);
-//	public static Item mithril_pickaxe = new TOCPickaxe("pickaxe_mithril", MITHRIL);
-//	public static Item adamantite_pickaxe = new TOCPickaxe("pickaxe_adamantite", ADAMANTITE);
-//	public static Item runite_pickaxe = new TOCPickaxe("pickaxe_runite", RUNITE);
-//	public static Item dragonstone_pickaxe = new TOCPickaxe("pickaxe_dragonstone", DRAGONSTONE);
-//
+	public static Item axe_bronze = new TOCAxe(ItemTier.IRON, 3, -2.5f, new Item.Properties().group(MOD_GROUP), "axe_bronze");
+	public static Item axe_iron = new TOCAxe(ItemTier.IRON, 5, -2.5f, new Item.Properties().group(MOD_GROUP), "axe_iron");
+	public static Item axe_steel = new TOCAxe(ItemTier.IRON, 9, -2.5f, new Item.Properties().group(MOD_GROUP), "axe_steel");
+	public static Item axe_mithril = new TOCAxe(ItemTier.IRON, 14, -2.5f, new Item.Properties().group(MOD_GROUP), "axe_mithril");
+	public static Item axe_adamantite = new TOCAxe(ItemTier.IRON, 20, -2.5f, new Item.Properties().group(MOD_GROUP), "axe_adamantite");
+	public static Item axe_runite = new TOCAxe(ItemTier.IRON,  27, -2.5f, new Item.Properties().group(MOD_GROUP), "axe_runite");
+	public static Item axe_dragonstone = new TOCAxe(ItemTier.IRON, 35, -2.5f, new Item.Properties().group(MOD_GROUP), "axe_dragonstone");
+
+	public static Item bronze_great_sword = new TOCGreatSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "great_sword_bronze", 14, -3f, false);
+	public static Item iron_great_sword = new TOCGreatSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "great_sword_iron", 18, -3f, false);
+	public static Item steel_great_sword = new TOCGreatSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "great_sword_steel", 26, -3f, false);
+	public static Item mithril_great_sword = new TOCGreatSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "great_sword_mithril", 36, -3f, false);
+	public static Item adamantite_great_sword = new TOCGreatSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "great_sword_adamantite", 48, -3f, false);
+	public static Item runite_great_sword = new TOCGreatSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "great_sword_runite", 62, -3f, true);
+	public static Item dragonstone_great_sword = new TOCGreatSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "great_sword_dragonstone", 78, -3f, true);
+
+	public static Item bronze_short_sword = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "short_sword_bronze", 7, -1.5f, Levels.ATTACK);
+	public static Item iron_short_sword = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "short_sword_iron", 11, -1.5f, Levels.ATTACK);
+	public static Item steel_short_sword = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "short_sword_steel", 16, -1.5f, Levels.ATTACK);
+	public static Item mithril_short_sword = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "short_sword_mithril", 21, -1.5f, Levels.ATTACK);
+	public static Item adamantite_short_sword = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "short_sword_adamantite", 27, -1.5f, Levels.ATTACK);
+	public static Item runite_short_sword = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "short_sword_runite", 36, -1.5f, Levels.ATTACK);
+	public static Item dragonstone_short_sword = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "short_sword_dragonstone", 47, -1.5f, Levels.ATTACK);
+
+	public static Item bronze_great_axe = new TOCGreatAxe(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "great_axe_bronze", 14, -3f, false);
+	public static Item iron_great_axe = new TOCGreatAxe(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "great_axe_iron", 18, -3f, false);
+	public static Item steel_great_axe = new TOCGreatAxe(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "great_axe_steel", 26, -3f, false);
+	public static Item mithril_great_axe = new TOCGreatAxe(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "great_axe_mithril", 36, -3f, false);
+	public static Item adamantite_great_axe = new TOCGreatAxe(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "great_axe_adamantite", 48, -3f, false);
+	public static Item runite_great_axe = new TOCGreatAxe(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "great_axe_runite", 62, -3f, true);
+	public static Item dragonstone_great_axe = new TOCGreatAxe(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "great_axe_dragonstone", 78, -3f, true);
+
+	public static Item bronze_club = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "club_bronze", 9, -2.5f, Levels.STRENGTH);
+	public static Item iron_club = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "club_iron", 13, -2.5f, Levels.STRENGTH);
+	public static Item steel_club = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "club_steel", 18, -2.5f, Levels.STRENGTH);
+	public static Item mithril_club = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "club_mithril", 23, -2.5f, Levels.STRENGTH);
+	public static Item adamantite_club = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "club_adamantite", 29, -2.5f, Levels.STRENGTH);
+	public static Item runite_club = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "club_runite", 38, -2.5f, Levels.STRENGTH);
+	public static Item dragonstone_club = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "club_dragonstone", 49, -2.5f, Levels.STRENGTH);
+
+	public static Item bronze_warhammer = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "warhammer_bronze", 11, -2.5f, Levels.STRENGTH);
+	public static Item iron_warhammer = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "warhammer_iron", 15, -2.5f, Levels.STRENGTH);
+	public static Item steel_warhammer = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "warhammer_steel", 20, -2.5f, Levels.STRENGTH);
+	public static Item mithril_warhammer = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "warhammer_mithril", 25, -2.5f, Levels.STRENGTH);
+	public static Item adamantite_warhammer = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "warhammer_adamantite", 31, -2.5f, Levels.STRENGTH);
+	public static Item runite_warhammer = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "warhammer_runite", 40, -2.5f, Levels.STRENGTH);
+	public static Item dragonstone_warhammer = new TOCSword(ItemTier.IRON, new Item.Properties().group(MOD_GROUP), "warhammer_dragonstone", 51, -2.5f, Levels.STRENGTH);
+
+	public static Item bronze_pickaxe = new TOCPickaxe(ItemTier.IRON, "pickaxe_bronze", 1, 1, new Item.Properties().group(MOD_GROUP));
+	public static Item iron_pickaxe = new TOCPickaxe(ItemTier.IRON, "pickaxe_iron", 1, 1, new Item.Properties().group(MOD_GROUP));
+	public static Item steel_pickaxe = new TOCPickaxe(ItemTier.IRON, "pickaxe_steel",  1, 1, new Item.Properties().group(MOD_GROUP));
+	public static Item mithril_pickaxe = new TOCPickaxe(ItemTier.IRON, "pickaxe_mithril", 1, 1, new Item.Properties().group(MOD_GROUP));
+	public static Item adamantite_pickaxe = new TOCPickaxe(ItemTier.IRON, "pickaxe_adamantite", 1, 1, new Item.Properties().group(MOD_GROUP));
+	public static Item runite_pickaxe = new TOCPickaxe(ItemTier.IRON, "pickaxe_runite", 1, 1, new Item.Properties().group(MOD_GROUP));
+	public static Item dragonstone_pickaxe = new TOCPickaxe(ItemTier.IRON, "pickaxe_dragonstone", 1, 1, new Item.Properties().group(MOD_GROUP));
+
 //	public static Item viking_helmet = new ArmorVikingHelmet(VIKING_STEEL_ARMOR_HELM, 0, EntityEquipmentSlot.HEAD, .05f, 0f, .10f);
 //	public static Item viking_chestplate = new CustomArmor(VIKING_STEEL_ARMOR, 1, EntityEquipmentSlot.CHEST, "viking_chestplate", .08f, 0f, .17f);
 //	public static Item viking_leggings = new CustomArmor(VIKING_STEEL_ARMOR, 2, EntityEquipmentSlot.LEGS, "viking_leggings", .05f, 0f, .12f);
 //	public static Item viking_boots = new CustomArmor(VIKING_STEEL_ARMOR, 3, EntityEquipmentSlot.FEET, "viking_boots", .03f, 0f, .08f);
-//
+
 	public static Item bronze_helmet = new CustomArmor(ArmorMaterialList.bronze, EntityEquipmentSlot.HEAD, new Item.Properties().group(MOD_GROUP), "bronze_helmet", .02f, 0f, .06f);
 	public static Item bronze_chestplate = new CustomArmor(ArmorMaterialList.bronze, EntityEquipmentSlot.CHEST, new Item.Properties().group(MOD_GROUP), "bronze_chestplate", .05f, 0f, .09f);
 	public static Item bronze_leggings = new CustomArmor(ArmorMaterialList.bronze, EntityEquipmentSlot.LEGS, new Item.Properties().group(MOD_GROUP), "bronze_leggings", .03f, 0f, .05f);
@@ -244,24 +254,24 @@ public class TOCItems {
 //	public static Item horse_summoner_zombie = new VariableHorseSummoner("horse_summoner_zombie", 5);
 //	public static Item horse_summoner_skeleton = new VariableHorseSummoner("horse_summoner_skeleton", 6);
 
-//	public static Item arrow_bronze      = new TOCArrow("arrow_bronze",       3, .5f, 0xFF0000);
-//	public static Item arrow_iron        = new TOCArrow("arrow_iron",         6, .4f, 0xFF0000);
-//	public static Item arrow_steel       = new TOCArrow("arrow_steel",       11, .4f, 0xFF0000);
-//	public static Item arrow_mithril     = new TOCArrow("arrow_mithril",     18, .3f, 0xFF0000);
-//	public static Item arrow_adamantite  = new TOCArrow("arrow_adamantite",  27, .2f, 0xFF0000);
-//	public static Item arrow_runite      = new TOCArrow("arrow_runite",      38, .1f, 0xFF0000);
-//	public static Item arrow_dragonstone = new TOCArrow("arrow_dragonstone", 52, .05f, 0xFF0000);
+	public static Item arrow_bronze      = new TOCArrow(new Item.Properties().group(MOD_GROUP), "arrow_bronze",       3, .5f);
+	public static Item arrow_iron        = new TOCArrow(new Item.Properties().group(MOD_GROUP), "arrow_iron",         6, .4f);
+	public static Item arrow_steel       = new TOCArrow(new Item.Properties().group(MOD_GROUP), "arrow_steel",       11, .4f);
+	public static Item arrow_mithril     = new TOCArrow(new Item.Properties().group(MOD_GROUP), "arrow_mithril",     18, .3f);
+	public static Item arrow_adamantite  = new TOCArrow(new Item.Properties().group(MOD_GROUP), "arrow_adamantite",  27, .2f);
+	public static Item arrow_runite      = new TOCArrow(new Item.Properties().group(MOD_GROUP), "arrow_runite",      38, .1f);
+	public static Item arrow_dragonstone = new TOCArrow(new Item.Properties().group(MOD_GROUP), "arrow_dragonstone", 52, .05f);
 	
-//	public static Item shears = new TOCShears();
-//	
+	public static Item shears = new TOCShears(new Item.Properties().group(MOD_GROUP), "shears");
+	
 	public static Item bow_oak_short_unstrung = new CustomItem(new Item.Properties().group(MOD_GROUP), "bow_oak_short_unstrung", 1);
 	public static Item bow_oak_long_unstrung =  new CustomItem(new Item.Properties().group(MOD_GROUP), "bow_oak_long_unstrung",  1);
-//	
-//	public static Item bow_oak_short = new TOCBow("bow_oak_short", 5, 20, .2f);
-//	public static Item bow_oak_long = new TOCBow("bow_oak_long", 8, 30, 1.3f);
-//	
+	
+	public static Item bow_oak_short = new TOCBow(new Item.Properties().group(MOD_GROUP), "bow_oak_short", 5, 20, .2f);
+	public static Item bow_oak_long = new TOCBow(new Item.Properties().group(MOD_GROUP), "bow_oak_long", 8, 30, 1.3f);
+	
 	public static Item bowstring = new CustomItem(new Item.Properties().group(MOD_GROUP), "bowstring", 20);
-//	
+	
 	public static Item stick_oak = new CustomItem(new Item.Properties().group(MOD_GROUP), "stick_oak", 20);
 	public static Item stick_birch = new CustomItem(new Item.Properties().group(MOD_GROUP), "stick_birch", 20);
 	public static Item stick_maple = new CustomItem(new Item.Properties().group(MOD_GROUP), "stick_maple", 20);

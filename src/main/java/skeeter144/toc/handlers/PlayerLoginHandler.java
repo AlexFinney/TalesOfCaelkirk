@@ -4,16 +4,19 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.network.Network;
-import skeeter144.toc.network.SetClientTOCPlayerMessage;
+import skeeter144.toc.network.SetClientTOCPlayerPKT;
 import skeeter144.toc.player.TOCPlayer;
+import skeeter144.toc.util.Reference;
 
+@EventBusSubscriber(modid = Reference.MODID)
 public class PlayerLoginHandler {
 
 	@SubscribeEvent
-	public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
+	public static void onPlayerLoggedIn(PlayerLoggedInEvent event) {
 	   EntityPlayer player = event.getPlayer();
 		if(player.world.isRemote) {
 		   return;
@@ -26,7 +29,7 @@ public class PlayerLoginHandler {
 	   }
 	   
 	   TOCPlayer tocPlayer = TOCMain.pm.getPlayer(player);
-	   Network.INSTANCE.sendTo(new SetClientTOCPlayerMessage(tocPlayer), (EntityPlayerMP)player);
+	   Network.INSTANCE.sendTo(new SetClientTOCPlayerPKT(tocPlayer), (EntityPlayerMP)player);
 	}
 	
 	

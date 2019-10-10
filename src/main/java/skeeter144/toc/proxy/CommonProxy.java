@@ -8,8 +8,11 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import skeeter144.toc.quest.NpcDialog;
+import skeeter144.toc.util.Reference;
 
+@EventBusSubscriber(modid = Reference.MODID,bus = EventBusSubscriber.Bus.MOD)
 public class CommonProxy 
 {
 //	public void preInit(FMLPreInitializationEvent event)

@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "toc:block_ore_adamantite" }
+        "": { "model": "toc:block/block_ore_adamantite" }
     }
 }

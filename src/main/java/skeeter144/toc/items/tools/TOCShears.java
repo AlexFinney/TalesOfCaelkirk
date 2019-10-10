@@ -7,12 +7,14 @@ import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import skeeter144.toc.util.Reference;
 
 public class TOCShears extends ItemShears
 {
-    public TOCShears(Item.Properties builder)
+    public TOCShears(Item.Properties builder, String name)
     {
     	super(builder);
+    	setRegistryName(Reference.MODID, name);
     }
 
     @Override

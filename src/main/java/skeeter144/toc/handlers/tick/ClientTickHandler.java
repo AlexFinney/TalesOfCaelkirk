@@ -41,8 +41,4 @@ public class ClientTickHandler extends TickHandler{
 			}
 		}
 	}
-	
-	@Override
-	public void serverTicked(ServerTickEvent e) {}
-	
 }

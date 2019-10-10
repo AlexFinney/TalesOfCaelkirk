@@ -24,6 +24,7 @@ import net.minecraft.world.World;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.tile.BlockTileEntity;
 import skeeter144.toc.entity.tile.TileEntityAnvil;
+import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.sounds.Sounds;
 
 public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
@@ -37,15 +38,15 @@ public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
 	
 	public BlockAnvil(String name) {
 		super(Properties.create(Material.ANVIL).hardnessAndResistance(1000, 1000), name);
-		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, EnumFacing.NORTH));
-//		ingots.add(TOCItems.ingot_bronze);
-//		ingots.add(TOCItems.ingot_iron);
-//		ingots.add(TOCItems.ingot_steel);
-//		ingots.add(TOCItems.ingot_gold);
-//		ingots.add(TOCItems.ingot_mithril);
-//		ingots.add(TOCItems.ingot_adamantite);
-//		ingots.add(TOCItems.ingot_runite);
-//		ingots.add(TOCItems.ingot_dragonstone);
+		//this.setDefaultState(this.stateContainer.getBaseState().with(FACING, EnumFacing.NORTH));
+		ingots.add(TOCItems.ingot_bronze);
+		ingots.add(TOCItems.ingot_iron);
+		ingots.add(TOCItems.ingot_steel);
+		ingots.add(TOCItems.ingot_gold);
+		ingots.add(TOCItems.ingot_mithril);
+		ingots.add(TOCItems.ingot_adamantite);
+		ingots.add(TOCItems.ingot_runite);
+		ingots.add(TOCItems.ingot_dragonstone);
 	}
 
 	@Override

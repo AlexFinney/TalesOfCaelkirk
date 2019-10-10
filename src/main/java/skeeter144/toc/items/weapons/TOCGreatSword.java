@@ -26,17 +26,19 @@ import net.minecraft.world.World;
 import skeeter144.toc.combat.CombatManager;
 import skeeter144.toc.combat.CombatManager.DamageType;
 import skeeter144.toc.combat.TOCDamageSource;
+import skeeter144.toc.util.Reference;
 import skeeter144.toc.util.Util;
 
 public class TOCGreatSword extends ItemSword implements ISpecialAttackWeapon{
 	String name;
 	float damage, speed;
 	boolean hasSpecial = false;
-	public TOCGreatSword(IItemTier tier, Item.Properties builder, float damage, float speed, boolean hasSpecial) {
+	public TOCGreatSword(IItemTier tier, Item.Properties builder, String name, float damage, float speed, boolean hasSpecial) {
 		super(tier, (int) damage, speed, builder);
 		this.damage = damage;
 		this.speed = speed;
 		this.hasSpecial = hasSpecial;
+		setRegistryName(Reference.MODID, name);
 	}
 	
 	@Override

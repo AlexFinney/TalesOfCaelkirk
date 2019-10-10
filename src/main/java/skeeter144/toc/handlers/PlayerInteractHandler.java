@@ -22,28 +22,33 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.network.NetworkHooks;
 import skeeter144.toc.TOCMain;
+import skeeter144.toc.blocks.BlockHarvestedTree;
+import skeeter144.toc.blocks.TOCBlocks;
 import skeeter144.toc.blocks.log.CustomBlockLog;
+import skeeter144.toc.client.gui.Guis;
 import skeeter144.toc.entity.tile.TileEntityAnvil;
 import skeeter144.toc.entity.tile.TileEntityHarvestedTree;
 import skeeter144.toc.handlers.PlayerInventoryHandler.ItemAddedToInventoryEvent;
 import skeeter144.toc.items.tools.TOCAxe;
-import skeeter144.toc.network.AddLevelXpMessage;
+import skeeter144.toc.network.AddLevelXpPKT;
 import skeeter144.toc.network.Network;
+import skeeter144.toc.network.OpenGUIClientPKT;
 import skeeter144.toc.network.SpawnParticlesPKT;
 import skeeter144.toc.particles.system.ParticleSystem;
 import skeeter144.toc.player.EntityLevels.Levels;
 import skeeter144.toc.skills.Woodcutting;
 import skeeter144.toc.tasks.TickableTask;
+import skeeter144.toc.util.Reference;
 
+@EventBusSubscriber(modid = Reference.MODID)
 public class PlayerInteractHandler {
 	
-	@SubscribeEvent
-	public void onPlayerLeftClick(PlayerInteractEvent.LeftClickEmpty e) {
-	}
 	
 	@SubscribeEvent
-	public void onPlayerLeftClick(PlayerInteractEvent.LeftClickBlock e) {
+	public static void onPlayerLeftClick(PlayerInteractEvent.LeftClickBlock e) {
 		if(e.getWorld().isRemote)
 			return;
 		
@@ -63,14 +68,14 @@ public class PlayerInteractHandler {
 	}
 	
 	@SubscribeEvent
-	public void onPlayerLeftClick(AttackEntityEvent e) {
+	public static void onPlayerLeftClick(AttackEntityEvent e) {
 		if(e.getEntityPlayer().getCooledAttackStrength(1) != 1) {
 			e.setCanceled(true);
 			cancelSwing(e.getEntityPlayer());
 		}
 	}
 	
-	private void cancelSwing(EntityPlayer p) {
+	private static void cancelSwing(EntityPlayer p) {
 		TOCMain.clientTaskManager.addTask(new TickableTask(4) {
 			public void tick(int worldTick) {
 				p.swingProgress = 0;
@@ -81,14 +86,13 @@ public class PlayerInteractHandler {
 	}
 	
 	@SubscribeEvent
-	public void onPlayerRightClickBlock(PlayerInteractEvent.RightClickBlock e) {
+	public static void onPlayerRightClickBlock(PlayerInteractEvent.RightClickBlock e) {
 		List<Item> ingots = new ArrayList<Item>(); // Arrays.asList(TOCItems.ingot_bronze, TOCItems.ingot_iron, TOCItems.ingot_steel,
 				//TOCItems.ingot_gold, TOCItems.ingot_mithril, TOCItems.ingot_runite, TOCItems.ingot_dragonstone);
 
 		IBlockState bs = e.getWorld().getBlockState(e.getPos()).getBlock().getDefaultState();
 		if (e.getWorld().isRemote) {
-			//if (bs.getBlock().equals(Blocks.NETHER_BRICKS))
-				//e.getEntityPlayer().openGui(TOCMain.instance, Guis.SMELTING_GUI, e.getWorld(), 0, 0, 0);
+			
 //TODO
 //			if (bs.getBlock().getDefaultState().equals(TOCBlocks.blockAnvil.getDefaultState())) {
 //				TileEntityAnvil anvil = (TileEntityAnvil) e.getWorld().getTileEntity(e.getPos());
@@ -98,6 +102,9 @@ public class PlayerInteractHandler {
 //				}
 //			}
 		} else {
+			if (bs.getBlock().equals(Blocks.NETHER_BRICKS))
+				Network.INSTANCE.sendTo(new OpenGUIClientPKT(Guis.SMELTING_GUI, e.getPos()), (EntityPlayerMP)e.getEntityPlayer());
+			
 			if(!(e.getWorld().getTileEntity(e.getPos()) instanceof TileEntityAnvil))
 				return;
 			
@@ -113,7 +120,7 @@ public class PlayerInteractHandler {
 		}
 	}
 		
-	private void processLogChopped(PlayerInteractEvent e) {
+	private static void processLogChopped(PlayerInteractEvent e) {
 		World world = e.getWorld();
 		EntityPlayer player = e.getEntityPlayer();
 		BlockPos pos = e.getPos();
@@ -181,13 +188,12 @@ public class PlayerInteractHandler {
 				}
 				world.setBlockState(lowestPos, lowestBlock);
 			
-				//TODO
-				//world.setBlockState(pos, TOCBlocks.harvested_tree.getDefaultState());
-				TileEntityHarvestedTree tree = (TileEntityHarvestedTree)world.getTileEntity(pos);
+				TileEntityHarvestedTree tree = ((BlockHarvestedTree)TOCBlocks.harvested_tree).createTileEntity(world, null);
 				tree.minSecs = Woodcutting.getMinRespawnSecsForWood(log);
 				tree.maxSecs = Woodcutting.getMaxRespawnSecsForWood(log);
-				
 				tree.treeBlocks = list;
+
+				world.setTileEntity(pos,  tree);
 			}
 			
 			if(player != null) {
@@ -195,7 +201,7 @@ public class PlayerInteractHandler {
 				MinecraftForge.EVENT_BUS.post(new ItemAddedToInventoryEvent(player, stack));
 				player.addItemStackToInventory(stack);
 				TOCMain.pm.getPlayer(player).levels.addExp(Levels.WOODCUTTING, xpGiven);
-				Network.INSTANCE.sendTo(new AddLevelXpMessage("Woodcutting", xpGiven), (EntityPlayerMP) player);
+				Network.INSTANCE.sendTo(new AddLevelXpPKT("Woodcutting", xpGiven), (EntityPlayerMP) player);
 			}
 		}
 	}

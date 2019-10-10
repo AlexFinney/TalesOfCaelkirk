@@ -21,14 +21,15 @@ public class SmeltingGui extends CraftingGui{
 		updatePlayersInventory();
 	}
 	
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	@Override
+	public void render(int x, int y, float partialTicks) {
 		this.drawDefaultBackground();
 		this.setGuiVals();
 		drawBackground();
 		drawRecipes();
+		super.render(x, y, partialTicks);
 		for(GuiButton btn : this.buttons) 
 			btn.enabled = selectedRecipe != null;
-	   // super.drawScreen(mouseX, mouseY, partialTicks);
 	    
 	    if(resized) {
 	    	initGui();
@@ -44,14 +45,36 @@ public class SmeltingGui extends CraftingGui{
 		this.buttons.clear();
 		int btnWidth = (int)(guiWidth * .3f);
 		
-		GuiButton smelt1 = new GuiButton(0, (int)(guiX + guiWidth - btnWidth * 1.2f), guiY + (int)(guiY * .15f), "Smelt 1") {};
+		GuiButton smelt1 = new GuiButton(0, (int)(guiX + guiWidth - btnWidth * 1.2f), guiY + (int)(guiY * .15f), "Smelt 1") {
+			@Override
+			public void onClick(double mouseX, double mouseY) {
+				EntityPlayer pl = Minecraft.getInstance().player;
+				if (selectedRecipe.canRecipeBeCraftedNumberTimes(pl.inventory, totalCrafting + 1)) {
+					Network.INSTANCE.sendToServer(new CraftItemMessage(selectedRecipe.crafted.getItem(), 1));
+					totalCrafting++;
+					pl.world.playSound(pl, pl.getPosition(), Sounds.anvil_strike, SoundCategory.MASTER, 1, 1);
+				}
+			}
+		};
 		smelt1.width = btnWidth;
 		
-		GuiButton smeltAll = new GuiButton(1, (int)(guiX + guiWidth - btnWidth * 1.2f), guiY + (int)(guiY * .5f), "Smelt All") {};
+		GuiButton smeltAll = new GuiButton(1, (int)(guiX + guiWidth - btnWidth * 1.2f), guiY + (int)(guiY * .5f), "Smelt All") {
+			@Override
+			public void onClick(double mouseX, double mouseY) {
+				EntityPlayer pl = Minecraft.getInstance().player;
+				int num = selectedRecipe.numberCanBeCrafted(pl.inventory) - totalCrafting;
+				for(int i = 0; i < num; ++i) {
+					Network.INSTANCE.sendToServer(new CraftItemMessage(selectedRecipe.crafted.getItem(), 1));
+					totalCrafting++;
+				}
+				updatePlayersInventory();
+				pl.world.playSound(pl, pl.getPosition(), Sounds.anvil_strike, SoundCategory.MASTER, 1, 1);
+			}
+		};
 		smeltAll.width = btnWidth;
 		
-		this.buttons.add(smeltAll);
-		this.buttons.add(smelt1);
+		addButton(smelt1);
+		addButton(smeltAll);
 	}
 	
 	protected void actionPerformed(GuiButton button){

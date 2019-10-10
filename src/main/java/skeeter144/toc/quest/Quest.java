@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import skeeter144.toc.TOCMain;
-import skeeter144.toc.network.AddLevelXpMessage;
+import skeeter144.toc.network.AddLevelXpPKT;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.player.EntityLevels;
 import skeeter144.toc.player.EntityLevels.Levels;
@@ -41,7 +41,7 @@ public class Quest {
 			if(combatLeveled)
 				TOCMain.pm.getPlayer(player).combatLeveledUp();
 			
-			Network.INSTANCE.sendTo(new AddLevelXpMessage(pair.getKey().name(), pair.getValue()), player);
+			Network.INSTANCE.sendTo(new AddLevelXpPKT(pair.getKey().name(), pair.getValue()), player);
 		}
 		
 		

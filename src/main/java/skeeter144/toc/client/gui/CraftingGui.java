@@ -8,13 +8,15 @@ import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
 import skeeter144.toc.recipe.Recipe;
+import skeeter144.toc.util.Mouse;
 
-public abstract class CraftingGui extends GuiScreen{
+public abstract class CraftingGui extends GuiScreen implements IGuiEventListener{
 	int totalCrafting = 0;
 	int crafted = 0;
 	boolean resized = true;
@@ -32,8 +34,6 @@ public abstract class CraftingGui extends GuiScreen{
 	int recipeStartY;
 	int recipeSpace;
 	int columns;
-	
-	
 	
 	@Override
 	public void onResize(Minecraft mcIn, int w, int h) {
@@ -77,8 +77,8 @@ public abstract class CraftingGui extends GuiScreen{
 		
 		tm.bindTexture(backgroundImage);
 		
-		guiWidth = mw.getScaledWidth() / 4;
-		guiHeight = mw.getScaledHeight();
+		guiWidth = mw.getScaledWidth() / 2;
+		guiHeight = mw.getScaledHeight() / 4;
 		guiX = mw.getScaledWidth() / 2 - guiWidth / 2;
 		guiY = (int)(mw.getScaledHeight() * .2f);
 	}
@@ -90,28 +90,16 @@ public abstract class CraftingGui extends GuiScreen{
 		GlStateManager.enableLighting();
 		int x = 0, y = 0;
 		int row = 0, col = 0;
-		int adjustedX = (int) (Minecraft.getInstance().mouseHelper.getMouseX() * mw.getScaledWidth() / mw.getWidth());
-		int adjustedY = (int) (mw.getScaledHeight() - Minecraft.getInstance().mouseHelper.getMouseY() * mw.getScaledHeight() / mw.getHeight());
-		 
-		for(Recipe r : allRecipes) {
-			if(!craftableRecipes.contains(r))
-				continue;
+		for(Recipe r : craftableRecipes) {
 			GlStateManager.translated(0, 0, 100);
 			x = recipeStartX + col * iconDim + col * recipeSpace;
 			y = recipeStartY + row * iconDim;
 			Rectangle2D rect = new Rectangle2D.Double(x, y, iconDim, iconDim);
-			if(!wasMouseClicked && Minecraft.getInstance().mouseHelper.isLeftDown()) {
-				if(rect.contains(new Point2D.Double(adjustedX, adjustedY))) {
-					wasMouseClicked = true;
-					selectedRecipe = r;
-				}
-			}
 			
 			if(selectedRecipe != null && r.equals(selectedRecipe))
-				this.drawRect((int)rect.getMinX(), (int)rect.getMinY(), (int)rect.getMaxX(), (int)rect.getMaxY(), 0xFFEBFF89);
+				drawRect((int)rect.getMinX(), (int)rect.getMinY(), (int)rect.getMaxX(), (int)rect.getMaxY(), 0xFFEBFF89);
 			
-			
-			this.itemRender.renderItemAndEffectIntoGUI(r.crafted, x, y);
+			this.itemRender.renderItemAndEffectIntoGUI(r.crafted, x+2, y+2);
 			GlStateManager.translatef(0, 0, -100);
 			++col;
 			if(col >= columns) {
@@ -129,5 +117,28 @@ public abstract class CraftingGui extends GuiScreen{
 		GlStateManager.popMatrix();
 	}
 	
+	@Override
+	public boolean mouseClicked(double mx, double my, int btn) {
+		super.mouseClicked(mx, my, btn);
+		
+		int col = 0, row = 0;
+		for(Recipe r : craftableRecipes) {
+			int x = recipeStartX + col * iconDim + col * recipeSpace;
+			int y = recipeStartY + row * iconDim;
+			Rectangle2D rect = new Rectangle2D.Double(x, y, iconDim, iconDim);
+			if (rect.contains(new Point2D.Double(mx, my))) {
+				wasMouseClicked = true;
+				selectedRecipe = r;
+				return true;
+			}
+			
+			++col;
+			if(col >= columns) {
+				col = 0;
+				++row;
+			}
+		}
+		return false;
+	}
 	
 }

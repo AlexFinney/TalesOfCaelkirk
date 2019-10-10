@@ -14,7 +14,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import skeeter144.toc.TOCMain;
-import skeeter144.toc.network.AddLevelXpMessage;
+import skeeter144.toc.network.AddLevelXpPKT;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.player.EntityLevels.Levels;
 import skeeter144.toc.player.TOCPlayer;
@@ -123,7 +123,7 @@ public class Crafting {
 		}
 		int xpGiven = getXpFromItemCraft(e.getCrafting().getItem());
 		p.levels.addExp(Levels.CRAFTING, xpGiven);
-		Network.INSTANCE.sendTo(new AddLevelXpMessage("Crafting", xpGiven), (EntityPlayerMP) e.getPlayer());
+		Network.INSTANCE.sendTo(new AddLevelXpPKT("Crafting", xpGiven), (EntityPlayerMP) e.getPlayer());
 	}
 	
 	int getCraftingLevelRequiredFor(Item i) {

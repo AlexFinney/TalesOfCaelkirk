@@ -24,17 +24,19 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import skeeter144.toc.combat.CombatManager;
 import skeeter144.toc.combat.CombatManager.DamageType;
+import skeeter144.toc.util.Reference;
 import skeeter144.toc.combat.TOCDamageSource;
 
 public class TOCGreatAxe extends ItemSword implements ISpecialAttackWeapon{
 
 	boolean hasSpecial = false;
 	float damage, speed;
-	public TOCGreatAxe(IItemTier tier, Item.Properties builder, float damage, float speed, boolean hasSpecial) {
+	public TOCGreatAxe(IItemTier tier, Item.Properties builder, String name, float damage, float speed, boolean hasSpecial) {
 		super(tier, (int) damage, speed, builder);
 		this.hasSpecial = hasSpecial;
 		this.damage = damage;
 		this.speed = speed;	
+		setRegistryName(Reference.MODID, name);
 	}
 	
 	

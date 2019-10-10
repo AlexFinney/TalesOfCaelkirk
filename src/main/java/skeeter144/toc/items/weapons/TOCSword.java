@@ -19,16 +19,18 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import skeeter144.toc.combat.CombatManager;
 import skeeter144.toc.player.EntityLevels.Levels;
+import skeeter144.toc.util.Reference;
 
 public class TOCSword extends ItemSword{
 	
 	float damage, speed;
 	public final Levels xpLeveled;
-	public TOCSword(IItemTier tier, Item.Properties builder, float damage, float speed, Levels xpLeveled) {
+	public TOCSword(IItemTier tier, Item.Properties builder, String name, float damage, float speed, Levels xpLeveled) {
 		super(tier, (int) damage, speed, builder);
 		this.damage = damage;
 		this.speed = speed;
 		this.xpLeveled = xpLeveled;
+		setRegistryName(Reference.MODID, name);
 	}
 
 	

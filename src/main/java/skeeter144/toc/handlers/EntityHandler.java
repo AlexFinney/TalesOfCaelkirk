@@ -25,7 +25,7 @@ import skeeter144.toc.combat.TOCDamageSource;
 import skeeter144.toc.entity.TOCEntity;
 import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.entity.projectile.EntityTOCArrow;
-import skeeter144.toc.network.AddLevelXpMessage;
+import skeeter144.toc.network.AddLevelXpPKT;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.player.EntityLevels;
 import skeeter144.toc.player.EntityLevels.Levels;
@@ -145,8 +145,8 @@ public class EntityHandler {
 
 			EntityPlayerMP truSource = (EntityPlayerMP) e.getSource().getTrueSource();
 
-			Network.INSTANCE.sendTo(new AddLevelXpMessage(level.name(), xp), truSource);
-			Network.INSTANCE.sendTo(new AddLevelXpMessage(Levels.HITPOINTS.name(), xp / 4), truSource);
+			Network.INSTANCE.sendTo(new AddLevelXpPKT(level.name(), xp), truSource);
+			Network.INSTANCE.sendTo(new AddLevelXpPKT(Levels.HITPOINTS.name(), xp / 4), truSource);
 			if (hpLeveled || leveledUp)
 				player.combatLeveledUp();
 		}

@@ -2,6 +2,7 @@ package skeeter144.toc.util;
 
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -11,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -18,6 +20,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import skeeter144.toc.combat.TOCDamageSource;
 
 public class Util {
@@ -205,6 +208,10 @@ public class Util {
 	public static Vec3d getMovementVectorTo(BlockPos from, BlockPos to) {
 		BlockPos fromTo = from.subtract(to);
 		return new Vec3d(fromTo).normalize();
+	}
+
+	public static EntityPlayerMP getPlayerByUUID(UUID uuid) {
+		return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByUUID(uuid);
 	}
 	
 	

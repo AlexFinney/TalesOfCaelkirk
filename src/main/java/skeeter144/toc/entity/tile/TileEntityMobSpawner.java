@@ -38,8 +38,7 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable {
 	public int mobs_per_spawn_max = 3;
 
 	@Override
-	public NBTTagCompound serializeNBT() {
-		NBTTagCompound compound = new NBTTagCompound();
+	public NBTTagCompound write(NBTTagCompound compound) {
 		compound.setString("mob_name", mob_name);
 		compound.setInt("spawn_radius", spawn_radius);
 		compound.setInt("avg_spawns_per_min", avg_spawns_per_min);
@@ -51,7 +50,7 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable {
 	}
 
 	@Override
-	public void deserializeNBT(NBTTagCompound compound) {
+	public void read(NBTTagCompound compound) {
 		mob_name = compound.getString("mob_name");
 		spawn_radius = compound.getInt("spawn_radius");
 		avg_spawns_per_min = compound.getInt("avg_spawns_per_min");

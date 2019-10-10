@@ -23,13 +23,7 @@ public class TOCMain
 {	
 	public static float VANILLA_TO_TOC_DAMAGE_CONVERSION = 3.0f;
 	public static final Logger LOGGER = LogManager.getLogger();
-	public static Random rand;
-	
-//	@Mod.Instance(Reference.MODID)
-//	public static TOCMain instance;
-	
-//	@SidedProxy(clientSide = Reference.CLIENTPROXY, serverSide = Reference.COMMONPROXY)
-//	public static CommonProxy proxy;
+	public static Random rand = new Random(System.currentTimeMillis());
 	
 	public static PlayerManager pm = PlayerManager.instance();
 	public static MobManager mm = MobManager.instance();
@@ -41,6 +35,7 @@ public class TOCMain
 	
 	public static TaskManager clientTaskManager = new TaskManager();
 	public static TaskManager serverTaskManager = new TaskManager();
+	
 	
 	public TOCMain() {
 		LOGGER.debug("Hello from TOC Main!");

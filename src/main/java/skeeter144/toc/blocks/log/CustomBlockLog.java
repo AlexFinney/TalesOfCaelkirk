@@ -17,7 +17,7 @@ public class CustomBlockLog extends BlockLog {
 			SoundEvents.BLOCK_WOOD_PLACE, Sounds.fake_wood_hit, SoundEvents.BLOCK_WOOD_BREAK);
 
 	public CustomBlockLog(String name) {
-		super(MaterialColor.WOOD, Properties.create(Material.WOOD).sound(customType));
+		super(MaterialColor.WOOD, Properties.create(Material.WOOD).sound(customType).hardnessAndResistance(-1));
 
 		this.setRegistryName(new ResourceLocation(Reference.MODID, name));
 		this.setDefaultState(this.stateContainer.getBaseState().with(AXIS, EnumFacing.Axis.Y));

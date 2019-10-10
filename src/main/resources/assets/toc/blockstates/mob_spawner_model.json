@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "toc:mob_spawner_model" }
+        "normal": { "model": "toc:block/mob_spawner_model" }
     }
 }
