@@ -7,19 +7,19 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent;
 import skeeter144.toc.recipe.Recipe;
 
-public class SetAnvilRecipeMessage{
+public class SetAnvilRecipePKT{
 	
-	public static void encode(SetAnvilRecipeMessage pkt, PacketBuffer buf) {}
-	public static SetAnvilRecipeMessage decode(PacketBuffer buf) {return null;}
+	public static void encode(SetAnvilRecipePKT pkt, PacketBuffer buf) {}
+	public static SetAnvilRecipePKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final SetAnvilRecipeMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final SetAnvilRecipePKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
 	Recipe r;
 	BlockPos pos;
-	public SetAnvilRecipeMessage() {}
-	public SetAnvilRecipeMessage(Recipe r, BlockPos pos) {
+	public SetAnvilRecipePKT() {}
+	public SetAnvilRecipePKT(Recipe r, BlockPos pos) {
 		this.r = r;
 		this.pos = pos;
 	}

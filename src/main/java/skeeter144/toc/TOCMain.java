@@ -36,6 +36,7 @@ public class TOCMain
 	public static TaskManager clientTaskManager = new TaskManager();
 	public static TaskManager serverTaskManager = new TaskManager();
 	
+	public static TOCMain instance;
 	
 	public TOCMain() {
 		LOGGER.debug("Hello from TOC Main!");
@@ -43,6 +44,7 @@ public class TOCMain
 		final ModLoadingContext modLoadingContext = ModLoadingContext.get();
 		modLoadingContext.registerConfig(ModConfig.Type.CLIENT, ConfigHolder.CLIENT_SPEC);
 		modLoadingContext.registerConfig(ModConfig.Type.SERVER, ConfigHolder.SERVER_SPEC);
+		instance = this;
 	}
 	
 //	static {

@@ -18,7 +18,7 @@ import skeeter144.toc.items.magic.BasicWand;
 import skeeter144.toc.magic.Spell;
 import skeeter144.toc.magic.Spells;
 import skeeter144.toc.network.Network;
-import skeeter144.toc.network.WandEmbueMessage;
+import skeeter144.toc.network.WandEmbuePKT;
 import skeeter144.toc.util.Mouse;
 import skeeter144.toc.util.Reference;
 
@@ -161,7 +161,7 @@ public class SpellBookGUI extends GuiScreen {
 					int hand = held == right ? 1 : 0;
 
 					Network.INSTANCE
-							.sendToServer(new WandEmbueMessage(Minecraft.getInstance().player, hand, selectedIcon));
+							.sendToServer(new WandEmbuePKT(Minecraft.getInstance().player, hand, selectedIcon));
 				} else {
 					Minecraft.getInstance().player
 							.sendChatMessage("You must be holding a wand to embue a spell onto it!");

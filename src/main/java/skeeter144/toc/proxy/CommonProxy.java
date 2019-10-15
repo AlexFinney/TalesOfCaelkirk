@@ -54,7 +54,7 @@ public class CommonProxy
 //		Network.INSTANCE.registerMessage(PlayMobAnimationMessageHandler.class, PlayMobAnimationMessage.class, Network.getNextId(), Side.CLIENT);
 //		Network.INSTANCE.registerMessage(ShouldShowRegionsMessageHandler.class, ShouldShowRegionsMessage.class, Network.getNextId(), Side.CLIENT);
 //		Network.INSTANCE.registerMessage(NotfyClientOfEffectMessageHandler.class, NotfyClientOfEffectMessage.class, Network.getNextId(), Side.CLIENT);
-//		Network.INSTANCE.registerMessage(AdjustPlayersScreenDimHandler.class, AdjustPlayersScreenDim.class, Network.getNextId(), Side.CLIENT);
+//		Network.INSTANCE.registerMessage(AdjustScreenDimPKTHandler.class, AdjustScreenDimPKT.class, Network.getNextId(), Side.CLIENT);
 //		Network.INSTANCE.registerMessage(PlayMusicTrackHandler.class, PlayMusicTrackMessage.class, Network.getNextId(), Side.CLIENT);
 //		Network.INSTANCE.registerMessage(ShowQuestDialogMessageHandler.class, ShowEntityDialogMessage.class, Network.getNextId(), Side.CLIENT);
 //		Network.INSTANCE.registerMessage(CloseGuisMessageHandler.class, CloseGuisMessage.class, Network.getNextId(), Side.CLIENT);

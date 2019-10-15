@@ -22,7 +22,6 @@ import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.items.tools.TOCPickaxe;
 import skeeter144.toc.network.AddLevelXpPKT;
 import skeeter144.toc.network.Network;
-import skeeter144.toc.network.OpenBankGUIMessage;
 import skeeter144.toc.network.SpawnParticlesPKT;
 import skeeter144.toc.particles.system.ParticleSystem;
 import skeeter144.toc.player.EntityLevels.Levels;

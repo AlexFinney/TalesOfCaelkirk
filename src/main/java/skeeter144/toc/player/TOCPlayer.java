@@ -9,10 +9,11 @@ import org.apache.commons.lang3.tuple.Pair;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import skeeter144.toc.entity.TOCEntity;
-import skeeter144.toc.network.HealthManaRegenUpdateMessage;
+import skeeter144.toc.network.HealthManaRegenUpdatePKT;
 import skeeter144.toc.network.Network;
-import skeeter144.toc.network.PlayerVitalsUpdateMessage;
-import skeeter144.toc.network.SpecialAttackCooldownMessage;
+import skeeter144.toc.network.PlayerVitalsUpdatePKT;
+import skeeter144.toc.network.PlayerVitalsUpdatePKT;
+import skeeter144.toc.network.SpecialAttackCooldownPKT;
 import skeeter144.toc.player.EntityLevels.Levels;
 
 public class TOCPlayer extends TOCEntity{
@@ -92,7 +93,7 @@ public class TOCPlayer extends TOCEntity{
 			curMana = 0;
 		
 		
-		skeeter144.toc.network.Network.INSTANCE.sendTo(new PlayerVitalsUpdateMessage(curHealth, curMana), (EntityPlayerMP) mcEntity);
+		skeeter144.toc.network.Network.INSTANCE.sendTo(new PlayerVitalsUpdatePKT(curHealth, curMana), (EntityPlayerMP) mcEntity);
 	}
 
 	//only called on server
@@ -120,7 +121,7 @@ public class TOCPlayer extends TOCEntity{
 		
 		for(String stack : specialAttackCooldowns.keySet()) {
 			Integer cooldown = specialAttackCooldowns.get(stack).getLeft() - 1;
-			Network.INSTANCE.sendTo(new SpecialAttackCooldownMessage(stack, (byte)cooldown.intValue(), (byte)20),  (EntityPlayerMP) mcEntity);
+			Network.INSTANCE.sendTo(new SpecialAttackCooldownPKT(stack, (byte)cooldown.intValue(), (byte)20),  (EntityPlayerMP) mcEntity);
 			if(cooldown <= 0)
 				stacksToRemove.add(stack);
 			
@@ -158,7 +159,7 @@ public class TOCPlayer extends TOCEntity{
 		manaRegen = mana;
 		
 		if(!mcEntity.world.isRemote)
-			Network.INSTANCE.sendTo(new HealthManaRegenUpdateMessage(healthRegen, manaRegen), (EntityPlayerMP)mcEntity);
+			Network.INSTANCE.sendTo(new HealthManaRegenUpdatePKT(healthRegen, manaRegen), (EntityPlayerMP)mcEntity);
 	}
 	
 	public int getMaxHealth() {

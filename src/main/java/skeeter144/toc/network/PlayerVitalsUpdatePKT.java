@@ -5,19 +5,19 @@ import java.util.function.Supplier;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class PlayerVitalsUpdateMessage {
+public class PlayerVitalsUpdatePKT {
 
-	public static void encode(OpenShopGuiMessage pkt, PacketBuffer buf) {}
-	public static OpenShopGuiMessage decode(PacketBuffer buf) {return null;}
+	public static void encode(PlayerVitalsUpdatePKT pkt, PacketBuffer buf) {}
+	public static PlayerVitalsUpdatePKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final OpenShopGuiMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final PlayerVitalsUpdatePKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
-	public PlayerVitalsUpdateMessage() {}
+	public PlayerVitalsUpdatePKT() {}
 	
 	int health, mana;
-	public PlayerVitalsUpdateMessage(int health, int mana) {
+	public PlayerVitalsUpdatePKT(int health, int mana) {
 		this.health = health;
 		this.mana = mana;
 	}

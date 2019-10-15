@@ -5,12 +5,12 @@ import java.util.function.Supplier;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class LightningBoltCastMessage{
-	public static void encode(LightningBoltCastMessage pkt, PacketBuffer buf) {}
-	public static LightningBoltCastMessage decode(PacketBuffer buf) {return null;}
+public class LightningBoltCastPKT{
+	public static void encode(LightningBoltCastPKT pkt, PacketBuffer buf) {}
+	public static LightningBoltCastPKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final LightningBoltCastMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final LightningBoltCastPKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 //	
 //	public LightningBoltCastMessage() {}

@@ -5,7 +5,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
-import skeeter144.toc.network.CraftItemMessage;
+import skeeter144.toc.network.CraftItemPKT;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.recipe.RecipeManager;
 import skeeter144.toc.sounds.Sounds;
@@ -50,7 +50,7 @@ public class SmeltingGui extends CraftingGui{
 			public void onClick(double mouseX, double mouseY) {
 				EntityPlayer pl = Minecraft.getInstance().player;
 				if (selectedRecipe.canRecipeBeCraftedNumberTimes(pl.inventory, totalCrafting + 1)) {
-					Network.INSTANCE.sendToServer(new CraftItemMessage(selectedRecipe.crafted.getItem(), 1));
+					Network.INSTANCE.sendToServer(new CraftItemPKT(selectedRecipe.crafted.getItem(), 1));
 					totalCrafting++;
 					pl.world.playSound(pl, pl.getPosition(), Sounds.anvil_strike, SoundCategory.MASTER, 1, 1);
 				}
@@ -64,7 +64,7 @@ public class SmeltingGui extends CraftingGui{
 				EntityPlayer pl = Minecraft.getInstance().player;
 				int num = selectedRecipe.numberCanBeCrafted(pl.inventory) - totalCrafting;
 				for(int i = 0; i < num; ++i) {
-					Network.INSTANCE.sendToServer(new CraftItemMessage(selectedRecipe.crafted.getItem(), 1));
+					Network.INSTANCE.sendToServer(new CraftItemPKT(selectedRecipe.crafted.getItem(), 1));
 					totalCrafting++;
 				}
 				updatePlayersInventory();
@@ -110,7 +110,7 @@ public class SmeltingGui extends CraftingGui{
 	public void onGuiClosed() {
 		super.onGuiClosed();
 		if(selectedRecipe != null)
-			Network.INSTANCE.sendToServer(new CraftItemMessage(selectedRecipe.crafted.getItem(), -1));
+			Network.INSTANCE.sendToServer(new CraftItemPKT(selectedRecipe.crafted.getItem(), -1));
 	}
 	
 }

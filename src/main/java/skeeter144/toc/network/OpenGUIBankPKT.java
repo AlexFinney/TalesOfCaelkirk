@@ -5,13 +5,13 @@ import java.util.function.Supplier;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class OpenBankGUIMessage{
+public class OpenGUIBankPKT{
 
-	public static void encode(OpenBankGUIMessage pkt, PacketBuffer buf) {}
-	public static OpenBankGUIMessage decode(PacketBuffer buf) {return null;}
+	public static void encode(OpenGUIBankPKT pkt, PacketBuffer buf) {}
+	public static OpenGUIBankPKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final OpenBankGUIMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final OpenGUIBankPKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
 //	List<ItemStack> items = new ArrayList<ItemStack>();

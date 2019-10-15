@@ -7,20 +7,20 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 import skeeter144.toc.entity.mob.CustomMob;
 
-public class AnimationEventMessage{
-	public static void encode(AdjustPlayersScreenDim pkt, PacketBuffer buf) {}
-	public static AdjustPlayersScreenDim decode(PacketBuffer buf) {return null;}
+public class AnimationEventPKT{
+	public static void encode(AnimationEventPKT pkt, PacketBuffer buf) {}
+	public static AnimationEventPKT decode(PacketBuffer buf) {return null;}
 	
 	public static class Handler
 	{
-		public static void handle(final AdjustPlayersScreenDim message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final AnimationEventPKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
-	public AnimationEventMessage() {}
+	public AnimationEventPKT() {}
 	
 	UUID uuid;
 	String functionName;
-	public AnimationEventMessage(String functionName, CustomMob mob) {
+	public AnimationEventPKT(String functionName, CustomMob mob) {
 		uuid = mob.getUniqueID();
 		this.functionName = functionName;
 	}

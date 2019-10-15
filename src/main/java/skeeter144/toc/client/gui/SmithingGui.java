@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import skeeter144.toc.entity.tile.TileEntityAnvil;
 import skeeter144.toc.network.Network;
-import skeeter144.toc.network.SetAnvilRecipeMessage;
+import skeeter144.toc.network.SetAnvilRecipePKT;
 import skeeter144.toc.recipe.Recipe;
 import skeeter144.toc.recipe.RecipeManager;
 import skeeter144.toc.util.Mouse;
@@ -58,7 +58,7 @@ public class SmithingGui extends CraftingGui{
 	@Override
 	public void onGuiClosed() {
 		if(selectedRecipe != null) {
-			Network.INSTANCE.sendToServer(new SetAnvilRecipeMessage(selectedRecipe, anvil.getPos()));
+			Network.INSTANCE.sendToServer(new SetAnvilRecipePKT(selectedRecipe, anvil.getPos()));
 		}
 	}
 	

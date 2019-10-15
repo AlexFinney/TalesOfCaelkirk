@@ -5,19 +5,19 @@ import java.util.function.Supplier;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class UpdatePlayerFlyingMessage {
+public class UpdatePlayerFlyingPKT {
 
-	public static void encode(UpdatePlayerFlyingMessage pkt, PacketBuffer buf) {}
-	public static UpdatePlayerFlyingMessage decode(PacketBuffer buf) {return null;}
+	public static void encode(UpdatePlayerFlyingPKT pkt, PacketBuffer buf) {}
+	public static UpdatePlayerFlyingPKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final UpdatePlayerFlyingMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final UpdatePlayerFlyingPKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
 	boolean isFlyingUp = false;
 	boolean isFlyingDown = false;
-	public UpdatePlayerFlyingMessage() {}
-	public UpdatePlayerFlyingMessage(boolean flyingUp, boolean flyingDown) {
+	public UpdatePlayerFlyingPKT() {}
+	public UpdatePlayerFlyingPKT(boolean flyingUp, boolean flyingDown) {
 		this.isFlyingUp = flyingUp;
 		this.isFlyingDown = flyingDown;
 	}

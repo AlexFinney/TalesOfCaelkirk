@@ -5,13 +5,13 @@ import java.util.function.Supplier;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class ShouldShowRegionsMessage {
+public class ShouldShowRegionsPKT {
 
-	public static void encode(ShouldShowRegionsMessage pkt, PacketBuffer buf) {}
-	public static ShouldShowRegionsMessage decode(PacketBuffer buf) {return null;}
+	public static void encode(ShouldShowRegionsPKT pkt, PacketBuffer buf) {}
+	public static ShouldShowRegionsPKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final ShouldShowRegionsMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final ShouldShowRegionsPKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 //	
 //	boolean val = false;

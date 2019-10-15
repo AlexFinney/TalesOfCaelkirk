@@ -6,20 +6,20 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class WandEmbueMessage{
+public class WandEmbuePKT{
 
-	public static void encode(WandEmbueMessage pkt, PacketBuffer buf) {}
-	public static WandEmbueMessage decode(PacketBuffer buf) {return null;}
+	public static void encode(WandEmbuePKT pkt, PacketBuffer buf) {}
+	public static WandEmbuePKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final WandEmbueMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final WandEmbuePKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
-	public WandEmbueMessage() {}
+	public WandEmbuePKT() {}
 	
 	String playerUUID;
 	int wandSlot, embueSpellId, uuidLength;
-	public WandEmbueMessage(EntityPlayer player, int wandSlot, int embueId) {
+	public WandEmbuePKT(EntityPlayer player, int wandSlot, int embueId) {
 		playerUUID = player.getUniqueID().toString();
 		this.wandSlot = wandSlot;
 		this.embueSpellId = embueId;

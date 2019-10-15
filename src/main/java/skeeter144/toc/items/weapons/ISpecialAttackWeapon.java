@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.network.Network;
-import skeeter144.toc.network.SpecialAttackCooldownMessage;
+import skeeter144.toc.network.SpecialAttackCooldownPKT;
 import skeeter144.toc.player.TOCPlayer;
 import skeeter144.toc.util.PlayerManager;
 import skeeter144.toc.util.Util;
@@ -33,7 +33,7 @@ public interface ISpecialAttackWeapon {
 					doAttack(attacker, hand, e);
 					pl.specialAttackCooldowns.put(item.getItem().getRegistryName().toString(), new MutablePair<Integer, Integer>(cooldown, cooldown));
 					
-					Network.INSTANCE.sendTo(new SpecialAttackCooldownMessage(item.getItem().getRegistryName().toString(), 
+					Network.INSTANCE.sendTo(new SpecialAttackCooldownPKT(item.getItem().getRegistryName().toString(), 
 							(byte)cooldown, (byte)cooldown), (EntityPlayerMP) pl.mcEntity);
 					
 					return true;

@@ -5,13 +5,13 @@ import java.util.function.Supplier;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class SendIconUpdateMessage{
+public class SendIconUpdatePKT{
 
-	public static void encode(SendIconUpdateMessage pkt, PacketBuffer buf) {}
-	public static SendIconUpdateMessage decode(PacketBuffer buf) {return null;}
+	public static void encode(SendIconUpdatePKT pkt, PacketBuffer buf) {}
+	public static SendIconUpdatePKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final SendIconUpdateMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final SendIconUpdatePKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
 //	public SendIconUpdateMessage() {}

@@ -5,18 +5,18 @@ import java.util.function.Supplier;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class PlayMusicTrackMessage{
+public class PlayMusicTrackPKT{
 
-	public static void encode(PlayMusicTrackMessage pkt, PacketBuffer buf) {}
-	public static PlayMusicTrackMessage decode(PacketBuffer buf) {return null;}
+	public static void encode(PlayMusicTrackPKT pkt, PacketBuffer buf) {}
+	public static PlayMusicTrackPKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final PlayMusicTrackMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final PlayMusicTrackPKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
 	int id;
-	public PlayMusicTrackMessage() {}
-	public PlayMusicTrackMessage(int id) {
+	public PlayMusicTrackPKT() {}
+	public PlayMusicTrackPKT(int id) {
 		this.id = id;
 	}
 //	

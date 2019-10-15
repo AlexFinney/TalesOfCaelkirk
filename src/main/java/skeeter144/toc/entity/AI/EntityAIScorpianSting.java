@@ -4,7 +4,7 @@ import net.minecraft.entity.ai.EntityAIBase;
 import skeeter144.toc.client.entity.animation.Animations;
 import skeeter144.toc.entity.mob.monster.EntityGiantScorpian;
 import skeeter144.toc.network.Network;
-import skeeter144.toc.network.PlayMobAnimationMessage;
+import skeeter144.toc.network.PlayMobAnimationPKT;
 
 public class EntityAIScorpianSting extends EntityAIBase{
 
@@ -33,7 +33,7 @@ public class EntityAIScorpianSting extends EntityAIBase{
 	@Override
 	public void startExecuting()
 	{
-		Network.INSTANCE.sendToAllAround(new PlayMobAnimationMessage(e,Animations.SCORPIAN_STING), 
+		Network.INSTANCE.sendToAllAround(new PlayMobAnimationPKT(e,Animations.SCORPIAN_STING), 
 																	 e.world.getChunk(e.getPosition()));
 		
 		lastAttackTime = e.ticksExisted;

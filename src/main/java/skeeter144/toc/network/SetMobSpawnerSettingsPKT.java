@@ -5,13 +5,13 @@ import java.util.function.Supplier;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class SetMobSpawnerSettingsMessage{
+public class SetMobSpawnerSettingsPKT{
 
-	public static void encode(SetMobSpawnerSettingsMessage pkt, PacketBuffer buf) {}
-	public static SetMobSpawnerSettingsMessage decode(PacketBuffer buf) {return null;}
+	public static void encode(SetMobSpawnerSettingsPKT pkt, PacketBuffer buf) {}
+	public static SetMobSpawnerSettingsPKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final SetMobSpawnerSettingsMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final SetMobSpawnerSettingsPKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
 //	public SetMobSpawnerSettingsMessage() {}

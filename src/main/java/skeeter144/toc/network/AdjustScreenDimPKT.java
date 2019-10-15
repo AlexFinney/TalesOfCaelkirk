@@ -5,19 +5,19 @@ import java.util.function.Supplier;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class AdjustPlayersScreenDim{
+public class AdjustScreenDimPKT{
 
-	public static void encode(AdjustPlayersScreenDim pkt, PacketBuffer buf) {}
-	public static AdjustPlayersScreenDim decode(PacketBuffer buf) {return null;}
+	public static void encode(AdjustScreenDimPKT pkt, PacketBuffer buf) {}
+	public static AdjustScreenDimPKT decode(PacketBuffer buf) {return null;}
 	
 	public static class Handler
 	{
-		public static void handle(final AdjustPlayersScreenDim message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final AdjustScreenDimPKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
 	float pct;
-	public AdjustPlayersScreenDim() {}
-	public AdjustPlayersScreenDim(float pct) {this.pct = pct;}
+	public AdjustScreenDimPKT() {}
+	public AdjustScreenDimPKT(float pct) {this.pct = pct;}
 //	
 //	@Override
 //	public void fromBytes(ByteBuf buf) {
@@ -29,8 +29,8 @@ public class AdjustPlayersScreenDim{
 //		buf.writeFloat(pct);
 //	}
 //
-//	public static class AdjustPlayersScreenDimHandlerHandler<AdjustPlayersScreenDim, IMessage>{
-//		public IMessage onMessage(AdjustPlayersScreenDim message, MessageContext ctx) {
+//	public static class AdjustScreenDimPKTHandlerHandler<AdjustScreenDimPKT, IMessage>{
+//		public IMessage onMessage(AdjustScreenDimPKT message, MessageContext ctx) {
 //			float startingLight = HUD.lightBlockedPct;
 //			float endingLight = message.pct;
 //			Minecraft.getInstance().addScheduledTask(new Runnable() {

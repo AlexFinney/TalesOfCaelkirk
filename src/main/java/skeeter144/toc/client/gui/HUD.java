@@ -14,8 +14,12 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.scoreboard.ScoreObjective;
+import net.minecraft.scoreboard.ScorePlayerTeam;
+import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.GameType;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
@@ -141,8 +145,8 @@ public class HUD extends GuiIngame {
 	}
 
 	public void renderGameOverlay(float partialTicks) {
-		super.renderGameOverlay(partialTicks);
-		
+		renderVanillaModified(partialTicks);
+
 		TOCPlayer pl = TOCMain.localPlayer;
 		if (pl == null)
 			return;
@@ -154,6 +158,120 @@ public class HUD extends GuiIngame {
 		drawManaBar(pl.getMana(), pl.getMaxMana());
 		drawXpMessages();
 		drawEffectIcons();
+	}
+	
+	void renderChat() {
+		GlStateManager.enableBlend();
+		GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
+				GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
+				GlStateManager.DestFactor.ZERO);
+		GlStateManager.disableAlphaTest();
+		GlStateManager.pushMatrix();
+		GlStateManager.translatef(0.0F, (float) (this.scaledHeight - 48), 0.0F);
+		this.mc.profiler.startSection("chat");
+		this.persistantChatGUI.drawChat(this.ticks);
+		this.mc.profiler.endSection();
+		GlStateManager.popMatrix();
+	}
+
+	void renderVanillaModified(float partialTicks) {
+		// super.renderGameOverlay(partialTicks);
+
+		this.scaledWidth = this.mc.mainWindow.getScaledWidth();
+		this.scaledHeight = this.mc.mainWindow.getScaledHeight();
+		FontRenderer fontrenderer = this.getFontRenderer();
+		GlStateManager.enableBlend();
+		if (Minecraft.isFancyGraphicsEnabled()) {
+			this.func_212303_b(this.mc.getRenderViewEntity());
+		} else {
+			GlStateManager.enableDepthTest();
+			GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
+					GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
+					GlStateManager.DestFactor.ZERO);
+		}
+
+		if (this.mc.playerController.getCurrentGameType() == GameType.SPECTATOR) {
+			this.spectatorGui.renderTooltip(partialTicks);
+		} else if (!this.mc.gameSettings.hideGUI) {
+			this.renderHotbar(partialTicks);
+		}
+
+		if (!this.mc.gameSettings.hideGUI) {
+			GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+			this.mc.getTextureManager().bindTexture(ICONS);
+			GlStateManager.enableBlend();
+			GlStateManager.enableAlphaTest();
+			this.renderAttackIndicator(partialTicks);
+			GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
+					GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
+					GlStateManager.DestFactor.ZERO);
+			this.mc.profiler.startSection("bossHealth");
+			this.overlayBoss.renderBossHealth();
+			this.mc.profiler.endSection();
+			GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+			this.mc.getTextureManager().bindTexture(ICONS);
+			if (this.mc.playerController.shouldDrawHUD()) {
+				// this.renderPlayerStats();
+			}
+
+			// this.renderVehicleHealth();
+			GlStateManager.disableBlend();
+			int k = this.scaledWidth / 2 - 91;
+			if (this.mc.player.isRidingHorse()) {
+				this.renderHorseJumpBar(k);
+			} else if (this.mc.playerController.gameIsSurvivalOrAdventure()) {
+				this.renderExpBar(k);
+			}
+
+			if (this.mc.gameSettings.heldItemTooltips
+					&& this.mc.playerController.getCurrentGameType() != GameType.SPECTATOR) {
+				this.renderSelectedItem();
+			} else if (this.mc.player.isSpectator()) {
+				this.spectatorGui.renderSelectedItem();
+			}
+
+			if (this.mc.gameSettings.heldItemTooltips
+					&& this.mc.playerController.getCurrentGameType() != GameType.SPECTATOR) {
+				this.renderSelectedItem();
+			} else if (this.mc.player.isSpectator()) {
+				this.spectatorGui.renderSelectedItem();
+			}
+		}
+
+		this.renderPotionEffects();
+		if (this.mc.gameSettings.showDebugInfo) {
+			this.overlayDebug.render();
+		}
+		
+		Scoreboard scoreboard = this.mc.world.getScoreboard();
+		ScoreObjective scoreobjective = null;
+		ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(this.mc.player.getScoreboardName());
+		if (scoreplayerteam != null) {
+			int j = scoreplayerteam.getColor().getColorIndex();
+			if (j >= 0) {
+				scoreobjective = scoreboard.getObjectiveInDisplaySlot(3 + j);
+			}
+		}
+
+		ScoreObjective scoreobjective1 = scoreobjective != null ? scoreobjective
+				: scoreboard.getObjectiveInDisplaySlot(1);
+		if (scoreobjective1 != null) {
+			this.renderScoreboard(scoreobjective1);
+		}
+
+			
+		scoreobjective1 = scoreboard.getObjectiveInDisplaySlot(0);
+		if (!this.mc.gameSettings.keyBindPlayerList.isKeyDown() || this.mc.isIntegratedServerRunning()
+				&& this.mc.player.connection.getPlayerInfoMap().size() <= 1 && scoreobjective1 == null) {
+			this.overlayPlayerList.setVisible(false);
+		} else {
+			this.overlayPlayerList.setVisible(true);
+			this.overlayPlayerList.renderPlayerlist(this.scaledWidth, scoreboard, scoreobjective1);
+		}
+
+		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.disableLighting();
+		GlStateManager.enableAlphaTest();
 	}
 
 	void drawLightBlock() {

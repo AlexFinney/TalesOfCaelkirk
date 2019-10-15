@@ -15,7 +15,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 import skeeter144.toc.network.Network;
-import skeeter144.toc.network.QuestDialogResponseMessage;
+import skeeter144.toc.network.QuestDialogResponsePKT;
 import skeeter144.toc.quest.NpcDialog;
 import skeeter144.toc.util.Reference;
 
@@ -180,7 +180,7 @@ public class DialogGui extends GuiScreen{
 					Minecraft.getInstance().displayGuiScreen(null);
 				
 				if(!response.serverEventFunc.equals(""))
-					Network.INSTANCE.sendToServer(new QuestDialogResponseMessage(e.getUniqueID(), response.serverEventFunc));
+					Network.INSTANCE.sendToServer(new QuestDialogResponsePKT(e.getUniqueID(), response.serverEventFunc));
 			}
 			
 		}

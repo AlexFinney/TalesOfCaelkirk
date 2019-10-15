@@ -6,19 +6,19 @@ import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class SpawnBlockedMessage {
+public class SpawnBlockedPKT {
 
-	public static void encode(SpawnBlockedMessage pkt, PacketBuffer buf) {}
-	public static SpawnBlockedMessage decode(PacketBuffer buf) {return null;}
+	public static void encode(SpawnBlockedPKT pkt, PacketBuffer buf) {}
+	public static SpawnBlockedPKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final SpawnBlockedMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final SpawnBlockedPKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
-	public SpawnBlockedMessage() {}
+	public SpawnBlockedPKT() {}
 	
 	long msb, lsb;
-	public SpawnBlockedMessage(Entity e) {
+	public SpawnBlockedPKT(Entity e) {
 		msb = e.getUniqueID().getMostSignificantBits();
 		lsb = e.getUniqueID().getLeastSignificantBits();
 	}

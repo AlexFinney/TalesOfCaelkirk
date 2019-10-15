@@ -5,20 +5,20 @@ import java.util.function.Supplier;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class NotfyClientOfEffectMessage	{
+public class NotfyClientOfEffectPKT	{
 
-	public static void encode(NotfyClientOfEffectMessage pkt, PacketBuffer buf) {}
-	public static NotfyClientOfEffectMessage decode(PacketBuffer buf) {return null;}
+	public static void encode(NotfyClientOfEffectPKT pkt, PacketBuffer buf) {}
+	public static NotfyClientOfEffectPKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final NotfyClientOfEffectMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final NotfyClientOfEffectPKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
 	String name;
 	int nameLength;
 	boolean newEffect;
-	public NotfyClientOfEffectMessage(){}
-	public NotfyClientOfEffectMessage(String name, boolean newEffect) {
+	public NotfyClientOfEffectPKT(){}
+	public NotfyClientOfEffectPKT(String name, boolean newEffect) {
 		this.name = name;
 		nameLength = name.length();
 		this.newEffect = newEffect;

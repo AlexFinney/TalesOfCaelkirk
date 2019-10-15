@@ -11,7 +11,7 @@ import skeeter144.toc.client.entity.animation.KeyFrame;
 import skeeter144.toc.client.entity.animation.PartOrientation;
 import skeeter144.toc.client.entity.renderer.AdvancedModelRenderer;
 import skeeter144.toc.entity.mob.CustomMob;
-import skeeter144.toc.network.AnimationEventMessage;
+import skeeter144.toc.network.AnimationEventPKT;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.util.CustomRunnable;
 
@@ -310,18 +310,18 @@ public class ModelGiantScorpian extends AdvancedModelBase {
     	
     	KeyFrame start = new KeyFrame(0, new CustomRunnable() {
 			public void run(Object mob) {
-				Network.INSTANCE.sendToServer(new AnimationEventMessage("giantScorpianStingStart", (CustomMob) mob));
+				Network.INSTANCE.sendToServer(new AnimationEventPKT("giantScorpianStingStart", (CustomMob) mob));
 			}});
     	KeyFrame f1 = new KeyFrame(10, null);
     	KeyFrame f2 = new KeyFrame(13, new CustomRunnable() {
 			public void run(Object mob) {
-				Network.INSTANCE.sendToServer(new AnimationEventMessage("giantScorpianSting", (CustomMob)mob));
+				Network.INSTANCE.sendToServer(new AnimationEventPKT("giantScorpianSting", (CustomMob)mob));
 			}}
     	);
     	
     	KeyFrame end = new KeyFrame(20, new CustomRunnable() {
 			public void run(Object mob) {
-				Network.INSTANCE.sendToServer(new AnimationEventMessage("giantScorpianStingFinish", (CustomMob)mob));
+				Network.INSTANCE.sendToServer(new AnimationEventPKT("giantScorpianStingFinish", (CustomMob)mob));
 			}
 		});
     	

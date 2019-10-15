@@ -5,18 +5,18 @@ import java.util.function.Supplier;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class HealthManaRegenUpdateMessage {
-	public static void encode(HealthManaRegenUpdateMessage pkt, PacketBuffer buf) {}
-	public static HealthManaRegenUpdateMessage decode(PacketBuffer buf) {return null;}
+public class HealthManaRegenUpdatePKT {
+	public static void encode(HealthManaRegenUpdatePKT pkt, PacketBuffer buf) {}
+	public static HealthManaRegenUpdatePKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final HealthManaRegenUpdateMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final HealthManaRegenUpdatePKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
-	public HealthManaRegenUpdateMessage() {}
+	public HealthManaRegenUpdatePKT() {}
 	
 	float mana, health;
-	public HealthManaRegenUpdateMessage(float health, float mana) {
+	public HealthManaRegenUpdatePKT(float health, float mana) {
 	this.health = health;
 	this.mana = mana;
 	}

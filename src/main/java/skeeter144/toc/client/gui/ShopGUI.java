@@ -19,7 +19,7 @@ import net.minecraft.util.registry.IRegistry;
 import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData;
 import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData.ItemPrice;
 import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData.ShopListing;
-import skeeter144.toc.network.ItemTransactionMessage;
+import skeeter144.toc.network.ItemTransactionPKT;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.util.Mouse;
 import skeeter144.toc.util.Reference;
@@ -278,7 +278,7 @@ public class ShopGUI extends GuiScreen{
 		if(buyBtn != null && button.id == buyBtn.id) {
 			InventoryPlayer inv = Minecraft.getInstance().player.inventory;
 			Item i = itemToBuy == null ? inv.getStackInSlot(itemToSell).getItem() : itemToBuy.getItem();
-			Network.INSTANCE.sendToServer(new ItemTransactionMessage(itemToBuy != null, i.getRegistryName().toString(), 1, shopData.keepId));
+			Network.INSTANCE.sendToServer(new ItemTransactionPKT(itemToBuy != null, i.getRegistryName().toString(), 1, shopData.keepId));
 		}
 	}
 	

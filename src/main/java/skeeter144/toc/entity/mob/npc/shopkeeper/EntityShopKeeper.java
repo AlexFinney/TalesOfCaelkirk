@@ -18,7 +18,7 @@ import skeeter144.toc.entity.mob.npc.EntityNpc;
 import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData.ItemPrice;
 import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData.ShopListing;
 import skeeter144.toc.network.Network;
-import skeeter144.toc.network.OpenShopGuiMessage;
+import skeeter144.toc.network.OpenShopGuiPKT;
 
 public class EntityShopKeeper extends EntityNpc {
 
@@ -51,7 +51,7 @@ public class EntityShopKeeper extends EntityNpc {
 			return true;
 		}
 		
-		Network.INSTANCE.sendTo(new OpenShopGuiMessage(this.shopData), (EntityPlayerMP)player);
+		Network.INSTANCE.sendTo(new OpenShopGuiPKT(this.shopData), (EntityPlayerMP)player);
 		return true;
 	}
 	

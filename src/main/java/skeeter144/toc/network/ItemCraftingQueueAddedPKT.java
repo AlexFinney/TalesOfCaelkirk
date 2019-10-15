@@ -5,13 +5,13 @@ import java.util.function.Supplier;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class ItemCraftingQueueAddedMessage{
+public class ItemCraftingQueueAddedPKT{
 
-	public static void encode(ItemCraftingQueueAddedMessage pkt, PacketBuffer buf) {}
-	public static ItemCraftingQueueAddedMessage decode(PacketBuffer buf) {return null;}
+	public static void encode(ItemCraftingQueueAddedPKT pkt, PacketBuffer buf) {}
+	public static ItemCraftingQueueAddedPKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final ItemCraftingQueueAddedMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final ItemCraftingQueueAddedPKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
 //	public ItemCraftingQueueAddedMessage() {}

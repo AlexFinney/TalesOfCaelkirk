@@ -5,12 +5,12 @@ import java.util.function.Supplier;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class ItemCraftedMessage{
-	public static void encode(ItemCraftedMessage pkt, PacketBuffer buf) {}
-	public static ItemCraftedMessage decode(PacketBuffer buf) {return null;}
+public class ItemCraftedPKT{
+	public static void encode(ItemCraftedPKT pkt, PacketBuffer buf) {}
+	public static ItemCraftedPKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final ItemCraftedMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final ItemCraftedPKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
 //	public ItemCraftedMessage() {}

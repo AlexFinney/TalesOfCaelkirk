@@ -6,18 +6,18 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData;
 
-public class OpenShopGuiMessage{
+public class OpenShopGuiPKT{
 
-	public static void encode(OpenShopGuiMessage pkt, PacketBuffer buf) {}
-	public static OpenShopGuiMessage decode(PacketBuffer buf) {return null;}
+	public static void encode(OpenShopGuiPKT pkt, PacketBuffer buf) {}
+	public static OpenShopGuiPKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final OpenShopGuiMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final OpenShopGuiPKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
 	public ShopData data;
-	public OpenShopGuiMessage() {}
-	public OpenShopGuiMessage(ShopData data) {
+	public OpenShopGuiPKT() {}
+	public OpenShopGuiPKT(ShopData data) {
 		this.data = data;
 	}
 //	

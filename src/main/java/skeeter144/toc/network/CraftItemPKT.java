@@ -6,18 +6,18 @@ import net.minecraft.item.Item;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class CraftItemMessage{
-	public static void encode(CraftItemMessage pkt, PacketBuffer buf) {}
-	public static CraftItemMessage decode(PacketBuffer buf) {return null;}
+public class CraftItemPKT{
+	public static void encode(CraftItemPKT pkt, PacketBuffer buf) {}
+	public static CraftItemPKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final CraftItemMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final CraftItemPKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
 	Item item;
 	int numToCraft;
-	public CraftItemMessage() {}
-	public CraftItemMessage(Item item, int numToCraft) {
+	public CraftItemPKT() {}
+	public CraftItemPKT(Item item, int numToCraft) {
 		this.item = item;
 		this.numToCraft = numToCraft;
 	}

@@ -11,7 +11,7 @@ import skeeter144.toc.entity.mob.monster.EntityGiantSpider;
 import skeeter144.toc.entityeffect.ServerEffectHandler;
 import skeeter144.toc.entityeffect.effects.ReducedVision;
 import skeeter144.toc.network.Network;
-import skeeter144.toc.network.PlayMusicTrackMessage;
+import skeeter144.toc.network.PlayMusicTrackPKT;
 import skeeter144.toc.sounds.Sounds;
 import skeeter144.toc.sounds.music.MusicManager.SoundCategory;
 
@@ -20,7 +20,7 @@ public class RegionCallbacks {
 	public static void spiderForrestEntered(EntityLivingBase e) {
 		ServerEffectHandler.attemptAddNewEffect(e.getUniqueID(), new ReducedVision(e, "reduced_vision", .4f));
 		if(e instanceof EntityPlayerMP) {
-			Network.INSTANCE.sendTo(new PlayMusicTrackMessage(SoundCategory.SUPER_CREEPY), (EntityPlayerMP)e);
+			Network.INSTANCE.sendTo(new PlayMusicTrackPKT(SoundCategory.SUPER_CREEPY), (EntityPlayerMP)e);
 		}
 	}
 	

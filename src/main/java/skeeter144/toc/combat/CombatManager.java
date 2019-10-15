@@ -15,7 +15,7 @@ import skeeter144.toc.items.weapons.TOCGreatAxe;
 import skeeter144.toc.items.weapons.TOCGreatSword;
 import skeeter144.toc.items.weapons.TOCSword;
 import skeeter144.toc.network.Network;
-import skeeter144.toc.network.SpawnBlockedMessage;
+import skeeter144.toc.network.SpawnBlockedPKT;
 import skeeter144.toc.player.EntityLevels;
 import skeeter144.toc.player.EntityLevels.Levels;
 
@@ -73,7 +73,7 @@ public class CombatManager {
 			
 			if(attackRoll < defenseRoll) {
 				if(TOCMain.rand.nextFloat() < .65f) {
-					Network.INSTANCE.sendToAllAround(new SpawnBlockedMessage(e), 
+					Network.INSTANCE.sendToAllAround(new SpawnBlockedPKT(e), 
 							e.getEntityWorld().getChunk(e.getPosition()));
 					return -1;
 				}

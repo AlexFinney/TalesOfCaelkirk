@@ -6,19 +6,19 @@ import java.util.function.Supplier;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class QuestDialogResponseMessage{
+public class QuestDialogResponsePKT{
 
-	public static void encode(QuestDialogResponseMessage pkt, PacketBuffer buf) {}
-	public static QuestDialogResponseMessage decode(PacketBuffer buf) {return null;}
+	public static void encode(QuestDialogResponsePKT pkt, PacketBuffer buf) {}
+	public static QuestDialogResponsePKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final QuestDialogResponseMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final QuestDialogResponsePKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
 	UUID questGiverUUID;
 	String dialogResponse;
-	public QuestDialogResponseMessage() {}
-	public QuestDialogResponseMessage(UUID questGiverUUID, String dialogResponse) {
+	public QuestDialogResponsePKT() {}
+	public QuestDialogResponsePKT(UUID questGiverUUID, String dialogResponse) {
 		this.questGiverUUID = questGiverUUID;
 		this.dialogResponse = dialogResponse;
 	}

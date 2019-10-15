@@ -5,20 +5,20 @@ import java.util.function.Supplier;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class SpecialAttackCooldownMessage {
+public class SpecialAttackCooldownPKT {
 
-	public static void encode(SpecialAttackCooldownMessage pkt, PacketBuffer buf) {}
-	public static SpecialAttackCooldownMessage decode(PacketBuffer buf) {return null;}
+	public static void encode(SpecialAttackCooldownPKT pkt, PacketBuffer buf) {}
+	public static SpecialAttackCooldownPKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final SpecialAttackCooldownMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final SpecialAttackCooldownPKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
-	public SpecialAttackCooldownMessage(){}
+	public SpecialAttackCooldownPKT(){}
 
 	String name;
 	byte cooldown, maxCooldown;
-	public SpecialAttackCooldownMessage(String name, byte cooldown, byte maxCooldown) {
+	public SpecialAttackCooldownPKT(String name, byte cooldown, byte maxCooldown) {
 		this.cooldown = cooldown;
 		this.maxCooldown = maxCooldown;
 		this.name = name;

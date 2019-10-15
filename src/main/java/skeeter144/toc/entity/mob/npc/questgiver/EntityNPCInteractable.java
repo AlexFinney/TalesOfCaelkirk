@@ -14,7 +14,7 @@ import skeeter144.toc.client.gui.NpcDialogResponse;
 import skeeter144.toc.entity.mob.npc.DialogManager;
 import skeeter144.toc.entity.mob.npc.EntityNpc;
 import skeeter144.toc.network.Network;
-import skeeter144.toc.network.ShowEntityDialogMessage;
+import skeeter144.toc.network.ShowEntityDialogPKT;
 import skeeter144.toc.quest.NpcDialog;
 
 public abstract class EntityNPCInteractable extends EntityNpc{
@@ -47,7 +47,7 @@ public abstract class EntityNPCInteractable extends EntityNpc{
 	}
 	
 	protected void sendDialog(String dialog, EntityPlayer player) {
-		Network.INSTANCE.sendTo(new ShowEntityDialogMessage(this.getUniqueID(), dialog), (EntityPlayerMP)player);
+		Network.INSTANCE.sendTo(new ShowEntityDialogPKT(this.getUniqueID(), dialog), (EntityPlayerMP)player);
 	}
 	
 	public NpcDialog getDialog(String dialogName) {

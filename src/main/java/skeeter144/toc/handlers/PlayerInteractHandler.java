@@ -1,6 +1,6 @@
 package skeeter144.toc.handlers;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +23,6 @@ import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.network.NetworkHooks;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.blocks.BlockHarvestedTree;
 import skeeter144.toc.blocks.TOCBlocks;
@@ -32,6 +31,7 @@ import skeeter144.toc.client.gui.Guis;
 import skeeter144.toc.entity.tile.TileEntityAnvil;
 import skeeter144.toc.entity.tile.TileEntityHarvestedTree;
 import skeeter144.toc.handlers.PlayerInventoryHandler.ItemAddedToInventoryEvent;
+import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.items.tools.TOCAxe;
 import skeeter144.toc.network.AddLevelXpPKT;
 import skeeter144.toc.network.Network;
@@ -87,20 +87,18 @@ public class PlayerInteractHandler {
 	
 	@SubscribeEvent
 	public static void onPlayerRightClickBlock(PlayerInteractEvent.RightClickBlock e) {
-		List<Item> ingots = new ArrayList<Item>(); // Arrays.asList(TOCItems.ingot_bronze, TOCItems.ingot_iron, TOCItems.ingot_steel,
-				//TOCItems.ingot_gold, TOCItems.ingot_mithril, TOCItems.ingot_runite, TOCItems.ingot_dragonstone);
+		List<Item> ingots = Arrays.asList(TOCItems.ingot_bronze, TOCItems.ingot_iron, TOCItems.ingot_steel,
+				TOCItems.ingot_gold, TOCItems.ingot_mithril, TOCItems.ingot_runite, TOCItems.ingot_dragonstone);
 
 		IBlockState bs = e.getWorld().getBlockState(e.getPos()).getBlock().getDefaultState();
 		if (e.getWorld().isRemote) {
 			
-//TODO
-//			if (bs.getBlock().getDefaultState().equals(TOCBlocks.blockAnvil.getDefaultState())) {
-//				TileEntityAnvil anvil = (TileEntityAnvil) e.getWorld().getTileEntity(e.getPos());
-//				if (!ingots.contains(e.getEntityPlayer().getHeldItemMainhand().getItem()) && anvil.producedItem == null) {
-//				//	e.getEntityPlayer().openGui(TOCMain.instance, Guis.SMITHING_GUI, e.getWorld(), e.getPos().getX(),
-//				//			e.getPos().getY(), e.getPos().getZ());
-//				}
-//			}
+			if (bs.getBlock().getDefaultState().equals(TOCBlocks.blockAnvil.getDefaultState())) {
+				TileEntityAnvil anvil = (TileEntityAnvil) e.getWorld().getTileEntity(e.getPos());
+				if (!ingots.contains(e.getEntityPlayer().getHeldItemMainhand().getItem()) && anvil.producedItem == null) {
+					Network.INSTANCE.sendTo(new OpenGUIClientPKT(Guis.SMITHING_GUI, e.getPos()), (EntityPlayerMP)e.getEntityPlayer());
+				}
+			}
 		} else {
 			if (bs.getBlock().equals(Blocks.NETHER_BRICKS))
 				Network.INSTANCE.sendTo(new OpenGUIClientPKT(Guis.SMELTING_GUI, e.getPos()), (EntityPlayerMP)e.getEntityPlayer());
@@ -109,14 +107,14 @@ public class PlayerInteractHandler {
 				return;
 			
 			TileEntityAnvil anvil = (TileEntityAnvil)e.getWorld().getTileEntity(e.getPos());
-//			if (bs.getBlock().getDefaultState().equals(TOCBlocks.blockAnvil.getDefaultState())) {
-//				if (anvil != null && anvil.producedItem != null) {
-//					e.getEntityPlayer().addItemStackToInventory(anvil.producedItem);
-//					anvil.anvilOwner = null;
-//					anvil.producedItem = null;
-//					anvil.sendUpdates();
-//				}
-//			}
+			if (bs.getBlock().getDefaultState().equals(TOCBlocks.blockAnvil.getDefaultState())) {
+				if (anvil != null && anvil.producedItem != null) {
+					e.getEntityPlayer().addItemStackToInventory(anvil.producedItem);
+					anvil.anvilOwner = null;
+					anvil.producedItem = null;
+					anvil.sendUpdates();
+				}
+			}
 		}
 	}
 		

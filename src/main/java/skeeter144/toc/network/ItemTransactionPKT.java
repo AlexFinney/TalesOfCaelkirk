@@ -6,21 +6,21 @@ import java.util.function.Supplier;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class ItemTransactionMessage{
+public class ItemTransactionPKT{
 	
-	public static void encode(ItemTransactionMessage pkt, PacketBuffer buf) {}
-	public static ItemTransactionMessage decode(PacketBuffer buf) {return null;}
+	public static void encode(ItemTransactionPKT pkt, PacketBuffer buf) {}
+	public static ItemTransactionPKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final ItemTransactionMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final ItemTransactionPKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
 	boolean buying;
 	String itemName;
 	int count;
 	UUID shopKeeperId;
-	public ItemTransactionMessage() {}
-	public ItemTransactionMessage(boolean isBuying, String itemName, int count, UUID shopKeeperId) {
+	public ItemTransactionPKT() {}
+	public ItemTransactionPKT(boolean isBuying, String itemName, int count, UUID shopKeeperId) {
 		this.buying = isBuying;
 		this.itemName = itemName;
 		this.count = count;

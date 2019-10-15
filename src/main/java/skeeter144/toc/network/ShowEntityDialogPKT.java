@@ -6,19 +6,19 @@ import java.util.function.Supplier;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class ShowEntityDialogMessage{
+public class ShowEntityDialogPKT{
 
-	public static void encode(ShowEntityDialogMessage pkt, PacketBuffer buf) {}
-	public static ShowEntityDialogMessage decode(PacketBuffer buf) {return null;}
+	public static void encode(ShowEntityDialogPKT pkt, PacketBuffer buf) {}
+	public static ShowEntityDialogPKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final ShowEntityDialogMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final ShowEntityDialogPKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
 	String dialogName;
 	UUID uuid;
-	public ShowEntityDialogMessage() {}
-	public ShowEntityDialogMessage(UUID entityId, String dialogName) {
+	public ShowEntityDialogPKT() {}
+	public ShowEntityDialogPKT(UUID entityId, String dialogName) {
 		this.uuid = entityId;
 		this.dialogName = dialogName;
 	}

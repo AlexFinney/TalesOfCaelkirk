@@ -5,13 +5,13 @@ import java.util.function.Supplier;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class CloseGuisMessage{
+public class CloseGuisPKT{
 
-	public static void encode(CloseGuisMessage pkt, PacketBuffer buf) {}
-	public static CloseGuisMessage decode(PacketBuffer buf) {return null;}
+	public static void encode(CloseGuisPKT pkt, PacketBuffer buf) {}
+	public static CloseGuisPKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final CloseGuisMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final CloseGuisPKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 //	public CloseGuisMessage() {	}
 //	

@@ -16,7 +16,7 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.network.AddLevelXpPKT;
-import skeeter144.toc.network.ItemCraftedMessage;
+import skeeter144.toc.network.ItemCraftedPKT;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.player.EntityLevels.Levels;
 import skeeter144.toc.util.Util;
@@ -129,7 +129,7 @@ public class RecipeManager {
 		if(playerCraftingQueue.get(player.getUniqueID()).size() == 0)
 			playerCraftingQueue.remove(player.getUniqueID());
 		
-		Network.INSTANCE.sendTo(new ItemCraftedMessage(), player);
+		Network.INSTANCE.sendTo(new ItemCraftedPKT(), player);
 		TOCMain.pm.getPlayer(player).levels.addExp(r.level, r.xp);
 		Network.INSTANCE.sendTo(new AddLevelXpPKT(r.level.name().toString(), r.xp), player);
 	}

@@ -7,20 +7,20 @@ import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class PlayMobAnimationMessage{
+public class PlayMobAnimationPKT{
 
-	public static void encode(PlayMobAnimationMessage pkt, PacketBuffer buf) {}
-	public static PlayMobAnimationMessage decode(PacketBuffer buf) {return null;}
+	public static void encode(PlayMobAnimationPKT pkt, PacketBuffer buf) {}
+	public static PlayMobAnimationPKT decode(PacketBuffer buf) {return null;}
 	public static class Handler
 	{
-		public static void handle(final PlayMobAnimationMessage message, Supplier<NetworkEvent.Context> ctx){}
+		public static void handle(final PlayMobAnimationPKT message, Supplier<NetworkEvent.Context> ctx){}
 	}
 	
-	public PlayMobAnimationMessage() {}
+	public PlayMobAnimationPKT() {}
 	
 	UUID uuid;
 	String animationName;
-	public PlayMobAnimationMessage(Entity entity, String animationName) {
+	public PlayMobAnimationPKT(Entity entity, String animationName) {
 		this.uuid = entity.getUniqueID();
 		this.animationName = animationName;
 	}
