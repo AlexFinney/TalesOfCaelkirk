@@ -152,7 +152,7 @@ public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
 	}
 
 	 public IBlockState getStateForPlacement(BlockItemUseContext context) {
-	      return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
+	      return this.getDefaultState();//.with(FACING, context.getPlacementHorizontalFacing().getOpposite());
 	   }
 	
 

@@ -14,5 +14,6 @@ public abstract class TickableTask {
 	
 	public abstract void tick(int worldTick);
 
+	public void onStart() {}
 	public void onEnd() {}
 }

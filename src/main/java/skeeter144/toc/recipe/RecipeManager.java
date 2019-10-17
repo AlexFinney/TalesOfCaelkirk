@@ -19,6 +19,8 @@ import skeeter144.toc.network.AddLevelXpPKT;
 import skeeter144.toc.network.ItemCraftedPKT;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.player.EntityLevels.Levels;
+import skeeter144.toc.tasks.TaskManager;
+import skeeter144.toc.tasks.TickableTask;
 import skeeter144.toc.util.Util;
 
 public class RecipeManager {
@@ -78,12 +80,35 @@ public class RecipeManager {
 		return null;
 	}
 	
-	public void queueRecipe(UUID uuid, Recipe recipe) {
+	public void queueRecipe(UUID uuid, Recipe recipe, int num) {
 		if(playerCraftingQueue.get(uuid) == null) 
 			playerCraftingQueue.put(uuid, new ArrayList<Recipe>());
 		
 		playerCraftingQueue.get(uuid).add(recipe);
-		craftRecipe(Util.getPlayerByUUID(uuid), recipe);
+		
+		TOCMain.serverTaskManager.addTask(new TickableTask(num * 20) {
+			int nextCraftTick = -1;
+			@Override
+			public void tick(int worldTick) {
+				System.out.println(worldTick);
+				if(worldTick > nextCraftTick) {
+					System.out.println("craft");
+					craftRecipe(Util.getPlayerByUUID(uuid), recipe);
+					nextCraftTick = worldTick + 19;
+				}
+			}
+
+			@Override
+			public void onStart() {
+				nextCraftTick = start + 19;
+			}
+			
+			@Override
+			public void onEnd() {
+				System.out.println("end");
+			}
+		});
+		
 	}
 	
 	public void cancelCraftingForPlayer(UUID uuid) {

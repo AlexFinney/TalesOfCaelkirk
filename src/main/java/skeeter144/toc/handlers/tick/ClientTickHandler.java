@@ -14,9 +14,8 @@ public class ClientTickHandler extends TickHandler{
 	int clientTicks = 0;
 	
 	@Override
-	@SubscribeEvent
 	public void clientTicked(ClientTickEvent e) {
-		TOCMain.clientTaskManager.tickTasks(clientTicks);
+		TOCMain.clientTaskManager.tickTasks();
 		++clientTicks;
 		
 		Minecraft mc = Minecraft.getInstance();

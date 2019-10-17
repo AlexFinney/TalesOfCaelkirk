@@ -63,10 +63,8 @@ public class SmeltingGui extends CraftingGui{
 			public void onClick(double mouseX, double mouseY) {
 				EntityPlayer pl = Minecraft.getInstance().player;
 				int num = selectedRecipe.numberCanBeCrafted(pl.inventory) - totalCrafting;
-				for(int i = 0; i < num; ++i) {
-					Network.INSTANCE.sendToServer(new CraftItemPKT(selectedRecipe.crafted.getItem(), 1));
-					totalCrafting++;
-				}
+				Network.INSTANCE.sendToServer(new CraftItemPKT(selectedRecipe.crafted.getItem(), num));
+				totalCrafting += num;
 				updatePlayersInventory();
 				pl.world.playSound(pl, pl.getPosition(), Sounds.anvil_strike, SoundCategory.MASTER, 1, 1);
 			}

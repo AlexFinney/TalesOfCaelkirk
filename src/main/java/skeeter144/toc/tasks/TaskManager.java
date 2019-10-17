@@ -6,21 +6,21 @@ import java.util.List;
 public class TaskManager {
 
 	List<TickableTask> tasks;
-	
 	public TaskManager() {
 		tasks = new ArrayList<TickableTask>();
 	}
+	
 	int currentTick = 0;
 	public void addTask(TickableTask t){
 		tasks.add(t);
 		t.setStartTick(currentTick);
+		t.onStart();
 	}
 	
-	public void tickTasks(int tick) {
-		currentTick = tick;
-		List<TickableTask> toRemove = new ArrayList<TickableTask>();
+	public void tickTasks() {
+		currentTick++;
 		for(int i = tasks.size() - 1; i >= 0; --i) {
-			tasks.get(i).tick(tick);
+			tasks.get(i).tick(currentTick);
 			if(--tasks.get(i).duration <= 0) {
 				tasks.get(i).onEnd();
 				tasks.remove(i);
