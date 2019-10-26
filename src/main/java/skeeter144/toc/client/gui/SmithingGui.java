@@ -19,12 +19,6 @@ public class SmithingGui extends CraftingGui{
 		backgroundImage = new ResourceLocation(Reference.MODID, "textures/gui/smithing_gui.png");
 		allRecipes = RecipeManager.instance().SMITHING_RECIPES;
 		this.anvil = (TileEntityAnvil) Minecraft.getInstance().world.getTileEntity(pos);
-	}
-	
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		this.drawDefaultBackground();
-		this.setGuiVals();
-		drawBackground();
 		
 		if(anvil != null && anvil.ingot != null) {
 			int ingots = anvil.addedIngots;
@@ -34,6 +28,14 @@ public class SmithingGui extends CraftingGui{
 				}
 			}
 		}
+	}
+	
+	public void render(int mouseX, int mouseY, float partialTicks) {
+		this.drawDefaultBackground();
+		this.setGuiVals();
+		drawBackground();
+		
+		
 		
 		drawRecipes();
 		if(wasMouseClicked && !Mouse.isButtonDown(0)) 

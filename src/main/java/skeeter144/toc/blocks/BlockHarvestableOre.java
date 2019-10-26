@@ -69,7 +69,7 @@ public class BlockHarvestableOre extends CustomBlock {
 			IBlockState oldState = world.getBlockState(pos);
 			MinecraftForge.EVENT_BUS.post(new BlockMinedEvent(world, pos, oldState, player));
 			
-			TileEntityHarvestedOre ore = ((BlockHarvestedOre) TOCBlocks.harvested_ore).createTileEntity(world, oldState);
+			TileEntityHarvestedOre ore = (TileEntityHarvestedOre) ((BlockHarvestedOre) TOCBlocks.harvested_ore).createTileEntity(oldState, world);
 			
 			world.setBlockState(pos, TOCBlocks.harvested_ore.getDefaultState());
 			world.setTileEntity(pos, ore);

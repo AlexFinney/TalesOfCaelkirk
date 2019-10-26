@@ -2,7 +2,9 @@ package skeeter144.toc.blocks;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import skeeter144.toc.entity.tile.BlockTileEntity;
 import skeeter144.toc.entity.tile.TileEntityHarvestedOre;
@@ -18,8 +20,9 @@ public class BlockHarvestedOre extends BlockTileEntity<TileEntityHarvestedOre>{
 		return TileEntityHarvestedOre.class;
 	}
 
+	
 	@Override
-	public TileEntityHarvestedOre createTileEntity(World world, IBlockState state) {
+	public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
 		return new TileEntityHarvestedOre(TOCBlocks.te_harvested_ore);
 	}
 	

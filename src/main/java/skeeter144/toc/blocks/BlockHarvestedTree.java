@@ -2,8 +2,10 @@ package skeeter144.toc.blocks;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import skeeter144.toc.entity.tile.BlockTileEntity;
@@ -21,10 +23,10 @@ public class BlockHarvestedTree extends BlockTileEntity<TileEntityHarvestedTree>
 	}
 
 	@Override
-	public TileEntityHarvestedTree createTileEntity(World world, IBlockState state) {
+	public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
 		return new TileEntityHarvestedTree(TOCBlocks.te_harvested_tree);
 	}
-
+	
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.INVISIBLE;

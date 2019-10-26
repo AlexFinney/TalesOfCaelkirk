@@ -7,7 +7,9 @@ import net.minecraft.block.Block.Properties;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.tileentity.TileEntityType.Builder;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -55,20 +57,17 @@ public class TOCBlocks {
 	public static Block yew_leaves = new CustomBlockLeaves("yew_leaves");
 	
 	@ObjectHolder(Reference.MODID + ":te_harvested_ore")
-	public static TileEntityType<TileEntityHarvestedOre> te_harvested_ore;
+	public static TileEntityType<?> te_harvested_ore;
 	
 	@ObjectHolder(Reference.MODID + ":te_harvested_tree")
-	public static TileEntityType<TileEntityHarvestedTree> te_harvested_tree;
+	public static TileEntityType<?> te_harvested_tree;
 	
 	@ObjectHolder(Reference.MODID + ":te_anvil")
-	public static TileEntityType<TileEntityAnvil> te_anvil;
+	public static TileEntityType<?> te_anvil;
 	
 	@ObjectHolder(Reference.MODID + ":te_mob_spawner")
-	public static TileEntityType<TileEntityMobSpawner> te_mob_spawner;
+	public static TileEntityType<?> te_mob_spawner;
 
-
-	
-	
 	public static void registerRenders() {
 		try {
 			for (Field f : TOCBlocks.class.getFields()) {
@@ -84,12 +83,20 @@ public class TOCBlocks {
 	@SubscribeEvent
 	public static void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> evt) {
 		te_harvested_ore = TileEntityType.register(Reference.MODID + ":harvested_ore", TileEntityType.Builder.create(TileEntityHarvestedOre::new));
-		te_anvil = TileEntityType.register(Reference.MODID + ":anvil", TileEntityType.Builder.create(TileEntityAnvil::new));
 		te_harvested_tree = TileEntityType.register(Reference.MODID + ":harvested_tree", TileEntityType.Builder.create(TileEntityHarvestedTree::new));
 		te_mob_spawner = TileEntityType.register(Reference.MODID + ":mob_spawner", TileEntityType.Builder.create(TileEntityMobSpawner::new));
 
+		registerTE(TileEntityType.Builder.create(TileEntityAnvil::new), "anvil", evt);
 	}
-	
+
+	static void registerTE(Builder<TileEntity> builder, 
+			String name, RegistryEvent.Register<TileEntityType<?>> evt) 
+	{
+		TileEntityType<?> type = builder.build(null);
+		type.setRegistryName(Reference.MODID, name);
+		evt.getRegistry().register(type);
+	}
+
 	public static void registerAllBlocks(final RegistryEvent.Register<Block> event) {
 		try {
 			for (Field f : TOCBlocks.class.getFields()) {

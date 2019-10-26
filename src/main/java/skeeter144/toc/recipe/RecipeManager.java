@@ -105,7 +105,7 @@ public class RecipeManager {
 			
 			@Override
 			public void onEnd() {
-				System.out.println("end");
+				cancelCraftingForPlayer(uuid);
 			}
 		});
 		
@@ -131,6 +131,8 @@ public class RecipeManager {
 	}
 	
 	private void craftRecipe(EntityPlayerMP player, Recipe r) {
+		if(!playerCraftingQueue.containsKey(player.getUniqueID())) return;
+		
 		ItemStack[] itemsLeft = new ItemStack[r.components.length];
 		for(int i = 0; i < itemsLeft.length; ++i) 
 			itemsLeft[i] = new ItemStack(r.components[i].getItem(), r.components[i].getCount());
@@ -139,8 +141,8 @@ public class RecipeManager {
 			int slot = 0;
 			for(ItemStack stack : player.inventory.mainInventory) {
 				if(stack.getItem().equals(itemsLeft[i].getItem())){
-					itemsLeft[i].shrink(stack.getCount());
-					player.inventory.getStackInSlot(slot).shrink(stack.getCount());
+					player.inventory.getStackInSlot(slot).shrink(itemsLeft[i].getCount());
+					itemsLeft[i].shrink(itemsLeft[i].getCount());
 				}
 				if(itemsLeft[i].getCount() == 0 || itemsLeft[i].isEmpty())
 					break;
@@ -150,9 +152,6 @@ public class RecipeManager {
 		MinecraftForge.EVENT_BUS.post(new ItemSmithedEvent(player, r.crafted.copy()));
 		
 		player.inventory.addItemStackToInventory(r.crafted.copy());
-		playerCraftingQueue.get(player.getUniqueID()).remove(r);
-		if(playerCraftingQueue.get(player.getUniqueID()).size() == 0)
-			playerCraftingQueue.remove(player.getUniqueID());
 		
 		Network.INSTANCE.sendTo(new ItemCraftedPKT(), player);
 		TOCMain.pm.getPlayer(player).levels.addExp(r.level, r.xp);

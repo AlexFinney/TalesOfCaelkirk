@@ -91,23 +91,20 @@ public class PlayerInteractHandler {
 				TOCItems.ingot_gold, TOCItems.ingot_mithril, TOCItems.ingot_runite, TOCItems.ingot_dragonstone);
 
 		IBlockState bs = e.getWorld().getBlockState(e.getPos()).getBlock().getDefaultState();
-		if (e.getWorld().isRemote) {
-			
-			if (bs.getBlock().getDefaultState().equals(TOCBlocks.blockAnvil.getDefaultState())) {
-				TileEntityAnvil anvil = (TileEntityAnvil) e.getWorld().getTileEntity(e.getPos());
-				if (!ingots.contains(e.getEntityPlayer().getHeldItemMainhand().getItem()) && anvil.producedItem == null) {
-					Network.INSTANCE.sendTo(new OpenGUIClientPKT(Guis.SMITHING_GUI, e.getPos()), (EntityPlayerMP)e.getEntityPlayer());
-				}
-			}
-		} else {
+		if (!e.getWorld().isRemote) {
 			if (bs.getBlock().equals(Blocks.NETHER_BRICKS))
 				Network.INSTANCE.sendTo(new OpenGUIClientPKT(Guis.SMELTING_GUI, e.getPos()), (EntityPlayerMP)e.getEntityPlayer());
 			
-			if(!(e.getWorld().getTileEntity(e.getPos()) instanceof TileEntityAnvil))
-				return;
-			
-			TileEntityAnvil anvil = (TileEntityAnvil)e.getWorld().getTileEntity(e.getPos());
-			if (bs.getBlock().getDefaultState().equals(TOCBlocks.blockAnvil.getDefaultState())) {
+			if (e.getWorld().getTileEntity(e.getPos()) instanceof TileEntityAnvil) {
+				TileEntityAnvil anvil = (TileEntityAnvil) e.getWorld().getTileEntity(e.getPos());
+
+				if (!ingots.contains(e.getEntityPlayer().getHeldItemMainhand().getItem())
+						&& anvil.producedItem == null) 
+				{
+					Network.INSTANCE.sendTo(new OpenGUIClientPKT(Guis.SMITHING_GUI, e.getPos()),
+							(EntityPlayerMP) e.getEntityPlayer());
+				}
+				
 				if (anvil != null && anvil.producedItem != null) {
 					e.getEntityPlayer().addItemStackToInventory(anvil.producedItem);
 					anvil.anvilOwner = null;
@@ -186,7 +183,7 @@ public class PlayerInteractHandler {
 				}
 				world.setBlockState(lowestPos, lowestBlock);
 			
-				TileEntityHarvestedTree tree = ((BlockHarvestedTree)TOCBlocks.harvested_tree).createTileEntity(world, null);
+				TileEntityHarvestedTree tree = (TileEntityHarvestedTree) ((BlockHarvestedTree)TOCBlocks.harvested_tree).createTileEntity(null, world);
 				tree.minSecs = Woodcutting.getMinRespawnSecsForWood(log);
 				tree.maxSecs = Woodcutting.getMaxRespawnSecsForWood(log);
 				tree.treeBlocks = list;

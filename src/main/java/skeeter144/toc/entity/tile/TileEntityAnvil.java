@@ -97,7 +97,7 @@ public class TileEntityAnvil extends TileEntity {
 
 	@Override
 	public NBTTagCompound getUpdateTag() {
-		return serializeNBT();
+		return write(new NBTTagCompound());
 	}
 	
 	@Override

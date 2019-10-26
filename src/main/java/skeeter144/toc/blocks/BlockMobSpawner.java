@@ -3,11 +3,13 @@ package skeeter144.toc.blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import skeeter144.toc.entity.tile.BlockTileEntity;
 import skeeter144.toc.entity.tile.TileEntityMobSpawner;
@@ -45,8 +47,8 @@ public class BlockMobSpawner extends BlockTileEntity<TileEntityMobSpawner> {
 	}
 
 	@Override
-	public TileEntityMobSpawner createTileEntity(World world, IBlockState state) {
+	public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
 		return new TileEntityMobSpawner(null);
 	}
-
+	
 }

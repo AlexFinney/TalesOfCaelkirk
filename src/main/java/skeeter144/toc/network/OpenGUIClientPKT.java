@@ -44,7 +44,8 @@ public class OpenGUIClientPKT{
 			Minecraft.getInstance().addScheduledTask(new Runnable() {
 				public void run() {
 					Minecraft.getInstance().displayGuiScreen((GuiScreen) GuiHandler.Instance()
-							.getClientGuiElement(message.id, Minecraft.getInstance().player,  Minecraft.getInstance().world, 0, 0, 0));
+							.getClientGuiElement(message.id, Minecraft.getInstance().player,  Minecraft.getInstance().world, 
+									message.pos.getX(), message.pos.getY(), message.pos.getZ()));
 				}
 			});
 		}
