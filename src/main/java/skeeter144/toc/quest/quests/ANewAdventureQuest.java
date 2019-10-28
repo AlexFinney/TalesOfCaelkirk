@@ -1,5 +1,8 @@
 package skeeter144.toc.quest.quests;
 
+import java.io.Serializable;
+import java.util.UUID;
+
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -16,8 +19,8 @@ import skeeter144.toc.recipe.RecipeManager.ItemSmithedEvent;
 
 public class ANewAdventureQuest extends Quest{
 	
-	public ANewAdventureQuest(String name, int id) {
-		super(id, name, 0);
+	public ANewAdventureQuest(int id) {
+		super(id, "A New Adventure", 0);
 		this.experienceRewards.put(Levels.ATTACK, 50);
 		this.experienceRewards.put(Levels.HITPOINTS, 40);
 		this.itemRewards.put(Items.DIAMOND, 1);
@@ -37,9 +40,10 @@ public class ANewAdventureQuest extends Quest{
 	
 	@SubscribeEvent
 	public void oakLogAdded(ItemAddedToInventoryEvent e) {
-	/*	if(e.getEntity().world.isRemote)
+		if(e.getEntity().world.isRemote)
 			return;
 		
+		/*
 		if(e.stack.getItem() != new ItemStack(TOCBlocks.oak_log).getItem())
 			return;
 		
@@ -144,6 +148,14 @@ public class ANewAdventureQuest extends Quest{
 	@Override
 	protected void questFinished(EntityPlayerMP player) {
 		System.out.println("Yay you finished da quest");		
+	}
+	
+	public static class AnewAdventureQuestProgress extends QuestProgress implements Serializable{
+		
+		public AnewAdventureQuestProgress(UUID playerId, int questId, int stage, int qp1, int qp2, int qp3) {
+			super(playerId, questId, stage, qp1, qp2, qp3);
+		}
+		
 	}
 
 }

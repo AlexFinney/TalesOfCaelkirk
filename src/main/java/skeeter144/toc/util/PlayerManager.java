@@ -38,6 +38,10 @@ public class PlayerManager {
 		return instance;
 	}
 	
+	public void savePlayer(TOCPlayer player) {
+		Database.savePlayer(player);
+	}
+	
 	public void savePlayers() {
 		for(Map.Entry<UUID, TOCPlayer> entry : players.entrySet()) {
 			Database.savePlayer(entry.getValue());

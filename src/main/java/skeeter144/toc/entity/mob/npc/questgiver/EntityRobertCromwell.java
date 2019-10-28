@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
@@ -43,7 +44,7 @@ public class EntityRobertCromwell extends EntityNPCInteractable{
 
 	
 	public void startPlayerOnQuest(UUID playerUUID) {
-		EntityPlayer pl = this.world.getPlayerEntityByUUID(playerUUID);
+		EntityPlayerMP pl = (EntityPlayerMP)this.world.getPlayerEntityByUUID(playerUUID);
 		pl.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.A_NEW_ADVENTURE + "] " + TextFormatting.GREEN + "[New Task] " + TextFormatting.WHITE + "Go talk to Ulric Weston about woodcutting"));
 		
 		QuestProgress qp = QuestManager.startPlayerOnQuest(playerUUID, "A New Adventure");

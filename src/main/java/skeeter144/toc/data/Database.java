@@ -16,16 +16,17 @@ public class Database {
 	static String user = "ZkCYQE6thv";
 	static String pass = "IgeKU0szPG";
 
-	public static void createPlayerInDatabase(UUID uuid) {
-		Database.executeUpdate("insert ignore into Players values(\"" + uuid + "\", NOW(), NOW(), 20, 12)");
-		insertPlayerLevels(uuid);
+	public static void createPlayerInDatabase(EntityPlayer player) {
+		Database.executeUpdate(String.format("insert ignore into Players values(\"" + player.getUniqueID() + "\", NOW(), NOW(), 20, 12, %s)", 
+				player.getDisplayName().toString()));
+		insertPlayerLevels(player.getUniqueID());
 	}
 
 	public static boolean playerExists(EntityPlayer player) {
 		if (getUserObject(player) != null)
 			return true;
 		else
-			createPlayerInDatabase(player.getUniqueID());
+			createPlayerInDatabase(player);
 		return false;
 	}
 
@@ -35,9 +36,9 @@ public class Database {
 
 	public static void savePlayer(TOCPlayer player) {
 		Database.executeUpdate(String.format(
-				"update Players SET LastOnline = NOW(), CurrentHP = %s, CurrentMP = %s WHERE UUID = \""
-						+ player.mcEntity.getUniqueID().toString() + "\"",
-				player.getHealth(), player.getMana()));
+				"update Players SET LastOnline = NOW(), CurrentHP = %s, CurrentMP = %s, DisplayName = %s WHERE UUID = \'"
+						+ player.mcEntity.getUniqueID().toString() + "\'",
+				player.getHealth(), player.getMana(), player.mcEntity.getDisplayName().getString()));
 
 		updatePlayerLevels(player.levels);
 	}
@@ -62,8 +63,8 @@ public class Database {
 				return null;
 			}
 			
-			tocPlayer = new TOCPlayer(player, new EntityLevels(levelsXp, player.getUniqueID()), new Integer(row.get(row.size() - 2)),
-					new Integer(row.get(row.size() - 1)));
+			tocPlayer = new TOCPlayer(player, new EntityLevels(levelsXp, player.getUniqueID()), new Integer(row.get(row.size() - 3)),
+					new Integer(row.get(row.size() - 2)));
 		}
 		return tocPlayer;
 	}
@@ -126,5 +127,4 @@ public class Database {
 		
 		Database.executeUpdate(query);
 	}
-
 }

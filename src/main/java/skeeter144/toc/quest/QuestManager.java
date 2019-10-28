@@ -13,22 +13,20 @@ import org.jline.utils.Log;
 
 import net.minecraftforge.common.MinecraftForge;
 import skeeter144.toc.data.Database;
+import skeeter144.toc.quest.quests.ANewAdventureQuest;
 
 public class QuestManager{
-
+	static int next_id = 0;
 	public static final String A_NEW_ADVENTURE = "A New Adventure";
 	public static final HashMap<Integer, Quest> quests = new HashMap<Integer, Quest>();
 	public static HashMap<UUID, HashMap<Integer, QuestProgress>> playerQuestProgresses = new HashMap<UUID, HashMap<Integer, QuestProgress>>();
 	
 	public static void initQuests() {
+		
+		addQuest(new ANewAdventureQuest(next_id));
+		
 		loadQuestProgress();
 	
-		ArrayList<ArrayList<String>> rows = Database.executeQuery("select * from Quests");
-		for(ArrayList<String> row : rows)
-		{
-			Quest q = new Quest(Integer.parseInt(row.get(0)), row.get(1), Integer.parseInt(row.get(2)));
-			addQuest(q);
-		}		
 	}
 	
 	private static void addQuest(Quest q) {
@@ -132,7 +130,6 @@ public class QuestManager{
 		}
 		q = questByName(questName);
 		
-
 		QuestProgress qp = map.get(q.id);
 		if(qp == null) {
 			qp = new QuestProgress(uuid, q.id, q.initialStep, 0, 0, 0);

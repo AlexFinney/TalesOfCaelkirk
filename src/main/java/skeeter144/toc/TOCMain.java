@@ -16,6 +16,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
+import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import skeeter144.toc.blocks.TOCBlocks;
 import skeeter144.toc.blocks.TOCClientBlockRenderers;
@@ -65,6 +66,7 @@ public class TOCMain
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::serverSetup);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::serverStopping);
 		
 		DialogManager.init();
 	}
@@ -81,10 +83,16 @@ public class TOCMain
 	
 	public void commonSetup(final FMLCommonSetupEvent evt) {
 		QuestManager.initQuests();
+		
+		
 	}
 	
 	public void serverSetup(final FMLDedicatedServerSetupEvent evt) {
 		QuestManager.initQuests();
+	}
+	
+	public void serverStopping(final FMLServerStoppingEvent evt) {
+		PlayerManager.instance().savePlayers();
 	}
 	
 //	static {

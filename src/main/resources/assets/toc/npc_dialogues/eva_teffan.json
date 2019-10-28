@@ -37,42 +37,42 @@
 			"text": "Excellent! To start off with, crafting is the art of creating something beautiful out of lesser parts, it's a fantastic process.  You can craft all sorts of wonderful tools and many other things!",
 			"responses":
 			{
-				"Cool!": {"transition": "tutorial_2"}
+				"Cool!": {"transition": "tutorial_1_1"}
 			}
 		},
-		"tutorial_2":
+		"tutorial_1_1":
 		{
 			"text": "As you progress in your crafting skill, you'll be able to craft more and more complex items that can be worth a lot of money! For the more complex items, you'll have to discover schematics on how to build them.",
 			"responses":
 			{
-				"Interesting.": {"transition": "tutorial_3"}
+				"Interesting.": {"transition": "tutorial_1_2"}
 			}
 		},
-		"tutorial_3":
+		"tutorial_1_2":
 		{
 			"text": "For most common items though, a decent crafting level and a little bit of intuition is all you'll need. Oh, and the required crafting materials, of course. Speaking of which, we'll need to get you some materials so can learn to craft something.",
 			"responses":
 			{
-				"What do I need?": {"transition": "tutorial_4"}
+				"What do I need?": {"transition": "tutorial_1_3"}
 			}
 		},
-		"tutorial_4":
+		"tutorial_1_3":
 		{
 			"text": "Hmm... well that depends I guess on what we're going to craft... Let's see... I think we'll craft... a nice fishing pole!  Especially since I want you to meet my favorite-est fishing pal after we're done.",
 			"responses":
 			{
-				"Sounds good to me.": {"transition": "tutorial_5"}
+				"Sounds good to me.": {"transition": "tutorial_1_4"}
 			}
 		},
-		"tutorial_5":
+		"tutorial_1_4":
 		{
 			"text": "Splendid!  Okay, so to make a fishing pole, we're going to need some string and wood.  There's several ways to make string, but one of my favorites is super, duper cute!  You go out back to the sheeps, shear some of their fluffy-wuffy wool, and then craft some string out of it! Easy-peasy!",
 			"responses":
 			{
-				"Uh huh...": {"transition": "tutorial_6"}
+				"Uh huh...": {"transition": "tutorial_1_5"}
 			}
 		},
-		"tutorial_6":
+		"tutorial_1_5":
 		{
 			"text": "Alrighty then! Here's some shears, go shear a sheep and bring his wool back! Then we'll get to business.'",
 			"responses":
@@ -81,15 +81,15 @@
 										"event": "beginShearSheep"}
 			}
 		},
-		"tutorial_7":
+		"tutorial_2":
 		{
 			"text": "Excellent! Looks like you got yourself some fluffy wool!  Crafting is pretty simple in Caelkirk.  All you have to do is walk up to a crafting table and place the components in the right pattern for whatever you want to craft!  To make string, just put your wool into the crafting table.  Each piece of wool you harvest will yield two strings.",
 			"responses":
 			{
-				"Okay": {"transition": "tutorial_8"}
+				"Okay": {"transition": "tutorial_2_1"}
 			}
 		},
-		"tutorial_8":
+		"tutorial_2_1":
 		{
 			"text": "After you've crafted your strings, do the same thing with one of the logs you chopped down earlier.  This time you'll craft sticks from your logs.  Each log will yield four sticks.  Come back to me once you've crafted at least 3 sticks and two string, okay?",
 			"responses":
@@ -97,7 +97,7 @@
 				"Alright, time to craft.": {"transition": "", "event": "beginCrafting"}
 			}
 		},
-		"tutorial_9":
+		"tutorial_2_2":
 		{
 			"text": "Great! Now that you've got the basics down, let's make that fishing pole! It's a little more complicated, but not too bad!  What you're gonna do is put three sticks diagonally for the rod, and then hang two strings from the top of it! Not too hard.  Now go craft that rod!",
 			"responses":

@@ -79,7 +79,7 @@ public class DialogGui extends GuiScreen {
 		RenderManager rendermanager = Minecraft.getInstance().getRenderManager();
 		rendermanager.setPlayerViewY(180.0F);
 		rendermanager.setRenderShadow(false);
-		rendermanager.renderEntity(e, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
+		rendermanager.renderEntity(e, 0.0D, -.3D, 0.0D, 0.0F, 1.0F, false);
 		rendermanager.setRenderShadow(true);
 		GlStateManager.popMatrix();
 		RenderHelper.disableStandardItemLighting();
@@ -90,7 +90,7 @@ public class DialogGui extends GuiScreen {
 
 		FontRenderer fr = Minecraft.getInstance().fontRenderer;
 		String name = e.getName().getFormattedText();
-		fr.drawString(name, x - fr.getStringWidth(name) / 2, y - e.height * scalef - fr.FONT_HEIGHT * 1.5f, 0x000000);
+		fr.drawString(name, x - fr.getStringWidth(name) / 2, y - e.height * scalef - fr.FONT_HEIGHT * 1.5f + 25, 0x000000);
 	}
 
 	public String dialog = "";

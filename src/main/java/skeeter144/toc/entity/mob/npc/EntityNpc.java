@@ -3,9 +3,9 @@ package skeeter144.toc.entity.mob.npc;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import skeeter144.toc.entity.mob.CustomMob;
+import skeeter144.toc.entity.mob.CustomCreature;
 
-public class EntityNpc extends CustomMob{
+public class EntityNpc extends CustomCreature{
 	public ResourceLocation texture;
 	public EntityNpc(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
