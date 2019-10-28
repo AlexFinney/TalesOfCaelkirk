@@ -11,11 +11,16 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import skeeter144.toc.TOCMain;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.sounds.Sounds;
 
 public class EntityGoblin extends CustomMob{
 
+	public EntityGoblin(World worldIn) {
+		this(TOCEntityType.GOBLIN, worldIn);
+	}
+	
 	public EntityGoblin(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
 		

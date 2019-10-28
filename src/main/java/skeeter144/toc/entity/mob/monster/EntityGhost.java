@@ -24,6 +24,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import skeeter144.toc.TOCMain;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.entity.mob.monster.EntityGhost.AIGhostDiveAttack.DiveStage;
 import skeeter144.toc.network.Network;
@@ -41,6 +42,10 @@ public class EntityGhost extends CustomMob{
 		public boolean getShouldWatch() {return true;}
 		public IAttribute getParent() {	return null;}
 	};
+	
+	public EntityGhost(World worldIn) {
+		this(TOCEntityType.GHOST, worldIn);
+	}
 	
 	public EntityGhost(EntityType<?> type, World worldIn) {
 		super(type, worldIn);

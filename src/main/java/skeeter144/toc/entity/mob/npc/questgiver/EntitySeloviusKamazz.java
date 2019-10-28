@@ -7,10 +7,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.QuestProgress;
 
 public class EntitySeloviusKamazz extends EntityNPCInteractable{
+	
+	public EntitySeloviusKamazz(World worldIn) {
+		this(TOCEntityType.SELOVIUS_KAMAZZ, worldIn);
+	}
 	
 	public EntitySeloviusKamazz(EntityType<?> type, World worldIn) {
 		super(type, worldIn);

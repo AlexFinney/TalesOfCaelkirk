@@ -15,12 +15,17 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import skeeter144.toc.TOCMain;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.player.EntityLevels;
 import skeeter144.toc.sounds.Sounds;
 
 public class EntitySiren extends CustomMob{
 
+	public EntitySiren(World worldIn) {
+		this(TOCEntityType.SIREN, worldIn);
+	}
+	
 	boolean isRapidSwim = false; 
 	public EntitySiren(EntityType<?> type, World worldIn) {
 		super(type, worldIn);

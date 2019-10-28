@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import skeeter144.toc.client.gui.NpcDialogResponse;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.mob.npc.DialogManager;
 import skeeter144.toc.entity.mob.npc.EntityNpc;
 import skeeter144.toc.network.Network;
@@ -18,6 +19,7 @@ import skeeter144.toc.network.ShowEntityDialogPKT;
 import skeeter144.toc.quest.NpcDialog;
 
 public abstract class EntityNPCInteractable extends EntityNpc{
+	
 	protected Map<String, NpcDialog> dialogs;
 	public EntityNPCInteractable(EntityType<?> type, World worldIn) {
 		super(type, worldIn);

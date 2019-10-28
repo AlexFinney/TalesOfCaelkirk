@@ -1,7 +1,17 @@
 {
 	"name": "A New Adventure",
-	"dialogues":
-	{
-	
+	"stages": {
+		"1": {
+			
+		}
+	},
+	"dialogues": {
+		
+	},
+	"rewards_items:": {
+		
+	},
+	"rewards_experience": {
+		
 	}
 }

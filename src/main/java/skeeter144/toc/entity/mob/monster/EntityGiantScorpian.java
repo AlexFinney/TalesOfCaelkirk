@@ -11,12 +11,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.AI.EntityAIScorpianSting;
 import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.sounds.Sounds;
 
 public class EntityGiantScorpian extends CustomMob{
 
+	public EntityGiantScorpian(World worldIn) {
+		this(TOCEntityType.GIANT_SCORPIAN, worldIn);
+	}
+	
 	public EntityGiantScorpian(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
 

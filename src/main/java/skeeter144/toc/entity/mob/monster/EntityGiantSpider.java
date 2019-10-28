@@ -12,11 +12,16 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.sounds.Sounds;
 
 public class EntityGiantSpider extends CustomMob{
 
+	public EntityGiantSpider(World worldIn) {
+		this(TOCEntityType.GIANT_SPIDER, worldIn);
+	}
+	
 	public EntityGiantSpider(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
 

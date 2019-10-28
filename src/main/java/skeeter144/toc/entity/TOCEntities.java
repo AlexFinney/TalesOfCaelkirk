@@ -2,11 +2,17 @@ package skeeter144.toc.entity;
 
 import java.util.HashMap;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
+import skeeter144.toc.entity.mob.monster.EntityRat;
+import skeeter144.toc.entity.mob.monster.EntityViking;
+import skeeter144.toc.util.Reference;
 
 public class TOCEntities {
 	
+
+
 	
 	static HashMap<String, Integer> vanillaMobXp = new HashMap<>();
 	public static void initVanillaMobXp() {
@@ -21,13 +27,13 @@ public class TOCEntities {
 	
 	public static void registerEntities() {
 		//monsters
-//		VIKING = EntityType.Builder.create(EntityViking.class, EntityViking::new).build(Reference.MODID + ":viking").setRegistryName(Reference.MODID + ":viking");
-//		VIKING = EntityType.Builder.create(EntityViking.class, EntityViking::new).build(Reference.MODID + ":rat").setRegistryName(Reference.MODID + ":rat");
-//		VIKING = EntityType.Builder.create(EntityViking.class, EntityViking::new).build(Reference.MODID + ":goblin").setRegistryName(Reference.MODID + ":goblin");
-//		VIKING = EntityType.Builder.create(EntityViking.class, EntityViking::new).build(Reference.MODID + ":giant_scorpian").setRegistryName(Reference.MODID + ":giant_scorpian");
-//		VIKING = EntityType.Builder.create(EntityViking.class, EntityViking::new).build(Reference.MODID + ":giant_spider").setRegistryName(Reference.MODID + ":giant_spider");
-//		VIKING = EntityType.Builder.create(EntityViking.class, EntityViking::new).build(Reference.MODID + ":ghost").setRegistryName(Reference.MODID + ":ghost");
-//		VIKING = EntityType.Builder.create(EntityViking.class, EntityViking::new).build(Reference.MODID + ":siren").setRegistryName(Reference.MODID + ":siren");
+//		viking = EntityType.Builder.create(EntityViking.class, EntityViking::new).build(Reference.MODID + ":viking").setRegistryName(Reference.MODID + ":viking");
+//		rat = EntityType.Builder.create(EntityRat.class, EntityRat::new).build(Reference.MODID + ":rat").setRegistryName(Reference.MODID + ":rat");
+//		goblin = EntityType.Builder.create(EntityViking.class, EntityViking::new).build(Reference.MODID + ":goblin").setRegistryName(Reference.MODID + ":goblin");
+//		giant_scorpian = EntityType.Builder.create(EntityViking.class, EntityViking::new).build(Reference.MODID + ":giant_scorpian").setRegistryName(Reference.MODID + ":giant_scorpian");
+//		giant_spider = EntityType.Builder.create(EntityViking.class, EntityViking::new).build(Reference.MODID + ":giant_spider").setRegistryName(Reference.MODID + ":giant_spider");
+//		ghost = EntityType.Builder.create(EntityViking.class, EntityViking::new).build(Reference.MODID + ":ghost").setRegistryName(Reference.MODID + ":ghost");
+//		siren = EntityType.Builder.create(EntityViking.class, EntityViking::new).build(Reference.MODID + ":siren").setRegistryName(Reference.MODID + ":siren");
 ////		registerEntity(EntityRat.class, "rat", 80, 3, true, 0x9999990, 0x606060);
 //		registerEntity(EntityGoblin.class, "goblin", 80, 3, true, 0x007F0E, 0x877436);
 //		registerEntity(EntityGiantScorpian.class, "giant_scorpian", 80, 3, true, 0x00AA0E, 0x87BD36);

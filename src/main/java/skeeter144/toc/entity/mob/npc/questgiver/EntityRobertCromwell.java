@@ -9,10 +9,15 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.QuestProgress;
 
 public class EntityRobertCromwell extends EntityNPCInteractable{
+	
+	public EntityRobertCromwell(World worldIn) {
+		this(TOCEntityType.ROBERT_CROMWELL, worldIn);
+	}
 	
 	public EntityRobertCromwell(EntityType<?> type, World worldIn) {
 		super(type, worldIn);

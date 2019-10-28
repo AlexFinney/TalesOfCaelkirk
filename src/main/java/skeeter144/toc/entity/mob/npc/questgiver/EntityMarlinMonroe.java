@@ -7,10 +7,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.QuestProgress;
 
 public class EntityMarlinMonroe extends EntityNPCInteractable{
+	
+	public EntityMarlinMonroe(World worldIn) {
+		this(TOCEntityType.MARLIN_MONROE, worldIn);
+	}
 	
 	public EntityMarlinMonroe(EntityType<?> type, World worldIn) {
 		super(type, worldIn);

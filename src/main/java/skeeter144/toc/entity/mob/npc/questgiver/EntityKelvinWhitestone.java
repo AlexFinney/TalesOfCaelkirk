@@ -9,10 +9,15 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.QuestProgress;
 
 public class EntityKelvinWhitestone extends EntityNPCInteractable{
+	
+	public EntityKelvinWhitestone(World worldIn) {
+		this(TOCEntityType.KELVIN_WHITESTONE, worldIn);
+	}
 	
 	public EntityKelvinWhitestone(EntityType<?> type, World worldIn) {
 		super(type, worldIn);

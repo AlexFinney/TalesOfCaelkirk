@@ -12,10 +12,8 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.model.ModelBase;
 import net.minecraft.client.renderer.entity.model.ModelBiped;
-import net.minecraft.client.renderer.entity.model.ModelSalmon;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntitySalmon;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.util.ResourceLocation;
@@ -80,7 +78,6 @@ public class ClientForgeEventSubscriber
 	private Entity pointedEntity;
 	
 	public ClientForgeEventSubscriber() {
-		System.out.println("client proxy");
 	}
 	
 
@@ -123,41 +120,46 @@ public class ClientForgeEventSubscriber
 //		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(Reference.MODID + ":" + name, "inventory"));
 //	}
 	
-	public void registerEntityRenders() {
-		RenderManager rm = Minecraft.getInstance().getRenderManager();
-		
-		
-		rm.entityRenderMap.put(EntityRobertCromwell.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
-		rm.entityRenderMap.put(EntityUlricWeston.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
-		rm.entityRenderMap.put(EntityEvaTeffan.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
-		rm.entityRenderMap.put(EntityKelvinWhitestone.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
-		rm.entityRenderMap.put(EntityMarlinMonroe.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
-		rm.entityRenderMap.put(EntitySeloviusKamazz.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
-		
-		rm.entityRenderMap.put(EntityBanker.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
-		
-		rm.entityRenderMap.put(EntityHumanShopKeeper.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
-		
-		rm.entityRenderMap.put(EntityViking.class, new RenderViking(rm, new ModelViking(), .5f));
-		rm.entityRenderMap.put(EntityGhost.class, new RenderCustomLiving<EntityGhost>(rm, new ModelGhost(), .5f, new ResourceLocation(Reference.MODID, "textures/entity/ghost.png")));
-		rm.entityRenderMap.put(EntityGiantSpider.class, new RenderCustomLiving<EntityGiantSpider>(rm, new ModelGiantSpider(), .5f, new ResourceLocation(Reference.MODID, "textures/entity/giant_spider.png")));
-		rm.entityRenderMap.put(EntityRat.class, new RenderCustomLiving<EntityRat>(rm, new ModelRat(), .25f, new ResourceLocation(Reference.MODID, "textures/entity/rat.png")));
-		rm.entityRenderMap.put(EntityGoblin.class, new RenderCustomLiving<EntityGoblin>(rm, new ModelGoblin(), .5f,  new ResourceLocation(Reference.MODID, "textures/entity/goblin.png")));
-		rm.entityRenderMap.put(EntityGiantScorpian.class, new RenderCustomLiving<EntityGiantScorpian>(rm, new ModelGiantScorpian(), .5f,  new ResourceLocation(Reference.MODID, "textures/entity/giant_scorpian.png")));
-		rm.entityRenderMap.put(EntitySiren.class, new RenderCustomLiving<EntitySiren>(rm, new ModelSiren(), .5f, new ResourceLocation(Reference.MODID, "textures/entity/siren.png")));
-		rm.entityRenderMap.put(EntitySalmon.class, new RenderCustomLiving<EntitySalmon>(rm, new ModelSalmon(), .5f, new ResourceLocation(Reference.MODID, "textures/entity/salmon.png")));
 
-		rm.entityRenderMap.put(EntityMuleMount.class, new RenderCustomAbstractHorse(rm, 0.92F));
-		rm.entityRenderMap.put(EntityDonkeyMount.class, new RenderCustomAbstractHorse(rm, 0.87F));
-		rm.entityRenderMap.put(EntityVariableHorseMount.class, new RenderCustomAbstractHorse(rm, 1F));
-		rm.entityRenderMap.put(EntityPegasus.class, new RenderPegasus(rm, new ModelPegasus(), 1F));
-		rm.entityRenderMap.put(EntityGriffin.class, new RenderGriffin(rm, new ModelGriffin(), 1F));
-		
-	}	
+	public static void registerClientEntityRenders() {
+		createNewRender(EntityRobertCromwell.class, RenderHumanNpc.class, new ModelHumanNpc(), .5f);
+		createNewRender(EntityUlricWeston.class, RenderHumanNpc.class, new ModelHumanNpc(), .5f);
+		createNewRender(EntityEvaTeffan.class, RenderHumanNpc.class, new ModelHumanNpc(), .5f);
+		createNewRender(EntityKelvinWhitestone.class, RenderHumanNpc.class, new ModelHumanNpc(), .5f);
+		createNewRender(EntityMarlinMonroe.class, RenderHumanNpc.class, new ModelHumanNpc(), .5f);
+		createNewRender(EntitySeloviusKamazz.class, RenderHumanNpc.class, new ModelHumanNpc(), .5f);
+		createNewRender(EntityBanker.class, RenderHumanNpc.class, new ModelHumanNpc(), .5f);
+		createNewRender(EntityHumanShopKeeper.class, RenderHumanNpc.class, new ModelHumanNpc(), .5f);
+//
+		createNewRender(EntityViking.class, RenderViking.class, new ModelViking(), .5f);
+//		createNewRender(EntityGhost.class, RenderViking.class, new ModelViking(), .5f);
+//		createNewRender(EntityGiantSpider.class, RenderViking.class, new ModelViking(), .5f);
+//		createNewRender(EntityRat.class, RenderViking.class, new ModelViking(), .5f);
+//		createNewRender(EntityGoblin.class, RenderViking.class, new ModelViking(), .5f);
+//		createNewRender(EntityGiantScorpian.class, RenderViking.class, new ModelViking(), .5f);
+//		createNewRender(EntitySiren.class, RenderViking.class, new ModelViking(), .5f);
+//		createNewRender(EntityMuleMount.class, RenderViking.class, new ModelViking(), .5f);
+//		createNewRender(EntityDonkeyMount.class, RenderViking.class, new ModelViking(), .5f);
+//		createNewRender(EntityVariableHorseMount.class, RenderViking.class, new ModelViking(), .5f);
+//		createNewRender(EntityPegasus.class, RenderViking.class, new ModelViking(), .5f);
+//		createNewRender(EntityGriffin.class, RenderViking.class, new ModelViking(), .5f);
 
+//		EntityGhost.class, new RenderCustomLiving<EntityGhost>(rm, new ModelGhost(), .5f, new ResourceLocation(Reference.MODID, "textures/entity/ghost.png")));
+//		EntityGiantSpider.class, new RenderCustomLiving<EntityGiantSpider>(rm, new ModelGiantSpider(), .5f, new ResourceLocation(Reference.MODID, "textures/entity/giant_spider.png")));
+//		EntityRat.class, new RenderCustomLiving<EntityRat>(rm, new ModelRat(), .25f, new ResourceLocation(Reference.MODID, "textures/entity/rat.png")));
+//		EntityGoblin.class, new RenderCustomLiving<EntityGoblin>(rm, new ModelGoblin(), .5f,  new ResourceLocation(Reference.MODID, "textures/entity/goblin.png")));
+//		EntityGiantScorpian.class, new RenderCustomLiving<EntityGiantScorpian>(rm, new ModelGiantScorpian(), .5f,  new ResourceLocation(Reference.MODID, "textures/entity/giant_scorpian.png")));
+//		EntitySiren.class, new RenderCustomLiving<EntitySiren>(rm, new ModelSiren(), .5f, new ResourceLocation(Reference.MODID, "textures/entity/siren.png")));
+//		//EntitySalmon.class, new RenderCustomLiving<EntitySalmon>(rm, new ModelSalmon(), .5f, new ResourceLocation(Reference.MODID, "textures/entity/salmon.png")));
+//		EntityMuleMount.class, new RenderCustomAbstractHorse(rm, 0.92F));
+//		EntityDonkeyMount.class, new RenderCustomAbstractHorse(rm, 0.87F));
+//		EntityVariableHorseMount.class, new RenderCustomAbstractHorse(rm, 1F));
+//		EntityPegasus.class, new RenderPegasus(rm, new ModelPegasus(), 1F));
+//		EntityGriffin.class, new RenderGriffin(rm, new ModelGriffin(), 1F));
+	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes", "unused" })
-	private void createNewRender(Class<? extends Entity> c, Class<? extends Render> renderClass, ModelBase model, float shadowSize) {
+	private static void createNewRender(Class<? extends Entity> c, Class<? extends Render> renderClass, ModelBase model, float shadowSize) {
 		RenderingRegistry.registerEntityRenderingHandler(c, new IRenderFactory() {
 			public Render createRenderFor(RenderManager manager) {
 				try {

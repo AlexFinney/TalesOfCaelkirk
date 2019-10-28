@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityType;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -13,12 +14,18 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import skeeter144.toc.blocks.TOCBlocks;
 import skeeter144.toc.blocks.TOCClientBlockRenderers;
 import skeeter144.toc.combat.CombatManager;
 import skeeter144.toc.config.ConfigHolder;
+import skeeter144.toc.entity.TOCEntityType;
+import skeeter144.toc.entity.mob.npc.DialogManager;
 import skeeter144.toc.player.TOCPlayer;
+import skeeter144.toc.proxy.ClientForgeEventSubscriber;
+import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.recipe.RecipeManager;
 import skeeter144.toc.regions.RegionManager;
 import skeeter144.toc.tasks.TaskManager;
@@ -47,8 +54,6 @@ public class TOCMain
 	public static TOCMain instance;
 	
 	public TOCMain() {
-		LOGGER.debug("Hello from TOC Main!");
-
 		final ModLoadingContext modLoadingContext = ModLoadingContext.get();
 		modLoadingContext.registerConfig(ModConfig.Type.CLIENT, ConfigHolder.CLIENT_SPEC);
 		modLoadingContext.registerConfig(ModConfig.Type.SERVER, ConfigHolder.SERVER_SPEC);
@@ -56,7 +61,12 @@ public class TOCMain
 		MinecraftForge.EVENT_BUS.addListener(this::tickTasks);
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Block.class, TOCBlocks::registerAllBlocks);
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(TileEntityType.class, TOCBlocks::registerTileEntities);
+		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(EntityType.class, TOCEntityType::registerEntityTypes);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::serverSetup);
+		
+		DialogManager.init();
 	}
 	
 	void tickTasks(TickEvent.ServerTickEvent e) {
@@ -66,6 +76,15 @@ public class TOCMain
 	
 	public void clientSetup(final FMLClientSetupEvent evt) {
 		TOCClientBlockRenderers.registerAll();
+		ClientForgeEventSubscriber.registerClientEntityRenders();
+	}
+	
+	public void commonSetup(final FMLCommonSetupEvent evt) {
+		QuestManager.initQuests();
+	}
+	
+	public void serverSetup(final FMLDedicatedServerSetupEvent evt) {
+		QuestManager.initQuests();
 	}
 	
 //	static {

@@ -5,11 +5,13 @@ import java.lang.reflect.Field;
 import net.minecraft.block.Block;
 import net.minecraft.block.Block.Properties;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.tileentity.TileEntityType.Builder;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -116,11 +118,11 @@ public class TOCBlocks {
 	
 	private static void registerBlockItemRender(Block block) {
 //		if(block == blockMobSpawnerInvis) {
-//		//	ModelLoader.setCustomModelResourceLocation(ForgeRegistries.ITEMS.getValue(blockMobSpawnerInvis.getRegistryName()), 0, 
-//		//			new ModelResourceLocation(blockMobSpawner.getRegistryName(), "inventory"));
+//			ModelLoader.setCustomModelResourceLocation(ForgeRegistries.ITEMS.getValue(blockMobSpawnerInvis.getRegistryName()), 0, 
+//					new ModelResourceLocation(blockMobSpawner.getRegistryName(), "inventory"));
 //		}else{
-//	//		ModelLoader.setCustomModelResourceLocation(ForgeRegistries.ITEMS.getValue(block.getRegistryName()), 0, 
-//	//				new ModelResourceLocation(block.getRegistryName(), "inventory"));
+//			ModelLoader.setCustomModelResourceLocation(ForgeRegistries.ITEMS.getValue(block.getRegistryName()), 0, 
+//					new ModelResourceLocation(block.getRegistryName(), "inventory"));
 //		}
 	}
 }

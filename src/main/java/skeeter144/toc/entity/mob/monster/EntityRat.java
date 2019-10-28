@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.AI.EntityAICrazyRunIdle;
 import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.sounds.Sounds;
@@ -18,6 +19,10 @@ import skeeter144.toc.util.Util;
 
 public class EntityRat extends CustomMob{
 
+	public EntityRat(World worldIn) {
+		this(TOCEntityType.RAT, worldIn);
+	}
+	
 	public EntityRat(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
 

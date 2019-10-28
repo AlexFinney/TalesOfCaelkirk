@@ -11,11 +11,16 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.QuestProgress;
 import skeeter144.toc.util.TOCUtils;
 
 public class EntityEvaTeffan extends EntityNPCInteractable{
+	
+	public EntityEvaTeffan(World worldIn) {
+		this(TOCEntityType.EVA_TEFFAN, worldIn);
+	}
 	
 	public EntityEvaTeffan(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
