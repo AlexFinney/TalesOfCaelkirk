@@ -13,7 +13,7 @@ import skeeter144.toc.player.EntityLevels;
 import skeeter144.toc.player.EntityLevels.Levels;
 import skeeter144.toc.player.TOCPlayer;
 
-public class Quest {
+public abstract class Quest {
 	public String name;
 	public final int id;
 	public int initialStep;
@@ -53,7 +53,7 @@ public class Quest {
 	}
 	
 	public boolean canPlayerStartQuest(TOCPlayer player) {return false;}
-	public QuestProgress getNewQuestProgressInstance() {return null;}
+	public abstract QuestProgress getNewQuestProgressInstance();
 	protected void questFinished(EntityPlayerMP player) {}
 	
 }

@@ -3,17 +3,25 @@ package skeeter144.toc.quest.quests;
 import java.io.Serializable;
 import java.util.UUID;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
+
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ChatType;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import skeeter144.toc.blocks.BlockHarvestableOre.BlockMinedEvent;
+import skeeter144.toc.blocks.TOCBlocks;
 import skeeter144.toc.handlers.PlayerInventoryHandler.ItemAddedToInventoryEvent;
 import skeeter144.toc.items.tools.TOCShears.SheepShearedEvent;
 import skeeter144.toc.player.EntityLevels.Levels;
 import skeeter144.toc.player.TOCPlayer;
 import skeeter144.toc.quest.Quest;
+import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.QuestProgress;
 import skeeter144.toc.recipe.RecipeManager.ItemSmithedEvent;
 
@@ -40,21 +48,16 @@ public class ANewAdventureQuest extends Quest{
 	
 	@SubscribeEvent
 	public void oakLogAdded(ItemAddedToInventoryEvent e) {
-		if(e.getEntity().world.isRemote)
-			return;
-		
-		/*
 		if(e.stack.getItem() != new ItemStack(TOCBlocks.oak_log).getItem())
 			return;
-		
-		ANewAdventureQuestProgress qp = (ANewAdventureQuestProgress)QuestManager.getQuestProgressForPlayer(e.getEntity().getUniqueID(), this);
+		((EntityPlayerMP)e.getEntity()).sendMessage(new TextComponentString("Test"), ChatType.GAME_INFO);
+		ANewAdventureQuestProgress qp = (ANewAdventureQuestProgress)QuestManager.getQuestProgressForPlayer(e.getEntity().getUniqueID(), name);
 		if(qp.ulricTalkedTo && qp.logsChopped < 10) {
 			if(++qp.logsChopped == 10){
-				((EntityPlayer)e.getEntity()).sendMessage(new TextComponentString(ChatFormatting.GREEN + "[" + this.name +"] [Task Completed] " + ChatFormatting.WHITE + ChatFormatting.STRIKETHROUGH +"Harvest 10 Oak Logs." ));
-				((EntityPlayer)e.getEntity()).sendMessage(new TextComponentString(ChatFormatting.GREEN + "[" + this.name +"] [New Task] " + ChatFormatting.WHITE + "Return to Ulric." ));
+				((EntityPlayerMP)e.getEntity()).sendMessage(new TextComponentString(ChatFormatting.GREEN + "[" + this.name +"] [Task Completed] " + ChatFormatting.WHITE + ChatFormatting.STRIKETHROUGH +"Harvest 10 Oak Logs." ));
+				((EntityPlayerMP)e.getEntity()).sendMessage(new TextComponentString(ChatFormatting.GREEN + "[" + this.name +"] [New Task] " + ChatFormatting.WHITE + "Return to Ulric." ));
 			}
 		}
-		*/
 	}
 	
 	@SubscribeEvent
@@ -141,7 +144,7 @@ public class ANewAdventureQuest extends Quest{
 	
 	@Override
 	public QuestProgress getNewQuestProgressInstance() {
-		return null;
+		return new ANewAdventureQuestProgress(null, id, 0, 0, 0, 0);
 	}
 	
 	
@@ -150,12 +153,21 @@ public class ANewAdventureQuest extends Quest{
 		System.out.println("Yay you finished da quest");		
 	}
 	
-	public static class AnewAdventureQuestProgress extends QuestProgress implements Serializable{
-		
-		public AnewAdventureQuestProgress(UUID playerId, int questId, int stage, int qp1, int qp2, int qp3) {
+	public static class ANewAdventureQuestProgress extends QuestProgress implements Serializable{
+		boolean ulricTalkedTo = false;
+		int logsChopped = 0;
+		int sheepsSheared = 0;
+		boolean stringCrafted = false;
+		boolean sticksCrafted = false;
+		boolean fishingRodCrafted = false;
+		int fishCaught = 0;
+		int copperMined = 0;
+		int tinMined = 0;
+		int goblinEarsCollected = 0;
+		int chickensKilled = 0;
+		public ANewAdventureQuestProgress(UUID playerId, int questId, int stage, int qp1, int qp2, int qp3) {
 			super(playerId, questId, stage, qp1, qp2, qp3);
 		}
-		
 	}
 
 }

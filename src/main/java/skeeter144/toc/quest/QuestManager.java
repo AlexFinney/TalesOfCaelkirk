@@ -26,7 +26,6 @@ public class QuestManager{
 		addQuest(new ANewAdventureQuest(next_id));
 		
 		loadQuestProgress();
-	
 	}
 	
 	private static void addQuest(Quest q) {
@@ -160,10 +159,10 @@ public class QuestManager{
 	 */
 	public static QuestProgress getQuestProgressForPlayer(UUID uuid, String questName) {
 		
-		HashMap<Integer, QuestProgress> qps = playerQuestProgresses.get(uuid);
-		if(qps == null) {
-			playerQuestProgresses.put(uuid, new HashMap<Integer, QuestProgress>());
-			qps = playerQuestProgresses.get(uuid);
+		HashMap<Integer, QuestProgress> playersQuestProgress = playerQuestProgresses.get(uuid);
+		if(playersQuestProgress == null) {
+			playersQuestProgress = new HashMap<Integer, QuestProgress>();
+			playerQuestProgresses.put(uuid, playersQuestProgress);
 		}
 		
 		Quest q = null;
@@ -175,10 +174,14 @@ public class QuestManager{
 		}
 		
 		if(q == null) {Log.error("Quest " + questName + " is not a registered quest!"); return null;}
+
+		QuestProgress qp = playersQuestProgress.get(q.id);
+		if(qp == null) { 
+			qp = q.getNewQuestProgressInstance();
+			playersQuestProgress.put(q.id, qp);
+		}
 		
-		QuestProgress progress = qps.get(q.id);
-		if(progress == null) progress = new QuestProgress(uuid, q.id, q.initialStep, 0, 0, 0);
-		return progress;
+		return qp;
 	}
 
 	public static void updateQuestProgressForPlayer(UUID playerUUID, QuestProgress qp) {

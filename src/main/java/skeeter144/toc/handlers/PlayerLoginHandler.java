@@ -2,6 +2,7 @@ package skeeter144.toc.handlers;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -25,9 +26,9 @@ public class PlayerLoginHandler {
 	   }
 	   
 	   if(TOCMain.pm.hasPlayerPreviouslyPlayed(player)) {
-		   player.sendMessage(new TextComponentTranslation("Welcome back, traveller.  I see you haven't been eaten by a monster yet.  This is good..."));
+		   ((EntityPlayerMP)player).sendMessage(new TextComponentTranslation("Welcome back, traveller.  I see you haven't been eaten by a monster yet.  This is good..."), ChatType.CHAT);
 	   }else {
-		   player.sendMessage(new TextComponentTranslation("Welome to the Land of Caelkirk, traveller.  So now, here begins your tale..."));
+		   ((EntityPlayerMP)player).sendMessage(new TextComponentTranslation("Welome to the Land of Caelkirk, traveller.  So now, here begins your tale..."), ChatType.CHAT);
 	   }
 	   
 	   TOCPlayer tocPlayer = TOCMain.pm.getPlayer(player);
