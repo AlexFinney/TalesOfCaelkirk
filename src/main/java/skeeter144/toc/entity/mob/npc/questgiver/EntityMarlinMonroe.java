@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.quest.QuestManager;
-import skeeter144.toc.quest.QuestProgress;
+import skeeter144.toc.quest.quests.ANewAdventureQuest.ANewAdventureQuestProgress;
 
 public class EntityMarlinMonroe extends EntityNPCInteractable{
 	
@@ -30,7 +30,7 @@ public class EntityMarlinMonroe extends EntityNPCInteractable{
 			return true;
 		}
 		
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), QuestManager.A_NEW_ADVENTURE);
+		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
 
 		if(qp.stage == 7) {
 			sendDialog("intro", player);
@@ -40,7 +40,7 @@ public class EntityMarlinMonroe extends EntityNPCInteractable{
 	
 	public void marlinFinished(UUID playerUUID) {
 		EntityPlayer player = world.getPlayerEntityByUUID(playerUUID);
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), QuestManager.A_NEW_ADVENTURE);
+		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
 		qp.incStage();
 	}
 	

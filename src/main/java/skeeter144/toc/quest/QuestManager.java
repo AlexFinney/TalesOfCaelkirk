@@ -1,7 +1,10 @@
 package skeeter144.toc.quest;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,21 +12,24 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.jline.utils.Log;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufInputStream;
 import net.minecraftforge.common.MinecraftForge;
 import skeeter144.toc.data.Database;
 import skeeter144.toc.quest.quests.ANewAdventureQuest;
 
 public class QuestManager{
 	static int next_id = 0;
-	public static final String A_NEW_ADVENTURE = "A New Adventure";
+	public static Quest A_NEW_ADVENTURE;
 	public static final HashMap<Integer, Quest> quests = new HashMap<Integer, Quest>();
 	public static HashMap<UUID, HashMap<Integer, QuestProgress>> playerQuestProgresses = new HashMap<UUID, HashMap<Integer, QuestProgress>>();
 	
 	public static void initQuests() {
 		
-		addQuest(new ANewAdventureQuest(next_id));
+		addQuest(A_NEW_ADVENTURE = new ANewAdventureQuest(next_id));
 		
 		loadQuestProgress();
 	}
@@ -49,50 +55,11 @@ public class QuestManager{
 	}
 	
 	public static void loadQuestProgress() {
-		ArrayList<ArrayList<String>> rows = Database.executeQuery("select * from QuestProgress");
-		if(rows == null) { System.err.println("Unable to retrieve rows from quest progress table"); return;}
-		
-		for(ArrayList<String> row : rows) {
-			HashMap<Integer, QuestProgress> progress = new HashMap<>();
-			progress.put(Integer.parseInt(row.get(1)), 
-					new QuestProgress(UUID.fromString(row.get(0)), 
-							Integer.parseInt(row.get(1)),
-							Integer.parseInt(row.get(2)),
-							Integer.parseInt(row.get(3)), 
-							Integer.parseInt(row.get(4)), 
-							Integer.parseInt(row.get(5))));
-			
-			playerQuestProgresses.put(UUID.fromString(row.get(0)), progress);
-		}
+		playerQuestProgresses = Database.loadAllQuestProgress();
 		
 		
-		
-//		File f = new File("quest_progress.bin");
-//		if(f.exists()) {
-//			try {
-//				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-//				
-//				playerQuestProgresses = (HashMap<UUID, HashMap<Integer, QuestProgress>>) ois.readObject();
-//				
-//				ois.close();
-//			}catch(Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
 	}
 	
-	public static void saveQuestProgress() {
-		try {
-			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("quest_progress.bin")));
-			
-			oos.writeObject(playerQuestProgresses);
-			
-			oos.close();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public static boolean isPlayerOnQuest(UUID uuid, Quest q) {
 		return hasPlayerStartedQuest(uuid, q) && !hasPlayerFinishedQuest(uuid, q);
 	}
@@ -131,7 +98,7 @@ public class QuestManager{
 		
 		QuestProgress qp = map.get(q.id);
 		if(qp == null) {
-			qp = new QuestProgress(uuid, q.id, q.initialStep, 0, 0, 0);
+			qp = new QuestProgress(uuid, q.id, q.initialStep);
 			map.put(q.id, qp);
 			Database.executeUpdate(String.format("insert into QuestProgress values ( \"%s\", %s, %s, %s, %s, %s )", 
 					uuid.toString(),
@@ -157,7 +124,8 @@ public class QuestManager{
 	 * @param theQuest The Quest in question
 	 * @return Returns the QuestProgress for the Player/Quest if it exists. Creates new instance if player hasn't started quest
 	 */
-	public static QuestProgress getQuestProgressForPlayer(UUID uuid, String questName) {
+	@SuppressWarnings("unchecked")
+	public static <T extends QuestProgress> T getQuestProgressForPlayer(UUID uuid, Class<T> qpClass) {
 		
 		HashMap<Integer, QuestProgress> playersQuestProgress = playerQuestProgresses.get(uuid);
 		if(playersQuestProgress == null) {
@@ -167,18 +135,23 @@ public class QuestManager{
 		
 		Quest q = null;
 		for(Entry<Integer, Quest> quests : quests.entrySet()) {
-			if(quests.getValue().name.equalsIgnoreCase(questName)) {
+			if(quests.getValue().getQuestProgressClass().equals(qpClass)) {
 				q = quests.getValue();
 				break;
 			}
 		}
 		
-		if(q == null) {Log.error("Quest " + questName + " is not a registered quest!"); return null;}
-
-		QuestProgress qp = playersQuestProgress.get(q.id);
-		if(qp == null) { 
-			qp = q.getNewQuestProgressInstance();
-			playersQuestProgress.put(q.id, qp);
+		if(q == null) {Log.error("Quest with quest progess class " + qpClass + " is not a registered quest!"); return null;}
+		T qp = null;
+		try {
+			qp = (T) playersQuestProgress.get(q.id);
+			if(qp == null) { 
+				qp = (T) q.getNewQuestProgressInstance();
+				playersQuestProgress.put(q.id, qp);
+			}
+		}catch(Exception e) {
+			System.out.println("An error occured tring to get quest with quest progress class " + qpClass + "\n");
+			e.printStackTrace();
 		}
 		
 		return qp;
@@ -190,7 +163,6 @@ public class QuestManager{
 				+ "Counter2 = %s, Counter3 = %s where UUID = \"%s\"", 
 				qp.questId,
 				qp.stage,
-				qp.qp1, qp.qp2, qp.qp3, 
 				playerUUID.toString()));
 	}
 }

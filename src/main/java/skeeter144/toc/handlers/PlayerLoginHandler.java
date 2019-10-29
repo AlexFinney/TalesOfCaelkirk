@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import skeeter144.toc.TOCMain;
+import skeeter144.toc.data.Database;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.SetClientTOCPlayerPKT;
 import skeeter144.toc.player.TOCPlayer;
@@ -25,13 +26,15 @@ public class PlayerLoginHandler {
 		   return;
 	   }
 	   
-	   if(TOCMain.pm.hasPlayerPreviouslyPlayed(player)) {
+       TOCPlayer tocPlayer = TOCMain.pm.getPlayer(player);
+	   if(tocPlayer != null) {
 		   ((EntityPlayerMP)player).sendMessage(new TextComponentTranslation("Welcome back, traveller.  I see you haven't been eaten by a monster yet.  This is good..."), ChatType.CHAT);
 	   }else {
 		   ((EntityPlayerMP)player).sendMessage(new TextComponentTranslation("Welome to the Land of Caelkirk, traveller.  So now, here begins your tale..."), ChatType.CHAT);
+		   tocPlayer = Database.createPlayerInDatabase(player);
 	   }
 	   
-	   TOCPlayer tocPlayer = TOCMain.pm.getPlayer(player);
+	   
 	   Network.INSTANCE.sendTo(new SetClientTOCPlayerPKT(tocPlayer), (EntityPlayerMP)player);
 	}
 	
@@ -43,7 +46,4 @@ public class PlayerLoginHandler {
 	   }
 	   PlayerManager.instance().savePlayer(PlayerManager.instance().getPlayer(player));
 	}
-	
-	
-	
 }

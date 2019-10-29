@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.entity.player.EntityPlayer;
 import skeeter144.toc.data.Database;
 import skeeter144.toc.player.TOCPlayer;
@@ -23,11 +25,12 @@ public class PlayerManager {
 	}
 	
 	public TOCPlayer getPlayer(EntityPlayer player) {
+		@Nullable 
 		TOCPlayer pl = players.get(player.getUniqueID());
 		
-		if(pl == null)  pl = Database.getPlayer(player);
-			
-		players.put(player.getUniqueID(), pl);
+		if(pl == null) { pl = Database.getPlayer(player); players.put(pl.mcEntity.getUniqueID(), pl); }
+		else players.put(player.getUniqueID(), pl);
+		
 		return pl;
 	}
 	
@@ -36,6 +39,10 @@ public class PlayerManager {
 			instance = new PlayerManager();
 		
 		return instance;
+	}
+	
+	public void addPlayer(TOCPlayer player) {
+		players.put(player.mcEntity.getUniqueID(), player);
 	}
 	
 	public void savePlayer(TOCPlayer player) {

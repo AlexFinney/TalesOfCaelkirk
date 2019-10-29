@@ -17,6 +17,7 @@ import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.QuestProgress;
+import skeeter144.toc.quest.quests.ANewAdventureQuest.ANewAdventureQuestProgress;
 import skeeter144.toc.util.TOCUtils;
 
 public class EntityEvaTeffan extends EntityNPCInteractable{
@@ -37,7 +38,7 @@ public class EntityEvaTeffan extends EntityNPCInteractable{
 		if(player.world.isRemote) {
 			return true;
 		}
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), QuestManager.A_NEW_ADVENTURE);
+		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
 		
 		if(qp.stage == 3) {
 			sendDialog("intro", player);
@@ -73,7 +74,7 @@ public class EntityEvaTeffan extends EntityNPCInteractable{
 	
 	public void beginShearSheep(UUID playerUUID) {
 		EntityPlayerMP player = (EntityPlayerMP)world.getPlayerEntityByUUID(playerUUID);
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), QuestManager.A_NEW_ADVENTURE);
+		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
 
 //		//TODO: `mark map for sheep
 		player.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.A_NEW_ADVENTURE + "] " + TextFormatting.GREEN + "[New Task]" + TextFormatting.WHITE + "Shear a sheep and collect its wool."));
@@ -88,7 +89,7 @@ public class EntityEvaTeffan extends EntityNPCInteractable{
 	
 	public void beginCrafting(UUID playerUUID) {
 		EntityPlayer player = world.getPlayerEntityByUUID(playerUUID);
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), QuestManager.A_NEW_ADVENTURE);
+		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
 
 		player.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.A_NEW_ADVENTURE + "] " + TextFormatting.GREEN + "[New Task]" + TextFormatting.WHITE + "Craft at least 3 sticks and two strings, then return to Eva."));
 		qp.incStage();

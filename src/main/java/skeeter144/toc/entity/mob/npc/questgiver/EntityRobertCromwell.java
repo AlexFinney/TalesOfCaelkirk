@@ -10,9 +10,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import skeeter144.toc.data.Database;
 import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.QuestProgress;
+import skeeter144.toc.quest.quests.ANewAdventureQuest;
+import skeeter144.toc.quest.quests.ANewAdventureQuest.ANewAdventureQuestProgress;
 
 public class EntityRobertCromwell extends EntityNPCInteractable{
 	
@@ -32,9 +35,9 @@ public class EntityRobertCromwell extends EntityNPCInteractable{
 		if(player.world.isRemote)
 			return true;
 		
-		QuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), "A New Adventure");
-		
-		if(qp.stage == 0)
+		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
+
+		if(!qp.robertTalkedTo)
 			sendDialog("introduction", player);
 		else
 			sendDialog("player_returned", player);
@@ -47,9 +50,11 @@ public class EntityRobertCromwell extends EntityNPCInteractable{
 		EntityPlayerMP pl = (EntityPlayerMP)this.world.getPlayerEntityByUUID(playerUUID);
 		pl.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.A_NEW_ADVENTURE + "] " + TextFormatting.GREEN + "[New Task] " + TextFormatting.WHITE + "Go talk to Ulric Weston about woodcutting"));
 		
-		QuestProgress qp = QuestManager.startPlayerOnQuest(playerUUID, "A New Adventure");
-		qp.incStage();
-	
+		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(playerUUID, ANewAdventureQuestProgress.class);
+		qp.robertTalkedTo = true;
+		qp.playerId = playerUUID;
+		Database.insertQuestProgress(playerUUID, qp.questId, qp);
+		
 		//TOCUtils.addIconMarkerToMap("Ulric Weston", new ResourceLocation(Reference.MODID, "toc:textures/icons/map/quest_objective"), new BlockPos(720, 42, 815), this.world.provider.getDimension());
 	}
 	

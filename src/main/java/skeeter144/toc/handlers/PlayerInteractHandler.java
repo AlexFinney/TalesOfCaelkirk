@@ -136,13 +136,11 @@ public class PlayerInteractHandler {
 					+ " to cut down " + log.getNameTextComponent()));
 			return;
 		}
-		
 		float chance = Woodcutting.getChopChanceForWood((TOCAxe) e.getEntityPlayer().getHeldItemMainhand().getItem(), world.getBlockState(pos));
 		if(chance == 0) {
 			player.sendMessage(new TextComponentString("Your axe is not strong enough to chop down " + log.getNameTextComponent()));
 			return;
 		}
-		
 		if(TOCMain.rand.nextFloat() <= chance) {
 			Map<BlockPos, IBlockState> list = Woodcutting.getTreeFromLog(world, pos);
 			int leavesFound = 0;

@@ -1,32 +1,44 @@
 package skeeter144.toc.data;
 
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
+
+import org.apache.commons.io.output.ByteArrayOutputStream;
 
 import net.minecraft.entity.player.EntityPlayer;
 import skeeter144.toc.player.EntityLevels;
 import skeeter144.toc.player.TOCPlayer;
+import skeeter144.toc.quest.QuestProgress;
+import skeeter144.toc.util.PlayerManager;
 
 public class Database {
 
 	static String user = "ZkCYQE6thv";
 	static String pass = "IgeKU0szPG";
 
-	public static void createPlayerInDatabase(EntityPlayer player) {
-		Database.executeUpdate(String.format("insert ignore into Players values(\"" + player.getUniqueID() + "\", NOW(), NOW(), 20, 12, %s)", 
-				player.getDisplayName().toString()));
-		insertPlayerLevels(player.getUniqueID());
+	public static TOCPlayer createPlayerInDatabase(EntityPlayer player) 
+	{
+		Database.executeUpdate(String.format("insert ignore into Players values(\"" + player.getUniqueID() + "\", NOW(), NOW(), 20, 12, \'%s\')", 
+				player.getDisplayName().getString()));
+		
+		TOCPlayer tocPlayer = new TOCPlayer(player, insertPlayerLevels(player.getUniqueID()), 20, 12);
+		PlayerManager.instance().addPlayer(tocPlayer);
+		
+		return tocPlayer;
 	}
 
 	public static boolean playerExists(EntityPlayer player) {
 		if (getUserObject(player) != null)
 			return true;
-		else
-			createPlayerInDatabase(player);
 		return false;
 	}
 
@@ -36,7 +48,7 @@ public class Database {
 
 	public static void savePlayer(TOCPlayer player) {
 		Database.executeUpdate(String.format(
-				"update Players SET LastOnline = NOW(), CurrentHP = %s, CurrentMP = %s, DisplayName = %s WHERE UUID = \'"
+				"update Players SET LastOnline = NOW(), CurrentHP = %s, CurrentMP = %s, DisplayName = \'%s\' WHERE UUID = \'"
 						+ player.mcEntity.getUniqueID().toString() + "\'",
 				player.getHealth(), player.getMana(), player.mcEntity.getDisplayName().getString()));
 
@@ -69,6 +81,9 @@ public class Database {
 		return tocPlayer;
 	}
 
+	
+	
+	
 	public static ArrayList<ArrayList<String>> executeQuery(String query) {
 		Connection con = null;
 		ResultSet rs = null;
@@ -110,9 +125,10 @@ public class Database {
 		t.start();
 	}
 
-	public static void insertPlayerLevels(UUID uuid) {
+	public static EntityLevels insertPlayerLevels(UUID uuid) {
 		String query = "insert into PlayerLevels values(\"%s\", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);";
 		Database.executeUpdate(String.format(query, uuid.toString()));
+		return new EntityLevels(uuid);
 	}
 	
 	public static void updatePlayerLevels(EntityLevels entityLevels) {
@@ -126,5 +142,62 @@ public class Database {
 				xps.get(10));
 		
 		Database.executeUpdate(query);
+	}
+	
+	public static void saveQuestProgress(UUID uuid, int questId, QuestProgress progress) {
+		try {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(baos);
+			oos.writeObject(progress);
+			Database.executeUpdate(String.format("update QuestProgress set Data = %s where UUID = %s and QuestID = %s", 
+												baos.toByteArray(), uuid, questId));
+			oos.close();
+			baos.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void insertQuestProgress(UUID uuid, int questId, QuestProgress progress) {
+		Thread t = new Thread(() -> {
+			try {
+				Connection con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/ZkCYQE6thv", user, pass);
+
+				PreparedStatement pstmt = con
+						.prepareStatement("insert into QuestProgress(UUID, questId, Data) values (?, ?, ?)");
+				pstmt.setString(1, uuid.toString());
+				pstmt.setInt(2, questId);
+				pstmt.setObject(3, progress);
+				pstmt.executeUpdate();
+
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+		t.start();
+	}
+	
+	public static HashMap<UUID, HashMap<Integer, QuestProgress>> loadAllQuestProgress(){
+		HashMap<UUID, HashMap<Integer, QuestProgress>> questProgresses = new HashMap<>();
+		try {
+			Connection con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/ZkCYQE6thv", user, pass);;
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from QuestProgress");
+
+			while(rs.next()) {
+				System.out.println();
+				UUID uuid = UUID.fromString(rs.getString(1));
+				InputStream is = rs.getBlob(3).getBinaryStream();
+			    ObjectInputStream oip = new ObjectInputStream(is);
+			    QuestProgress qp = (QuestProgress)oip.readObject();
+				if(!questProgresses.containsKey(uuid)) questProgresses.put(uuid, new HashMap<>());
+				questProgresses.get(uuid).put(qp.questId, qp);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return questProgresses;
 	}
 }

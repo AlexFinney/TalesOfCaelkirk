@@ -54,6 +54,7 @@ public abstract class Quest {
 	
 	public boolean canPlayerStartQuest(TOCPlayer player) {return false;}
 	public abstract QuestProgress getNewQuestProgressInstance();
+	public abstract Class<? extends QuestProgress> getQuestProgressClass();
 	protected void questFinished(EntityPlayerMP player) {}
 	
 }
