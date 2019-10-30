@@ -1,0 +1,20 @@
+{
+	"type": "crafting_shaped",
+	"pattern": [
+    	"@  ",
+    	"#@ ",
+    	"# @"
+    ],
+    "key": {
+    	"@": [
+    		{ "item": "toc:stick_oak" }
+  		],
+  		"#": [
+    		{ "item": "minecraft:string" }
+  		]
+  	},
+	"result": {
+		"item": "minecraft:fishing_rod",
+		"count": 1
+	}
+}

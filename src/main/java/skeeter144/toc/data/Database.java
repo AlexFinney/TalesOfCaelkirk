@@ -17,6 +17,7 @@ import org.apache.commons.io.output.ByteArrayOutputStream;
 import net.minecraft.entity.player.EntityPlayer;
 import skeeter144.toc.player.EntityLevels;
 import skeeter144.toc.player.TOCPlayer;
+import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.QuestProgress;
 import skeeter144.toc.util.PlayerManager;
 
@@ -145,17 +146,25 @@ public class Database {
 	}
 	
 	public static void saveQuestProgress(UUID uuid, int questId, QuestProgress progress) {
-		try {
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ObjectOutputStream oos = new ObjectOutputStream(baos);
-			oos.writeObject(progress);
-			Database.executeUpdate(String.format("update QuestProgress set Data = %s where UUID = %s and QuestID = %s", 
-												baos.toByteArray(), uuid, questId));
-			oos.close();
-			baos.close();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+		Thread t = new Thread(() -> {
+			try {
+				
+				Connection con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/ZkCYQE6thv", user, pass);
+	
+				PreparedStatement pstmt = con
+						.prepareStatement("update QuestProgress set Data = ? where UUID = ? and QuestID = ?");
+				pstmt.setObject(1, progress);
+				pstmt.setString(2, uuid.toString());
+				pstmt.setInt(3, questId);
+				pstmt.executeUpdate();
+	
+				con.close();
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		});
+		t.start();
 	}
 
 	public static void insertQuestProgress(UUID uuid, int questId, QuestProgress progress) {

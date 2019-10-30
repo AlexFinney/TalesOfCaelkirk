@@ -22,7 +22,7 @@
 		"responses": {
 			"Okay.": {
 				"transition": "",
-				"event": ""
+				"event": "smeltingStart"
 			}
 		}
 	},

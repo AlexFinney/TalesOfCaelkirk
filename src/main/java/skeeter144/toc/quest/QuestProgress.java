@@ -3,6 +3,8 @@ package skeeter144.toc.quest;
 import java.io.Serializable;
 import java.util.UUID;
 
+import skeeter144.toc.data.Database;
+
 public class QuestProgress implements Serializable{
 	private static final long serialVersionUID = -3429641809467634017L;
 	
@@ -18,6 +20,10 @@ public class QuestProgress implements Serializable{
 	
 	public void incStage() {
 		++stage;
-		QuestManager.updateQuestProgressForPlayer(playerId, this);
+		//QuestManager.updateQuestProgressForPlayer(playerId, this);
+	}
+	
+	public void save() {
+		Database.saveQuestProgress(playerId, questId, this);
 	}
 }

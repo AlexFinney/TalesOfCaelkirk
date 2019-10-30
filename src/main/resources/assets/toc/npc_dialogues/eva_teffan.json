@@ -97,7 +97,7 @@
 				"Alright, time to craft.": {"transition": "", "event": "beginCrafting"}
 			}
 		},
-		"tutorial_2_2":
+		"tutorial_3":
 		{
 			"text": "Great! Now that you've got the basics down, let's make that fishing pole! It's a little more complicated, but not too bad!  What you're gonna do is put three sticks diagonally for the rod, and then hang two strings from the top of it! Not too hard.  Now go craft that rod!",
 			"responses":

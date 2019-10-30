@@ -1,0 +1,15 @@
+{
+	"type": "crafting_shaped",
+	"pattern": [
+    	"#"
+    ],
+    "key": {
+    	"#": [
+    		{ "item": "toc:oak_log" }
+  		]
+  	},
+	"result": {
+		"item": "toc:stick_oak",
+		"count": 4
+	}
+}

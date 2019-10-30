@@ -156,13 +156,4 @@ public class QuestManager{
 		
 		return qp;
 	}
-
-	public static void updateQuestProgressForPlayer(UUID playerUUID, QuestProgress qp) {
-		Database.executeUpdate(String.format("update QuestProgress set QuestID = %s, "
-				+ "CurrentStep = %s, Counter1 = %s, "
-				+ "Counter2 = %s, Counter3 = %s where UUID = \"%s\"", 
-				qp.questId,
-				qp.stage,
-				playerUUID.toString()));
-	}
 }

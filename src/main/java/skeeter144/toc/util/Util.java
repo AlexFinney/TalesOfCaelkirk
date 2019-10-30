@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
@@ -19,9 +18,14 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import skeeter144.toc.combat.TOCDamageSource;
+import skeeter144.toc.quest.Quest;
+import skeeter144.toc.quest.QuestManager;
+import skeeter144.toc.quest.QuestProgress;
 
 public class Util {
 
@@ -214,5 +218,16 @@ public class Util {
 		return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByUUID(uuid);
 	}
 	
+	public static void sendNewTaskMessage(EntityPlayer player, Quest quest, String text) {
+		player.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  quest.name + "] " + TextFormatting.GOLD + "[New Task] " + TextFormatting.WHITE + text));
+	}
+	
+	public static void sendTaskUpdateMessage(EntityPlayer player, Quest quest, String text) {
+		player.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  quest.name + "] " + TextFormatting.GREEN + "[Task Updated] " + TextFormatting.WHITE + text));
+	}
+	
+	public static void saveQuestProgress(UUID player, Class<? extends QuestProgress> questClass) {
+		QuestManager.getQuestProgressForPlayer(player, questClass).save();
+	}
 	
 }

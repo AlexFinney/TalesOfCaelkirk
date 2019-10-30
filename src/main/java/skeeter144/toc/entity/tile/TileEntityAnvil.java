@@ -15,12 +15,14 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ForgeRegistries;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.blocks.TOCBlocks;
 import skeeter144.toc.network.AddLevelXpPKT;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.recipe.Recipe;
+import skeeter144.toc.recipe.RecipeManager;
 
 public class TileEntityAnvil extends TileEntity {
 	public TileEntityAnvil() {
@@ -74,6 +76,8 @@ public class TileEntityAnvil extends TileEntity {
 					
 					if(selectedRecipe != null)
 						producedItem = new ItemStack(selectedRecipe.crafted.getItem(), selectedRecipe.crafted.getCount());
+					
+					MinecraftForge.EVENT_BUS.post(new RecipeManager.ItemSmithedEvent((EntityPlayerMP) striker, producedItem));
 					
 					striker.addItemStackToInventory(new ItemStack(ingot, addedIngots - selectedRecipe.components[0].getCount()));
 					
