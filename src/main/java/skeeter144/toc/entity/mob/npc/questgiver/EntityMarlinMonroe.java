@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.quests.ANewAdventureQuest.ANewAdventureQuestProgress;
+import skeeter144.toc.util.Util;
 
 public class EntityMarlinMonroe extends EntityNPCInteractable{
 	
@@ -32,16 +33,20 @@ public class EntityMarlinMonroe extends EntityNPCInteractable{
 		
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
 
-		if(qp.stage == 7) {
+		if(qp.evaFinished && !qp.marlinTalkedTo) {
 			sendDialog("intro", player);
+			qp.marlinTalkedTo = true;
+			qp.save();
 		}
 		return true;
 	}
 	
 	public void marlinFinished(UUID playerUUID) {
 		EntityPlayer player = world.getPlayerEntityByUUID(playerUUID);
+		Util.sendNewTaskMessage(player, QuestManager.A_NEW_ADVENTURE, "Meet Kelvin Whitestone in the mines to learn about Mining, Smithing, and Combat.");
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
-		qp.incStage();
+		qp.marlinFinished = true;
+		qp.save();
 	}
 	
 	

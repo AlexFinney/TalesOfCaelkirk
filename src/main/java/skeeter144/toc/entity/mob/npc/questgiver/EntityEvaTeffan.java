@@ -19,6 +19,7 @@ import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.QuestProgress;
 import skeeter144.toc.quest.quests.ANewAdventureQuest.ANewAdventureQuestProgress;
 import skeeter144.toc.util.TOCUtils;
+import skeeter144.toc.util.Util;
 
 public class EntityEvaTeffan extends EntityNPCInteractable{
 	
@@ -38,61 +39,58 @@ public class EntityEvaTeffan extends EntityNPCInteractable{
 		if(player.world.isRemote) {
 			return true;
 		}
+		
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
 		
-		if(qp.stage == 3) {
-			sendDialog("intro", player);
-		}else if (qp.stage < 3) {
+		if(qp.ulricFinished) {
+			if(!qp.evaTalkedTo) sendDialog("intro", player);
+			else {
+				if(qp.sheepsSheared == 0) sendDialog("returned", player);
+				else {
+					if(!qp.stringCrafted || !qp.sticksCrafted) sendDialog("tutorial_2", player);	
+					else {
+						if(!qp.fishingRodCrafted) sendDialog("tutorial_3", player);
+						else {
+							sendDialog("finished", player);
+						}
+					}
+				}
+			}
+		}else{
 			sendDialog("not_expected", player);
-		}else if(qp.stage == 4) {
-			if(TOCUtils.getItemCountInInventory(Blocks.WHITE_WOOL.asItem(), player.inventory) >= 1) {
-				sendDialog("tutorial_7", player);
-			}else {
-				sendDialog("returned", player);
-			}
-		}else if (qp.stage == 5) {
-			if(TOCUtils.getItemCountInInventory(Blocks.WHITE_WOOL.asItem(), player.inventory) >= 1)
-			{
-				sendDialog("tutorial_7", player);
-				qp.incStage();
-			}else {
-				sendDialog("returned", player);
-			}
 		}
-		else if (qp.stage == 6) {
-			if(TOCUtils.getItemCountInInventory(Items.FISHING_ROD, player.inventory) >= 1) {
-				sendDialog("finished", player);
-				qp.incStage();
-			}else {
-				sendDialog("tutorial_9", player);
-			}
-		}else if (qp.stage >= 7) {
-			sendDialog("finished", player);
-		}
+	
 		return true;
 	}
 	
 	public void beginShearSheep(UUID playerUUID) {
 		EntityPlayerMP player = (EntityPlayerMP)world.getPlayerEntityByUUID(playerUUID);
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
-
+		qp.evaTalkedTo = true;
+		
+		Util.sendNewTaskMessage(player, QuestManager.A_NEW_ADVENTURE, "Shear a sheep and collect its wool.");
 //		//TODO: `mark map for sheep
-		player.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.A_NEW_ADVENTURE + "] " + TextFormatting.GREEN + "[New Task]" + TextFormatting.WHITE + "Shear a sheep and collect its wool."));
 		player.inventory.addItemStackToInventory(new ItemStack(TOCItems.shears));
-		qp.incStage();
+		
+		qp.save();
 	}
 	
 	public void evaFinished(UUID playerUUID) {
 		EntityPlayer player = this.world.getPlayerEntityByUUID(playerUUID);
-		player.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.A_NEW_ADVENTURE + "] " + TextFormatting.GREEN + "[New Task]" + TextFormatting.WHITE + "Go across the bridge and talk to Marlin Monroe."));
+		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
+		if(!qp.evaFinished) {
+			Util.sendNewTaskMessage(player, QuestManager.A_NEW_ADVENTURE, "Go across the bridge and talk to Marlin Monroe to learn about Fishing.");
+			qp.evaFinished = true;
+			qp.save();
+		}
 	}
 	
 	public void beginCrafting(UUID playerUUID) {
 		EntityPlayer player = world.getPlayerEntityByUUID(playerUUID);
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
-
-		player.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.A_NEW_ADVENTURE + "] " + TextFormatting.GREEN + "[New Task]" + TextFormatting.WHITE + "Craft at least 3 sticks and two strings, then return to Eva."));
-		qp.incStage();
+		Util.sendNewTaskMessage(player, QuestManager.A_NEW_ADVENTURE, "Craft the components of a Fishing Rod: String (0/2), Oak Sticks (0/3)");
+		qp.craftingStarted = true;
+		qp.save();
 	}
 	
 	

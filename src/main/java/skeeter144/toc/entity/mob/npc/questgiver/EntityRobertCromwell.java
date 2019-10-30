@@ -16,6 +16,7 @@ import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.QuestProgress;
 import skeeter144.toc.quest.quests.ANewAdventureQuest;
 import skeeter144.toc.quest.quests.ANewAdventureQuest.ANewAdventureQuestProgress;
+import skeeter144.toc.util.Util;
 
 public class EntityRobertCromwell extends EntityNPCInteractable{
 	
@@ -48,8 +49,7 @@ public class EntityRobertCromwell extends EntityNPCInteractable{
 	
 	public void startPlayerOnQuest(UUID playerUUID) {
 		EntityPlayerMP pl = (EntityPlayerMP)this.world.getPlayerEntityByUUID(playerUUID);
-		pl.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.A_NEW_ADVENTURE + "] " + TextFormatting.GREEN + "[New Task] " + TextFormatting.WHITE + "Go talk to Ulric Weston about woodcutting"));
-		
+		Util.sendNewTaskMessage(pl, QuestManager.A_NEW_ADVENTURE, "Go speak with Ulric Weston to learn about woodcutting.");
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(playerUUID, ANewAdventureQuestProgress.class);
 		qp.robertTalkedTo = true;
 		qp.playerId = playerUUID;

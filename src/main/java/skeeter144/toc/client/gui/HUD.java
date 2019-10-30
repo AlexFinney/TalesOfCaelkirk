@@ -146,18 +146,19 @@ public class HUD extends GuiIngame {
 
 	public void renderGameOverlay(float partialTicks) {
 		renderVanillaModified(partialTicks);
-
-		TOCPlayer pl = TOCMain.localPlayer;
-		if (pl == null)
-			return;
-
-		if (Minecraft.getInstance().player.isCreative())
-			return;
-
-		drawHealthBar(pl.getHealth(), pl.getMaxHealth());
-		drawManaBar(pl.getMana(), pl.getMaxMana());
+		
+		if (!Minecraft.getInstance().player.isCreative()) {
+			TOCPlayer pl = TOCMain.localPlayer;
+			if (pl != null) {
+				drawHealthBar(pl.getHealth(), pl.getMaxHealth());	
+				drawManaBar(pl.getMana(), pl.getMaxMana());
+			}
+		}
+		
 		drawXpMessages();
 		drawEffectIcons();
+		
+		renderChat();
 	}
 	
 	void renderChat() {
@@ -259,7 +260,6 @@ public class HUD extends GuiIngame {
 			this.renderScoreboard(scoreobjective1);
 		}
 
-			
 		scoreobjective1 = scoreboard.getObjectiveInDisplaySlot(0);
 		if (!this.mc.gameSettings.keyBindPlayerList.isKeyDown() || this.mc.isIntegratedServerRunning()
 				&& this.mc.player.connection.getPlayerInfoMap().size() <= 1 && scoreobjective1 == null) {
