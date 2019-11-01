@@ -2,7 +2,6 @@ package skeeter144.toc.data;
 
 import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,12 +11,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-import org.apache.commons.io.output.ByteArrayOutputStream;
-
 import net.minecraft.entity.player.EntityPlayer;
 import skeeter144.toc.player.EntityLevels;
 import skeeter144.toc.player.TOCPlayer;
-import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.QuestProgress;
 import skeeter144.toc.util.PlayerManager;
 

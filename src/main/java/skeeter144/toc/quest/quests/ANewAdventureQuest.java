@@ -2,13 +2,10 @@ package skeeter144.toc.quest.quests;
 
 import java.util.UUID;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
@@ -46,8 +43,8 @@ public class ANewAdventureQuest extends Quest{
 		if(e.getEntity().world.isRemote)
 			return;
 		
-		if(e.getEntity() instanceof EntityGoblin) {
-			EntityPlayer player = (EntityPlayer) e.getEntity();
+		if(e.getEntity() instanceof EntityGoblin && e.getSource().getTrueSource() instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer)e.getSource().getTrueSource();
 			ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(e.getEntity().getUniqueID(), ANewAdventureQuestProgress.class);
 			if(qp.goblinsKilled < 10) {
 				Util.sendTaskUpdateMessage(player, this, String.format("Kill Goblins (%s/%s)", qp.goblinsKilled, 10));
