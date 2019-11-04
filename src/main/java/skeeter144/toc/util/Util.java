@@ -1,5 +1,6 @@
 package skeeter144.toc.util;
 
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -12,8 +13,11 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntitySelectors;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -22,6 +26,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import net.minecraftforge.registries.ForgeRegistries;
 import skeeter144.toc.combat.TOCDamageSource;
 import skeeter144.toc.quest.Quest;
 import skeeter144.toc.quest.QuestManager;
@@ -228,6 +233,20 @@ public class Util {
 	
 	public static void saveQuestProgress(UUID player, Class<? extends QuestProgress> questClass) {
 		QuestManager.getQuestProgressForPlayer(player, questClass).save();
+	}
+
+	public static void writeItemStack(ItemStack itemStack, PacketBuffer buf) {
+		buf.writeInt(itemStack.getCount());
+		String name = itemStack.getItem().getRegistryName().toString();
+		buf.writeInt(name.length());
+		buf.writeCharSequence(name, Charset.defaultCharset());
+	}
+	
+	public static ItemStack readItemStack(PacketBuffer buf) {
+		int cnt = buf.readInt();
+		int charLength = buf.readInt();
+		String itemName = buf.readCharSequence(charLength , Charset.defaultCharset()).toString();
+		return new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemName)), cnt);
 	}
 	
 }

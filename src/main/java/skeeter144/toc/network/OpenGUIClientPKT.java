@@ -1,19 +1,12 @@
 package skeeter144.toc.network;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Supplier;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.network.NetworkEvent;
-import skeeter144.toc.banking.BankInventory;
 import skeeter144.toc.client.gui.GuiHandler;
 
 public class OpenGUIClientPKT{

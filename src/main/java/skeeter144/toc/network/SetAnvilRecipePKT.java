@@ -14,6 +14,14 @@ import skeeter144.toc.recipe.RecipeManager;
 
 public class SetAnvilRecipePKT{
 	
+	Recipe r;
+	BlockPos pos;
+	public SetAnvilRecipePKT() {}
+	public SetAnvilRecipePKT(Recipe r, BlockPos pos) {
+		this.r = r;
+		this.pos = pos;
+	}
+	
 	public static void encode(SetAnvilRecipePKT pkt, PacketBuffer buf) {
 		char[] crafted = pkt.r.crafted.getItem().getRegistryName().toString().toCharArray();
 		buf.writeInt(crafted.length);
@@ -54,13 +62,5 @@ public class SetAnvilRecipePKT{
 			});
 			ctx.get().setPacketHandled(true);
 		}
-	}
-	
-	Recipe r;
-	BlockPos pos;
-	public SetAnvilRecipePKT() {}
-	public SetAnvilRecipePKT(Recipe r, BlockPos pos) {
-		this.r = r;
-		this.pos = pos;
 	}
 }

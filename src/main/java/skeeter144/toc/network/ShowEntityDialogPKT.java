@@ -12,7 +12,17 @@ import skeeter144.toc.client.gui.DialogGui;
 import skeeter144.toc.entity.mob.npc.questgiver.EntityNPCInteractable;
 
 public class ShowEntityDialogPKT{
-
+	
+	int dialogNameLength;
+	String dialogName;
+	UUID uuid;
+	public ShowEntityDialogPKT() {}
+	public ShowEntityDialogPKT(UUID entityId, String dialogName) {
+		this.uuid = entityId;
+		this.dialogName = dialogName;
+		this.dialogNameLength = dialogName.length();
+	}
+	
 	public static void encode(ShowEntityDialogPKT pkt, PacketBuffer buf) {
 		buf.writeInt(pkt.dialogName.length());
 		buf.writeString(pkt.dialogName);
@@ -52,34 +62,4 @@ public class ShowEntityDialogPKT{
 			});
 		}
 	}
-	
-	int dialogNameLength;
-	String dialogName;
-	UUID uuid;
-	public ShowEntityDialogPKT() {}
-	public ShowEntityDialogPKT(UUID entityId, String dialogName) {
-		this.uuid = entityId;
-		this.dialogName = dialogName;
-		this.dialogNameLength = dialogName.length();
-	}
-
-//
-//	@Override
-//	public void toBytes(ByteBuf buf) {
-//		ByteBufUtils.writeUTF8String(buf, dialogName);
-//		buf.writeLong(uuid.getMostSignificantBits());
-//		buf.writeLong(uuid.getLeastSignificantBits());
-//	}
-//	
-//	public static class ShowQuestDialogMessageHandlerHandler<ShowEntityDialogMessage, IMessage>{
-//		public IMessage onMessage(ShowEntityDialogMessage message, MessageContext ctx) {
-//			Minecraft.getInstance().addScheduledTask(new Runnable() {
-//				public void run() {
-//					
-//				}
-//			});
-//			return null;
-//		}
-//	}
-
 }

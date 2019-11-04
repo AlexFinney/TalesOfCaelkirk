@@ -62,6 +62,7 @@ public class SpawnParticlesPKT{
 					system.spawnParticles();
 				}
 			});
+			ctx.get().setPacketHandled(true);
 		}
 	}
 	
