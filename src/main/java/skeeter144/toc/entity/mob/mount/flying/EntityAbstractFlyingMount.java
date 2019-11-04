@@ -22,8 +22,8 @@ public class EntityAbstractFlyingMount extends EntityAbstractHorseMount{
 	public EntityAbstractFlyingMount(EntityType<?> type, World worldIn, UUID uuid) {
 		super(type, worldIn, uuid);
 		
-		if(!worldIn.isRemote)
-			this.dataManager.set(IS_FLYING, isFlying);
+		//if(!worldIn.isRemote)
+		//	this.dataManager.set(IS_FLYING, isFlying);
 	}
 
 	

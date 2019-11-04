@@ -11,9 +11,6 @@ import skeeter144.toc.util.Reference;
 
 public class TOCEntities {
 	
-
-
-	
 	static HashMap<String, Integer> vanillaMobXp = new HashMap<>();
 	public static void initVanillaMobXp() {
 		vanillaMobXp.put(ForgeRegistries.ENTITIES.getValue(new ResourceLocation("chicken")).func_212546_e().toString(), 5);

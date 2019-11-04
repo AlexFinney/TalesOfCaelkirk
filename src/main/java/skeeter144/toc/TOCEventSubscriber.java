@@ -76,7 +76,6 @@ public class TOCEventSubscriber {
 	public static void onRegister(@Nonnull final RegistryEvent.Register<TileEntityType<?>> event) {
 		// Register your TileEntities here if you have them
 		event.getRegistry().registerAll(
-				// We don't have a datafixer for our TileEntity, so we pass null into build
 				//setup(TileEntityType.Builder.create(TileEntityExampleTileEntity::new).build(null), "example_tile_entity")
 				setup(TileEntityType.Builder.create(TileEntityHarvestedOre::new).build(null), "te_harvested_ore")
 		);
