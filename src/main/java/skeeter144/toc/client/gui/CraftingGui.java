@@ -4,19 +4,25 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.IGuiEventListener;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import skeeter144.toc.recipe.Recipe;
-import skeeter144.toc.util.Mouse;
 
-public abstract class CraftingGui extends GuiScreen implements IGuiEventListener{
+public abstract class CraftingGui extends Screen implements IGuiEventListener{
+	
+	protected CraftingGui(ITextComponent titleIn) {
+		super(titleIn);
+	}
+
 	int totalCrafting = 0;
 	int crafted = 0;
 	boolean resized = true;
@@ -35,11 +41,11 @@ public abstract class CraftingGui extends GuiScreen implements IGuiEventListener
 	int recipeSpace;
 	int columns;
 	
-	@Override
-	public void onResize(Minecraft mcIn, int w, int h) {
-		super.onResize(mcIn, w, h);
-		resized = true;
-	}
+//	@Override
+//	public void onResize(Minecraft mcIn, int w, int h) {
+//		super.onResize(mcIn, w, h);
+//		resized = true;
+//	}
 	
 	public void updatePlayersInventory() {
 		craftableRecipes.clear();
@@ -68,7 +74,8 @@ public abstract class CraftingGui extends GuiScreen implements IGuiEventListener
 	
 
 	void drawBackground() {
-		drawModalRectWithCustomSizedTexture(guiX, guiY, 0, 0, guiWidth, guiHeight, guiWidth, guiHeight);
+		drawBackground();
+		//blit(guiX, guiY, 0, 0, guiWidth, guiHeight, guiWidth, guiHeight);
 	}
 	
 	void setGuiVals() {
@@ -97,9 +104,9 @@ public abstract class CraftingGui extends GuiScreen implements IGuiEventListener
 			Rectangle2D rect = new Rectangle2D.Double(x, y, iconDim, iconDim);
 			
 			if(selectedRecipe != null && r.equals(selectedRecipe))
-				drawRect((int)rect.getMinX(), (int)rect.getMinY(), (int)rect.getMaxX(), (int)rect.getMaxY(), 0xFFEBFF89);
+				fill((int)rect.getMinX(), (int)rect.getMinY(), (int)rect.getMaxX(), (int)rect.getMaxY(), 0xFFEBFF89);
 			
-			this.itemRender.renderItemAndEffectIntoGUI(r.crafted, x+2, y+2);
+			itemRenderer.renderItemAndEffectIntoGUI(r.crafted, x+2, y+2);
 			GlStateManager.translatef(0, 0, -100);
 			++col;
 			if(col >= columns) {

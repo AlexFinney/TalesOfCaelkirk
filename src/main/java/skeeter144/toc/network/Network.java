@@ -1,6 +1,6 @@
 package skeeter144.toc.network;
 
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.network.NetworkDirection;
@@ -46,7 +46,7 @@ public class Network {
 			channel.send(PacketDistributor.TRACKING_CHUNK.with(() -> chunk), msg);
 		}
 
-		public <MSG> void sendTo(MSG msg, EntityPlayerMP player) {
+		public <MSG> void sendTo(MSG msg, ServerPlayerEntity player) {
 			channel.sendTo(msg, player.connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		}
 		

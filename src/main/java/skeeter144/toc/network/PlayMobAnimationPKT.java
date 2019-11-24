@@ -4,8 +4,10 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkEvent;
 import skeeter144.toc.client.entity.animation.Animations;
 import skeeter144.toc.entity.mob.CustomMob;
@@ -46,10 +48,10 @@ public class PlayMobAnimationPKT {
 
 	public static class Handler {
 		public static void handle(final PlayMobAnimationPKT message, Supplier<NetworkEvent.Context> ctx) {
-			Minecraft.getInstance().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().deferTask(new Runnable() {
 				public void run() {
 					UUID uuid = message.uuid;
-					for (Entity e : Minecraft.getInstance().world.loadedEntityList) {
+					for (Entity e : ((ClientWorld)Minecraft.getInstance().world).getAllEntities()) {
 						if (e.getUniqueID().equals(uuid)) {
 							((CustomMob) e).playAnimation(Animations.get(message.animationName));
 							break;

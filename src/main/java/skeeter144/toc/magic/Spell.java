@@ -1,7 +1,7 @@
 package skeeter144.toc.magic;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -27,10 +27,10 @@ public abstract class Spell {
 	
 	public void onCast(Entity caster) {
 		if(!caster.world.isRemote) {
-			TOCPlayer tocCaster = TOCMain.pm.getPlayer((EntityPlayer) caster);
+			TOCPlayer tocCaster = TOCMain.pm.getPlayer((PlayerEntity) caster);
 			tocCaster.adjustVitals(0, -getManaCost());
 			performSpellAction(caster);
-			if(this.sound != null && caster instanceof EntityPlayer) {
+			if(this.sound != null && caster instanceof PlayerEntity) {
 				caster.world.playSound(null, caster.getPosition(), Sounds.spell_wind_gust, SoundCategory.MASTER, 1, 1);
 			}
 		}

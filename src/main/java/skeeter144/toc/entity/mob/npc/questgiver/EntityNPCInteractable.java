@@ -5,13 +5,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.EnumHand;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import skeeter144.toc.client.gui.NpcDialogResponse;
-import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.mob.npc.DialogManager;
 import skeeter144.toc.entity.mob.npc.EntityNpc;
 import skeeter144.toc.network.Network;
@@ -21,7 +21,7 @@ import skeeter144.toc.quest.NpcDialog;
 public abstract class EntityNPCInteractable extends EntityNpc{
 	
 	protected Map<String, NpcDialog> dialogs;
-	public EntityNPCInteractable(EntityType<?> type, World worldIn) {
+	public EntityNPCInteractable(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		String s = this.getClass().getName();
 		String[] split = s.split("\\.");
@@ -29,7 +29,7 @@ public abstract class EntityNPCInteractable extends EntityNpc{
 		
 	}
 	
-	protected abstract boolean processInteract(EntityPlayer player, EnumHand hand);
+	protected abstract boolean processInteract(PlayerEntity player, Hand hand);
 	
 	public void runServerFunction(UUID playerUUID, String dialogResponse) {
 		for(Entry<String, NpcDialog> dialog : dialogs.entrySet()) {
@@ -48,8 +48,8 @@ public abstract class EntityNPCInteractable extends EntityNpc{
 		}
 	}
 	
-	protected void sendDialog(String dialog, EntityPlayer player) {
-		Network.INSTANCE.sendTo(new ShowEntityDialogPKT(this.getUniqueID(), dialog), (EntityPlayerMP)player);
+	protected void sendDialog(String dialog, PlayerEntity player) {
+		Network.INSTANCE.sendTo(new ShowEntityDialogPKT(this.getUniqueID(), dialog), (ServerPlayerEntity)player);
 	}
 	
 	public NpcDialog getDialog(String dialogName) {

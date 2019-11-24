@@ -6,15 +6,15 @@ import java.util.List;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.text.ITextComponent;
 
-public class BankInventory extends InventoryBasic{
+public class BankInventory extends Inventory{
 
 	public BankInventory(ITextComponent title, int slotCount) {
-		super(title, slotCount);
+		super(slotCount);
 	}
 	
 	
@@ -26,7 +26,7 @@ public class BankInventory extends InventoryBasic{
 		List<SerializableItemStack> items = new ArrayList<SerializableItemStack>();
 		
 		public SerializableBankInventory(BankInventory inv) {
-			invName = inv.getName();
+			//invName = inv.na
 			slots = inv.getSizeInventory();
 			
 			for(int i = 0; i < inv.getSizeInventory(); ++i) {

@@ -3,7 +3,7 @@ package skeeter144.toc.network;
 import java.util.function.Supplier;
 
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 import skeeter144.toc.entity.mob.mount.flying.EntityAbstractFlyingMount;
@@ -36,7 +36,7 @@ public class UpdatePlayerFlyingPKT {
 					{
 						public void run() 
 						{
-							EntityPlayer player = ctx.get().getSender();
+							PlayerEntity player = ctx.get().getSender();
 							if(player.getRidingEntity() == null || !(player.getRidingEntity()instanceof EntityAbstractFlyingMount))
 								return;
 							
@@ -48,12 +48,12 @@ public class UpdatePlayerFlyingPKT {
 							}else if(message.isFlyingUp && !message.isFlyingDown) {
 								ep.setIsFlying(true);
 								ep.setNoGravity(true);
-								ep.motionY = .5;
+								ep.setMotion(ep.getMotion().x, -.5, ep.getMotion().z);
 								speed = ep.getAttribute(SharedMonsterAttributes.FLYING_SPEED).getBaseValue();
 							}else if(!message.isFlyingUp && message.isFlyingDown) {
-								ep.motionY = -.5;
+								ep.setMotion(ep.getMotion().x, -.5, ep.getMotion().z);
 							}else if(!message.isFlyingUp && !message.isFlyingDown) {
-								ep.motionY = 0;
+								ep.setMotion(ep.getMotion().x, 0, ep.getMotion().z);
 							}
 							
 							if(!ep.isAirBorne) {

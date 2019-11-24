@@ -3,16 +3,15 @@ package skeeter144.toc.entity.mob.npc.questgiver;
 import java.util.UUID;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import skeeter144.toc.blocks.TOCBlocks;
 import skeeter144.toc.entity.TOCEntityType;
+import skeeter144.toc.entity.mob.npc.EntityNpc;
 import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.quests.ANewAdventureQuest.ANewAdventureQuestProgress;
@@ -25,17 +24,16 @@ public class EntityUlricWeston extends EntityNPCInteractable{
 		this(TOCEntityType.ULRIC_WESTON, worldIn);
 	}
 	
-	public EntityUlricWeston(EntityType<?> type, World worldIn) {
+	public EntityUlricWeston(EntityType<? extends EntityNpc> type, World worldIn) {
 		super(type, worldIn);
-		this.setSize(.75f, 2f);
 		if(texture == null)
 			texture = new ResourceLocation("toc:textures/entity/ulric_weston.png");
 		
-		this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(TOCItems.axe_steel));
+		this.setHeldItem(Hand.MAIN_HAND, new ItemStack(TOCItems.axe_steel));
 	}
 	
 	@Override
-	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
+	protected boolean processInteract(PlayerEntity player, Hand hand) {
 		if(player.world.isRemote) {
 			return true;
 		}
@@ -59,7 +57,7 @@ public class EntityUlricWeston extends EntityNPCInteractable{
 	}
 	
 	public void ulricFinished(UUID playerUUID) {
-		EntityPlayer player = this.world.getPlayerEntityByUUID(playerUUID);
+		PlayerEntity player = this.world.getPlayerByUuid(playerUUID);
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
 		if(!qp.ulricFinished) {
 			qp.ulricFinished = true;
@@ -71,7 +69,7 @@ public class EntityUlricWeston extends EntityNPCInteractable{
 	}
 	
 	public void beginLogChopping(UUID playerUUID) {
-		EntityPlayerMP player = (EntityPlayerMP)this.world.getPlayerEntityByUUID(playerUUID);
+		ServerPlayerEntity player = (ServerPlayerEntity)this.world.getPlayerByUuid(playerUUID);
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
 		qp.ulricTalkedTo = true;
 		
@@ -81,8 +79,8 @@ public class EntityUlricWeston extends EntityNPCInteractable{
 		player.addItemStackToInventory(new ItemStack(TOCItems.axe_bronze));
 		qp.save();
 //		//mark point on map
-//		Network.INSTANCE.sendTo(new SendIconUpdateMessage("Speak with Ulric", 719, 42, 811, player.world.provider.getDimension(), Reference.MODID, "textures/icons/map/quest_objective.png", true), (EntityPlayerMP)player);
-//		Network.INSTANCE.sendTo(new SendIconUpdateMessage("Chop down oak logs", 736, 42, 815, player.world.provider.getDimension(), Reference.MODID, "textures/icons/map/quest_objective.png"), (EntityPlayerMP)player);
+//		Network.INSTANCE.sendTo(new SendIconUpdateMessage("Speak with Ulric", 719, 42, 811, player.world.provider.getDimension(), Reference.MODID, "textures/icons/map/quest_objective.png", true), (ServerPlayerEntity)player);
+//		Network.INSTANCE.sendTo(new SendIconUpdateMessage("Chop down oak logs", 736, 42, 815, player.world.provider.getDimension(), Reference.MODID, "textures/icons/map/quest_objective.png"), (ServerPlayerEntity)player);
 		
 	}
 	

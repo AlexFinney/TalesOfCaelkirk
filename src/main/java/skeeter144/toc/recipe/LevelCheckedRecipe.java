@@ -7,17 +7,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import skeeter144.toc.util.Reference;
 
 public class LevelCheckedRecipe implements IRecipe {
 	ResourceLocation registryName;
@@ -96,7 +95,7 @@ public class LevelCheckedRecipe implements IRecipe {
 		//TODO: Make this work with released code
 		
 		
-	/*	EntityPlayer pl = findPlayer(inv);
+	/*	PlayerEntity pl = findPlayer(inv);
 		if(pl.world.isRemote)
 			return true;
 		
@@ -165,13 +164,13 @@ public class LevelCheckedRecipe implements IRecipe {
 	private final Field containerPlayerPlayerField = ReflectionHelper.findField(ContainerPlayer.class, "player");
 	private final Field slotCraftingPlayerField = ReflectionHelper.findField(SlotCrafting.class, "player");
 	
-	private EntityPlayer findPlayer(InventoryCrafting inv) {
+	private PlayerEntity findPlayer(InventoryCrafting inv) {
 		try {
 			Container container = (Container) eventHandlerField.get(inv);
 			if (container instanceof ContainerPlayer)
-				return (EntityPlayer) containerPlayerPlayerField.get(container);
+				return (PlayerEntity) containerPlayerPlayerField.get(container);
 			else if (container instanceof ContainerWorkbench)
-				return (EntityPlayer) slotCraftingPlayerField.get(container.getSlot(0));
+				return (PlayerEntity) slotCraftingPlayerField.get(container.getSlot(0));
 		} catch (Exception e) {
 
 		}
@@ -208,6 +207,13 @@ public class LevelCheckedRecipe implements IRecipe {
 
 	@Override
 	public IRecipeSerializer<?> getSerializer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public IRecipeType getType() {
 		// TODO Auto-generated method stub
 		return null;
 	}

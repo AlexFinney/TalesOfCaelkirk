@@ -2,7 +2,10 @@ package skeeter144.toc.particles.particle;
 
 import javax.vecmath.Vector3d;
 
+import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.entity.Entity;
 import skeeter144.toc.TOCMain;
 
@@ -22,7 +25,7 @@ public class OrbitingEffectParticle extends Particle{
 		this.target = target;
 		
 		
-		this.setParticleTextureIndex(144);
+		//this.setParticleTextureIndex(144);
 		
 		ageOffset = TOCMain.rand.nextInt() % 200;
 		int usedAge = age * 2 + ageOffset;
@@ -45,6 +48,16 @@ public class OrbitingEffectParticle extends Particle{
 		double z = target.posZ + radius * Math.sin((usedAge / 2f) / (2 * Math.PI));
 		this.setPosition(x,  target.posY + heightOffset,  z);
 		
+	}
+
+	@Override
+	public void renderParticle(BufferBuilder buffer, ActiveRenderInfo entityIn, float partialTicks, float rotationX,
+			float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+	}
+
+	@Override
+	public IParticleRenderType getRenderType() {
+		return IParticleRenderType.CUSTOM;
 	}
 	
 	

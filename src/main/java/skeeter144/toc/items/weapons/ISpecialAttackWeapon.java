@@ -3,10 +3,10 @@ package skeeter144.toc.items.weapons;
 import org.apache.commons.lang3.tuple.MutablePair;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.SpecialAttackCooldownPKT;
@@ -16,10 +16,10 @@ import skeeter144.toc.util.Util;
 
 public interface ISpecialAttackWeapon {
 	
-	public void doAttack(EntityPlayer attacker, EnumHand hand, Entity attacked);
+	public void doAttack(PlayerEntity attacker, Hand hand, Entity attacked);
 	
-	default boolean fireSpecialAttack(EntityPlayer attacker, EnumHand hand, Entity attacked, int cooldown, boolean targetRequired) {
-		if(hand == EnumHand.OFF_HAND)
+	default boolean fireSpecialAttack(PlayerEntity attacker, Hand hand, Entity attacked, int cooldown, boolean targetRequired) {
+		if(hand == Hand.OFF_HAND)
 			 return false;
 		
 		ItemStack item = attacker.getHeldItem(hand);
@@ -34,7 +34,7 @@ public interface ISpecialAttackWeapon {
 					pl.specialAttackCooldowns.put(item.getItem().getRegistryName().toString(), new MutablePair<Integer, Integer>(cooldown, cooldown));
 					
 					Network.INSTANCE.sendTo(new SpecialAttackCooldownPKT(item.getItem().getRegistryName().toString(), 
-							(byte)cooldown, (byte)cooldown), (EntityPlayerMP) pl.mcEntity);
+							(byte)cooldown, (byte)cooldown), (ServerPlayerEntity) pl.mcEntity);
 					
 					return true;
 				}else {

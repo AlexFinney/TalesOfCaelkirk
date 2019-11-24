@@ -2,11 +2,11 @@ package skeeter144.toc.minigames;
 
 import java.util.ArrayList;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -15,8 +15,8 @@ public class MiningMinigame {
 	int height;
 	BlockPos center;
 	World world;
-	EntityPlayer owner;
-	public MiningMinigame(World w, EntityPlayer owner, BlockPos center, int sizeX, int sizeY) {
+	PlayerEntity owner;
+	public MiningMinigame(World w, PlayerEntity owner, BlockPos center, int sizeX, int sizeY) {
 		world = w;
 		width = sizeX;
 		height = sizeY;
@@ -36,7 +36,7 @@ public class MiningMinigame {
 	}
 	
 	void generateTileAt(BlockPos pos) {
-		IBlockState state = null;
+		BlockState state = null;
 		
 		int block = (int)(world.rand.nextFloat() * 100f);
 		if(block < 4) state = Blocks.DIAMOND_ORE.getDefaultState();

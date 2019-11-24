@@ -4,6 +4,7 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -32,10 +33,10 @@ public class SpawnBlockedPKT {
 
 	public static class Handler {
 		public static void handle(final SpawnBlockedPKT message, Supplier<NetworkEvent.Context> ctx) {
-			Minecraft.getInstance().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().deferTask(new Runnable() {
 				public void run() {
 					UUID uuid = new UUID(message.msb, message.lsb);
-					for (Entity e : Minecraft.getInstance().world.loadedEntityList) {
+					for (Entity e : ((ClientWorld)Minecraft.getInstance().world).getAllEntities()) {
 						if (e.getUniqueID().equals(uuid)) {
 							ClientProxy.displayParticle(e, "Blocked!");
 						}

@@ -1,28 +1,29 @@
 package skeeter144.toc.client.entity.model;
 
-import net.minecraft.client.renderer.entity.model.ModelBase;
+import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import skeeter144.toc.client.entity.renderer.AdvancedModelRenderer;
 
 /**
- * An enhanced ModelBase
+ * An enhanced Model
  *
  * @author gegy1000, updated by Skeeter 144
  * @since 1.0.0
  */
 @OnlyIn(Dist.CLIENT)
-public class AdvancedModelBase extends ModelBase {
+public class AdvancedModelBase<T extends Entity> extends EntityModel<T> {
     private float movementScale = 1.0F;
 
     /**
      * Sets the default pose to the current pose of this model
      */
     public void updateDefaultPose() {
-        this.boxList.stream().filter(modelRenderer -> modelRenderer instanceof AdvancedModelRenderer).forEach(modelRenderer -> {
-            AdvancedModelRenderer advancedModelRenderer = (AdvancedModelRenderer) modelRenderer;
-            advancedModelRenderer.updateDefaultPose();
+        this.boxList.stream().filter(RendererModel -> RendererModel instanceof AdvancedModelRenderer).forEach(RendererModel -> {
+            AdvancedModelRenderer AdvancedModelRenderer = (AdvancedModelRenderer) RendererModel;
+            AdvancedModelRenderer.updateDefaultPose();
         });
     }
 
@@ -30,9 +31,9 @@ public class AdvancedModelBase extends ModelBase {
      * Sets the current pose to the previously set default pose
      */
     public void resetToDefaultPose() {
-        this.boxList.stream().filter(modelRenderer -> modelRenderer instanceof AdvancedModelRenderer).forEach(modelRenderer -> {
-            AdvancedModelRenderer advancedModelRenderer = (AdvancedModelRenderer) modelRenderer;
-            advancedModelRenderer.resetToDefaultPose();
+        this.boxList.stream().filter(RendererModel -> RendererModel instanceof AdvancedModelRenderer).forEach(RendererModel -> {
+            AdvancedModelRenderer AdvancedModelRenderer = (AdvancedModelRenderer) RendererModel;
+            AdvancedModelRenderer.resetToDefaultPose();
         });
     }
 

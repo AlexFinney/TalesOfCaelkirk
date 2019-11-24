@@ -6,10 +6,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,13 +17,15 @@ import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import skeeter144.toc.TOCMain;
@@ -37,7 +39,7 @@ import skeeter144.toc.sounds.Sounds;
 
 public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
 
-	public static final DirectionProperty FACING = BlockHorizontal.HORIZONTAL_FACING;
+	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 	protected static final AxisAlignedBB X_AXIS_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.125D, 1.0D, 1.0D, 0.875D);
 	protected static final AxisAlignedBB Z_AXIS_AABB = new AxisAlignedBB(0.125D, 0.0D, 0.0D, 0.875D, 1.0D, 1.0D);
 	protected static final Logger LOGGER = LogManager.getLogger();
@@ -46,7 +48,7 @@ public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
 
 	public BlockAnvil(String name) {
 		super(Properties.create(Material.ANVIL).hardnessAndResistance(1000, 1000), name);
-		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, EnumFacing.NORTH));
+		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
 		ingots.add(TOCItems.ingot_bronze);
 		ingots.add(TOCItems.ingot_iron);
 		ingots.add(TOCItems.ingot_steel);
@@ -58,8 +60,7 @@ public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
 	}
 
 	@Override
-	public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer player, EnumHand hand,
-			EnumFacing side, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		boolean isServer = !worldIn.isRemote;
 
 		if (ingots.contains(player.getHeldItem(hand).getItem())) {
@@ -67,8 +68,7 @@ public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
 			if (isServer) {
 				if (anvil.anvilOwner != null) {
 					if (!anvil.anvilOwner.equals(player.getUniqueID())) {
-						player.sendMessage(
-								new TextComponentString("Someone else is using that anvil! Find an empty one"));
+						player.sendMessage(new StringTextComponent("Someone else is using that anvil! Find an empty one"));
 						return false;
 					}
 				}
@@ -91,11 +91,11 @@ public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
 			} else {
 				if (isServer) {
 					if (!item.equals(anvil.ingot)) {
-						player.sendMessage(new TextComponentString("You already have "
+						player.sendMessage(new StringTextComponent("You already have "
 								+ new ItemStack(anvil.ingot).getDisplayName()
 								+ "s on the anvil. Either take them off by right clicking with an empty hand, or craft those ingots first."));
 					} else {
-						player.sendMessage(new TextComponentString("You already have 6 ingots on the anvil!"));
+						player.sendMessage(new StringTextComponent("You already have 6 ingots on the anvil!"));
 					}
 				}
 			}
@@ -114,7 +114,7 @@ public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
 	}
 
 	@Override
-	public void onBlockClicked(IBlockState state, World worldIn, BlockPos pos, EntityPlayer playerIn) {
+	public void onBlockClicked(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn) {
 		boolean isServer = !worldIn.isRemote;
 
 		TileEntityAnvil anvil = (TileEntityAnvil) worldIn.getTileEntity(pos);
@@ -157,32 +157,32 @@ public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
 		}
 	}
 
-	public boolean isOpaqueCube(IBlockState state) {
+	public boolean isOpaqueCube(BlockState state) {
 		return false;
 	}
 
-	public IBlockState getStateForPlacement(BlockItemUseContext context) {
+	public BlockState getStateForPlacement(BlockItemUseContext context) {
 		return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().rotateY());
 	}
 
-	public boolean isFullCube(IBlockState state) {
+	public boolean isFullCube(BlockState state) {
 		return false;
 	}
 
-	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().with(FACING, EnumFacing.byIndex(meta & 3));
+	public BlockState getStateFromMeta(int meta) {
+		return this.getDefaultState().with(FACING, Direction.byIndex(meta & 3));
 	}
 
-	public int getMetaFromState(IBlockState state) {
-		return ((EnumFacing) state.get(FACING)).getHorizontalIndex();
+	public int getMetaFromState(BlockState state) {
+		return ((Direction) state.get(FACING)).getHorizontalIndex();
 	}
 
-	public IBlockState withRotation(IBlockState state, Rotation rot) {
-		return state.getBlock() != this ? state : state.with(FACING, rot.rotate((EnumFacing) state.get(FACING)));
+	public BlockState withRotation(BlockState state, Rotation rot) {
+		return state.getBlock() != this ? state : state.with(FACING, rot.rotate((Direction) state.get(FACING)));
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, IBlockState> builder) {
+	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(FACING);
 	}
 
@@ -192,7 +192,7 @@ public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
 	}
 
 	@Override
-	public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
+	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
 		return new TileEntityAnvil();
 	}
 }

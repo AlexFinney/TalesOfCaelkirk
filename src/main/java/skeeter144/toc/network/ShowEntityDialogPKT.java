@@ -4,8 +4,9 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 import skeeter144.toc.client.gui.DialogGui;
@@ -42,12 +43,12 @@ public class ShowEntityDialogPKT{
 	{
 		public static void handle(final ShowEntityDialogPKT message, Supplier<NetworkEvent.Context> ctx)
 		{
-			Minecraft.getInstance().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().deferTask(new Runnable() {
 				public void run() {
-					EntityLivingBase ent = null;
-					for(Entity e : Minecraft.getInstance().world.loadedEntityList) {
+					LivingEntity ent = null;
+					for (Entity e : ((ClientWorld)Minecraft.getInstance().world).getAllEntities()) {
 						if(e.getUniqueID().equals(message.uuid)) {
-							ent = (EntityLivingBase)e;
+							ent = (LivingEntity)e;
 							break;
 						}
 					}

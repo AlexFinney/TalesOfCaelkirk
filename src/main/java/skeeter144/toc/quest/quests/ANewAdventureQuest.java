@@ -2,13 +2,13 @@ package skeeter144.toc.quest.quests;
 
 import java.util.UUID;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Items;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import skeeter144.toc.blocks.BlockHarvestableOre.BlockMinedEvent;
 import skeeter144.toc.blocks.TOCBlocks;
 import skeeter144.toc.entity.mob.monster.EntityGoblin;
@@ -43,8 +43,8 @@ public class ANewAdventureQuest extends Quest{
 		if(e.getEntity().world.isRemote)
 			return;
 		
-		if(e.getEntity() instanceof EntityGoblin && e.getSource().getTrueSource() instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer)e.getSource().getTrueSource();
+		if(e.getEntity() instanceof EntityGoblin && e.getSource().getTrueSource() instanceof PlayerEntity) {
+			PlayerEntity player = (PlayerEntity)e.getSource().getTrueSource();
 			ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(e.getEntity().getUniqueID(), ANewAdventureQuestProgress.class);
 			if(qp.goblinsKilled < 10) {
 				Util.sendTaskUpdateMessage(player, this, String.format("Kill Goblins (%s/%s)", qp.goblinsKilled, 10));
@@ -58,10 +58,10 @@ public class ANewAdventureQuest extends Quest{
 	
 	@SubscribeEvent
 	public void oakLogAdded(ItemAddedToInventoryEvent e) {
-		if(e.stack.getItem() != new ItemStack(TOCBlocks.oak_log).getItem() || !(e.getEntity() instanceof EntityPlayer))
+		if(e.stack.getItem() != new ItemStack(TOCBlocks.oak_log).getItem() || !(e.getEntity() instanceof PlayerEntity))
 			return;
 		
-		EntityPlayer player = (EntityPlayer) e.getEntity();
+		PlayerEntity player = (PlayerEntity) e.getEntity();
 		
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(e.getEntity().getUniqueID(), ANewAdventureQuestProgress.class);
 		
@@ -192,7 +192,7 @@ public class ANewAdventureQuest extends Quest{
 	
 	
 	@Override
-	protected void questFinished(EntityPlayerMP player) {
+	protected void questFinished(ServerPlayerEntity player) {
 		System.out.println("Yay you finished da quest");		
 	}
 	

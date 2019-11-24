@@ -10,21 +10,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.text.StringTextComponent;
 import skeeter144.toc.banking.BankInventory.SerializableBankInventory;
 
 public class BankManager {
 
 	private static Map<UUID, BankInventory> playerInventories = new HashMap< UUID, BankInventory>();
 	
-	public static BankInventory getPlayerInventory(EntityPlayer player) {
+	public static BankInventory getPlayerInventory(PlayerEntity player) {
 		
 		if(playerInventories.get(player.getUniqueID()) == null) 
-			playerInventories.put(player.getUniqueID(), new BankInventory(new TextComponentString("Bank Inventory"), 54));
+			playerInventories.put(player.getUniqueID(), new BankInventory(new StringTextComponent("Bank Inventory"), 54));
 		
 		
-		playerInventories.get(player.getUniqueID()).setCustomName(player.getDisplayName().appendText("'s Bank"));
+		//playerInventories.get(player.getUniqueID()).setCustomName(player.getDisplayName().appendText("'s Bank"));
 		return playerInventories.get(player.getUniqueID());
 	}
 	
@@ -61,7 +61,7 @@ public class BankManager {
 		}
 	}
 	
-	public static void savePlayerInventory(EntityPlayer player) {
+	public static void savePlayerInventory(PlayerEntity player) {
 		
 	}
 

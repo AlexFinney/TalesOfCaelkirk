@@ -3,12 +3,13 @@ package skeeter144.toc.entity.mob.npc.banker;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import skeeter144.toc.banking.BankInventory;
@@ -18,7 +19,7 @@ import skeeter144.toc.util.Reference;
 
 public class EntityBanker extends EntityNpc {
 
-	public EntityBanker(EntityType<?> type, World worldIn) {
+	public EntityBanker(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20);
@@ -28,7 +29,7 @@ public class EntityBanker extends EntityNpc {
 	}
 	
 	@Override
-	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
+	protected boolean processInteract(PlayerEntity player, Hand hand) {
 		if(player.world.isRemote) {
 			return true;
 		}
@@ -38,7 +39,8 @@ public class EntityBanker extends EntityNpc {
 			stacks.add(inventory.getStackInSlot(i));
 		}
 		
-		((EntityPlayerMP)player).displayGUIChest(inventory);
+		//TODO
+		//((ServerPlayerEntity)player).displayGUIChest(inventory);
 		
 		return true;
 	}

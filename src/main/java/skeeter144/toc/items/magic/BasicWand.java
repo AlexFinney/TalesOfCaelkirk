@@ -4,15 +4,15 @@ import java.util.List;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.projectile.EntityWandProjectile;
@@ -33,18 +33,18 @@ public class BasicWand extends CustomItem
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
 		Spell embuedSpell = null;
 		
 		if(player.getHeldItem(hand).getTag() == null) {
-			player.getHeldItem(hand).setTag(new NBTTagCompound());
-			player.getHeldItem(hand).getTag().setInt("embued_spell", 0);
+			player.getHeldItem(hand).setTag(new CompoundNBT());
+			player.getHeldItem(hand).getTag().putInt("embued_spell", 0);
 		}
 
 		embuedSpell = Spells.getSpell(player.getHeldItem(hand).getTag().getInt("embued_spell"));
 		
 		if(embuedSpell == null) {
-			return new ActionResult<ItemStack>(EnumActionResult.FAIL, player.getHeldItem(hand));
+			return new ActionResult<ItemStack>(ActionResultType.FAIL, player.getHeldItem(hand));
 		}
 		
 		
@@ -58,8 +58,8 @@ public class BasicWand extends CustomItem
 			
 		}else {
 			if(TOCMain.localPlayer.getMana() < embuedSpell.getManaCost() && !Minecraft.getInstance().player.isCreative()) {
-				player.sendMessage(new TextComponentString("You do not have enough mana to cast " + embuedSpell.getName() + " (need " + embuedSpell.getManaCost() + ")"));
-				return new ActionResult<ItemStack>(EnumActionResult.FAIL, player.getHeldItem(hand));
+				player.sendMessage(new StringTextComponent("You do not have enough mana to cast " + embuedSpell.getName() + " (need " + embuedSpell.getManaCost() + ")"));
+				return new ActionResult<ItemStack>(ActionResultType.FAIL, player.getHeldItem(hand));
 			}
 			
 			embuedSpell.onCast(player);;
@@ -78,11 +78,11 @@ public class BasicWand extends CustomItem
 					
 				}
 				
-				player.world.spawnEntity(spell);
+				player.world.addEntity(spell);
 			}
 		}
 		
-		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+		return new ActionResult<ItemStack>(ActionResultType.SUCCESS, player.getHeldItem(hand));
 	}
 	
 	@Override

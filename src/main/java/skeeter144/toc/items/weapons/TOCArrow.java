@@ -3,19 +3,20 @@ package skeeter144.toc.items.weapons;
 import java.util.List;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.item.ArrowItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import skeeter144.toc.entity.projectile.EntityTOCArrow;
 import skeeter144.toc.util.Reference;
 
-public class TOCArrow extends ItemArrow {
+public class TOCArrow extends ArrowItem implements IItemProvider {
 
 	int damage;
 	public final float destroyChance;
@@ -30,7 +31,7 @@ public class TOCArrow extends ItemArrow {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TextComponentString(TextFormatting.YELLOW + "Bonus Damage: " + damage));
+		tooltip.add(new StringTextComponent(TextFormatting.YELLOW + "Bonus Damage: " + damage));
 	}
 
 	@Override
@@ -39,7 +40,7 @@ public class TOCArrow extends ItemArrow {
 	}
 
 	@Override
-	public EntityArrow createArrow(World worldIn, ItemStack stack, EntityLivingBase shooter) {
+	public ArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
 		EntityTOCArrow ent_arrow = new EntityTOCArrow(worldIn, shooter);
 		ent_arrow.toc_arrow = (TOCArrow) stack.getItem();
 		return ent_arrow;

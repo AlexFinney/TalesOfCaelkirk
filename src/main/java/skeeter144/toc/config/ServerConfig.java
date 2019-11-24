@@ -3,7 +3,7 @@ package skeeter144.toc.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.DyeColor;
 import net.minecraftforge.common.ForgeConfigSpec;
 import skeeter144.toc.util.Reference;
 
@@ -17,7 +17,7 @@ final class ServerConfig {
 
 	final ForgeConfigSpec.BooleanValue serverBoolean;
 	final ForgeConfigSpec.ConfigValue<List<String>> serverStringList;
-	final ForgeConfigSpec.ConfigValue<EnumDyeColor> serverEnumDyeColor;
+	final ForgeConfigSpec.ConfigValue<DyeColor> serverEnumDyeColor;
 
 	ServerConfig(final ForgeConfigSpec.Builder builder) {
 		builder.push("general");
@@ -32,7 +32,7 @@ final class ServerConfig {
 		serverEnumDyeColor = builder
 				.comment("An example EnumDyeColor in the server config")
 				.translation(Reference.MODID + ".config.serverEnumColor")
-				.defineEnum("serverEnumDyeColor", EnumDyeColor.WHITE);
+				.defineEnum("serverEnumDyeColor", DyeColor.WHITE);
 		builder.pop();
 	}
 

@@ -1,21 +1,21 @@
 package skeeter144.toc.client.entity.renderer;
 
-import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.model.ModelBase;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.LivingRenderer;
+import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
-import skeeter144.toc.entity.mob.monster.EntityGiantScorpian;
 import skeeter144.toc.util.Reference;
 
-public class RenderGiantScorpian extends RenderLiving<EntityGiantScorpian>{
+public class RenderGiantScorpian<T extends LivingEntity, M extends EntityModel<T>> extends LivingRenderer<T, M>{
 	private static final ResourceLocation texture = new ResourceLocation(Reference.MODID, "textures/entity/giant_scorpian.png");
 	
-	public RenderGiantScorpian(RenderManager rendermanagerIn, ModelBase modelbaseIn, float shadowsizeIn) {
-		super(rendermanagerIn, modelbaseIn, shadowsizeIn);
+	public RenderGiantScorpian(EntityRendererManager rendermanagerIn, M ModelIn, float shadowsizeIn) {
+		super(rendermanagerIn, ModelIn, shadowsizeIn);
 	}
 
 	@Override
-	protected ResourceLocation getEntityTexture(EntityGiantScorpian entity) {
+	protected ResourceLocation getEntityTexture(T entity) {
 		return texture;
 	}
 

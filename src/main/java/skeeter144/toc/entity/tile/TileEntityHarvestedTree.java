@@ -3,11 +3,11 @@ package skeeter144.toc.entity.tile;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.block.BlockState;
+import net.minecraft.client.renderer.texture.ITickable;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ITickable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -24,18 +24,18 @@ public class TileEntityHarvestedTree extends TileEntity implements ITickable{
 		super(tileEntityTypeIn);
 	}
 
-	public Map<BlockPos, IBlockState> treeBlocks = new HashMap<BlockPos, IBlockState>();
+	public Map<BlockPos, BlockState> treeBlocks = new HashMap<BlockPos, BlockState>();
 	public int minSecs, maxSecs;
 	
 	@Override
-	public NBTTagCompound write(NBTTagCompound compound) {
-		compound.setInt("secsRemaining", secsRemaining);
-		compound.setInt("numTreeBlocks", treeBlocks.size());
+	public CompoundNBT write(CompoundNBT compound) {
+		compound.putInt("secsRemaining", secsRemaining);
+		compound.putInt("numTreeBlocks", treeBlocks.size());
 		
 		int counter = 0;
-		for(Map.Entry<BlockPos, IBlockState> entry : treeBlocks.entrySet()) {
+		for(Map.Entry<BlockPos, BlockState> entry : treeBlocks.entrySet()) {
 			String blockName = entry.getValue().getBlock().getRegistryName().toString();
-			compound.setString("Block:" + counter , entry.getKey().getX() + "_" + entry.getKey().getY() + "_" + entry.getKey().getZ()  + " " + blockName);
+			compound.putString("Block:" + counter , entry.getKey().getX() + "_" + entry.getKey().getY() + "_" + entry.getKey().getZ()  + " " + blockName);
 			++counter;
 		}
 		
@@ -43,7 +43,7 @@ public class TileEntityHarvestedTree extends TileEntity implements ITickable{
 	}
 	
 	@Override
-	public void read(NBTTagCompound compound) {
+	public void read(CompoundNBT compound) {
 		treeBlocks.clear();
 		secsRemaining = compound.getInt("secsRemaining");
 		int numBlocks = compound.getInt("numTreeBlocks");
@@ -90,11 +90,12 @@ public class TileEntityHarvestedTree extends TileEntity implements ITickable{
 	}
 	
 	private void restoreTree() {
-		IBlockState state = treeBlocks.remove(this.pos);
-		for(Map.Entry<BlockPos, IBlockState> entry : treeBlocks.entrySet()) {
+		BlockState state = treeBlocks.remove(this.pos);
+		for(Map.Entry<BlockPos, BlockState> entry : treeBlocks.entrySet()) {
 			world.setBlockState(entry.getKey(), entry.getValue());
 		}
 		world.setBlockState(this.pos, state);
-		world.markTileEntityForRemoval(this);
+		//TODO:
+		//world.markTileEntityForRemoval(this);
 	}
 }

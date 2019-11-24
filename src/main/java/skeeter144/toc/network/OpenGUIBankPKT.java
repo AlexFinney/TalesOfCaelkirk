@@ -5,12 +5,17 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.gui.screen.inventory.ChestScreen;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.ChestContainer;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.fml.network.NetworkEvent;
 import skeeter144.toc.banking.BankInventory;
+import skeeter144.toc.banking.ContainerBank;
+import skeeter144.toc.client.gui.BankGui;
 import skeeter144.toc.util.Util;
 
 public class OpenGUIBankPKT{
@@ -33,12 +38,13 @@ public class OpenGUIBankPKT{
 	public static class Handler
 	{
 		public static void handle(final OpenGUIBankPKT message, Supplier<NetworkEvent.Context> ctx){
-			Minecraft.getInstance().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().deferTask(new Runnable() {
 				public void run() {
-					BankInventory bankInv = new BankInventory(new TextComponentString("Bank"), message.items.size());
+					BankInventory bankInv = new BankInventory(new StringTextComponent("Bank"), message.items.size());
 					for(ItemStack is : message.items)
 						bankInv.addItem(is);
-					Minecraft.getInstance().displayGuiScreen(new GuiChest(Minecraft.getInstance().player.inventory, bankInv));
+					PlayerInventory inv =  Minecraft.getInstance().player.inventory;
+					Minecraft.getInstance().displayGuiScreen(new BankGui<ContainerBank>(inv, bankInv));
 				}
 			});
 		}

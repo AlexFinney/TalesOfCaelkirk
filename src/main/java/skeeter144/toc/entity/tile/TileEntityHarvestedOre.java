@@ -1,11 +1,12 @@
 package skeeter144.toc.entity.tile;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.client.renderer.texture.ITickable;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ITickable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 import skeeter144.toc.TOCMain;
@@ -21,20 +22,20 @@ public class TileEntityHarvestedOre extends TileEntity implements ITickable{
 		super(tileEntityTypeIn);
 	}
 
-	public IBlockState resourceBlockState;
+	public BlockState resourceBlockState;
 	public int minSecs = 3, maxSecs = 6;
 	@Override
-	public NBTTagCompound write(NBTTagCompound compound) {
+	public CompoundNBT write(CompoundNBT compound) {
 		super.write(compound);
-		compound.setInt("secsRemaining", secsRemaining);
-		compound.setInt("minSecs", minSecs);
-		compound.setInt("maxSecs", maxSecs);
-		compound.setString("oreName", resourceBlockState.getBlock().getRegistryName().toString());
+		compound.putInt("secsRemaining", secsRemaining);
+		compound.putInt("minSecs", minSecs);
+		compound.putInt("maxSecs", maxSecs);
+		compound.putString("oreName", resourceBlockState.getBlock().getRegistryName().toString());
 		return compound;
 	}
 	
 	@Override
-	public void read(NBTTagCompound compound) {
+	public void read(CompoundNBT compound) {
 		super.read(compound);
 		secsRemaining = compound.getInt("secsRemaining");
 		minSecs = compound.getInt("minSecs");

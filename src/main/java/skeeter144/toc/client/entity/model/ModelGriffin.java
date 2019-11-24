@@ -1,10 +1,10 @@
 package skeeter144.toc.client.entity.model;
 
-import net.minecraft.entity.Entity;
 import skeeter144.toc.client.entity.renderer.AdvancedModelRenderer;
+import skeeter144.toc.entity.mob.mount.flying.EntityGriffin;
 
 
-public class ModelGriffin extends AdvancedModelBase {
+public class ModelGriffin extends AdvancedModelBase<EntityGriffin> {
     public AdvancedModelRenderer body;
     public AdvancedModelRenderer l_wing;
     public AdvancedModelRenderer r_wing;
@@ -263,15 +263,14 @@ public class ModelGriffin extends AdvancedModelBase {
     }
 
     @Override
-    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
-    		float headPitch, float scaleFactor, Entity entityIn) {
-    	super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
+    public void setRotationAngles(EntityGriffin entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
+    		float headPitch, float scaleFactor) {
     	//init();
     	resetToDefaultPose();
 
     	boolean isFlying = true;//((EntityPegasus)entityIn).getIsFlying();
     	
-    	float f = entityIn.ticksExisted;
+    	float f = ageInTicks;
         float f1 = 1;
     	float speed = .3f;
         float height = .2f;
@@ -339,16 +338,16 @@ public class ModelGriffin extends AdvancedModelBase {
     
     
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+    public void render(EntityGriffin entity, float f, float f1, float f2, float f3, float f4, float f5) { 
         this.body.render(f5);
     }
 
     /**
      * This is a helper function from Tabula to set the rotation of model parts
      */
-    public void setRotateAngle(AdvancedModelRenderer modelRenderer, float x, float y, float z) {
-        modelRenderer.rotateAngleX = x;
-        modelRenderer.rotateAngleY = y;
-        modelRenderer.rotateAngleZ = z;
+    public void setRotateAngle(AdvancedModelRenderer RendererModel, float x, float y, float z) {
+        RendererModel.rotateAngleX = x;
+        RendererModel.rotateAngleY = y;
+        RendererModel.rotateAngleZ = z;
     }
 }

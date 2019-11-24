@@ -1,33 +1,33 @@
 package skeeter144.toc.client.gui;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityGhast;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.EntitySlime;
-import net.minecraft.entity.passive.EntityAmbientCreature;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntitySquid;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.monster.GhastEntity;
+import net.minecraft.entity.monster.SlimeEntity;
+import net.minecraft.entity.passive.AmbientEntity;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.SquidEntity;
 
 public abstract class AbstractHealthDisplay implements ToroHealthDisplay {
 
-	protected EntityLivingBase entity;
+	protected LivingEntity entity;
 
 	public static enum Relation {
 		FRIEND, FOE, UNKNOWN
 	}
 
 	protected Relation determineRelation() {
-		if (entity instanceof EntityMob) {
+		if (entity instanceof MobEntity) {
 			return Relation.FOE;
-		} else if (entity instanceof EntitySlime) {
+		} else if (entity instanceof SlimeEntity) {
 			return Relation.FOE;
-		} else if (entity instanceof EntityGhast) {
+		} else if (entity instanceof GhastEntity) {
 			return Relation.FOE;
-		} else if (entity instanceof EntityAnimal) {
+		} else if (entity instanceof AnimalEntity) {
 			return Relation.FRIEND;
-		} else if (entity instanceof EntitySquid) {
+		} else if (entity instanceof SquidEntity) {
 			return Relation.FRIEND;
-		} else if (entity instanceof EntityAmbientCreature) {
+		} else if (entity instanceof AmbientEntity) {
 			return Relation.FRIEND;
 		} else {
 			return Relation.UNKNOWN;
@@ -35,7 +35,7 @@ public abstract class AbstractHealthDisplay implements ToroHealthDisplay {
 	}
 
 	@Override
-	public void setEntity(EntityLivingBase entity) {
+	public void setEntity(LivingEntity entity) {
 		this.entity = entity;
 	}
 

@@ -1,12 +1,12 @@
 package skeeter144.toc.entity.mob;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.world.World;
 import skeeter144.toc.client.entity.animation.Animation;
 import skeeter144.toc.client.entity.animation.KeyFrame;
 
-public class CustomMob extends EntityMob{
+public class CustomMob extends MobEntity{
 
 	public int hpLevel;
 	public int attackLevel;
@@ -19,7 +19,7 @@ public class CustomMob extends EntityMob{
 	public float animationTicks;
 	public float animationStartTime;
 	
-	public CustomMob(EntityType<?> type, World worldIn) {
+	public CustomMob(EntityType<? extends MobEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 	

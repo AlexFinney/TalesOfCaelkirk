@@ -1,14 +1,14 @@
 package skeeter144.toc.entity.AI;
 
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.ai.RandomPositionGenerator;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
-public class EntityAICrazyRunIdle extends EntityAIBase{
+public class EntityAICrazyRunIdle extends Goal{
 
-	EntityCreature e;
+	CreatureEntity e;
 	float speed = 1;
     protected double randPosX;
     protected double randPosY;
@@ -18,10 +18,9 @@ public class EntityAICrazyRunIdle extends EntityAIBase{
     int posIndex = 0;
     boolean posesFull = false;
     
-	public EntityAICrazyRunIdle(EntityCreature e, float speed) {
+	public EntityAICrazyRunIdle(CreatureEntity e, float speed) {
 		this.e = e;
 		this.speed = speed;
-		this.setMutexBits(1);
 	}
 	
 	@Override

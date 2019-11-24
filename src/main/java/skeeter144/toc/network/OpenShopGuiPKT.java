@@ -54,7 +54,7 @@ public class OpenShopGuiPKT {
 
 	public static class Handler {
 		public static void handle(final OpenShopGuiPKT message, Supplier<NetworkEvent.Context> ctx) {
-			Minecraft.getInstance().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().deferTask(new Runnable() {
 				public void run() {
 					Minecraft.getInstance().displayGuiScreen(new ShopGUI(message.data));
 				}

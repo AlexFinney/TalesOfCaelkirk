@@ -1,7 +1,8 @@
 package skeeter144.toc.entityeffect.effects;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.chunk.Chunk;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.SpawnParticlesPKT;
@@ -15,7 +16,7 @@ public class ManaPotionEffect extends EntityEffect {
 	public ManaPotionEffect(Entity effected, int duration, float totalHealthHealed) {
 		super(effected, "mana_potion", duration);
 		addedRegen = totalHealthHealed / (duration / 20);
-		player = TOCMain.pm.getPlayer((EntityPlayer) effected);
+		player = TOCMain.pm.getPlayer((PlayerEntity) effected);
 		this.duration = duration;
 	}
 	
@@ -24,7 +25,7 @@ public class ManaPotionEffect extends EntityEffect {
 		player.setHealthAndManaRegen(player.getHealthRegen(), player.getManaRegen() + addedRegen);
 		
 		Network.INSTANCE.sendToAllAround(new SpawnParticlesPKT(ParticleSystem.MANA_REGEN_EFFECT_ID, effected.getPosition(), effected.getEntityId(), duration), 
-				effected.world.getChunk(effected.getPosition()));
+				(Chunk)effected.world.getChunk(effected.getPosition()));
 	}
 	
 	@Override

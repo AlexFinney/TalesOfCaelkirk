@@ -37,7 +37,7 @@ public class CommandRegions{
 //			case "sp":
 //			case "setpoint":
 //				if(args.length != 2) {
-//					sender.sendMessage(new TextComponentString("Usage: /regions <setpoint, setp, sp> <1 or 2>"));	
+//					sender.sendMessage(new StringTextComponent("Usage: /regions <setpoint, setp, sp> <1 or 2>"));	
 //					return;
 //				}
 //				
@@ -47,7 +47,7 @@ public class CommandRegions{
 //					if(points == null)
 //						points = new MutablePair<Point, Point>();
 //					if(pointNum != 1 && pointNum != 2) {
-//						sender.sendMessage(new TextComponentString("Usage: /regions <setpoint, setp, sp> <1 or 2>"));
+//						sender.sendMessage(new StringTextComponent("Usage: /regions <setpoint, setp, sp> <1 or 2>"));
 //						return;
 //					}
 //					Point p = new Point(sender.getCommandSenderEntity().getPosition().getX(), 
@@ -57,9 +57,9 @@ public class CommandRegions{
 //				else
 //					points.setRight(p);
 //				TOCMain.rm.setPlayersPoints(sender.getCommandSenderEntity().getUniqueID(), points);
-//				sender.sendMessage(new TextComponentString("Point " + pointNum + " set to [" + p.x + ", " + p.z + "]"));
+//				sender.sendMessage(new StringTextComponent("Point " + pointNum + " set to [" + p.x + ", " + p.z + "]"));
 //				}catch(Exception e) {
-//					sender.sendMessage(new TextComponentString("Usage: /regions <setpoint, setp, sp> <1 or 2>"));	
+//					sender.sendMessage(new StringTextComponent("Usage: /regions <setpoint, setp, sp> <1 or 2>"));	
 //					return;
 //				}
 //				break;
@@ -68,13 +68,13 @@ public class CommandRegions{
 //			case "add":
 //			case "addregion":
 //				if(args.length != 2) {
-//					sender.sendMessage(new TextComponentString("Usage: /regions <addregion, addr, ar> <name>"));
+//					sender.sendMessage(new StringTextComponent("Usage: /regions <addregion, addr, ar> <name>"));
 //					return;
 //				}
 //				Pair<Point, Point> points = TOCMain.rm.getPlayersPoints(sender.getCommandSenderEntity().getUniqueID());
 //				if(points == null || points.getLeft() == null || points.getRight() == null) {
-//					sender.sendMessage(new TextComponentString("You must set two corners of a region before you can add a new region!"));
-//					sender.sendMessage(new TextComponentString("Try: /regions (setpoint, setp, sp) <1 or 2>"));
+//					sender.sendMessage(new StringTextComponent("You must set two corners of a region before you can add a new region!"));
+//					sender.sendMessage(new StringTextComponent("Try: /regions (setpoint, setp, sp) <1 or 2>"));
 //					return;
 //				}
 //				//TODO: transform points here to get the bottom left and upper right corner
@@ -106,32 +106,32 @@ public class CommandRegions{
 //				
 //				
 //				TOCMain.rm.addBoundsToRegion(args[1], new1, new2);
-//				sender.sendMessage(new TextComponentString("Added new boundry to region \"" + args[1] + "\"\nFrom:"
+//				sender.sendMessage(new StringTextComponent("Added new boundry to region \"" + args[1] + "\"\nFrom:"
 //						+ "[" + new1.x + ", " + new1.z + " to [" + new2.x + ", " + new2.z + "]"));
 //				break;
 //			case "show":
-//				Network.INSTANCE.sendTo(new ShouldShowRegionsMessage(true, TOCMain.rm.getRegions()), (EntityPlayerMP)sender.getCommandSenderEntity());
+//				Network.INSTANCE.sendTo(new ShouldShowRegionsMessage(true, TOCMain.rm.getRegions()), (ServerPlayerEntity)sender.getCommandSenderEntity());
 //				break;
 //			case "hide":
-//				Network.INSTANCE.sendTo(new ShouldShowRegionsMessage(false, null), (EntityPlayerMP)sender.getCommandSenderEntity());RegionsRendering.doRender = false;
+//				Network.INSTANCE.sendTo(new ShouldShowRegionsMessage(false, null), (ServerPlayerEntity)sender.getCommandSenderEntity());RegionsRendering.doRender = false;
 //				break;
 //			case "list":
-//				sender.sendMessage(new TextComponentString("Regions: "));
+//				sender.sendMessage(new StringTextComponent("Regions: "));
 //				for(Map.Entry<String, Region> entry : TOCMain.rm.getRegions().entrySet()) {
-//					sender.sendMessage(new TextComponentString("     " + entry.getKey() + ", bounds: " + entry.getValue().bounds.size()));
+//					sender.sendMessage(new StringTextComponent("     " + entry.getKey() + ", bounds: " + entry.getValue().bounds.size()));
 //				}
 //				break;
 //			case "rma":
 //			case "rmall":
 //			case "removeall":
 //					if(args.length != 2) {
-//						sender.sendMessage(new TextComponentString("Usage: /regions (removeall, rmall, rma) <region_name>"));
+//						sender.sendMessage(new StringTextComponent("Usage: /regions (removeall, rmall, rma) <region_name>"));
 //						break;
 //					}
 //					String regionName = args[1];
 //					Region r = TOCMain.rm.getRegion(regionName);
 //					if(r == null) {
-//						sender.sendMessage(new TextComponentString("Unknown region: " + regionName));
+//						sender.sendMessage(new StringTextComponent("Unknown region: " + regionName));
 //						break;
 //					}
 //					TOCMain.rm.getRegions().remove(regionName);
@@ -141,12 +141,12 @@ public class CommandRegions{
 //			case "rmbound":
 //			case "removeboundry":
 //				if(args.length != 2) {
-//					sender.sendMessage(new TextComponentString("Usage: /regions (removeboundry, rmbound, rmb) <region_name>"));
+//					sender.sendMessage(new StringTextComponent("Usage: /regions (removeboundry, rmbound, rmb) <region_name>"));
 //					break;
 //				}
 //				Region reg = TOCMain.rm.getRegion(args[1]);
 //				if(reg == null) {
-//					sender.sendMessage(new TextComponentString("Error: Region \"" + args[1] + "\" does not exist."));
+//					sender.sendMessage(new StringTextComponent("Error: Region \"" + args[1] + "\" does not exist."));
 //					break;
 //				}
 //				List<RegionBound> boundsToRemove = new ArrayList<RegionBound>();
@@ -161,13 +161,13 @@ public class CommandRegions{
 //				}
 //				break;
 //			default:
-//				sender.sendMessage(new TextComponentString("Unknown command: " + command));
+//				sender.sendMessage(new StringTextComponent("Unknown command: " + command));
 //				break;
 //			}
 //			
 //			
 //		}else {
-//			sender.sendMessage(new TextComponentString(getUsage(sender)));	
+//			sender.sendMessage(new StringTextComponent(getUsage(sender)));	
 //		}
 //	}
 //

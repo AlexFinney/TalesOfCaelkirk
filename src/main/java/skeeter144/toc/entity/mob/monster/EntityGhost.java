@@ -2,27 +2,22 @@ package skeeter144.toc.entity.mob.monster;
 
 import java.util.Random;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityFlyHelper;
-import net.minecraft.entity.ai.EntityMoveHelper;
 import net.minecraft.entity.ai.attributes.IAttribute;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.pathfinding.PathNavigateFlying;
+import net.minecraft.entity.ai.controller.MovementController;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.mob.CustomMob;
@@ -47,7 +42,7 @@ public class EntityGhost extends CustomMob{
 		this(TOCEntityType.GHOST, worldIn);
 	}
 	
-	public EntityGhost(EntityType<?> type, World worldIn) {
+	public EntityGhost(EntityType<? extends MobEntity> type, World worldIn) {
 		super(type, worldIn);
 		
 		this.setNoGravity(true);
@@ -57,11 +52,10 @@ public class EntityGhost extends CustomMob{
 		this.magicLevel = 1;
 		this.xpGiven = 120;
 		
-		this.getAttributeMap().registerAttribute(SharedMonsterAttributes.FLYING_SPEED);
+		this.getAttributes().registerAttribute(SharedMonsterAttributes.FLYING_SPEED);
 		
-		this.getAttributeMap().registerAttribute(DIVE_STAGE);
+		this.getAttributes().registerAttribute(DIVE_STAGE);
 		
-		this.setSize(1f, 2.5f);
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50);
 		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(1f);
@@ -83,60 +77,55 @@ public class EntityGhost extends CustomMob{
 		++ticksInCurrentStage;
 	}
 	
-	@Override
-	protected void initEntityAI() {
-		this.navigator = new PathNavigateFlying(this, this.world);
-		this.moveHelper = new EntityFlyHelper(this);
-		this.tasks.addTask(0, new EntityAISwimming(this));
-		this.tasks.addTask(1, new AIGhostDiveAttack(this));
-		this.tasks.addTask(2, new EntityAIAttackMelee(this, 1, false));
-		this.tasks.addTask(5, new AIRandomFly(this));
-		this.tasks.addTask(6, new EntityAILookIdle(this));
-
-		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true, true));
-	}
+	
+//	@Override
+//	protected void initEntityAI() {
+//		this.navigator = new PathNavigateFlying(this, this.world);
+//		this.moveHelper = new EntityFlyHelper(this);
+//		this.tasks.addTask(0, new EntityAISwimming(this));
+//		this.tasks.addTask(1, new AIGhostDiveAttack(this));
+//		this.tasks.addTask(2, new EntityAIAttackMelee(this, 1, false));
+//		this.tasks.addTask(5, new AIRandomFly(this));
+//		this.tasks.addTask(6, new EntityAILookIdle(this));
+//
+//		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, PlayerEntity.class, true, true));
+//	}
 	
 	public void fall(float distance, float damageMultiplier) {}
 	
 	public void travel(float strafe, float vertical, float forward) {
 
 		if (this.isInWater()) {
-			this.moveRelative(strafe, vertical, forward, 0.02F);
-			this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
-			this.motionX *= 0.800000011920929D;
-			this.motionY *= 0.800000011920929D;
-			this.motionZ *= 0.800000011920929D;
+			this.moveRelative(0.02F, new Vec3d(strafe, vertical, forward));
+			this.move(MoverType.SELF, new Vec3d(this.getMotion().x, this.getMotion().y, this.getMotion().z));
+			this.getMotion().scale(0.800000011920929D);
 		} else if (this.isInLava()) {
-			this.moveRelative(strafe, vertical, forward, 0.02F);
-			this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
-			this.motionX *= 0.5D;
-			this.motionY *= 0.5D;
-			this.motionZ *= 0.5D;
+			this.moveRelative(strafe, new Vec3d(vertical, forward, 0.02F));
+			this.move(MoverType.SELF, new Vec3d(this.getMotion().x, this.getMotion().y, this.getMotion().z));
+			this.getMotion().scale(0.5D);
 		} else {
 			float f = 0.91F;
 
 			if (this.onGround) {
 				BlockPos underPos = new BlockPos(MathHelper.floor(this.posX),
 						MathHelper.floor(this.getBoundingBox().minY) - 1, MathHelper.floor(this.posZ));
-				IBlockState underState = this.world.getBlockState(underPos);
+				BlockState underState = this.world.getBlockState(underPos);
 				f = underState.getBlock().getSlipperiness(underState, this.world, underPos, this) * 0.91F;
 			}
 
 			float f1 = 0.16277136F / (f * f * f);
-			this.moveRelative(strafe, vertical, forward, this.onGround ? 0.1F * f1 : 0.02F);
+			this.moveRelative(this.onGround ? 0.1F * f1 : 0.02F, new Vec3d(strafe, vertical, forward));
 			f = 0.91F;
 
 			if (this.onGround) {
 				BlockPos underPos = new BlockPos(MathHelper.floor(this.posX),
 						MathHelper.floor(this.getBoundingBox().minY) - 1, MathHelper.floor(this.posZ));
-				IBlockState underState = this.world.getBlockState(underPos);
+				BlockState underState = this.world.getBlockState(underPos);
 				f = underState.getBlock().getSlipperiness(underState, this.world, underPos, this) * 0.91F;
 			}
 
-			this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
-			this.motionX *= (double) f;
-			this.motionY *= (double) f;
-			this.motionZ *= (double) f;
+			this.move(MoverType.SELF, new Vec3d(this.getMotion().x, this.getMotion().y, this.getMotion().z));
+			this.getMotion().scale((double) f);
 		}
 
 		this.prevLimbSwingAmount = this.limbSwingAmount;
@@ -152,16 +141,16 @@ public class EntityGhost extends CustomMob{
 		this.limbSwing += this.limbSwingAmount;
 	}
 
-	static class AIRandomFly extends EntityAIBase {
+	static class AIRandomFly extends Goal {
 		private final EntityGhost parentEntity;
 
 		public AIRandomFly(EntityGhost ghost) {
 			this.parentEntity = ghost;
-			this.setMutexBits(3);
+			//this.setMutexBits(3);
 		}
 
 		public boolean shouldExecute() {
-			EntityMoveHelper entitymovehelper = this.parentEntity.getMoveHelper();
+			MovementController entitymovehelper = this.parentEntity.getMoveHelper();
 
 			if (!entitymovehelper.isUpdating()) {
 				return true;
@@ -190,7 +179,7 @@ public class EntityGhost extends CustomMob{
 		}
 	}
 
-	public static class AIGhostDiveAttack extends EntityAIBase {
+	public static class AIGhostDiveAttack extends Goal {
 		
 		EntityGhost ghost;
 		BlockPos raisePos;
@@ -198,7 +187,7 @@ public class EntityGhost extends CustomMob{
 		
 		public AIGhostDiveAttack(EntityGhost ghost) {
 			this.ghost = ghost;
-			this.setMutexBits(3);
+			//this.setMutexBits(3);
 		}
 
 		public boolean shouldExecute() {
@@ -215,7 +204,8 @@ public class EntityGhost extends CustomMob{
 			int max = 25;
 			int highest = 0;
 			for(int i = 0; i < max; ++i) {
-				if(!ghost.world.getBlockState(new BlockPos(ghost.posX, ghost.posY + i, ghost.posZ)).isFullCube()) {
+				BlockPos pos = new BlockPos(ghost.posX, ghost.posY + i, ghost.posZ);
+				if(!ghost.world.getBlockState(pos).isAir(ghost.world, pos)) {
 					highest = (int)ghost.posY + i;
 				}
 			}
@@ -266,9 +256,7 @@ public class EntityGhost extends CustomMob{
 				float f9 = (float)(MathHelper.atan2(dz, dx) * (180D / Math.PI)) + 90.0F;
 		        ghost.rotationYaw = this.limitAngle(ghost.rotationYaw, f9, 90.0F);
 				
-				ghost.motionX = -moveVec.x;
-				ghost.motionY = -moveVec.y;
-				ghost.motionZ = -moveVec.z;
+				ghost.getMotion().scale(-moveVec.x);
 				
 				double dy = ghost.getAttackTarget().posY - ghost.posX;
             	
@@ -305,7 +293,7 @@ public class EntityGhost extends CustomMob{
 		void spawnTeleportParticles(BlockPos pos) {
 			Network.INSTANCE.sendToAllAround(new SpawnParticlesPKT(ParticleSystem.GHOST_TELEPORT_SYSTEM,
 																	   new BlockPos(pos.getX() + .5f, pos.getY() + 1.5f, pos.getZ() + .5f)),
-											 ghost.world.getChunk(pos));
+											 (Chunk)ghost.world.getChunk(pos));
 		}
 		
 		float limitAngle(float sourceAngle, float targetAngle, float maximumChange)

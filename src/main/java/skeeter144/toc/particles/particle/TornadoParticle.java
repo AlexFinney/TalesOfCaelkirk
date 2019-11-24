@@ -2,7 +2,10 @@ package skeeter144.toc.particles.particle;
 
 import javax.vecmath.Vector3d;
 
+import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.world.World;
 import skeeter144.toc.TOCMain;
 
@@ -16,7 +19,7 @@ public class TornadoParticle extends Particle{
 	public TornadoParticle(World worldIn, double posX, double posY, double posZ, float radius, int maxTicks) {
 		super(worldIn, posX, posY, posZ);
 		this.setMaxAge(maxTicks);
-		particleScale = 2.0f + radius * 5;
+		multipleParticleScaleBy(2.0f + radius * 5);
 		int randRadius = TOCMain.rand.nextInt(2) + 1;
 		this.radius = radius / randRadius;
 		
@@ -28,7 +31,7 @@ public class TornadoParticle extends Particle{
 		
 		this.setPosition(x,  posY,  z);
 		
-		this.setParticleTextureIndex(86);
+//		this.setParticleTextureIndex(86);
 	}
 	
 	@Override
@@ -39,6 +42,19 @@ public class TornadoParticle extends Particle{
 		double x = origin.x + radius * Math.cos((usedAge % 200) / (2 * Math.PI));
 		double z = origin.z + radius * Math.sin((usedAge % 200) / (2 * Math.PI));
 		this.setPosition(x,  posY,  z);
+	}
+
+	@Override
+	public void renderParticle(BufferBuilder buffer, ActiveRenderInfo entityIn, float partialTicks, float rotationX,
+			float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public IParticleRenderType getRenderType() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

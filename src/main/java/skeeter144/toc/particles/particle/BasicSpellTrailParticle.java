@@ -2,7 +2,10 @@ package skeeter144.toc.particles.particle;
 
 import java.awt.Color;
 
+import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.world.World;
 import skeeter144.toc.TOCMain;
 
@@ -21,9 +24,8 @@ public class BasicSpellTrailParticle extends Particle{
 		this.motionY = velY;
 		this.motionZ = velZ;
 		
-		this.particleScale = size;
+		this.multipleParticleScaleBy(size);
 		this.setMaxAge(20);
-		this.setParticleTextureIndex(5);
 		
 		Color c = new Color(color);
 		this.setColor((float) c.getRed() / 255, (float)c.getGreen() / 255, (float)c.getBlue() / 255);
@@ -33,8 +35,18 @@ public class BasicSpellTrailParticle extends Particle{
 	public void tick() {
 		super.tick();
 		float i = ((float)age) / (maxAge) * (7);
-		if(fizzleOut)
-			this.setParticleTextureIndex((int)(7-i));
+		//if(fizzleOut)
+		//	this.setParticleTextureIndex((int)(7-i));
 	}
 
+	@Override
+	public void renderParticle(BufferBuilder buffer, ActiveRenderInfo entityIn, float partialTicks, float rotationX,
+			float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+		
+	}
+
+	@Override
+	public IParticleRenderType getRenderType() {
+		return IParticleRenderType.CUSTOM;
+	}
 }

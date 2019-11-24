@@ -14,7 +14,7 @@ import skeeter144.toc.particles.particle.BasicParticle;
  * Ghost - Undefined
  * Created using Tabula 7.0.0
  */
-public class ModelGhost extends AdvancedModelBase {
+public class ModelGhost extends AdvancedModelBase<EntityGhost> {
     public AdvancedModelRenderer body;
     public AdvancedModelRenderer head;
     public AdvancedModelRenderer left_arm;
@@ -41,20 +41,15 @@ public class ModelGhost extends AdvancedModelBase {
         updateDefaultPose();
     }
 
-    @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
-        this.body.render(f5);
+    @Override 
+    public void render(EntityGhost entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+        this.body.render(scale);
     }
 
     @Override
-    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
-    		float headPitch, float scaleFactor, Entity entityIn) {
-    	super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
-    	
+    public void setRotationAngles(EntityGhost entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,	float headPitch, float scaleFactor) {
     	resetToDefaultPose();
-    	
-    	
-    	
+
     	EntityGhost ghost = (EntityGhost)entityIn;
     	float f = entityIn.ticksExisted;
         float f1 = 1;
@@ -154,9 +149,9 @@ public class ModelGhost extends AdvancedModelBase {
         }
     }
     
-    public void setRotateAngle(AdvancedModelRenderer modelRenderer, float x, float y, float z) {
-        modelRenderer.rotateAngleX = x;
-        modelRenderer.rotateAngleY = y;
-        modelRenderer.rotateAngleZ = z;
+    public void setRotateAngle(AdvancedModelRenderer RendererModel, float x, float y, float z) {
+        RendererModel.rotateAngleX = x;
+        RendererModel.rotateAngleY = y;
+        RendererModel.rotateAngleZ = z;
     }
 }

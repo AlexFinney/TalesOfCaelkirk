@@ -5,7 +5,9 @@ import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
@@ -29,10 +31,8 @@ public class DamageParticle extends Particle {
 	
 	public DamageParticle(String damage, World world, double parX, double parY, double parZ, double parMotionX, double parMotionY, double parMotionZ) {
 		super(world, parX, parY, parZ, 0, parMotionY, 0);
-		particleTextureJitterX = 0.0F;
-		particleTextureJitterY = 0.0F;
 		particleGravity = GRAVITY;
-		particleScale = SIZE;
+		scale = SIZE;
 		maxAge = LIFESPAN;
 		this.damage = damage;
 		this.text = (damage);
@@ -43,14 +43,14 @@ public class DamageParticle extends Particle {
 	}
 
 	@Override
-	public void renderParticle(final BufferBuilder renderer, final Entity entity, final float x, final float y,
-			final float z, final float dX, final float dY, final float dZ) {
+	public void renderParticle(BufferBuilder buffer, ActiveRenderInfo entityIn, float partialTicks, float rotationX,
+			float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
 		float rotationYaw = (-Minecraft.getInstance().player.rotationYaw);
 		float rotationPitch = Minecraft.getInstance().player.rotationPitch;
 
-		final float locX = ((float) (this.prevPosX + (this.posX - this.prevPosX) * x - interpPosX));
-		final float locY = ((float) (this.prevPosY + (this.posY - this.prevPosY) * y - interpPosY));
-		final float locZ = ((float) (this.prevPosZ + (this.posZ - this.prevPosZ) * z - interpPosZ));
+		final float locX = ((float) (this.prevPosX + (this.posX - this.prevPosX) * 1 - interpPosX));
+		final float locY = ((float) (this.prevPosY + (this.posY - this.prevPosY) * 1 - interpPosY));
+		final float locZ = ((float) (this.prevPosZ + (this.posZ - this.prevPosZ) * 1 - interpPosZ));
 
 		GL11.glPushMatrix();
 		if (this.shouldOnTop) {
@@ -63,7 +63,7 @@ public class DamageParticle extends Particle {
 		GL11.glRotatef(rotationPitch, 1.0F, 0.0F, 0.0F);
 
 		GL11.glScalef(-1.0F, -1.0F, 1.0F);
-		GL11.glScaled(this.particleScale * 0.008D, this.particleScale * 0.008D, this.particleScale * 0.008D);
+		GL11.glScaled(this.scale * 0.008D, this.scale * 0.008D, this.scale * 0.008D);
 		GL11.glScaled(this.scale, this.scale, this.scale);
 
 		//OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0F, 0.003662109F);
@@ -92,17 +92,22 @@ public class DamageParticle extends Particle {
 
 		GL11.glPopMatrix();
 		if (this.grow) {
-			this.particleScale *= 1.08F;
-			if (this.particleScale > SIZE * 3.0D) {
+			this.scale *= 1.08F;
+			if (this.scale > SIZE * 3.0D) {
 				this.grow = false;
 			}
 		} else {
-			this.particleScale *= 0.96F;
+			this.scale *= 0.96F;
 		}
 	}
 
 	public int getFXLayer() {
 		return 3;
+	}
+
+	@Override
+	public IParticleRenderType getRenderType() {
+		return IParticleRenderType.CUSTOM;
 	}
 	
 }

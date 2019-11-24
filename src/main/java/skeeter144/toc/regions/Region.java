@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.util.CustomRunnable;
 
@@ -34,28 +34,28 @@ public class Region implements Serializable{
 		return rules.get(id);
 	}
 	
-	public void onRegionEntered(EntityLivingBase e) {
+	public void onRegionEntered(LivingEntity e) {
 		Class c = RegionCallbacks.class;
 		try {
-			c.getMethod((name + "Entered"), EntityLivingBase.class).invoke(null, e);
+			c.getMethod((name + "Entered"), LivingEntity.class).invoke(null, e);
 		} catch (Exception e1) {
 			System.out.println("Warning: No Method for region enter for " + name);
 		}
 	}
 	
-	public void onRegionExited(EntityLivingBase e) {
+	public void onRegionExited(LivingEntity e) {
 		Class c = RegionCallbacks.class;
 		try {
-			c.getMethod((name + "Exited"), EntityLivingBase.class).invoke(null, e);
+			c.getMethod((name + "Exited"), LivingEntity.class).invoke(null, e);
 		} catch (Exception e1) {
 			System.out.println("Warning: No Method for region exit for " + name);
 		}
 	}
 	
-	public void onRegionTick(EntityLivingBase e) {
+	public void onRegionTick(LivingEntity e) {
 		Class c = RegionCallbacks.class;
 		try {
-			c.getMethod((name + "Tick"), EntityLivingBase.class).invoke(null, e);
+			c.getMethod((name + "Tick"), LivingEntity.class).invoke(null, e);
 		} catch (Exception e1) {
 			System.out.println("Warning: No Method for region tick for " + name);
 		}

@@ -1,9 +1,10 @@
 package skeeter144.toc.handlers;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import skeeter144.toc.client.Keybindings;
 import skeeter144.toc.client.gui.CustomPlayerGui;
 import skeeter144.toc.client.gui.LevelsGui;
@@ -34,13 +35,14 @@ public class PlayerInputHandler {
 			//Minecraft.getInstance().player.openGui(TOCMain.instance, Guis.SPELL_BOOK_GUI, Minecraft.getInstance().player.world, 0, 0, 0);
 			return;
 		}else if(Keybindings.LEVELS_KEYBIND.isPressed()) {
-			Minecraft.getInstance().displayGuiScreen(new LevelsGui());
+			Minecraft.getInstance().displayGuiScreen(new LevelsGui(new StringTextComponent("Levels")));
 			return;
 		}else if(Keybindings.INVENTORY_KEYBIND.isPressed()) {
 			if(Minecraft.getInstance().currentScreen instanceof CustomPlayerGui)
 				 Minecraft.getInstance().displayGuiScreen(null);
-			else 
-				Minecraft.getInstance().displayGuiScreen(new CustomPlayerGui(Minecraft.getInstance().player));
+			//TODO
+			//else 
+			//	Minecraft.getInstance().displayGuiScreen(new CustomPlayerGui(Minecraft.getInstance().player));
 		}
 	}
 	

@@ -1,11 +1,12 @@
 package skeeter144.toc.magic;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.monster.AbstractSkeleton;
-import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.monster.EntityZombieVillager;
-import net.minecraft.entity.passive.EntityZombieHorse;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.monster.SkeletonEntity;
+import net.minecraft.entity.monster.ZombieEntity;
+import net.minecraft.entity.monster.ZombieVillagerEntity;
+import net.minecraft.entity.passive.horse.ZombieHorseEntity;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import skeeter144.toc.combat.CombatManager.DamageType;
 import skeeter144.toc.combat.TOCDamageSource;
@@ -20,12 +21,19 @@ public class PunishUndeadSpell extends ShootableSpell {
 
 	@Override
 	public void onProjectileImpact(RayTraceResult res, EntityWandProjectile proj) {
-		Entity e = res.entity;
+		EntityRayTraceResult entRay = null;
+		if(res instanceof EntityRayTraceResult) {
+			entRay= (EntityRayTraceResult)res;
+		}else {
+			return;
+		}
+		
+		Entity e = entRay.getEntity();
 		if(e != null  && !e.world.isRemote) {
-			if(e instanceof EntityLiving){
-				if(e instanceof EntityZombie || e instanceof EntityZombieHorse || e instanceof EntityZombieVillager || e instanceof AbstractSkeleton) {
-					((EntityLiving)e).attackEntityFrom(new TOCDamageSource(DamageType.MAGICAL, proj.getThrower()), DAMAGE);
-					((EntityLiving)e).setRevengeTarget(proj.getThrower());
+			if(e instanceof LivingEntity){
+				if(e instanceof ZombieEntity || e instanceof ZombieHorseEntity || e instanceof ZombieVillagerEntity || e instanceof SkeletonEntity) {
+					((LivingEntity)e).attackEntityFrom(new TOCDamageSource(DamageType.MAGICAL, proj.getThrower()), DAMAGE);
+					((LivingEntity)e).setRevengeTarget(proj.getThrower());
 				}
 				
 			}

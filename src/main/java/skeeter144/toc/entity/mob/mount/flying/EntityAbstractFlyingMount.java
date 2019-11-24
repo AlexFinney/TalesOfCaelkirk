@@ -3,7 +3,8 @@ package skeeter144.toc.entity.mob.mount.flying;
 import java.util.UUID;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.passive.horse.AbstractChestedHorseEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -15,11 +16,11 @@ public class EntityAbstractFlyingMount extends EntityAbstractHorseMount{
 	private static final DataParameter<Boolean> IS_FLYING = EntityDataManager.<Boolean>createKey(EntityAbstractHorseMount.class, DataSerializers.BOOLEAN);
 	
 	public boolean isFlying = false;
-	public EntityAbstractFlyingMount(EntityType<?> type, World worldIn) {
+	public EntityAbstractFlyingMount(EntityType<? extends AbstractChestedHorseEntity> type, World worldIn) {
 		this(type, worldIn, null);
 	}
 	
-	public EntityAbstractFlyingMount(EntityType<?> type, World worldIn, UUID uuid) {
+	public EntityAbstractFlyingMount(EntityType<? extends AbstractChestedHorseEntity> type, World worldIn, UUID uuid) {
 		super(type, worldIn, uuid);
 		
 		//if(!worldIn.isRemote)
@@ -38,14 +39,14 @@ public class EntityAbstractFlyingMount extends EntityAbstractHorseMount{
 	
 	
 	@Override
-	public NBTTagCompound serializeNBT() {
-		NBTTagCompound compound = new NBTTagCompound();
-		compound.setBoolean("isFlying", isFlying);
+	public CompoundNBT serializeNBT() {
+		CompoundNBT compound = new CompoundNBT();
+		compound.putBoolean("isFlying", isFlying);
 		return compound;
 	}
 	
 	@Override
-	public void deserializeNBT(NBTTagCompound compound) {
+	public void deserializeNBT(CompoundNBT compound) {
 		this.isFlying = compound.getBoolean("isFlying");
 		this.dataManager.set(IS_FLYING, isFlying);
 	}

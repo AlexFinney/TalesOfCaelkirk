@@ -11,6 +11,7 @@ import skeeter144.toc.client.entity.animation.KeyFrame;
 import skeeter144.toc.client.entity.animation.PartOrientation;
 import skeeter144.toc.client.entity.renderer.AdvancedModelRenderer;
 import skeeter144.toc.entity.mob.CustomMob;
+import skeeter144.toc.entity.mob.monster.EntityGiantScorpian;
 import skeeter144.toc.network.AnimationEventPKT;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.util.CustomRunnable;
@@ -19,7 +20,7 @@ import skeeter144.toc.util.CustomRunnable;
  * GiantScorpian - Undefined
  * Created using Tabula 5.1.0
  */
-public class ModelGiantScorpian extends AdvancedModelBase {
+public class ModelGiantScorpian extends AdvancedModelBase<EntityGiantScorpian> {
     public AdvancedModelRenderer body_1;
     public AdvancedModelRenderer left_claw_1;
     public AdvancedModelRenderer body_2;
@@ -298,7 +299,7 @@ public class ModelGiantScorpian extends AdvancedModelBase {
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+    public void render(EntityGiantScorpian entity, float f, float f1, float f2, float f3, float f4, float f5) { 
         this.body_1.render(f5);
     }
     
@@ -400,9 +401,8 @@ public class ModelGiantScorpian extends AdvancedModelBase {
     }
     
     @Override
-    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
-    		float headPitch, float scaleFactor, Entity entityIn) {
-    	super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
+    public void setRotationAngles(EntityGiantScorpian entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
+    		float headPitch, float scaleFactor) {
     	resetToDefaultPose();
     	this.currentAnim = ((CustomMob)entityIn).currentAnim;
     	CustomMob customMob = (CustomMob)entityIn;
@@ -484,9 +484,9 @@ public class ModelGiantScorpian extends AdvancedModelBase {
     /**
      * This is a helper function from Tabula to set the rotation of model parts
      */
-    public void setRotateAngle(AdvancedModelRenderer modelRenderer, float x, float y, float z) {
-        modelRenderer.rotateAngleX = x;
-        modelRenderer.rotateAngleY = y;
-        modelRenderer.rotateAngleZ = z;
+    public void setRotateAngle(AdvancedModelRenderer RendererModel, float x, float y, float z) {
+        RendererModel.rotateAngleX = x;
+        RendererModel.rotateAngleY = y;
+        RendererModel.rotateAngleZ = z;
     }
 }

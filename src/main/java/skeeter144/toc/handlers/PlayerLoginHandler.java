@@ -1,13 +1,13 @@
 package skeeter144.toc.handlers;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.ChatType;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.data.Database;
 import skeeter144.toc.network.Network;
@@ -21,26 +21,26 @@ public class PlayerLoginHandler {
 
 	@SubscribeEvent
 	public static void onPlayerLoggedIn(PlayerLoggedInEvent event) {
-	   EntityPlayer player = event.getPlayer();
+	   PlayerEntity player = event.getPlayer();
 		if(player.world.isRemote) {
 		   return;
 	   }
 	   
        TOCPlayer tocPlayer = TOCMain.pm.getPlayer(player);
 	   if(tocPlayer != null) {
-		   ((EntityPlayerMP)player).sendMessage(new TextComponentTranslation("Welcome back, traveller.  I see you haven't been eaten by a monster yet.  This is good..."), ChatType.CHAT);
+		   ((ServerPlayerEntity)player).sendMessage(new StringTextComponent("Welcome back, traveller.  I see you haven't been eaten by a monster yet.  This is good..."), ChatType.CHAT);
 	   }else {
-		   ((EntityPlayerMP)player).sendMessage(new TextComponentTranslation("Welome to the Land of Caelkirk, traveller.  So now, here begins your tale..."), ChatType.CHAT);
+		   ((ServerPlayerEntity)player).sendMessage(new StringTextComponent("Welome to the Land of Caelkirk, traveller.  So now, here begins your tale..."), ChatType.CHAT);
 		   tocPlayer = Database.createPlayerInDatabase(player);
 	   }
 	   
 	   
-	   Network.INSTANCE.sendTo(new SetClientTOCPlayerPKT(tocPlayer), (EntityPlayerMP)player);
+	   Network.INSTANCE.sendTo(new SetClientTOCPlayerPKT(tocPlayer), (ServerPlayerEntity)player);
 	}
 	
 	@SubscribeEvent
 	public static void onPlayerLoggedOut(PlayerLoggedOutEvent event) {
-	   EntityPlayer player = event.getPlayer();
+	   PlayerEntity player = event.getPlayer();
 		if(player.world.isRemote) {
 		   return;
 	   }

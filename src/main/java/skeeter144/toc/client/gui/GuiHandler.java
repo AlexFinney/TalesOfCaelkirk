@@ -1,8 +1,9 @@
 package skeeter144.toc.client.gui;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import skeeter144.toc.entity.tile.TileEntityMobSpawner;
@@ -16,16 +17,16 @@ public class GuiHandler implements IGuiHandler {
 	}
 	
 	@Override
-	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+	public Object getServerGuiElement(int ID, PlayerEntity player, World world, int x, int y, int z) {
 		return null;
 	}
 
 	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+	public Object getClientGuiElement(int ID, PlayerEntity player, World world, int x, int y, int z) {
 		if(ID == Guis.SPELL_BOOK_GUI) 
-			return new SpellBookGUI();
+			return new SpellBookGUI(new StringTextComponent("Spellbook"));
 		else if(ID == Guis.LEVELS_GUI) 
-			return new LevelsGui();
+			return new LevelsGui(new StringTextComponent("Levels"));
 		else if(ID == Guis.SMELTING_GUI)
 			return new SmeltingGui();
 		else if(ID == Guis.SMITHING_GUI)

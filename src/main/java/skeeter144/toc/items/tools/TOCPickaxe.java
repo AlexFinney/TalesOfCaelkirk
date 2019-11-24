@@ -5,13 +5,13 @@ import java.util.Map;
 
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemPickaxe;
+import net.minecraft.item.PickaxeItem;
 import skeeter144.toc.blocks.BlockHarvestableOre;
 import skeeter144.toc.blocks.TOCBlocks;
 import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.util.Reference;
 
-public class TOCPickaxe extends ItemPickaxe{
+public class TOCPickaxe extends PickaxeItem{
 
 	public TOCPickaxe(IItemTier tier, String name, float damage, float speed, Item.Properties builder) {
 		super(tier, (int) damage, speed, builder);

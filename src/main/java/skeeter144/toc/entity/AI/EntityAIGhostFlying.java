@@ -1,13 +1,13 @@
 package skeeter144.toc.entity.AI;
 
-import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.player.PlayerEntity;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.mob.monster.EntityGhost;
 
-public class EntityAIGhostFlying extends EntityAIBase{
+public class EntityAIGhostFlying extends Goal{
 
-	EntityPlayer target;
+	PlayerEntity target;
 	EntityGhost ghost;
 	
 	int ticksSinceLastTarget = 0;

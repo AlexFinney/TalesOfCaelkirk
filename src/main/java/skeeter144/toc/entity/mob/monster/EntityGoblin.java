@@ -1,12 +1,8 @@
 package skeeter144.toc.entity.mob.monster;
 
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
@@ -21,7 +17,7 @@ public class EntityGoblin extends CustomMob{
 		this(TOCEntityType.GOBLIN, worldIn);
 	}
 	
-	public EntityGoblin(EntityType<?> type, World worldIn) {
+	public EntityGoblin(EntityType<? extends MobEntity> type, World worldIn) {
 		super(type, worldIn);
 		
 		this.attackLevel = 3;
@@ -31,14 +27,13 @@ public class EntityGoblin extends CustomMob{
 		this.magicLevel = 1;
 		this.xpGiven = 12;
 		
-		this.tasks.addTask(1, new EntityAISwimming(this));
-		this.tasks.addTask(2, new EntityAIAttackMelee(this, 1, false));
-		this.tasks.addTask(4, new  EntityAIWander(this, 1.0));
-		this.tasks.addTask(6, new EntityAILookIdle(this));
+//		this.tasks.addTask(1, new EntityAISwimming(this));
+//		this.tasks.addTask(2, new EntityAIAttackMelee(this, 1, false));
+//		this.tasks.addTask(4, new  EntityAIWander(this, 1.0));
+//		this.tasks.addTask(6, new EntityAILookIdle(this));
+//		
+//		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
 		
-		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
-		
-		this.setSize(.5f, 1.5f);
 		this.setHealth(10f);
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10);
 		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
@@ -61,9 +56,10 @@ public class EntityGoblin extends CustomMob{
 	protected SoundEvent getHurtSound(DamageSource d) {
 		return Sounds.goblin_snarl;
 	}
+	
 	@Override
-	protected void dropLoot(boolean wasRecentlyHit, int lootingModifier, DamageSource source) {
-		super.dropLoot(wasRecentlyHit, lootingModifier, source);
+	protected void dropLoot(DamageSource src, boolean wasRecentlyHit) {
+		super.dropLoot(src, wasRecentlyHit);
 		//TODO:
 //		this.entityDropItem(new ItemStack(TOCItems.goblin_ear), 0);
 	}

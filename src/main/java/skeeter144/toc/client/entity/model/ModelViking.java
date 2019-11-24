@@ -1,8 +1,9 @@
 package skeeter144.toc.client.entity.model;
 
-import net.minecraft.client.renderer.entity.model.ModelBiped;
+import net.minecraft.client.renderer.entity.model.BipedModel;
+import skeeter144.toc.entity.mob.monster.EntityViking;
 
-public class ModelViking extends ModelBiped{
+public class ModelViking extends BipedModel<EntityViking>{
 
 	public ModelViking(){
 		this(0.0F, false);

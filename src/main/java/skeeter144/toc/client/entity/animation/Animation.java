@@ -3,8 +3,8 @@ package skeeter144.toc.client.entity.animation;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.client.renderer.entity.model.ModelBase;
-import skeeter144.toc.client.entity.renderer.AdvancedModelRenderer;
+import net.minecraft.client.renderer.entity.model.RendererModel;
+import net.minecraft.client.renderer.model.Model;
 import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.event.AnimationEvent;
 
@@ -14,10 +14,10 @@ public class Animation {
 	int durationTicks;
 	List<KeyFrame> keyFrames = new ArrayList<KeyFrame>();
 	public List<AnimationEvent> events = new ArrayList<AnimationEvent>();
-	ModelBase model;
+	Model model;
 	
 	boolean doesLoop = false;
-	public Animation(String name, int durationTicks, ModelBase model, boolean loops) {
+	public Animation(String name, int durationTicks, Model model, boolean loops) {
 		this.name = name;
 		this.durationTicks = durationTicks;
 		this.model = model;
@@ -96,7 +96,7 @@ public class Animation {
 			for(PartOrientation po : frame.getPartOrientations()) {
 				try {
 					 model.getClass().getField(po.partName).setAccessible(true);
-					 po.part =  (AdvancedModelRenderer)model.getClass().getField(po.partName).get(model);
+					 po.part =  (RendererModel)model.getClass().getField(po.partName).get(model);
 				} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
 					e.printStackTrace();
 				}

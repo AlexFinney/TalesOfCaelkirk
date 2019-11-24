@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -22,7 +22,7 @@ public class ServerEffectHandler {
 	@SubscribeEvent
 	public static void livingUpdate(LivingUpdateEvent event)
 	{
-		if(!event.getEntity().world.isRemote && (event.getEntity() instanceof EntityLiving || event.getEntity() instanceof EntityPlayerMP)) {
+		if(!event.getEntity().world.isRemote && (event.getEntity() instanceof LivingEntity || event.getEntity() instanceof ServerPlayerEntity)) {
 			int id = event.getEntity().getEntityId();
 			List<EntityEffect> effects = effectsMap.get(event.getEntity().getUniqueID());
 			if(effects != null)

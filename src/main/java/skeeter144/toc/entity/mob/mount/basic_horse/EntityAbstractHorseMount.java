@@ -2,39 +2,43 @@ package skeeter144.toc.entity.mob.mount.basic_horse;
 
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.ILivingEntityData;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.passive.AbstractChestHorse;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.passive.horse.AbstractChestedHorseEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-public abstract class EntityAbstractHorseMount extends AbstractChestHorse{
+public abstract class EntityAbstractHorseMount extends AbstractChestedHorseEntity{
 
 	int secondsSinceLastRide = 0;
 	public UUID horseOwner = null;
-	public EntityPlayer followTarget = null;
+	public PlayerEntity followTarget = null;
 	
-	public EntityAbstractHorseMount(EntityType<?> type, World worldIn) {
+	public EntityAbstractHorseMount(EntityType<? extends AbstractChestedHorseEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.tasks.taskEntries.clear();
-		this.targetTasks.taskEntries.clear();
+//		this.tasks.taskEntries.clear();
+//		this.targetTasks.taskEntries.clear();
 		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64);
 	}
 	
 	
-	public EntityAbstractHorseMount(EntityType<?> type, World worldIn, UUID horseOwner) {
+	public EntityAbstractHorseMount(EntityType<? extends AbstractChestedHorseEntity> type, World worldIn, UUID horseOwner) {
 		super(type, worldIn);
-		this.tasks.taskEntries.clear();
-		this.targetTasks.taskEntries.clear();
+//		this.tasks.taskEntries.clear();
+//		this.targetTasks.taskEntries.clear();
 		this.horseOwner = horseOwner;
 		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64);
 	}
@@ -62,16 +66,16 @@ public abstract class EntityAbstractHorseMount extends AbstractChestHorse{
 		}
 	}
 	@Override
-	public NBTTagCompound serializeNBT() {
-		NBTTagCompound compound = new NBTTagCompound();
+	public CompoundNBT serializeNBT() {
+		CompoundNBT compound = new CompoundNBT();
 		if(horseOwner != null)
-			compound.setUniqueId("horseOwner", horseOwner);
+			compound.putUniqueId("horseOwner", horseOwner);
 		return super.serializeNBT();
 	}
 
 	
 	@Override
-	public void deserializeNBT(NBTTagCompound compound) {
+	public void deserializeNBT(CompoundNBT compound) {
 		horseOwner = compound.getUniqueId("horseOwner");
 	}
 	
@@ -80,9 +84,10 @@ public abstract class EntityAbstractHorseMount extends AbstractChestHorse{
 		return false;
 	}
 	
+	 //onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
 	@Override
-	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata, NBTTagCompound compound) {
-		IEntityLivingData data =  super.onInitialSpawn(difficulty, livingdata, compound);
+	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficulty, SpawnReason reason, ILivingEntityData livingdata, CompoundNBT compound) {
+		ILivingEntityData data =  super.onInitialSpawn(worldIn, difficulty, reason, livingdata, compound);
 		this.setGrowingAge(0);
 		return data;
 	}
@@ -93,7 +98,7 @@ public abstract class EntityAbstractHorseMount extends AbstractChestHorse{
 	}
 	
 	@Override
-	public boolean processInteract(EntityPlayer player, EnumHand hand) {
+	public boolean processInteract(PlayerEntity player, Hand hand) {
 		return super.processInteract(player, hand);
 	}
 	
@@ -113,7 +118,7 @@ public abstract class EntityAbstractHorseMount extends AbstractChestHorse{
         if (!this.dead)
         {
             Entity entity = cause.getTrueSource();
-            EntityLivingBase entitylivingbase = this.getAttackingEntity();
+            LivingEntity entitylivingbase = this.getAttackingEntity();
 
             if (this.scoreValue >= 0 && entitylivingbase != null)
             {
@@ -132,16 +137,17 @@ public abstract class EntityAbstractHorseMount extends AbstractChestHorse{
             {
                 int i = net.minecraftforge.common.ForgeHooks.getLootingLevel(this, entity, cause);
 
-                if (this.canDropLoot() && this.world.getGameRules().getBoolean("doMobLoot"))
+                if (true)//this.canDropLoot() && this.world.getGameRules().getBoolean("doMobLoot"))
                 {
                     boolean flag = this.recentlyHit > 0;
-                    this.dropLoot(flag, i, cause);
+                    //this.dropLoot(flag, i, cause);
                 }
+                
                 if (!net.minecraftforge.common.ForgeHooks.onLivingDrops(this, cause, captureDrops(), i, recentlyHit > 0))
                 {
-                    for (EntityItem item : captureDrops())
+                    for (ItemEntity item : captureDrops())
                     {
-                        world.spawnEntity(item);
+                        world.addEntity(item);
                     }
                 }
             }

@@ -4,13 +4,13 @@ import javax.vecmath.Matrix4d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.model.ModelBox;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
-import net.minecraft.client.renderer.entity.model.TextureOffset;
+import net.minecraft.client.renderer.entity.model.RendererModel;
+import net.minecraft.client.renderer.model.ModelBox;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -19,13 +19,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import skeeter144.toc.client.entity.model.AdvancedModelBase;
 
 /**
- * An enhanced ModelRenderer
+ * An enhanced RendererModel
  *
  * @author gegy1000, updated by Skeeter144
  * @since 1.0.0
  */
 @OnlyIn(Dist.CLIENT)
-public class AdvancedModelRenderer extends ModelRenderer {
+public class AdvancedModelRenderer extends RendererModel {
     public float defaultRotationX, defaultRotationY, defaultRotationZ;
     public float defaultOffsetX, defaultOffsetY, defaultOffsetZ;
     public float defaultPositionX, defaultPositionY, defaultPositionZ;
@@ -58,22 +58,22 @@ public class AdvancedModelRenderer extends ModelRenderer {
     }
 
     @Override
-    public ModelRenderer addBox(String partName, float offX, float offY, float offZ, int width, int height, int depth) {
+    public RendererModel func_217178_a(String partName, float offX, float offY, float offZ, int width, int height, int depth, float x, int y, int z) {
         partName = this.boxName + "." + partName;
-        TextureOffset textureoffset = this.model.getTextureOffset(partName);
-        this.setTextureOffset(textureoffset.textureOffsetX, textureoffset.textureOffsetY);
+      //  Texture textureoffset = this.model.getTextureOffset(partName);
+       // this.setTextureOffset(textureoffset.textureOffsetX, textureoffset.textureOffsetY);
         this.cubeList.add((new ModelBox(this, this.textureOffsetX, this.textureOffsetY, offX, offY, offZ, width, height, depth, 0.0F)).setBoxName(partName));
         return this;
     }
 
     @Override
-    public ModelRenderer addBox(float offX, float offY, float offZ, int width, int height, int depth) {
+    public RendererModel addBox(float offX, float offY, float offZ, int width, int height, int depth) {
         this.cubeList.add(new ModelBox(this, this.textureOffsetX, this.textureOffsetY, offX, offY, offZ, width, height, depth, 0.0F));
         return this;
     }
 
     @Override
-    public ModelRenderer addBox(float offX, float offY, float offZ, int width, int height, int depth, boolean mirrored) {
+    public RendererModel addBox(float offX, float offY, float offZ, int width, int height, int depth, boolean mirrored) {
         this.cubeList.add(new ModelBox(this, this.textureOffsetX, this.textureOffsetY, offX, offY, offZ, width, height, depth, 0.0F, mirrored));
         return this;
     }
@@ -97,7 +97,7 @@ public class AdvancedModelRenderer extends ModelRenderer {
     }
 
     /**
-     * Sets the scale for this AdvancedModelRenderer to be rendered at. (Performs a call to GLStateManager.scale()).
+     * Sets the scale for this AdvancedRendererModel to be rendered at. (Performs a call to GLStateManager.scale()).
      *
      * @param scaleX the x scale
      * @param scaleY the y scale
@@ -127,7 +127,7 @@ public class AdvancedModelRenderer extends ModelRenderer {
     }
 
     /**
-     * Sets this ModelRenderer's default pose to the current pose.
+     * Sets this RendererModel's default pose to the current pose.
      */
     public void updateDefaultPose() {
         this.defaultRotationX = this.rotateAngleX;
@@ -161,7 +161,7 @@ public class AdvancedModelRenderer extends ModelRenderer {
     }
 
     @Override
-    public void addChild(ModelRenderer child) {
+    public void addChild(RendererModel child) {
         super.addChild(child);
         if (child instanceof AdvancedModelRenderer) {
             AdvancedModelRenderer advancedChild = (AdvancedModelRenderer) child;
@@ -257,7 +257,7 @@ public class AdvancedModelRenderer extends ModelRenderer {
                     }
                 }
                 if (this.childModels != null) {
-                    for (ModelRenderer childModel : this.childModels) {
+                    for (RendererModel childModel : this.childModels) {
                         childModel.render(scale);
                     }
                 }
@@ -394,13 +394,13 @@ public class AdvancedModelRenderer extends ModelRenderer {
     /**
      * Returns the position of the model renderer relative to the center and facing axis of the model.
      */
-    public Vec3d getModelPos(AdvancedModelRenderer modelRenderer, Vec3d recurseValue) {
+    public Vec3d getModelPos(AdvancedModelRenderer RendererModel, Vec3d recurseValue) {
         double x = recurseValue.x;
         double y = recurseValue.y;
         double z = recurseValue.z;
         Point3d rendererPos = new Point3d(x, y, z);
 
-        AdvancedModelRenderer parent = modelRenderer.getParent();
+        AdvancedModelRenderer parent = RendererModel.getParent();
         if (parent != null) {
             Matrix4d boxTranslate = new Matrix4d();
             Matrix4d boxRotateX = new Matrix4d();

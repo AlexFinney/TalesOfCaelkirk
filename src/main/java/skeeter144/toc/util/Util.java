@@ -9,20 +9,21 @@ import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceContext;
+import net.minecraft.util.math.RayTraceContext.BlockMode;
+import net.minecraft.util.math.RayTraceContext.FluidMode;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
@@ -34,12 +35,12 @@ import skeeter144.toc.quest.QuestProgress;
 
 public class Util {
 
-	public static EntityPlayer getPlayerFromDamageSource(DamageSource source) {
-		if(source.getTrueSource() instanceof EntityPlayer) {
-			return (EntityPlayer)source.getTrueSource();
+	public static PlayerEntity getPlayerFromDamageSource(DamageSource source) {
+		if(source.getTrueSource() instanceof PlayerEntity) {
+			return (PlayerEntity)source.getTrueSource();
 		}
-		else if (source instanceof TOCDamageSource && ((TOCDamageSource)source).source instanceof EntityPlayer) {
-			return (EntityPlayer)((TOCDamageSource)source).source;
+		else if (source instanceof TOCDamageSource && ((TOCDamageSource)source).source instanceof PlayerEntity) {
+			return (PlayerEntity)((TOCDamageSource)source).source;
 		}
 		return null;
 	}
@@ -54,7 +55,7 @@ public class Util {
 		double distance = reachDistance;
 
 		if (objectMouseOver != null) {
-			distance = objectMouseOver.hitVec.distanceTo(observerPositionEyes);
+			distance = objectMouseOver.getHitVec().distanceTo(observerPositionEyes);
 		}
 
 		Vec3d lookVector = observer.getLook(partialTicks);
@@ -66,41 +67,41 @@ public class Util {
 				observer.getBoundingBox()
 						.expand(lookVector.x * reachDistance, lookVector.y * reachDistance, lookVector.z * reachDistance)
 						.expand(1.0D, 1.0D, 1.0D),
-				EntitySelectors.NOT_SPECTATING);
+						e -> !e.isSpectator());
 		double d2 = distance;
+//TODO
+//		for (int j = 0; j < list.size(); ++j) {
+//			Entity entity1 = (Entity) list.get(j);
+//			AxisAlignedBB axisalignedbb = entity1.getBoundingBox().grow((double) entity1.getCollisionBorderSize());
+//			RayTraceResult raytraceresult = axisalignedbb.
+//
+//			if (axisalignedbb.contains(observerPositionEyes)) {
+//				if (d2 >= 0.0D) {
+//					pointedEntity = entity1;
+//					hitVector = raytraceresult == null ? observerPositionEyes : raytraceresult.hitVec;
+//					d2 = 0.0D;
+//				}
+//			} else if (raytraceresult != null) {
+//				double d3 = observerPositionEyes.distanceTo(raytraceresult.hitVec);
+//
+//				if (d3 < d2 || d2 == 0.0D) {
+//					if (entity1.getLowestRidingEntity() == observer.getLowestRidingEntity() && !observer.canRiderInteract()) {
+//						if (d2 == 0.0D) {
+//							pointedEntity = entity1;
+//							hitVector = raytraceresult.hitVec;
+//						}
+//					} else {
+//						pointedEntity = entity1;
+//						hitVector = raytraceresult.hitVec;
+//						d2 = d3;
+//					}
+//				}
+//			}
+//		}
 
-		for (int j = 0; j < list.size(); ++j) {
-			Entity entity1 = (Entity) list.get(j);
-			AxisAlignedBB axisalignedbb = entity1.getBoundingBox().grow((double) entity1.getCollisionBorderSize());
-			RayTraceResult raytraceresult = axisalignedbb.calculateIntercept(observerPositionEyes, lookVectorFromEyePosition);
+		//objectMouseOver = new RayTraceResult(pointedEntity, hitVector);
 
-			if (axisalignedbb.contains(observerPositionEyes)) {
-				if (d2 >= 0.0D) {
-					pointedEntity = entity1;
-					hitVector = raytraceresult == null ? observerPositionEyes : raytraceresult.hitVec;
-					d2 = 0.0D;
-				}
-			} else if (raytraceresult != null) {
-				double d3 = observerPositionEyes.distanceTo(raytraceresult.hitVec);
-
-				if (d3 < d2 || d2 == 0.0D) {
-					if (entity1.getLowestRidingEntity() == observer.getLowestRidingEntity() && !observer.canRiderInteract()) {
-						if (d2 == 0.0D) {
-							pointedEntity = entity1;
-							hitVector = raytraceresult.hitVec;
-						}
-					} else {
-						pointedEntity = entity1;
-						hitVector = raytraceresult.hitVec;
-						d2 = d3;
-					}
-				}
-			}
-		}
-
-		objectMouseOver = new RayTraceResult(pointedEntity, hitVector);
-
-		if (pointedEntity instanceof EntityLivingBase) {
+		if (pointedEntity instanceof LivingEntity) {
 			return pointedEntity;
 		}
 
@@ -113,7 +114,7 @@ public class Util {
 		Vec3d vec3d = e.getEyePosition(partialTicks);
 		Vec3d vec3d1 = e.getLook(partialTicks);
 		Vec3d vec3d2 = vec3d.add(vec3d1.x * blockReachDistance, vec3d1.y * blockReachDistance, vec3d1.z * blockReachDistance);
-		return e.world.rayTraceBlocks(vec3d, vec3d2);
+		return e.world.rayTraceBlocks(new RayTraceContext(vec3d, vec3d2, BlockMode.OUTLINE, FluidMode.NONE, e));
 	}
 	
 	
@@ -190,13 +191,13 @@ public class Util {
 		return a >= min && a <= max;
 	}
 	
-	public static void LookAt(double px, double py, double pz , EntityLiving e)
+	public static void LookAt(double px, double py, double pz , LivingEntity e)
 	{
 	    double dirx = e.getPosition().getX() - px;
 	    double diry = e.getPosition().getY() - py;
 	    double dirz = e.getPosition().getZ() - pz;
 
-	    double len = Math.sqrt(e.getPosition().distanceSq(px, py, pz));
+	    double len = Math.sqrt(e.getPosition().distanceSq(px, py, pz, true));
 
 	    dirx /= len;
 	    diry /= len;
@@ -219,16 +220,16 @@ public class Util {
 		return new Vec3d(fromTo).normalize();
 	}
 
-	public static EntityPlayerMP getPlayerByUUID(UUID uuid) {
+	public static ServerPlayerEntity getPlayerByUUID(UUID uuid) {
 		return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByUUID(uuid);
 	}
 	
-	public static void sendNewTaskMessage(EntityPlayer player, Quest quest, String text) {
-		player.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  quest.name + "] " + TextFormatting.GOLD + "[New Task] " + TextFormatting.WHITE + text));
+	public static void sendNewTaskMessage(PlayerEntity player, Quest quest, String text) {
+		player.sendMessage(new StringTextComponent(TextFormatting.BLUE  + "[" +  quest.name + "] " + TextFormatting.GOLD + "[New Task] " + TextFormatting.WHITE + text));
 	}
 	
-	public static void sendTaskUpdateMessage(EntityPlayer player, Quest quest, String text) {
-		player.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  quest.name + "] " + TextFormatting.GREEN + "[Task Updated] " + TextFormatting.WHITE + text));
+	public static void sendTaskUpdateMessage(PlayerEntity player, Quest quest, String text) {
+		player.sendMessage(new StringTextComponent(TextFormatting.BLUE  + "[" +  quest.name + "] " + TextFormatting.GREEN + "[Task Updated] " + TextFormatting.WHITE + text));
 	}
 	
 	public static void saveQuestProgress(UUID player, Class<? extends QuestProgress> questClass) {

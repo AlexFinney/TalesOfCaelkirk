@@ -2,9 +2,9 @@ package skeeter144.toc.proxy;
 
 import java.util.Random;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.entity.model.ModelBiped;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.block.BlockState;
+import net.minecraft.client.renderer.entity.model.BipedModel;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -80,21 +80,21 @@ public class CommonProxy
 	
 	//public void drawMapIconMarker(Marker marker) {}
 	
-	public void showDialogToPlayer(EntityLivingBase ent, NpcDialog dialog){}
+	public void showDialogToPlayer(LivingEntity ent, NpcDialog dialog){}
 	
 	public void spawnTornadoSystem(World world, double x, double y, double z, int level) {}
 
-	public void displayDamageDealt(EntityLivingBase entity) {}
+	public void displayDamageDealt(LivingEntity entity) {}
 	
 	public void setEntityInCrosshairs() {}
 	
-	public ModelBiped getModelForId(int id) {return null;}
+	public BipedModel<LivingEntity> getModelForId(int id) {return null;}
 
 	public void renderInit(Item item, int meta, String name) {}
 
 	public void cancelSwing() {}
 	
-	public void magicLeavesParticle(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {}
+	public void magicLeavesParticle(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {}
 	
 	
 }

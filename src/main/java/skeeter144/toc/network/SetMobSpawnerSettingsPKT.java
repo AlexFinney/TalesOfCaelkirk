@@ -2,11 +2,11 @@ package skeeter144.toc.network;
 
 import java.util.function.Supplier;
 
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.fml.network.NetworkEvent;
 import skeeter144.toc.entity.tile.TileEntityMobSpawner;
 
@@ -74,7 +74,7 @@ public class SetMobSpawnerSettingsPKT{
 					if(!ctx.get().getSender().isCreative())
 						return;
 					
-					EntityPlayerMP player = ctx.get().getSender();
+					ServerPlayerEntity player = ctx.get().getSender();
 					if(player.world.isBlockLoaded(new BlockPos(msg.x, msg.y, msg.z))) {
 						TileEntity te = player.world.getTileEntity(new BlockPos(msg.x, msg.y, msg.z));
 						if(te != null && te instanceof TileEntityMobSpawner) {
@@ -86,7 +86,7 @@ public class SetMobSpawnerSettingsPKT{
 							tems.mob_spawn_search_radius = msg.spawnSearchRadius;
 							tems.mobs_per_spawn_min = msg.minMobsPerSpawn;
 							tems.mobs_per_spawn_max = msg.maxMobsPersSpawn;
-							player.sendMessage(new TextComponentString("Spawner settings saved."));
+							player.sendMessage(new StringTextComponent("Spawner settings saved."));
 							tems.sendUpdates();
 						}
 					}

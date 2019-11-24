@@ -1,15 +1,16 @@
 package skeeter144.toc.client.entity.tilerenderer;
 
-import net.minecraft.block.BlockAnvil;
-import net.minecraft.block.state.IBlockState;
+import com.mojang.blaze3d.platform.GlStateManager;
+
+import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.Vec3i;
+import skeeter144.toc.blocks.BlockAnvil;
 import skeeter144.toc.entity.tile.TileEntityAnvil;
 
 public class TileEntityAnvilRenderer extends TileEntityRenderer<TileEntityAnvil>{
@@ -25,21 +26,21 @@ public class TileEntityAnvilRenderer extends TileEntityRenderer<TileEntityAnvil>
 		ItemStack stack = new ItemStack(anvil.ingot);
 		IBakedModel model = Minecraft.getInstance().getItemRenderer().getItemModelMesher().getItemModel(stack);
 		
-		IBlockState bs = te.getWorld().getBlockState(te.getPos());
-		EnumFacing facing = bs.get(BlockAnvil.FACING);
+		BlockState bs = te.getWorld().getBlockState(te.getPos());
+		Direction facing = bs.get(BlockAnvil.FACING);
 		facing = facing.rotateYCCW();
 		
 		Vec3i forward = facing.getDirectionVec();
 		Vec3i right = forward.crossProduct(new Vec3i(0, 1, 0));
 		
 		float rot = 0;
-		if(facing.equals(EnumFacing.NORTH))
+		if(facing.equals(Direction.NORTH))
 			rot = 180;
-		else if(facing.equals(EnumFacing.SOUTH))
+		else if(facing.equals(Direction.SOUTH))
 			rot = 0;
-		else if(facing.equals(EnumFacing.EAST))
+		else if(facing.equals(Direction.EAST))
 			rot = 90;
-		else if(facing.equals(EnumFacing.WEST))
+		else if(facing.equals(Direction.WEST))
 			rot = -90;
 		
 		GlStateManager.pushMatrix();
@@ -111,4 +112,5 @@ public class TileEntityAnvilRenderer extends TileEntityRenderer<TileEntityAnvil>
 		
 		GlStateManager.popMatrix();
 	}
+	
 }

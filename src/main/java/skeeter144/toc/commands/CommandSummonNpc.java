@@ -41,7 +41,7 @@ public class CommandSummonNpc{
 //				}
 //				Entity e = new EntityHumanShopKeeper(sender.getEntityWorld(), shopDataFile, textureName);
 //				e.setPosition(sender.getPosition().getX(), sender.getPosition().getY() + 1, sender.getPosition().getZ());
-//				sender.getEntityWorld().spawnEntity(e);
+//				sender.getEntityWorld().addEntity(e);
 //			}
 //		}
 //		

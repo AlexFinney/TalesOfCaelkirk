@@ -1,9 +1,9 @@
 package skeeter144.toc.handlers.tick;
 
+import net.minecraftforge.event.TickEvent.ClientTickEvent;
+import net.minecraftforge.event.TickEvent.ServerTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.util.Reference;
 
@@ -12,7 +12,7 @@ public class TickHandler {
 	
 	static int serverTicks = 0;
 	@SubscribeEvent
-	public void serverTicked(TickEvent.ServerTickEvent e) {
+	public void serverTicked(ServerTickEvent e) {
 		TOCMain.serverTaskManager.tickTasks();
 		++serverTicks;
 	}

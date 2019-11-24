@@ -1,13 +1,12 @@
 package skeeter144.toc.blocks;
 
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
 import skeeter144.toc.entity.tile.BlockTileEntity;
 import skeeter144.toc.entity.tile.TileEntityHarvestedTree;
 
@@ -23,17 +22,17 @@ public class BlockHarvestedTree extends BlockTileEntity<TileEntityHarvestedTree>
 	}
 
 	@Override
-	public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
+	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
 		return new TileEntityHarvestedTree(TOCBlocks.te_harvested_tree);
 	}
 	
 	@Override
-	public EnumBlockRenderType getRenderType(IBlockState state) {
-		return EnumBlockRenderType.INVISIBLE;
+	public BlockRenderType getRenderType(BlockState state) {
+		return BlockRenderType.INVISIBLE;
 	}
 
 
-	public boolean canCollideCheck(IBlockState state, boolean hitIfLiquid) {
+	public boolean canCollideCheck(BlockState state, boolean hitIfLiquid) {
 		return false;
 	}
 
@@ -41,7 +40,7 @@ public class BlockHarvestedTree extends BlockTileEntity<TileEntityHarvestedTree>
 		return false;
 	}
 
-	public boolean isFullCube(IBlockState state) {
+	public boolean isFullCube(BlockState state) {
 		return false;
 	}
 

@@ -1,13 +1,13 @@
 package skeeter144.toc.client.entity.animation;
 
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
+import net.minecraft.client.renderer.entity.model.RendererModel;
 import skeeter144.toc.util.Util;
 
 public class PartOrientation {
 	public final float x, y, z, rotX, rotY, rotZ;
 	public final String partName;
-	public ModelRenderer part;
-	public PartOrientation(String partName, ModelRenderer part, float deltaX,    float deltaY,    float deltaZ, 
+	public RendererModel part;
+	public PartOrientation(String partName, RendererModel part, float deltaX,    float deltaY,    float deltaZ, 
 																		float deltaRotX, float deltaRotY, float deltaRotZ) {
 		
 		deltaRotX = Util.toRad(deltaRotX);
@@ -23,7 +23,7 @@ public class PartOrientation {
 		this.rotZ = deltaRotZ + part.rotateAngleZ;
 	}
 	
-	public PartOrientation(ModelRenderer m, String name) {
+	public PartOrientation(RendererModel m, String name) {
 		x = m.offsetX;
 		y = m.offsetY;
 		z = m.offsetZ;

@@ -4,6 +4,7 @@ import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.StringTextComponent;
 import skeeter144.toc.entity.tile.TileEntityAnvil;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.SetAnvilRecipePKT;
@@ -16,6 +17,7 @@ public class SmithingGui extends CraftingGui{
 
 	TileEntityAnvil anvil;
 	public SmithingGui(BlockPos pos) {
+		super(new StringTextComponent("Smithing"));
 		backgroundImage = new ResourceLocation(Reference.MODID, "textures/gui/smithing_gui.png");
 		allRecipes = RecipeManager.instance().SMITHING_RECIPES;
 		this.anvil = (TileEntityAnvil) Minecraft.getInstance().world.getTileEntity(pos);
@@ -31,7 +33,7 @@ public class SmithingGui extends CraftingGui{
 	}
 	
 	public void render(int mouseX, int mouseY, float partialTicks) {
-		this.drawDefaultBackground();
+		this.renderBackground();
 		this.setGuiVals();
 		drawBackground();
 		
@@ -58,7 +60,7 @@ public class SmithingGui extends CraftingGui{
 	}
 	
 	@Override
-	public void onGuiClosed() {
+	public void onClose() {
 		if(selectedRecipe != null) {
 			Network.INSTANCE.sendToServer(new SetAnvilRecipePKT(selectedRecipe, anvil.getPos()));
 		}

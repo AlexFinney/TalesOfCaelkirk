@@ -4,14 +4,14 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
@@ -40,19 +40,19 @@ public class TileEntityAnvil extends TileEntity {
 	
 	
 	@Override
-	public NBTTagCompound write (NBTTagCompound compound) {
-		compound.setString("ingotType", ingot != null ? ingot.getRegistryName().toString() : "");
-		compound.setString("producedItem", producedItem != null ? producedItem.getItem().getRegistryName().toString() : "");
-		compound.setInt("producedItemCount", producedItem != null ? producedItem.getCount() : 0);
-		compound.setInt("addedIngots", addedIngots);
-		compound.setLong("uuid1", anvilOwner != null ? anvilOwner.getMostSignificantBits() : 0);
-		compound.setLong("uuid2", anvilOwner != null ? anvilOwner.getLeastSignificantBits() : 0);
+	public CompoundNBT write (CompoundNBT compound) {
+		compound.putString("ingotType", ingot != null ? ingot.getRegistryName().toString() : "");
+		compound.putString("producedItem", producedItem != null ? producedItem.getItem().getRegistryName().toString() : "");
+		compound.putInt("producedItemCount", producedItem != null ? producedItem.getCount() : 0);
+		compound.putInt("addedIngots", addedIngots);
+		compound.putLong("uuid1", anvilOwner != null ? anvilOwner.getMostSignificantBits() : 0);
+		compound.putLong("uuid2", anvilOwner != null ? anvilOwner.getLeastSignificantBits() : 0);
 		return compound;
 	}
 	
 	
 	@Override
-	public void read(NBTTagCompound compound) {
+	public void read(CompoundNBT compound) {
 		String ingotType = compound.getString("ingotType");
 		if(ingotType != "")
 			ingot = ForgeRegistries.ITEMS.getValue(new ResourceLocation(ingotType));
@@ -67,7 +67,7 @@ public class TileEntityAnvil extends TileEntity {
 		anvilOwner = new UUID(compound.getLong("uuid1"), compound.getLong("uuid2")); 
 	}
 	
-	public void hammerStruck(EntityPlayer striker) {
+	public void hammerStruck(PlayerEntity striker) {
 		if(!this.world.isRemote) {
 			if(strikesLeft > 0 && selectedRecipe != null && ingot != null && ingot.equals(selectedRecipe.components[0].getItem()) 
 					&& addedIngots >= selectedRecipe.components[0].getCount()) {
@@ -77,13 +77,13 @@ public class TileEntityAnvil extends TileEntity {
 					if(selectedRecipe != null)
 						producedItem = new ItemStack(selectedRecipe.crafted.getItem(), selectedRecipe.crafted.getCount());
 					
-					MinecraftForge.EVENT_BUS.post(new RecipeManager.ItemSmithedEvent((EntityPlayerMP) striker, producedItem));
+					MinecraftForge.EVENT_BUS.post(new RecipeManager.ItemSmithedEvent((ServerPlayerEntity) striker, producedItem));
 					
 					striker.addItemStackToInventory(new ItemStack(ingot, addedIngots - selectedRecipe.components[0].getCount()));
 					
 					TOCMain.pm.getPlayer(striker).levels.addExp(selectedRecipe.level, selectedRecipe.xp);
 					
-					Network.INSTANCE.sendTo(new AddLevelXpPKT(selectedRecipe.level.name().toString(), selectedRecipe.xp), (EntityPlayerMP) striker);
+					Network.INSTANCE.sendTo(new AddLevelXpPKT(selectedRecipe.level.name().toString(), selectedRecipe.xp), (ServerPlayerEntity) striker);
 					
 					addedIngots = 0;
 					ingot = null;
@@ -95,28 +95,28 @@ public class TileEntityAnvil extends TileEntity {
 	
 	@Override
 	@Nullable
-	public SPacketUpdateTileEntity getUpdatePacket() {
-		return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
+	public SUpdateTileEntityPacket getUpdatePacket() {
+		return new SUpdateTileEntityPacket(this.pos, 3, this.getUpdateTag());
 	}
 
 	@Override
-	public NBTTagCompound getUpdateTag() {
-		return write(new NBTTagCompound());
+	public CompoundNBT getUpdateTag() {
+		return write(new CompoundNBT());
 	}
 	
 	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
 		super.onDataPacket(net, pkt);
 		handleUpdateTag(pkt.getNbtCompound());
 	}
 	
 	public void sendUpdates() {
-		world.markBlockRangeForRenderUpdate(pos, pos);
+		//world.markBlockRangeForRenderUpdate(pos, pos);
 		world.notifyBlockUpdate(pos, getState(), getState(), 3);
 		markDirty();
 	}
 	
-	private IBlockState getState() {
+	private BlockState getState() {
 		return world.getBlockState(pos);
 	}
 	

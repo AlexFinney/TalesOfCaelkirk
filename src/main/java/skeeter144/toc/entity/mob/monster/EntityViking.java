@@ -1,29 +1,23 @@
 package skeeter144.toc.entity.mob.monster;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.ILivingEntityData;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.mob.CustomMob;
-import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.player.EntityLevels;
 import skeeter144.toc.sounds.Sounds;
 
@@ -35,7 +29,7 @@ public class EntityViking extends CustomMob{
 		this(TOCEntityType.VIKING, world);
 	}
 	
-	public EntityViking(EntityType<?> type, World worldIn) {
+	public EntityViking(EntityType<? extends MobEntity> type, World worldIn) {
 		super(type, worldIn);
 		
 		this.attackLevel = 10;
@@ -45,21 +39,21 @@ public class EntityViking extends CustomMob{
 		this.magicLevel = 1;
 		this.xpGiven = 170;
 		
-		this.tasks.addTask(1, new EntityAISwimming(this));
-		this.tasks.addTask(2, new EntityAIAttackMelee(this, 1.0, false));
-		this.tasks.addTask(3, new  EntityAIMoveTowardsRestriction(this, 1.0));
-		this.tasks.addTask(4, new  EntityAIWander(this, 1.0));
-		this.tasks.addTask(5, new  EntityAIWatchClosest(this, EntityPlayer.class, 20));
-		this.tasks.addTask(6, new EntityAILookIdle(this));
+//		this.tasks.addTask(1, new EntityAISwimming(this));
+//		this.tasks.addTask(2, new EntityAIAttackMelee(this, 1.0, false));
+//		this.tasks.addTask(3, new  EntityAIMoveTowardsRestriction(this, 1.0));
+//		this.tasks.addTask(4, new  EntityAIWander(this, 1.0));
+//		this.tasks.addTask(5, new  EntityAIWatchClosest(this, PlayerEntity.class, 20));
+//		this.tasks.addTask(6, new EntityAILookIdle(this));
+//		
+//		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, PlayerEntity.class, true, true));
 		
-		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true, true));
-		
-		this.setDropChance(EntityEquipmentSlot.CHEST, .05f);
-		this.setDropChance(EntityEquipmentSlot.HEAD, .05f);
-		this.setDropChance(EntityEquipmentSlot.LEGS, .05f);
-		this.setDropChance(EntityEquipmentSlot.FEET, .05f);
-		this.setDropChance(EntityEquipmentSlot.MAINHAND, .05f);
-		this.setDropChance(EntityEquipmentSlot.OFFHAND, .05f);
+		this.setDropChance(EquipmentSlotType.CHEST, .05f);
+		this.setDropChance(EquipmentSlotType.HEAD, .05f);
+		this.setDropChance(EquipmentSlotType.LEGS, .05f);
+		this.setDropChance(EquipmentSlotType.FEET, .05f);
+		this.setDropChance(EquipmentSlotType.MAINHAND, .05f);
+		this.setDropChance(EquipmentSlotType.OFFHAND, .05f);
 
 		if(TOCMain.rand.nextInt(20) == 0) {
 			isVikingElite = true;
@@ -81,7 +75,6 @@ public class EntityViking extends CustomMob{
 		this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(isVikingElite ? 2 : 1);
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.hpLevel * EntityLevels.HP_PER_LEVEL);
 		this.setHealth(this.hpLevel * EntityLevels.HP_PER_LEVEL);
-		this.setSize(0.7f, 2f);
 	}
 
 
@@ -95,32 +88,31 @@ public class EntityViking extends CustomMob{
 	}
 	
 	@Override
-	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData entityLivingData,
-			NBTTagCompound itemNbt) {
+	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
 		if(isVikingElite) {
-			this.setCustomName(new TextComponentString("Viking Elite"));
+			this.setCustomName(new StringTextComponent("Viking Elite"));
 			//TODO
-//			this.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(TOCItems.viking_helmet));
-//			this.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(TOCItems.viking_chestplate));
-//			this.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(TOCItems.viking_leggings));
-//			this.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(TOCItems.viking_boots));
-		//	this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(TOCItems.getRandomWeaponForClass("steel", 1)));
+//			this.setItemStackToSlot(EquipmentSlotType.HEAD, new ItemStack(TOCItems.viking_helmet));
+//			this.setItemStackToSlot(EquipmentSlotType.CHEST, new ItemStack(TOCItems.viking_chestplate));
+//			this.setItemStackToSlot(EquipmentSlotType.LEGS, new ItemStack(TOCItems.viking_leggings));
+//			this.setItemStackToSlot(EquipmentSlotType.FEET, new ItemStack(TOCItems.viking_boots));
+		//	this.setHeldItem(Hand.MAIN_HAND, new ItemStack(TOCItems.getRandomWeaponForClass("steel", 1)));
 			
 		}else {
 //			if(TOCMain.rand.nextInt(5) == 0)
-//				this.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(TOCItems.viking_helmet));
+//				this.setItemStackToSlot(EquipmentSlotType.HEAD, new ItemStack(TOCItems.viking_helmet));
 //			if(TOCMain.rand.nextInt(5) == 0)
-//				this.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(TOCItems.viking_chestplate));
+//				this.setItemStackToSlot(EquipmentSlotType.CHEST, new ItemStack(TOCItems.viking_chestplate));
 //			if(TOCMain.rand.nextInt(5) == 0)
-//				this.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(TOCItems.viking_leggings));
+//				this.setItemStackToSlot(EquipmentSlotType.LEGS, new ItemStack(TOCItems.viking_leggings));
 //			if(TOCMain.rand.nextInt(5) == 0)
-//				this.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(TOCItems.viking_boots));
+//				this.setItemStackToSlot(EquipmentSlotType.FEET, new ItemStack(TOCItems.viking_boots));
 			
 			String weaponType = TOCMain.rand.nextFloat() < .4f ? "steel" : "iron";
-		//	this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(TOCItems.getRandomWeaponForClass(weaponType, .05f)));
+		//	this.setHeldItem(Hand.MAIN_HAND, new ItemStack(TOCItems.getRandomWeaponForClass(weaponType, .05f)));
 		}
 		
-		return super.onInitialSpawn(difficulty, entityLivingData, itemNbt);
+		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
 	@Override

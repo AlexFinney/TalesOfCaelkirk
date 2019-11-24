@@ -1,8 +1,9 @@
 package skeeter144.toc.client.entity.model;
 
-import net.minecraft.client.renderer.entity.model.ModelBiped;
+import net.minecraft.client.renderer.entity.model.BipedModel;
+import net.minecraft.entity.LivingEntity;
 
-public class ModelHumanNpc extends ModelBiped{
+public class ModelHumanNpc<T extends LivingEntity> extends BipedModel<T>{
 
 	public ModelHumanNpc(){
 		this(0.0F, false);

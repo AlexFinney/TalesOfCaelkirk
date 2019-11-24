@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -117,7 +117,7 @@ public class RecipeManager {
 	
 	public void craftRecipes() {
 		for(Map.Entry<UUID, List<Recipe>> entry : playerCraftingQueue.entrySet()) {
-			EntityPlayerMP player = ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByUUID(entry.getKey());
+			ServerPlayerEntity player = ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByUUID(entry.getKey());
 
 			Recipe r = entry.getValue().get(0);
 			if(r.canRecipeBeCrafted(player.inventory)) {
@@ -130,7 +130,7 @@ public class RecipeManager {
 		}
 	}
 	
-	private void craftRecipe(EntityPlayerMP player, Recipe r) {
+	private void craftRecipe(ServerPlayerEntity player, Recipe r) {
 		if(!playerCraftingQueue.containsKey(player.getUniqueID())) return;
 		
 		ItemStack[] itemsLeft = new ItemStack[r.components.length];
@@ -167,9 +167,9 @@ public class RecipeManager {
 	
 	public static class ItemSmithedEvent extends Event
 	{		
-		public EntityPlayer player;
+		public PlayerEntity player;
 		public ItemStack smithed;
-		public ItemSmithedEvent(EntityPlayerMP player, ItemStack smithed) {
+		public ItemSmithedEvent(ServerPlayerEntity player, ItemStack smithed) {
 			this.player = player;
 			this.smithed = smithed;
 		}

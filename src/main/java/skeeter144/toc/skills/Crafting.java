@@ -3,16 +3,12 @@ package skeeter144.toc.skills;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Items;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraftforge.common.crafting.RecipeType;
-import net.minecraftforge.event.RegistryEvent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.event.entity.player.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.network.AddLevelXpPKT;
 import skeeter144.toc.network.Network;
@@ -110,7 +106,7 @@ public class Crafting {
 		}
 		TOCPlayer p = TOCMain.pm.getPlayer(e.getPlayer());
 		if(p.levels.getLevel(Levels.CRAFTING).getLevel() < levelReq) {
-			e.getPlayer().sendMessage(new TextComponentString("You must be Crafting Level " + levelReq + " to craft that!"));
+			e.getPlayer().sendMessage(new StringTextComponent("You must be Crafting Level " + levelReq + " to craft that!"));
 			
 //			for(int slot = 0; slot < e.getInventory().getSizeInventory(); ++slot) {
 //				if(e.getInventory().getStackInSlot(slot).getItem() != Items.AIR) {
@@ -123,7 +119,7 @@ public class Crafting {
 		}
 		int xpGiven = getXpFromItemCraft(e.getCrafting().getItem());
 		p.levels.addExp(Levels.CRAFTING, xpGiven);
-		Network.INSTANCE.sendTo(new AddLevelXpPKT("Crafting", xpGiven), (EntityPlayerMP) e.getPlayer());
+		Network.INSTANCE.sendTo(new AddLevelXpPKT("Crafting", xpGiven), (ServerPlayerEntity) e.getPlayer());
 	}
 	
 	int getCraftingLevelRequiredFor(Item i) {

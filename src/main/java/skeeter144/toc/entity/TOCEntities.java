@@ -13,8 +13,8 @@ public class TOCEntities {
 	
 	static HashMap<String, Integer> vanillaMobXp = new HashMap<>();
 	public static void initVanillaMobXp() {
-		vanillaMobXp.put(ForgeRegistries.ENTITIES.getValue(new ResourceLocation("chicken")).func_212546_e().toString(), 5);
-		vanillaMobXp.put(ForgeRegistries.ENTITIES.getValue(new ResourceLocation("sheep")).func_212546_e().toString(), 5);
+		vanillaMobXp.put(ForgeRegistries.ENTITIES.getValue(new ResourceLocation("chicken")).getName().toString(), 5);
+		vanillaMobXp.put(ForgeRegistries.ENTITIES.getValue(new ResourceLocation("sheep")).getName().toString(), 5);
 	}
 	
 	public static int getXpFroVanillaMob(String className) {

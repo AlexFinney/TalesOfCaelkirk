@@ -1,9 +1,8 @@
 package skeeter144.toc.entity.mob;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.init.Blocks;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -14,9 +13,9 @@ public class TOCWaterMob extends CustomMob {
 	int breath = 60;
 	int ticksSinceDrown = 0;
 
-	public TOCWaterMob(EntityType<?> type, World worldIn) {
+	public TOCWaterMob(EntityType<? extends CustomMob> type, World worldIn) {
 		super(type, worldIn);
-		this.tasks.addTask(0, new AIMoveRandom(this));
+//		this.tasks.addTask(0, new AIMoveRandom(this));
 	}
 
 	@Override
@@ -42,17 +41,10 @@ public class TOCWaterMob extends CustomMob {
 	
 	void setMovementVector(double x, double y, double z) {
 		System.out.println(x + " " + y + " " + z);
-		this.motionX = x;
-		this.motionY = y;
-		this.motionZ = z;
-	}
-	
-	@Override
-	public void travel(float strafe, float vertical, float forward) {
-		this.move(MoverType.SELF, motionX, motionY, motionZ);
+		this.setMotion(x, y, z);
 	}
 
-	static class AIMoveRandom extends EntityAIBase {
+	static class AIMoveRandom extends Goal {
 		private final TOCWaterMob mob;
 		int sleepTime = 60;
 		

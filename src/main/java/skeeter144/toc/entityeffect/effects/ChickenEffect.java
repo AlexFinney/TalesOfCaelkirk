@@ -1,22 +1,18 @@
 package skeeter144.toc.entityeffect.effects;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.ai.EntityAITasks.EntityAITaskEntry;
-import net.minecraft.entity.passive.EntityChicken;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.passive.ChickenEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ChickenEffect extends EntityEffect{
 	
-	Set<EntityAITaskEntry> tasksCopy = new HashSet<EntityAITaskEntry>();
-	Set<EntityAITaskEntry> targetTasksCopy = new HashSet<EntityAITaskEntry>();
+//	Set<EntityAITaskEntry> tasksCopy = new HashSet<EntityAITaskEntry>();
+//	Set<EntityAITaskEntry> targetTasksCopy = new HashSet<EntityAITaskEntry>();
 	AxisAlignedBB bb;
 	public ChickenEffect(Entity effected, Entity effecter, int duration) {
 		super(effected, "turn_chicken", duration);
@@ -24,25 +20,25 @@ public class ChickenEffect extends EntityEffect{
 	
 	@Override
 	protected void onEffectStart() {
-		chicken = new EntityChicken(effected.world);
+		chicken = new ChickenEntity(EntityType.CHICKEN, effected.world);
 		chicken.setPosition(effected.posX, effected.posY + 1.5f, effected.posZ);
-		effected.world.spawnEntity(chicken);
+		effected.world.addEntity(chicken);
 		effected.setInvulnerable(true);
 		
-		if(effected instanceof EntityPlayer) {
-			((EntityPlayer) effected).addPotionEffect(new PotionEffect(ForgeRegistries.POTIONS.getValue(new ResourceLocation("slowness")), 1000, 1000));
-			((EntityPlayer) effected).addPotionEffect(new PotionEffect(ForgeRegistries.POTIONS.getValue(new ResourceLocation("invisibility")), 1000, 1000));
+		if(effected instanceof PlayerEntity) {
+			((PlayerEntity) effected).addPotionEffect(new EffectInstance(ForgeRegistries.POTIONS.getValue(new ResourceLocation("slowness")), 1000, 1000));
+			((PlayerEntity) effected).addPotionEffect(new EffectInstance(ForgeRegistries.POTIONS.getValue(new ResourceLocation("invisibility")), 1000, 1000));
 		
-			copyTaskSetTo(((EntityLiving)chicken).tasks.taskEntries, tasksCopy);
-			copyTaskSetTo(((EntityLiving)chicken).targetTasks.taskEntries, targetTasksCopy);
+//			copyTaskSetTo(((LivingEntity)chicken).tasks.taskEntries, tasksCopy);
+//			copyTaskSetTo(((LivingEntity)chicken).targetTasks.taskEntries, targetTasksCopy);
 		}else {
 			effected.setInvisible(true);
 			
-			copyTaskSetTo(((EntityLiving)effected).tasks.taskEntries, tasksCopy);
-			copyTaskSetTo(((EntityLiving)effected).targetTasks.taskEntries, targetTasksCopy);
+//			copyTaskSetTo(((LivingEntity)effected).tasks.taskEntries, tasksCopy);
+//			copyTaskSetTo(((LivingEntity)effected).targetTasks.taskEntries, targetTasksCopy);
 			
-			((EntityLiving)effected).tasks.taskEntries.clear();
-			((EntityLiving)effected).targetTasks.taskEntries.clear();
+//			((LivingEntity)effected).tasks.taskEntries.clear();
+//			((LivingEntity)effected).targetTasks.taskEntries.clear();
 			
 		
 			effected.noClip = true;
@@ -59,12 +55,12 @@ public class ChickenEffect extends EntityEffect{
 		effected.noClip = false;
 		effected.setNoGravity(false);
 		
-		if(effected instanceof EntityPlayer) {
-			((EntityPlayer) effected).removePotionEffect(ForgeRegistries.POTIONS.getValue(new ResourceLocation("slowness")));
-			((EntityPlayer) effected).removePotionEffect(ForgeRegistries.POTIONS.getValue(new ResourceLocation("invisibility")));
+		if(effected instanceof PlayerEntity) {
+			((PlayerEntity) effected).removePotionEffect(ForgeRegistries.POTIONS.getValue(new ResourceLocation("slowness")));
+			((PlayerEntity) effected).removePotionEffect(ForgeRegistries.POTIONS.getValue(new ResourceLocation("invisibility")));
 		}else {
-			copyTaskSetTo(tasksCopy, ((EntityLiving)effected).tasks.taskEntries);
-			copyTaskSetTo(targetTasksCopy, ((EntityLiving)effected).targetTasks.taskEntries);
+//			copyTaskSetTo(tasksCopy, ((LivingEntity)effected).tasks.taskEntries);
+//			copyTaskSetTo(targetTasksCopy, ((LivingEntity)effected).targetTasks.taskEntries);
 		}
 	}
 
@@ -73,11 +69,11 @@ public class ChickenEffect extends EntityEffect{
 			effected.setPositionAndRotation(chicken.posX, chicken.posY + 1, chicken.posZ, chicken.rotationYaw, chicken.rotationPitch);
 	}
 
-	private void copyTaskSetTo(Set<EntityAITaskEntry> tasks, Set<EntityAITaskEntry> copyTo) {
-		copyTo.clear();
-		for(EntityAITaskEntry task : tasks) {
-			copyTo.add(task);
-		}
-	}
+//	private void copyTaskSetTo(Set<EntityAITaskEntry> tasks, Set<EntityAITaskEntry> copyTo) {
+//		copyTo.clear();
+//		for(EntityAITaskEntry task : tasks) {
+//			copyTo.add(task);
+//		}
+//	}
 	
 }

@@ -3,17 +3,18 @@ package skeeter144.toc.blocks;
 import java.util.Arrays;
 import java.util.List;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BlockEvent;
 import skeeter144.toc.TOCMain;
@@ -43,7 +44,7 @@ public class BlockHarvestableOre extends CustomBlock {
 	}
 
 	@Override
-	public void onBlockClicked(IBlockState state, World world, BlockPos pos, EntityPlayer player) {
+	public void onBlockClicked(BlockState state, World world, BlockPos pos, PlayerEntity player) {
 		if (player.getCooledAttackStrength(1) < 1)
 			return;
 
@@ -55,18 +56,18 @@ public class BlockHarvestableOre extends CustomBlock {
 		if (world.isRemote)
 			return;
 
-		Network.INSTANCE.sendTo(new SpawnParticlesPKT(ParticleSystem.ORE_MINING_PARTICLE_SYSTEM, pos), (EntityPlayerMP)player);
+		Network.INSTANCE.sendTo(new SpawnParticlesPKT(ParticleSystem.ORE_MINING_PARTICLE_SYSTEM, pos), (ServerPlayerEntity)player);
 
 		float chance = ((TOCPickaxe) player.getHeldItemMainhand().getItem()).getMineChanceForOre(this);
 		if (TOCMain.rand.nextFloat() < chance) {
-			 Network.INSTANCE.sendToAllAround(new SpawnParticlesPKT(ParticleSystem.ORE_BROKEN_PARTICLE_SYSTEM, pos), world.getChunk(pos));
+			 Network.INSTANCE.sendToAllAround(new SpawnParticlesPKT(ParticleSystem.ORE_BROKEN_PARTICLE_SYSTEM, pos), (Chunk)world.getChunk(pos));
 
 			if (player.inventory.getFirstEmptyStack() == -1) {
-				player.sendMessage(new TextComponentString("Your inventory is too full to hold any more ore!"));
+				player.sendMessage(new StringTextComponent("Your inventory is too full to hold any more ore!"));
 				return;
 			}
 
-			IBlockState oldState = world.getBlockState(pos);
+			BlockState oldState = world.getBlockState(pos);
 			MinecraftForge.EVENT_BUS.post(new BlockMinedEvent(world, pos, oldState, player));
 			
 			TileEntityHarvestedOre ore = (TileEntityHarvestedOre) ((BlockHarvestedOre) TOCBlocks.harvested_ore).createTileEntity(oldState, world);
@@ -81,14 +82,9 @@ public class BlockHarvestableOre extends CustomBlock {
 			if (player != null) {
 				player.addItemStackToInventory(new ItemStack(hOre.item));
 				TOCMain.pm.getPlayer(player).levels.addExp(Levels.MINING, hOre.xpGiven);
-				 Network.INSTANCE.sendTo(new AddLevelXpPKT("Mining", hOre.xpGiven), (EntityPlayerMP) player);
+				 Network.INSTANCE.sendTo(new AddLevelXpPKT("Mining", hOre.xpGiven), (ServerPlayerEntity) player);
 			}
 		}
-	}
-
-	@Override
-	public boolean isFullCube(IBlockState state) {
-		return false;
 	}
 
 	@Override
@@ -97,9 +93,9 @@ public class BlockHarvestableOre extends CustomBlock {
 	}
 
 	public static class BlockMinedEvent extends BlockEvent {
-		public EntityPlayer player;
+		public PlayerEntity player;
 
-		public BlockMinedEvent(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+		public BlockMinedEvent(World world, BlockPos pos, BlockState state, PlayerEntity player) {
 			super(world, pos, state);
 			this.player = player;
 		}

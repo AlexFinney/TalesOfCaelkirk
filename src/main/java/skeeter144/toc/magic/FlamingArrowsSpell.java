@@ -4,13 +4,16 @@ import java.lang.reflect.Field;
 import java.util.Random;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemArrow;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
+import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.item.ArrowItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.tasks.TickableTask;
@@ -31,13 +34,14 @@ public class FlamingArrowsSpell extends Spell {
 	public void performSpellAction(Entity caster) {
 		if (!caster.world.isRemote) {
 			Entity e = Util.getPointedEntity(caster, 1, 100);
-			BlockPos pos = null;
-			if (e != null) {
-				pos = e.getPosition();
-			} else {
+			Vec3d pos = null;
+			if(e == null) {
 				RayTraceResult rtr = Util.rayTrace(caster, 100, 1);
-				if (rtr != null) {
-					pos = rtr.getBlockPos();
+				if(rtr instanceof EntityRayTraceResult) {
+					e = ((EntityRayTraceResult)rtr).getEntity();
+					pos = new Vec3d(e.getPosition());
+				}else {
+					pos = rtr.getHitVec();
 				}
 			}
 
@@ -48,13 +52,13 @@ public class FlamingArrowsSpell extends Spell {
 	}
 
 	private void spawnArrows(Entity caster, World w, double x, double y, double z) {
-		ItemArrow itemarrow = (ItemArrow) (Items.ARROW);
+		ArrowItem itemarrow = (ArrowItem) (Items.ARROW);
 		ItemStack itemstack = new ItemStack(Items.ARROW);
 
 		TOCMain.serverTaskManager.addTask(new TickableTask(200) {
 			public void tick(int worldTick) {
 				if (worldTick % 5 == 0) {
-					EntityArrow entityarrow = itemarrow.createArrow(w, itemstack, (EntityLivingBase) caster);
+					AbstractArrowEntity entityarrow = itemarrow.createArrow(w, itemstack, (LivingEntity) caster);
 
 					Random r = TOCMain.rand;
 					BlockPos target = new BlockPos(x + r.nextFloat() - .5f, y + 1, z + r.nextFloat() - .5f);
@@ -72,11 +76,11 @@ public class FlamingArrowsSpell extends Spell {
 					entityarrow.setPosition(arrowPos.getX(), arrowPos.getY(), arrowPos.getZ());
 					entityarrow.setFire(3);
 					entityarrow.setDamage(30);
-					entityarrow.pickupStatus = EntityArrow.PickupStatus.DISALLOWED;
-					w.spawnEntity(entityarrow);
+					entityarrow.pickupStatus = ArrowEntity.PickupStatus.DISALLOWED;
+					w.addEntity(entityarrow);
 
 					try {
-						Field f = EntityArrow.class.getDeclaredField("ticksInGround");
+						Field f = ArrowEntity.class.getDeclaredField("ticksInGround");
 						f.setAccessible(true);
 						f.set(entityarrow, 1100);
 					} catch (NoSuchFieldException | SecurityException | IllegalArgumentException

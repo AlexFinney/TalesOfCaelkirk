@@ -60,7 +60,7 @@ public class AdjustScreenDimPKT {
 	// public IMessage onMessage(AdjustScreenDimPKT message, MessageContext ctx) {
 	// float startingLight = HUD.lightBlockedPct;
 	// float endingLight = message.pct;
-	// Minecraft.getInstance().addScheduledTask(new Runnable() {
+	// Minecraft.getInstance().deferTask(new Runnable() {
 	//
 	// }
 	// });

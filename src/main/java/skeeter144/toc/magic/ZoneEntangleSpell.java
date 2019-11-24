@@ -2,8 +2,8 @@ package skeeter144.toc.magic;
 
 import java.util.ArrayList;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -27,7 +27,7 @@ public class ZoneEntangleSpell extends ShootableSpell{
 			for(int j = -2; j < 2; ++j) {
 				for(int k = 0; k < 3; ++k) {
 					if(TOCMain.rand.nextFloat() < .3f) {
-						BlockPos pos = new BlockPos(res.hitVec.x + i,  res.hitVec.y + k, res.hitVec.z + j);
+						BlockPos pos = new BlockPos(res.getHitVec().x + i,  res.getHitVec().y + k, res.getHitVec().z + j);
 						if(proj.world.getBlockState(pos).equals(Blocks.AIR.getDefaultState())) {
 							webs.add(pos);
 							proj.world.setBlockState(pos, Blocks.COBWEB.getDefaultState());

@@ -1,8 +1,9 @@
 package skeeter144.toc.magic;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import skeeter144.toc.combat.CombatManager.DamageType;
 import skeeter144.toc.combat.TOCDamageSource;
@@ -16,14 +17,16 @@ public class EarthCrumbleSpell extends ElementalSpell {
 
 	@Override
 	public void onProjectileImpact(RayTraceResult res, EntityWandProjectile proj) {
-		Entity e = res.entity;
-		if(e != null  && !e.world.isRemote) {
-			if(e instanceof EntityLivingBase){
-				((EntityLivingBase)e).attackEntityFrom(new TOCDamageSource(DamageType.MAGICAL, proj.getThrower()), damage);
-				if(e instanceof EntityLiving)
-					((EntityLiving)e).setRevengeTarget(proj.getThrower());
+		if(res instanceof EntityRayTraceResult) {
+			Entity e = ((EntityRayTraceResult)res).getEntity();
+			if(e != null  && !e.world.isRemote) {
+				if(e instanceof LivingEntity){
+					((LivingEntity)e).attackEntityFrom(new TOCDamageSource(DamageType.MAGICAL, proj.getThrower()), damage);
+					((LivingEntity)e).setRevengeTarget(proj.getThrower());
+				}
 			}
 		}
+		
 	}
 
 	@Override

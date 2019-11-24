@@ -2,23 +2,18 @@ package skeeter144.toc.entity.mob.npc.questgiver;
 
 import java.util.UUID;
 
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.quest.QuestManager;
-import skeeter144.toc.quest.QuestProgress;
 import skeeter144.toc.quest.quests.ANewAdventureQuest.ANewAdventureQuestProgress;
-import skeeter144.toc.util.TOCUtils;
 import skeeter144.toc.util.Util;
 
 public class EntityEvaTeffan extends EntityNPCInteractable{
@@ -27,15 +22,14 @@ public class EntityEvaTeffan extends EntityNPCInteractable{
 		this(TOCEntityType.EVA_TEFFAN, worldIn);
 	}
 	
-	public EntityEvaTeffan(EntityType<?> type, World worldIn) {
+	public EntityEvaTeffan(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.setSize(.75f, 2f);
 		if(texture == null)
 			texture = new ResourceLocation("toc:textures/entity/eva_teffan.png");
 	}
 	
 	@Override
-	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
+	protected boolean processInteract(PlayerEntity player, Hand hand) {
 		if(player.world.isRemote) {
 			return true;
 		}
@@ -64,7 +58,7 @@ public class EntityEvaTeffan extends EntityNPCInteractable{
 	}
 	
 	public void beginShearSheep(UUID playerUUID) {
-		EntityPlayerMP player = (EntityPlayerMP)world.getPlayerEntityByUUID(playerUUID);
+		ServerPlayerEntity player = (ServerPlayerEntity)world.getPlayerByUuid(playerUUID);
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
 		qp.evaTalkedTo = true;
 		
@@ -76,7 +70,7 @@ public class EntityEvaTeffan extends EntityNPCInteractable{
 	}
 	
 	public void evaFinished(UUID playerUUID) {
-		EntityPlayer player = this.world.getPlayerEntityByUUID(playerUUID);
+		PlayerEntity player = this.world.getPlayerByUuid(playerUUID);
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
 		if(!qp.evaFinished) {
 			Util.sendNewTaskMessage(player, QuestManager.A_NEW_ADVENTURE, "Go across the bridge and talk to Marlin Monroe to learn about Fishing.");
@@ -86,7 +80,7 @@ public class EntityEvaTeffan extends EntityNPCInteractable{
 	}
 	
 	public void beginCrafting(UUID playerUUID) {
-		EntityPlayer player = world.getPlayerEntityByUUID(playerUUID);
+		PlayerEntity player = world.getPlayerByUuid(playerUUID);
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
 		Util.sendNewTaskMessage(player, QuestManager.A_NEW_ADVENTURE, "Craft the components of a Fishing Rod: String (0/2), Oak Sticks (0/3)");
 		qp.craftingStarted = true;

@@ -4,10 +4,10 @@ import java.util.Collection;
 import java.util.function.Supplier;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkEvent;
 import skeeter144.toc.TOCMain;
@@ -48,7 +48,7 @@ public class AddLevelXpPKT {
 
 	public static class Handler {
 		public static void handle(final AddLevelXpPKT message, Supplier<NetworkEvent.Context> ctx) {
-			Minecraft.getInstance().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().deferTask(new Runnable() {
 				public void run() {
 					Collection<Level> levels = TOCMain.localPlayer.getPlayerLevels().getLevels();
 					for (Level l : levels) {
@@ -65,7 +65,7 @@ public class AddLevelXpPKT {
 //								bar.setDuration(200);
 //								SnackbarHandler.INSTANCE.showSnackbar(bar);
 								World w = Minecraft.getInstance().player.world;
-								EntityPlayer pl = Minecraft.getInstance().player;
+								PlayerEntity pl = Minecraft.getInstance().player;
 								w.playSound(pl, pl.getPosition(), SoundEvents.ENTITY_FIREWORK_ROCKET_BLAST,
 										SoundCategory.MASTER, 1, 1);
 								w.playSound(pl, pl.getPosition(), SoundEvents.ENTITY_FIREWORK_ROCKET_TWINKLE,

@@ -2,33 +2,34 @@ package skeeter144.toc.client.gui;
 
 import java.util.ArrayList;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.gui.widget.button.Button.IPressable;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.StringTextComponent;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.QuestDialogResponsePKT;
 import skeeter144.toc.quest.NpcDialog;
 import skeeter144.toc.util.Reference;
 
-public class DialogGui extends GuiScreen {
+public class DialogGui extends Screen {
 
 	ResourceLocation backgreoundImage = new ResourceLocation(Reference.MODID, "textures/gui/levels_background.png");
 	NpcDialog npcDialog;
 	int questId, dialogId;
-	public EntityLivingBase e;
+	public LivingEntity e;
 
-	public DialogGui(EntityLivingBase e, NpcDialog dialog) {
-		super();
+	public DialogGui(LivingEntity e, NpcDialog dialog) {
+		super(new StringTextComponent("Dialog"));
 		this.e = e;
 		this.npcDialog = dialog;
 
@@ -44,7 +45,7 @@ public class DialogGui extends GuiScreen {
 	}
 
 	public void render(int mouseX, int mouseY, float partialTicks) {
-		this.drawDefaultBackground();
+		renderBackground();
 		drawBookBackground();
 		super.render(mouseX, mouseY, partialTicks);
 		if (e != null) {
@@ -53,11 +54,6 @@ public class DialogGui extends GuiScreen {
 			popEntityRotations();
 		}
 		drawDialog();
-		if (resized) {
-			super.buttons.clear();
-			this.initGui();
-			resized = false;
-		}
 	}
 
 	private void renderEntity() {
@@ -76,7 +72,7 @@ public class DialogGui extends GuiScreen {
 		GlStateManager.enableColorMaterial();
 		RenderHelper.enableStandardItemLighting();
 		GlStateManager.translatef(0.0F, 0.0F, 0.0F);
-		RenderManager rendermanager = Minecraft.getInstance().getRenderManager();
+		EntityRendererManager rendermanager = Minecraft.getInstance().getRenderManager();
 		rendermanager.setPlayerViewY(180.0F);
 		rendermanager.setRenderShadow(false);
 		rendermanager.renderEntity(e, 0.0D, -.3D, 0.0D, 0.0F, 1.0F, false);
@@ -84,13 +80,13 @@ public class DialogGui extends GuiScreen {
 		GlStateManager.popMatrix();
 		RenderHelper.disableStandardItemLighting();
 		GlStateManager.disableRescaleNormal();
-		GlStateManager.activeTexture(OpenGlHelper.GL_TEXTURE1);
-		GlStateManager.disableTexture2D();
-		GlStateManager.activeTexture(OpenGlHelper.GL_TEXTURE0);
+//		GlStateManager.activeTexture(OpenGlHelper.GL_TEXTURE1);
+//		GlStateManager.disableTexture2D();
+//		GlStateManager.activeTexture(OpenGlHelper.GL_TEXTURE0);
 
 		FontRenderer fr = Minecraft.getInstance().fontRenderer;
 		String name = e.getName().getFormattedText();
-		fr.drawString(name, x - fr.getStringWidth(name) / 2, y - e.height * scalef - fr.FONT_HEIGHT * 1.5f + 25, 0x000000);
+		fr.drawString(name, x - fr.getStringWidth(name) / 2, y - e.getHeight() * scalef - fr.FONT_HEIGHT * 1.5f + 25, 0x000000);
 	}
 
 	public String dialog = "";
@@ -111,7 +107,7 @@ public class DialogGui extends GuiScreen {
 		String curLine = "";
 		ArrayList<String> lines = new ArrayList<String>();
 		for (String token : tokens) {
-			if (bookX + fontRenderer.getStringWidth(curLine + token + " ") - bookWidth * .17f < bookX + maxWidth) {
+			if (bookX + font.getStringWidth(curLine + token + " ") - bookWidth * .17f < bookX + maxWidth) {
 				curLine += token + " ";
 			} else {
 				lines.add(curLine);
@@ -121,15 +117,15 @@ public class DialogGui extends GuiScreen {
 		lines.add(curLine);
 
 		for (int i = 0; i < lines.size(); ++i) {
-			fontRenderer.drawString(lines.get(i), (bookX + bookWidth * .03f) * invscalef,
-					(bookY + bookWidth * .03f + fontRenderer.FONT_HEIGHT * i) * invscalef, 0x000000);
+			font.drawString(lines.get(i), (bookX + bookWidth * .03f) * invscalef,
+					(bookY + bookWidth * .03f + font.FONT_HEIGHT * i) * invscalef, 0x000000);
 		}
 	}
 
 	public String[] buttonTexts = { "", "", "", "", "" };
 	@Override
-	public void initGui() {
-		super.initGui();
+	public void init() {
+		super.init();
 		this.buttons.clear();
 		this.children.clear();
 		int buttonWidth = (int)(bookWidth * .45f);
@@ -140,33 +136,34 @@ public class DialogGui extends GuiScreen {
 			}
 		}
 		if (numButtons > 0) {
-			GuiButton temp = new GuiButton(0, 0, 0, "") {};
-			//buttonHeight = temp.height;
+			Button temp = new Button(0, 0, 0, 0, "", new IPressable() {
+				@Override
+				public void onPress(Button p_onPress_1_) {
+					
+				}
+			});
 		}
 
 		int buttonBaseY = bookY + bookHeight - (int)(1.5 * 20);
 		for (int i = 4; i >= 0; --i) {
 			if (buttonTexts[i] != null && !buttonTexts[i].equals("")) {
 
-				GuiButton btn = new GuiButton(i, 
-						bookX + bookWidth / 2 - buttonWidth - 7, 
-						buttonBaseY - i * 20 -  i,
-						buttonWidth,
-						20,
-						buttonTexts[i]) {
-					public void onClick(double mouseX, double mouseY) {
-						buttonClicked(this);
-					}
-				};
+				Button btn = new Button(bookX + bookWidth / 2 - buttonWidth - 7, buttonBaseY - i * 20 - i, buttonWidth,
+						20, buttonTexts[i], new IPressable() {
+							@Override
+							public void onPress(Button button) {
+								buttonClicked(button);
+							}
+						});
 
 				this.addButton(btn);
 			}
 		}
 	}
 
-	protected void buttonClicked(GuiButton button) {
+	protected void buttonClicked(Button btn) {
 		for (NpcDialogResponse response : npcDialog.playerResponses) {
-			if (response.responseName.equals(button.displayString)) {
+			if (response.responseName.equals(btn.getMessage())) {
 				if (response.transitionDialog != null)
 					Minecraft.getInstance().displayGuiScreen(new DialogGui(this.e, response.transitionDialog));
 				else
@@ -180,18 +177,10 @@ public class DialogGui extends GuiScreen {
 		}
 
 		for (int i = 0; i < 5; ++i) {
-			if (buttonTexts[i] != null && buttonTexts[i].equals(button.displayString)) {
+			if (buttonTexts[i] != null && buttonTexts[i].equals(btn.getMessage())) {
 
 			}
 		}
-	}
-
-	boolean resized = true;
-
-	@Override
-	public void onResize(Minecraft mcIn, int w, int h) {
-		super.onResize(mcIn, w, h);
-		resized = true;
 	}
 
 	static int bookWidth, bookHeight, bookX, bookY;
@@ -210,7 +199,7 @@ public class DialogGui extends GuiScreen {
 		bookX = sr.getScaledWidth() / 2 - bookWidth / 2 - 5;
 		bookY = (int)(sr.getScaledHeight() * .02f);
 
-		drawModalRectWithCustomSizedTexture(bookX, bookY, 0, 0, bookWidth, bookHeight, bookWidth, bookHeight);
+		blit(bookX, bookY, 0, 0, bookWidth, bookHeight, bookWidth, bookHeight);
 		GlStateManager.popMatrix();
 	}
 
@@ -243,7 +232,7 @@ public class DialogGui extends GuiScreen {
 	}
 
 	@Override
-	public boolean doesGuiPauseGame() {
+	public boolean isPauseScreen() {
 		return false;
 	}
 }

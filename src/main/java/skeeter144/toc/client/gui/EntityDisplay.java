@@ -1,13 +1,14 @@
 package skeeter144.toc.client.gui;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityGhast;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.monster.GhastEntity;
 import net.minecraft.util.math.MathHelper;
 
 public class EntityDisplay implements ToroHealthDisplay {
@@ -22,7 +23,7 @@ public class EntityDisplay implements ToroHealthDisplay {
 	private float glX;
 	private float glY;
 
-	private EntityLivingBase entity;
+	private LivingEntity entity;
 	private Entity leashedToEntity;
 	private float prevYawOffset;
 	private float prevYaw;
@@ -42,7 +43,7 @@ public class EntityDisplay implements ToroHealthDisplay {
 	}
 
 	@Override
-	public void setEntity(EntityLivingBase entity) {
+	public void setEntity(LivingEntity entity) {
 		this.entity = entity;
 		updateScale();
 	}
@@ -64,11 +65,11 @@ public class EntityDisplay implements ToroHealthDisplay {
 			glY = (float) y + HEIGHT - PADDING;
 			return;
 		}
-		int scaleY = MathHelper.ceil(RENDER_HEIGHT / entity.height);
-		int scaleX = MathHelper.ceil(RENDER_WIDTH / entity.width);
+		int scaleY = MathHelper.ceil(RENDER_HEIGHT / entity.getHeight());
+		int scaleX = MathHelper.ceil(RENDER_WIDTH / entity.getWidth());
 		scale = Math.min(scaleX, scaleY);
 		glY = (float) y + (HEIGHT / 2 + RENDER_HEIGHT / 2);
-		if (entity instanceof EntityGhast) {
+		if (entity instanceof GhastEntity) {
 			glY -= 10;
 		}
 	}
@@ -87,7 +88,7 @@ public class EntityDisplay implements ToroHealthDisplay {
 		RenderHelper.enableStandardItemLighting();
 
 		GlStateManager.translatef(0.0F, 0.0F, 0.0F);
-		RenderManager rendermanager = Minecraft.getInstance().getRenderManager();
+		EntityRendererManager rendermanager = Minecraft.getInstance().getRenderManager();
 		rendermanager.setPlayerViewY(180.0F);
 		rendermanager.setRenderShadow(false);
 		rendermanager.renderEntity(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
@@ -97,22 +98,22 @@ public class EntityDisplay implements ToroHealthDisplay {
 		RenderHelper.disableStandardItemLighting();
 		GlStateManager.disableRescaleNormal();
 		//GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
-		GlStateManager.disableTexture2D();
+//		GlStateManager.disableTexture2D();
 	//	GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
 	}
 
 	private void popEntityLeasedTo() {
-		if (entity instanceof EntityLiving && leashedToEntity != null) {
-			((EntityLiving) entity).setLeashHolder(leashedToEntity, false);
+		if (entity instanceof MobEntity && leashedToEntity != null) {
+			((MobEntity) entity).setLeashHolder(leashedToEntity, false);
 			leashedToEntity = null;
 		}
 	}
 
 	private void pushEntityLeasedTo() {
-		if (entity instanceof EntityLiving) {
-			if (((EntityLiving) entity).getLeashed()) {
-				leashedToEntity = ((EntityLiving) entity).getLeashHolder();
-				((EntityLiving) entity).setLeashHolder(null, false);
+		if (entity instanceof MobEntity) {
+			if (((MobEntity) entity).getLeashed()) {
+				leashedToEntity = ((MobEntity) entity).getLeashHolder();
+				((MobEntity) entity).setLeashHolder(null, false);
 			}
 		}
 	}

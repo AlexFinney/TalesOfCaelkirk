@@ -2,13 +2,14 @@ package skeeter144.toc.client.gui;
 
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class GuiEntityStatus extends Gui {
+public class GuiEntityStatus extends Screen {
 
 	private static final int PADDING_FROM_EDGE = 3;
 	//private static final ResourceLocation SKIN_BASIC = new ResourceLocation(ToroHealthMod.MODID, "textures/gui/default_skin_basic.png");
@@ -18,7 +19,7 @@ public class GuiEntityStatus extends Gui {
 	private final ToroHealthDisplay entityDisplay;
 	private final ToroHealthDisplay barDisplay;
 
-	private EntityLivingBase entity;
+	private LivingEntity entity;
 	private int age = 0;
 	private boolean showHealthBar = false;
 
@@ -30,11 +31,13 @@ public class GuiEntityStatus extends Gui {
 
 	int x, y;
 
+	
 	public GuiEntityStatus() {
 		this(Minecraft.getInstance());
 	}
 
 	public GuiEntityStatus(Minecraft mc) {
+		super(new StringTextComponent(""));
 		this.mc = mc;
 		entityDisplay = new EntityDisplay(mc);
 	///	heartsDisplay = new HeartsDisplay(mc, this);
@@ -70,7 +73,7 @@ public class GuiEntityStatus extends Gui {
 		}
 		
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		Gui.drawModalRectWithCustomSizedTexture(screenX - 10, screenY - 10, 0.0f, 0.0f, 160, 60, 160, 60);
+		Gui.blit(screenX - 10, screenY - 10, 0.0f, 0.0f, 160, 60, 160, 60);
 	}
 
 	private void updateGuiAge() {
@@ -163,7 +166,7 @@ public class GuiEntityStatus extends Gui {
 		showHealthBar = false;
 	}
 
-	public void setEntity(EntityLivingBase entityToTrack) {
+	public void setEntity(LivingEntity entityToTrack) {
 		if(entityToTrack == null) {
 			entity = null;
 			entityDisplay.setEntity(null);

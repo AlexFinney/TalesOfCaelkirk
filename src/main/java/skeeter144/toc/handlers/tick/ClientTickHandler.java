@@ -1,9 +1,7 @@
 package skeeter144.toc.handlers.tick;
 
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
+import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.client.Keybindings;
 import skeeter144.toc.entity.mob.mount.flying.EntityAbstractFlyingMount;

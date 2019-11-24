@@ -2,7 +2,7 @@ package skeeter144.toc.blocks.log;
 
 import java.util.List;
 
-import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import skeeter144.toc.util.Reference;
 
-public class CustomBlockLeaves extends BlockLeaves {
+public class CustomBlockLeaves extends LeavesBlock {
 
 	public CustomBlockLeaves(String name) {
 		super(Properties.create(Material.LEAVES).hardnessAndResistance(-1, 1));

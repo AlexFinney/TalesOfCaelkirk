@@ -1,8 +1,10 @@
 package skeeter144.toc.entity.projectile;
 
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.ThrowableEntity;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -13,15 +15,15 @@ import skeeter144.toc.particles.system.ParticleSystem;
 import skeeter144.toc.particles.system.PunishUndeadSystem;
 
 @Mod.EventBusSubscriber
-public class EntityWandProjectile extends EntityThrowable{
+public class EntityWandProjectile extends ThrowableEntity{
 
 	int spellId;
 	ParticleSystem trail;	
-	protected EntityLivingBase thrower;
+	protected LivingEntity thrower;
 	public Vec3d movementVector;
 	boolean repeatedTrailSpawn = true;
 	boolean spawnedOnce = false;
-	public EntityWandProjectile(EntityType<?> type, World worldIn, EntityLivingBase throwerIn, int spellId, ParticleSystem trail) {
+	public EntityWandProjectile(EntityType<? extends ThrowableEntity> type, World worldIn, LivingEntity throwerIn, int spellId, ParticleSystem trail) {
 		super(type, worldIn);
 		this.spellId = spellId;
 		Spells.getSpell(spellId);
@@ -32,19 +34,7 @@ public class EntityWandProjectile extends EntityThrowable{
 			movementVector = thrower.getLookVec();
 	}
 	
-	@Override
-	protected void onImpact(RayTraceResult result) {
-		if(result.entity != null && result.entity == thrower) { //retrun on server or client if player shoots himself
-			return;
-		}
-		((IShootableSpell)Spells.getSpell(spellId)).onProjectileImpact(result, this);
-		
-		if(trail instanceof PunishUndeadSystem) {
-			((PunishUndeadSystem)trail).kill();
-		}
-	}
-	
-	public EntityLivingBase getThrower() {
+	public LivingEntity getThrower() {
 		return thrower;
 	}
 	
@@ -96,5 +86,28 @@ public class EntityWandProjectile extends EntityThrowable{
 	
 	public void disableRepeatedParticles() {
 		repeatedTrailSpawn = false;
+	}
+
+	@Override
+	protected void onImpact(RayTraceResult result) {
+		Entity entity = null;
+		if(result instanceof EntityRayTraceResult)
+			entity = ((EntityRayTraceResult)result).getEntity();
+		
+		if(entity != null && entity == thrower) { //return on server or client if player shoots himself
+			return;
+		}
+		
+		((IShootableSpell)Spells.getSpell(spellId)).onProjectileImpact(result, this);
+		
+		if(trail instanceof PunishUndeadSystem) {
+			((PunishUndeadSystem)trail).kill();
+		}
+	}
+
+	@Override
+	protected void registerData() {
+		// TODO Auto-generated method stub
+		
 	}
 }

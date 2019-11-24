@@ -1,18 +1,13 @@
 package skeeter144.toc.entity.mob.monster;
 
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import skeeter144.toc.entity.TOCEntityType;
-import skeeter144.toc.entity.AI.EntityAICrazyRunIdle;
 import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.sounds.Sounds;
 import skeeter144.toc.util.Util;
@@ -23,7 +18,7 @@ public class EntityRat extends CustomMob{
 		this(TOCEntityType.RAT, worldIn);
 	}
 	
-	public EntityRat(EntityType<?> type, World worldIn) {
+	public EntityRat(EntityType<? extends MobEntity> type, World worldIn) {
 		super(type, worldIn);
 
 		this.attackLevel = 1;
@@ -33,15 +28,14 @@ public class EntityRat extends CustomMob{
 		this.magicLevel = 1;
 		this.xpGiven = 10;
 		
-		this.tasks.addTask(1, new EntityAISwimming(this));
-		this.tasks.addTask(2, new EntityAIAttackMelee(this, 2.0, false));
-		this.tasks.addTask(3, new EntityAICrazyRunIdle(this, 2));
-		this.tasks.addTask(5, new  EntityAIWander(this, 1.0));
-		this.tasks.addTask(6, new EntityAILookIdle(this));
+//		this.tasks.addTask(1, new EntityAISwimming(this));
+//		this.tasks.addTask(2, new EntityAIAttackMelee(this, 2.0, false));
+//		this.tasks.addTask(3, new EntityAICrazyRunIdle(this, 2));
+//		this.tasks.addTask(5, new  EntityAIWander(this, 1.0));
+//		this.tasks.addTask(6, new EntityAILookIdle(this));
+//		
+//		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
 		
-		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
-		
-		this.setSize(.5f, .5f);
 		this.setHealth(3f);
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(3);
 		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
@@ -56,7 +50,7 @@ public class EntityRat extends CustomMob{
 		super.onDeath(cause);
 		if(this.world.isRemote)
 			return; 
-		EntityPlayer pl = Util.getPlayerFromDamageSource(cause);
+		PlayerEntity pl = Util.getPlayerFromDamageSource(cause);
 		if(pl != null) {
 			//TODO
 			//pl.addItemStackToInventory(new ItemStack(TOCItems.rat_tail));

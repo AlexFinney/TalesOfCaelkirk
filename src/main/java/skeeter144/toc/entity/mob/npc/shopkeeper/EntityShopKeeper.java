@@ -6,13 +6,9 @@ import java.io.FileReader;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.EnumHand;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import skeeter144.toc.entity.mob.npc.EntityNpc;
 import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData.ItemPrice;
@@ -25,7 +21,7 @@ public class EntityShopKeeper extends EntityNpc {
 	public ShopData shopData;
 	String shopFileData = "";
 
-	public EntityShopKeeper(EntityType<?> type, World worldIn, String shopFileName) {
+	public EntityShopKeeper(EntityType<? extends EntityNpc> type, World worldIn, String shopFileName) {
 		super(type, worldIn);
 		if (!worldIn.isRemote) {
 			shopFileData = parseShopDataFile("shops/" + shopFileName + ".csv");
@@ -33,25 +29,24 @@ public class EntityShopKeeper extends EntityNpc {
 			shopData.keepId = this.getUniqueID();
 		}
 
-		this.tasks.addTask(1, new EntityAISwimming(this));
-		this.tasks.addTask(3, new EntityAIMoveTowardsRestriction(this, .5f));
-		this.tasks.addTask(5, new EntityAIWander(this, .5f));
-		this.tasks.addTask(6, new EntityAILookIdle(this));
+//		this.tasks.addTask(1, new EntityAISwimming(this));
+//		this.tasks.addTask(3, new EntityAIMoveTowardsRestriction(this, .5f));
+//		this.tasks.addTask(5, new EntityAIWander(this, .5f));
+//		this.tasks.addTask(6, new EntityAILookIdle(this));
 
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100);
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0);
 
-		this.setSize(1f, 1f);
 		this.setHealth(100f);
 	}
 
 	@Override
-	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
+	protected boolean processInteract(PlayerEntity player, Hand hand) {
 		if(player.world.isRemote) {
 			return true;
 		}
 		
-		Network.INSTANCE.sendTo(new OpenShopGuiPKT(this.shopData), (EntityPlayerMP)player);
+		Network.INSTANCE.sendTo(new OpenShopGuiPKT(this.shopData), (ServerPlayerEntity)player);
 		return true;
 	}
 	

@@ -36,7 +36,7 @@ public class SendIconUpdatePKT{
 	public static class Handler
 	{
 		public static void handle(final SendIconUpdatePKT message, Supplier<NetworkEvent.Context> ctx){
-			Minecraft.getInstance().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().deferTask(new Runnable() {
 				public void run() {
 //					if(!msg.shouldRemove)
 //						TOCUtils.addIconMarkerToMap(msg.name, new ResourceLocation(msg.rsLocDomain, msg.rsLocPath), new BlockPos(msg.x, msg.y, msg.z), msg.dim);

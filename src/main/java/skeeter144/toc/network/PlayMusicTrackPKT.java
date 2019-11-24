@@ -21,7 +21,7 @@ public class PlayMusicTrackPKT{
 	public static class Handler
 	{
 		public static void handle(final PlayMusicTrackPKT message, Supplier<NetworkEvent.Context> ctx){
-			Minecraft.getInstance().addScheduledTask(() -> {
+			Minecraft.getInstance().deferTask(() -> {
 				MusicManager.playMusicTrack(message.id);
 			});
 		}

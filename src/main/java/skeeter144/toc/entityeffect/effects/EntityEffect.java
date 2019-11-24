@@ -1,7 +1,7 @@
 package skeeter144.toc.entityeffect.effects;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.NotfyClientOfEffectPKT;
 
@@ -39,14 +39,14 @@ public abstract class EntityEffect {
 	{
 		active  = true;
 		onEffectStart();
-		if(effected instanceof EntityPlayerMP) {
-			Network.INSTANCE.sendTo(new NotfyClientOfEffectPKT(effectName, true), (EntityPlayerMP)effected);
+		if(effected instanceof ServerPlayerEntity) {
+			Network.INSTANCE.sendTo(new NotfyClientOfEffectPKT(effectName, true), (ServerPlayerEntity)effected);
 		}
 	}
 	
 	public void end(EffectEndType type) {
-		if(effected instanceof EntityPlayerMP) {
-			Network.INSTANCE.sendTo(new NotfyClientOfEffectPKT(effectName, false), (EntityPlayerMP)effected);
+		if(effected instanceof ServerPlayerEntity) {
+			Network.INSTANCE.sendTo(new NotfyClientOfEffectPKT(effectName, false), (ServerPlayerEntity)effected);
 		}
 		onEffectEnd(type);
 	}

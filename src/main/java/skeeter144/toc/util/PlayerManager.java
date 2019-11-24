@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import skeeter144.toc.data.Database;
 import skeeter144.toc.player.TOCPlayer;
 
@@ -20,11 +20,11 @@ public class PlayerManager {
 		players = new HashMap<UUID, TOCPlayer>();
 	}
 	
-	public boolean hasPlayerPreviouslyPlayed(EntityPlayer player) {
+	public boolean hasPlayerPreviouslyPlayed(PlayerEntity player) {
 		return Database.playerExists(player);
 	}
 	
-	public TOCPlayer getPlayer(EntityPlayer player) {
+	public TOCPlayer getPlayer(PlayerEntity player) {
 		@Nullable 
 		TOCPlayer pl = players.get(player.getUniqueID());
 		

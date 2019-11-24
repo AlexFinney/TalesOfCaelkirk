@@ -31,7 +31,7 @@ public class PlayerVitalsUpdatePKT {
 	public static class Handler
 	{
 		public static void handle(final PlayerVitalsUpdatePKT message, Supplier<NetworkEvent.Context> ctx){
-			Minecraft.getInstance().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().deferTask(new Runnable() {
 				@Override
 				public void run() {
 					if (TOCMain.localPlayer != null) {

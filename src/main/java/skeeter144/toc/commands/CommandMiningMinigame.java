@@ -13,8 +13,8 @@ public class CommandMiningMinigame{
 	public static void register(CommandDispatcher<CommandSource> dispatcher) {
 		dispatcher.register(Commands.literal("give").requires((sender) -> {
 			return sender.hasPermissionLevel(2);
-		}).then(Commands.argument("targets", EntityArgument.multiplePlayers())
-				.then(Commands.argument("item", ItemArgument.itemStack()).executes((p_198493_0_) -> {
+		}).then(Commands.argument("targets", EntityArgument.players())
+				.then(Commands.argument("item", ItemArgument.item()).executes((p_198493_0_) -> {
 					return 1;
 				}).then(Commands.argument("count", IntegerArgumentType.integer(1)).executes((p_198495_0_) -> {
 					return 1;
@@ -55,12 +55,12 @@ public class CommandMiningMinigame{
 //			case "start":
 //			case "begin":
 //			case "create":
-//				new MiningMinigame(sender.getEntityWorld(), (EntityPlayer)sender.getCommandSenderEntity(), sender.getPosition(), 10, 10);
+//				new MiningMinigame(sender.getEntityWorld(), (PlayerEntity)sender.getCommandSenderEntity(), sender.getPosition(), 10, 10);
 //				break;
 //			}
 //			
 //		}else {
-//			sender.sendMessage(new TextComponentString(getUsage(sender)));	
+//			sender.sendMessage(new StringTextComponent(getUsage(sender)));	
 //		}
 //	}
 //

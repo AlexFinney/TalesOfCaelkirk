@@ -1,7 +1,7 @@
 package skeeter144.toc.magic;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import skeeter144.toc.entityeffect.ServerEffectHandler;
 import skeeter144.toc.entityeffect.ServerEffectHandler.EffectAddResult;
 import skeeter144.toc.entityeffect.effects.HealWoundsEffect;
@@ -27,7 +27,7 @@ public class HealWoundsSpell extends Spell {
 
 	@Override
 	public void performSpellAction(Entity caster) {
-		EntityLivingBase el = (EntityLivingBase)caster;
+		LivingEntity el = (LivingEntity)caster;
 		EffectAddResult effRes = ServerEffectHandler.attemptAddNewEffect(el.getUniqueID(), new HealWoundsEffect(el, 400));
 	}
 	

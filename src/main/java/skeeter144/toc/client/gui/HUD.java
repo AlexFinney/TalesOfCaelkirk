@@ -5,19 +5,20 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+
+import net.minecraft.block.Blocks;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiIngame;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.IngameGui;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.GameType;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
@@ -31,7 +32,7 @@ import skeeter144.toc.player.TOCPlayer;
 import skeeter144.toc.tasks.TickableTask;
 import skeeter144.toc.util.Reference;
 
-public class HUD extends GuiIngame {
+public class HUD extends IngameGui {
 
 	public HUD(Minecraft mcIn) {
 		super(mcIn);
@@ -58,7 +59,7 @@ public class HUD extends GuiIngame {
 
 	@SubscribeEvent
 	public void dizzy(EntityViewRenderEvent.CameraSetup event) {
-		double ticks = event.getEntity().ticksExisted + event.getRenderPartialTicks();
+		double ticks = Minecraft.getInstance().player.ticksExisted + event.getRenderPartialTicks();
 
 		offset = (float) Math.sin(ticks / 15) * 25;
 
@@ -101,7 +102,7 @@ public class HUD extends GuiIngame {
 				if (wasHoldingTorch) {
 					float startR = fogR, startG = fogG, startB = fogB, startStart = fogStart, startEnd = fogEnd;
 					float endR = .1f, endG = 0f, endB = 0f, endStart = 3, endEnd = 10;
-					Minecraft.getInstance().addScheduledTask(new Runnable() {
+					Minecraft.getInstance().deferTask(new Runnable() {
 						public void run() {
 							TOCMain.clientTaskManager.addTask(new TickableTask(40) {
 								public void tick(int worldTick) {
@@ -169,21 +170,17 @@ public class HUD extends GuiIngame {
 		GlStateManager.disableAlphaTest();
 		GlStateManager.pushMatrix();
 		GlStateManager.translatef(0.0F, (float) (this.scaledHeight - 48), 0.0F);
-		this.mc.profiler.startSection("chat");
-		this.persistantChatGUI.drawChat(this.ticks);
-		this.mc.profiler.endSection();
 		GlStateManager.popMatrix();
 	}
 
 	void renderVanillaModified(float partialTicks) {
 		// super.renderGameOverlay(partialTicks);
-
 		this.scaledWidth = this.mc.mainWindow.getScaledWidth();
 		this.scaledHeight = this.mc.mainWindow.getScaledHeight();
 		FontRenderer fontrenderer = this.getFontRenderer();
 		GlStateManager.enableBlend();
 		if (Minecraft.isFancyGraphicsEnabled()) {
-			this.func_212303_b(this.mc.getRenderViewEntity());
+			 renderVignette(mc.getRenderViewEntity());
 		} else {
 			GlStateManager.enableDepthTest();
 			GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
@@ -199,18 +196,18 @@ public class HUD extends GuiIngame {
 
 		if (!this.mc.gameSettings.hideGUI) {
 			GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-			this.mc.getTextureManager().bindTexture(ICONS);
+			this.mc.getTextureManager().bindTexture(GUI_ICONS_LOCATION);
 			GlStateManager.enableBlend();
 			GlStateManager.enableAlphaTest();
-			this.renderAttackIndicator(partialTicks);
+			this.renderAttackIndicator();
 			GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
 					GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
 					GlStateManager.DestFactor.ZERO);
-			this.mc.profiler.startSection("bossHealth");
-			this.overlayBoss.renderBossHealth();
-			this.mc.profiler.endSection();
+			this.mc.getProfiler().startSection("bossHealth");
+			this.overlayBoss.render();
+			this.mc.getProfiler().endSection();
 			GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-			this.mc.getTextureManager().bindTexture(ICONS);
+			//this.mc.getTextureManager().bindTexture(ICONS);
 			if (this.mc.playerController.shouldDrawHUD()) {
 				// this.renderPlayerStats();
 			}
@@ -266,7 +263,7 @@ public class HUD extends GuiIngame {
 			this.overlayPlayerList.setVisible(false);
 		} else {
 			this.overlayPlayerList.setVisible(true);
-			this.overlayPlayerList.renderPlayerlist(this.scaledWidth, scoreboard, scoreobjective1);
+			this.overlayPlayerList.render(this.scaledWidth, scoreboard, scoreobjective1);
 		}
 
 		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -280,7 +277,7 @@ public class HUD extends GuiIngame {
 		int screenWidth = sr.getScaledWidth();
 		int screenHeight = sr.getScaledHeight();
 		Byte light = new Byte((byte) (lightBlockedPct * 255));
-		drawRect(0, 0, screenWidth, screenHeight, light << 24);
+		fill(0, 0, screenWidth, screenHeight, light << 24);
 	}
 
 	void drawEffectIcons() {
@@ -301,7 +298,7 @@ public class HUD extends GuiIngame {
 				ResourceLocation icon = new ResourceLocation(Reference.MODID,
 						"textures/icons/effects/" + activeEffects.get(i) + ".png");
 				tm.bindTexture(icon);
-				drawScaledCustomSizeModalRect((int) (iconX - iconSize / 2f), (int) (y), 0, 0, iconSize, iconSize,
+				blit((int) (iconX - iconSize / 2f), (int) (y), 0, 0, iconSize, iconSize,
 						iconSize, iconSize, iconSize, iconSize);
 			}
 
@@ -323,13 +320,13 @@ public class HUD extends GuiIngame {
 		int barX = screenWidth / 2 - barWidth / 2;
 		int barY = (screenHeight - 41 - barHeight);
 
-		drawRect(barX, barY, barX + barWidth, barY + barHeight, 0xFF000000);
+		fill(barX, barY, barX + barWidth, barY + barHeight, 0xFF000000);
 		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		tm.bindTexture(healthBar);
-		drawScaledCustomSizeModalRect(barX, barY, 0, 0, barWidth, barHeight, (int) (barWidth * scale), barHeight,
+		blit(barX, barY, 0, 0, barWidth, barHeight, (int) (barWidth * scale), barHeight,
 				barWidth, barHeight);
 		tm.bindTexture(emptyBarHealth);
-		drawModalRectWithCustomSizedTexture(barX, barY, 0, 0, barWidth, barHeight, barWidth, barHeight);
+		blit(barX, barY, 0, 0, barWidth, barHeight, barWidth, barHeight);
 
 		String s = curHealth + "/" + maxhealth;
 		drawString(Minecraft.getInstance().fontRenderer, s, barX + barWidth / 2 - 20, barY + barHeight / 2 - 4,
@@ -344,13 +341,13 @@ public class HUD extends GuiIngame {
 		GlStateManager.enableBlend();
 		GlStateManager.popMatrix();
 
-		if (((EntityPlayer) TOCMain.localPlayer.mcEntity).getHeldItem(EnumHand.MAIN_HAND)
+		if (((PlayerEntity) TOCMain.localPlayer.mcEntity).getHeldItem(Hand.MAIN_HAND)
 				.getItem() instanceof ISpecialAttackWeapon) {
 			GlStateManager.pushMatrix();
 			GlStateManager.scaled(.25, .25, .25);
 
 			scale = .5f;
-			String name = ((EntityPlayer) TOCMain.localPlayer.mcEntity).getHeldItem(EnumHand.MAIN_HAND).getItem()
+			String name = ((PlayerEntity) TOCMain.localPlayer.mcEntity).getHeldItem(Hand.MAIN_HAND).getItem()
 					.getRegistryName().toString();
 			Pair p = TOCMain.localPlayer.specialAttackCooldowns.get(name);
 
@@ -361,16 +358,16 @@ public class HUD extends GuiIngame {
 			}
 
 			tm.bindTexture(healthBar);
-			drawScaledCustomSizeModalRect(barX * 4 + barWidth * 4 - barWidth, barY * 4 - barHeight, 0, 0, barWidth,
+			blit(barX * 4 + barWidth * 4 - barWidth, barY * 4 - barHeight, 0, 0, barWidth,
 					barHeight, (int) (barWidth * scale), barHeight, barWidth, barHeight);
 
 			if (scale == 1) {
-				drawScaledCustomSizeModalRect(barX * 4 + (int) (barWidth * 4.05f), barY * 4 - barHeight, 0, 0, barWidth,
+				blit(barX * 4 + (int) (barWidth * 4.05f), barY * 4 - barHeight, 0, 0, barWidth,
 						barHeight, (int) (barWidth * .1f), barHeight, barWidth, barHeight);
 			}
 
 			tm.bindTexture(emptyBarHealth);
-			drawModalRectWithCustomSizedTexture(barX * 4 + barWidth * 4 - barWidth, barY * 4 - barHeight, 0, 0,
+			blit(barX * 4 + barWidth * 4 - barWidth, barY * 4 - barHeight, 0, 0,
 					barWidth, barHeight, barWidth, barHeight);
 
 			GlStateManager.popMatrix();
@@ -391,13 +388,13 @@ public class HUD extends GuiIngame {
 		int barX = screenWidth / 2 - barWidth / 2;
 		int barY = (screenHeight - 41);
 
-		drawRect(barX, barY, barX + barWidth, barY + barHeight, 0xFF000000);
+		fill(barX, barY, barX + barWidth, barY + barHeight, 0xFF000000);
 		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		tm.bindTexture(manaBar);
-		drawScaledCustomSizeModalRect(barX, barY, 0, 0, barWidth, barHeight, (int) (barWidth * scale), barHeight,
+		blit(barX, barY, 0, 0, barWidth, barHeight, (int) (barWidth * scale), barHeight,
 				barWidth, barHeight);
 		tm.bindTexture(emptyBarMana);
-		drawModalRectWithCustomSizedTexture(barX, barY, 0, 0, barWidth, barHeight, barWidth, barHeight);
+		blit(barX, barY, 0, 0, barWidth, barHeight, barWidth, barHeight);
 
 		String s = curMana + "/" + maxMana;
 		int stringWidth = Minecraft.getInstance().fontRenderer.getStringWidth(s);
@@ -429,7 +426,7 @@ public class HUD extends GuiIngame {
 			fr.drawString(msg.string, msg.x, msg.y, 0x000000);
 			tm.bindTexture(new ResourceLocation(msg.icon));
 			GlStateManager.color3f(1f, 1f, 1f);
-			drawModalRectWithCustomSizedTexture(msg.x - iconDim, (int) (msg.y - iconDim / 4f), iconDim, iconDim,
+			blit(msg.x - iconDim, (int) (msg.y - iconDim / 4f), iconDim, iconDim,
 					iconDim, iconDim, iconDim, iconDim);
 			msg.y += xpMessageSpeed;
 		}

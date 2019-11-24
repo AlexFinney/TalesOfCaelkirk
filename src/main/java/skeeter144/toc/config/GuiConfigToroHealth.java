@@ -1,6 +1,6 @@
 package skeeter144.toc.config;
 //
-//import net.minecraft.client.gui.GuiScreen;
+//import net.minecraft.client.gui.Screen;
 //import net.minecraftforge.common.config.ConfigElement;
 //import net.minecraftforge.common.config.Configuration;
 //import net.minecraftforge.fml.client.config.GuiConfig;
@@ -8,7 +8,7 @@ package skeeter144.toc.config;
 //
 //public class GuiConfigToroHealth extends GuiConfig {
 //
-//	public GuiConfigToroHealth(GuiScreen parent) {
+//	public GuiConfigToroHealth(Screen parent) {
 //		super (parent, new ConfigElement(ConfigurationHandler.config.getCategory(Configuration.CATEGORY_CLIENT)).getChildElements(),
 //				Reference.MODID,
 //				false,

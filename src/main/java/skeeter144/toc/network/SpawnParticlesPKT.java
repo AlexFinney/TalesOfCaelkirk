@@ -53,7 +53,7 @@ public class SpawnParticlesPKT{
 	{
 		public static void handle(final SpawnParticlesPKT message, Supplier<NetworkEvent.Context> ctx){
 			int id = (int) message.data[0];
-			Minecraft.getInstance().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().deferTask(new Runnable() {
 				public void run() {
 					World w = Minecraft.getInstance().player.world;
 					ParticleSystem system = ParticleSystem.getNewParticleSystem(id);

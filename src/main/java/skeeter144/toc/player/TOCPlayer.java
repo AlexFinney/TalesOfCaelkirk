@@ -6,8 +6,8 @@ import java.util.HashMap;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import skeeter144.toc.entity.TOCEntity;
 import skeeter144.toc.network.HealthManaRegenUpdatePKT;
 import skeeter144.toc.network.Network;
@@ -28,7 +28,7 @@ public class TOCPlayer extends TOCEntity{
 	public HashMap<String, Pair<Integer, Integer>> specialAttackCooldowns = new HashMap<String, Pair<Integer, Integer>>();
 	
 	
-	public TOCPlayer(EntityPlayer mcPlayer)
+	public TOCPlayer(PlayerEntity mcPlayer)
 	{
 		super(mcPlayer, new EntityLevels(mcPlayer.getUniqueID()));
 		curHealth = maxHealth = getMaxHealth();
@@ -40,7 +40,7 @@ public class TOCPlayer extends TOCEntity{
 		
 	}
 	
-	public TOCPlayer(EntityPlayer mcPlayer, EntityLevels levels, int curHealth, int curMana) {
+	public TOCPlayer(PlayerEntity mcPlayer, EntityLevels levels, int curHealth, int curMana) {
 		super(mcPlayer, levels);
 		this.maxHealth = getMaxHealth();
 		this.maxMana = getMaxMana();
@@ -93,7 +93,7 @@ public class TOCPlayer extends TOCEntity{
 			curMana = 0;
 		
 		
-		skeeter144.toc.network.Network.INSTANCE.sendTo(new PlayerVitalsUpdatePKT(curHealth, curMana), (EntityPlayerMP) mcEntity);
+		skeeter144.toc.network.Network.INSTANCE.sendTo(new PlayerVitalsUpdatePKT(curHealth, curMana), (ServerPlayerEntity) mcEntity);
 	}
 
 	//only called on server
@@ -121,7 +121,7 @@ public class TOCPlayer extends TOCEntity{
 		
 		for(String stack : specialAttackCooldowns.keySet()) {
 			Integer cooldown = specialAttackCooldowns.get(stack).getLeft() - 1;
-			Network.INSTANCE.sendTo(new SpecialAttackCooldownPKT(stack, (byte)cooldown.intValue(), (byte)20),  (EntityPlayerMP) mcEntity);
+			Network.INSTANCE.sendTo(new SpecialAttackCooldownPKT(stack, (byte)cooldown.intValue(), (byte)20),  (ServerPlayerEntity) mcEntity);
 			if(cooldown <= 0)
 				stacksToRemove.add(stack);
 			
@@ -159,7 +159,7 @@ public class TOCPlayer extends TOCEntity{
 		manaRegen = mana;
 		
 		if(!mcEntity.world.isRemote)
-			Network.INSTANCE.sendTo(new HealthManaRegenUpdatePKT(healthRegen, manaRegen), (EntityPlayerMP)mcEntity);
+			Network.INSTANCE.sendTo(new HealthManaRegenUpdatePKT(healthRegen, manaRegen), (ServerPlayerEntity)mcEntity);
 	}
 	
 	public int getMaxHealth() {

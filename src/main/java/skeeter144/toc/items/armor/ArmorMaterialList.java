@@ -1,6 +1,6 @@
 package skeeter144.toc.items.armor;
 
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.Ingredient;
@@ -29,12 +29,12 @@ public enum ArmorMaterialList implements IArmorMaterial{
 	}
 	
 	@Override
-	public int getDurability(EntityEquipmentSlot slot) {
+	public int getDurability(EquipmentSlotType slot) {
 		return max_damage_array[slot.getIndex()]  * durability;
 	}
 
 	@Override
-	public int getDamageReductionAmount(EntityEquipmentSlot slot) {
+	public int getDamageReductionAmount(EquipmentSlotType slot) {
 		return damageReductionAmount[slot.getIndex()];
 	}
 

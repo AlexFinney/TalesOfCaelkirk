@@ -3,8 +3,8 @@ package skeeter144.toc.handlers;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -16,7 +16,7 @@ public class PlayerInventoryHandler {
 
 	@SubscribeEvent
 	public void addCoinsToInventory(CoinsAddedToInventoryEvent e) {
-		EntityPlayer player = (EntityPlayer)e.getEntityLiving();
+		PlayerEntity player = (PlayerEntity)e.getEntityLiving();
 		handleCoinsAdded(player, e.amount, true);
 	}
 	
@@ -24,11 +24,11 @@ public class PlayerInventoryHandler {
 	public void playerPickUpItem(EntityItemPickupEvent e) {
 		Item i = e.getItem().getItem().getItem();
 //		if(i.equals(TOCItems.copper_coin)  || i.equals(TOCItems.silver_coin) || i.equals(TOCItems.gold_coin))
-//			handleCoinsAdded(e.getEntityPlayer(), null, false);
+//			handleCoinsAdded(e.getPlayerEntity(), null, false);
 		
 	}
 	
-	private void handleCoinsAdded(EntityPlayer player, ItemPrice coins, boolean shouldAdd) {
+	private void handleCoinsAdded(PlayerEntity player, ItemPrice coins, boolean shouldAdd) {
 		List<ItemStack> items = new ArrayList<ItemStack>();
 		
 		if(shouldAdd) {
@@ -70,7 +70,7 @@ public class PlayerInventoryHandler {
 	
 	public static class CoinsAddedToInventoryEvent extends LivingEvent{
 		ItemPrice amount;
-		public CoinsAddedToInventoryEvent(EntityLivingBase entity, ItemPrice amount) {
+		public CoinsAddedToInventoryEvent(LivingEntity entity, ItemPrice amount) {
 			super(entity);
 			this.amount = amount;
 		}
@@ -79,7 +79,7 @@ public class PlayerInventoryHandler {
 	
 	public static class ItemAddedToInventoryEvent extends LivingEvent{
 		public ItemStack stack;
-		public ItemAddedToInventoryEvent(EntityPlayer entity, ItemStack stack) {
+		public ItemAddedToInventoryEvent(PlayerEntity entity, ItemStack stack) {
 			super(entity);
 			this.stack = stack;
 		}

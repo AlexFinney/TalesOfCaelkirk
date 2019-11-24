@@ -1,8 +1,9 @@
 package skeeter144.toc.client.gui;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.ResourceLocation;
 import skeeter144.toc.util.Reference;
 
@@ -13,12 +14,12 @@ public class BarDisplay extends AbstractHealthDisplay implements ToroHealthDispl
 	private static final int BAR_WIDTH = 92;
 
 	private final Minecraft mc;
-	private final Gui gui;
+	private final Screen gui;
 	private int y;
 	private int barX;
 	private int barY;
 
-	public BarDisplay(Minecraft mc, Gui gui) {
+	public BarDisplay(Minecraft mc, Screen gui) {
 		this.mc = mc;
 		this.gui = gui;
 	}
@@ -56,10 +57,10 @@ public class BarDisplay extends AbstractHealthDisplay implements ToroHealthDispl
 	private void renderHealthBar() {
 		Color color = determineColor();
 		float percent = entity.getHealth() / entity.getMaxHealth();
-		gui.drawTexturedModalRect(barX, barY, 0, color.ordinal() * 5 * 2, BAR_WIDTH, 5);
+//		gui.drawTexturedModalRect(barX, barY, 0, color.ordinal() * 5 * 2, BAR_WIDTH, 5);
 		int healthWidth = (int) (percent * BAR_WIDTH);
 		if (healthWidth > 0) {
-			gui.drawTexturedModalRect(barX, barY, 0, color.ordinal() * 5 * 2 + 5, healthWidth, 5);
+//			gui.drawTexturedModalRect(barX, barY, 0, color.ordinal() * 5 * 2 + 5, healthWidth, 5);
 		}
 	}
 

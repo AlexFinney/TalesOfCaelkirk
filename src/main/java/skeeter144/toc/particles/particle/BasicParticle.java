@@ -2,7 +2,10 @@ package skeeter144.toc.particles.particle;
 
 import java.awt.Color;
 
+import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.world.World;
 
 public class BasicParticle extends Particle {
@@ -15,13 +18,23 @@ public class BasicParticle extends Particle {
 		this.motionY = yVel;
 		this.motionZ = zVel;
 		
-		this.particleScale = size;
+		multipleParticleScaleBy(size);
 		this.setMaxAge(20);
-		this.setParticleTextureIndex(5);
 		
 		Color c = new Color(color);
 		this.setColor((float) c.getRed() / 255, (float)c.getGreen() / 255, (float)c.getBlue() / 255);
 		this.particleGravity = useGravity ? 1 : 0;
+	}
+
+	@Override
+	public void renderParticle(BufferBuilder buffer, ActiveRenderInfo entityIn, float partialTicks, float rotationX,
+			float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+		
+	}
+
+	@Override
+	public IParticleRenderType getRenderType() {
+		return IParticleRenderType.PARTICLE_SHEET_LIT;
 	}
 	
 	

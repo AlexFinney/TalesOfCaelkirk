@@ -16,7 +16,7 @@ public class ItemCraftingQueueAddedPKT{
 	public static class Handler
 	{
 		public static void handle(final ItemCraftingQueueAddedPKT message, Supplier<NetworkEvent.Context> ctx){
-			Minecraft.getInstance().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().deferTask(new Runnable() {
 				public void run() {
 					if(Minecraft.getInstance().currentScreen instanceof SmeltingGui) {
 						((SmeltingGui)Minecraft.getInstance().currentScreen).incrementTotalCrafted();

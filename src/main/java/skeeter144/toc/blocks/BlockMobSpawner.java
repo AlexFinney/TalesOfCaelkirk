@@ -1,14 +1,15 @@
 package skeeter144.toc.blocks;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import skeeter144.toc.entity.tile.BlockTileEntity;
@@ -22,17 +23,12 @@ public class BlockMobSpawner extends BlockTileEntity<TileEntityMobSpawner> {
 		super(Properties.create(Material.ROCK).hardnessAndResistance(-1), name);
 	}
 	
-	@Override
-	public boolean isCollidable() {
-		return true;
-	}
-	
 	public BlockRenderLayer getBlockLayer() {
 		return BlockRenderLayer.TRANSLUCENT;
 	}
 	@Override
-	public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(playerIn.isCreative()){
+	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+		if(player.isCreative()){
 			//TODO: show gui
 			//playerIn.show(TOCMain.instance, Guis.MOB_SPAWNER_GUI, worldIn, pos.getX(),
 			//		pos.getY(), pos.getZ());
@@ -47,7 +43,7 @@ public class BlockMobSpawner extends BlockTileEntity<TileEntityMobSpawner> {
 	}
 
 	@Override
-	public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
+	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
 		return new TileEntityMobSpawner(null);
 	}
 	

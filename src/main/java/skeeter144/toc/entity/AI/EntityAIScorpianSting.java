@@ -1,12 +1,13 @@
 package skeeter144.toc.entity.AI;
 
-import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.world.chunk.Chunk;
 import skeeter144.toc.client.entity.animation.Animations;
 import skeeter144.toc.entity.mob.monster.EntityGiantScorpian;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.network.PlayMobAnimationPKT;
 
-public class EntityAIScorpianSting extends EntityAIBase{
+public class EntityAIScorpianSting extends Goal{
 
 	EntityGiantScorpian e;
 	float lastAttackTime, ticksBetweenAttacks, maxDamage;
@@ -34,7 +35,7 @@ public class EntityAIScorpianSting extends EntityAIBase{
 	public void startExecuting()
 	{
 		Network.INSTANCE.sendToAllAround(new PlayMobAnimationPKT(e,Animations.SCORPIAN_STING), 
-																	 e.world.getChunk(e.getPosition()));
+																	 (Chunk)e.world.getChunk(e.getPosition()));
 		
 		lastAttackTime = e.ticksExisted;
 	}

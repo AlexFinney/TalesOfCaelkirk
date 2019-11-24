@@ -1,6 +1,9 @@
 package skeeter144.toc.particles.particle;
 
+import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -17,8 +20,8 @@ public class PunishUndeadTrailParticle extends Particle{
 		this.motionZ = 0;
 		this.forward = forward;
 		this.setMaxAge(100);
-		this.setParticleTextureIndex(1);
-		this.particleScale = 2.0f;
+//		this.setParticleTextureIndex(1);
+		this.multipleParticleScaleBy(2.0f);
 	}
 
 	@Override
@@ -41,5 +44,16 @@ public class PunishUndeadTrailParticle extends Particle{
 		 this.posX = posX + forward.x * dist;
 	     this.posY = posY + forward.y * dist;
 	     this.posZ = posZ + forward.z * dist;
+	}
+
+	@Override
+	public void renderParticle(BufferBuilder buffer, ActiveRenderInfo entityIn, float partialTicks, float rotationX,
+			float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+		
+	}
+
+	@Override
+	public IParticleRenderType getRenderType() {
+		return IParticleRenderType.CUSTOM;
 	}
 }

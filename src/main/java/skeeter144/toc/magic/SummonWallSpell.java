@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.projectile.EntityWandProjectile;
@@ -25,10 +27,12 @@ public class SummonWallSpell extends ShootableSpell{
 			return;
 		proj.getThrower().noClip = true;
 
-		if(res.entity != null)
+		if(res instanceof EntityRayTraceResult)
 			return;
 		
-		if(proj.world.getBlockState(res.getBlockPos()) == Blocks.AIR.getDefaultState())
+		BlockRayTraceResult blockRay = (BlockRayTraceResult)res;
+		
+		if(proj.world.getBlockState(new BlockPos(res.getHitVec())) == Blocks.AIR.getDefaultState())
 			return;
 		
 		final Block[] blocks = new Block[] {Blocks.STONE_BRICKS, Blocks.COBBLESTONE, Blocks.MOSSY_COBBLESTONE};
@@ -40,14 +44,14 @@ public class SummonWallSpell extends ShootableSpell{
 			
 			public void tick(int worldTick) {
 				if(worldTick % 10 == 0) {
-					EnumFacing wallDirection = res.sideHit;
-					BlockPos genPos = new BlockPos(res.getBlockPos());
+					Direction wallDirection = blockRay.getFace();
+					BlockPos genPos = new BlockPos(blockRay.getPos());
 					
-					if(wallDirection == EnumFacing.UP) {
+					if(wallDirection == Direction.UP) {
 						wallDirection = proj.getHorizontalFacing();
 						wallDirection = wallDirection.rotateY();
 						genPos = genPos.add(0, 3, 0);
-					}else if(wallDirection == EnumFacing.DOWN) {
+					}else if(wallDirection == Direction.DOWN) {
 						wallDirection = proj.getHorizontalFacing();
 						genPos = genPos.add(0, -3, 0);
 						wallDirection = wallDirection.rotateY();

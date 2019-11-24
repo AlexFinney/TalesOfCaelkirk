@@ -7,25 +7,25 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 
 public class CommandSetXp{
 	public static void register(CommandDispatcher<CommandSource> dispatcher) {
 		dispatcher.register(Commands.literal("setxp").requires((sender) -> {
 			return sender.hasPermissionLevel(3);
 		})
-		.then(Commands.argument("target", EntityArgument.singlePlayer()))
+		.then(Commands.argument("target", EntityArgument.player()))
 			.then(Commands.argument("level", StringArgumentType.string()))
 				.then(Commands.argument("amount", IntegerArgumentType.integer()))
 					.executes((sender) -> {	
-						return setXp(EntityArgument.getOnePlayer(sender, "targets"), 
+						return setXp(EntityArgument.getPlayer(sender, "targets"), 
 								StringArgumentType.getString(sender, "level"),
 								IntegerArgumentType.getInteger(sender, "amount"));
 					})
 		);
 	}
 
-	private static int setXp(EntityPlayerMP player, String level, Integer amount) {
+	private static int setXp(ServerPlayerEntity player, String level, Integer amount) {
 		return 1;
 	}
 	
@@ -55,19 +55,19 @@ public class CommandSetXp{
 //			return;
 //		
 //		if(!server.isSinglePlayer()) {
-//			sender.sendMessage(new TextComponentString("You cannot use setxp on a multiplayer server!"));
+//			sender.sendMessage(new StringTextComponent("You cannot use setxp on a multiplayer server!"));
 //			return;
 //		}
 //		
 //		if(args.length != 2) {
-//			sender.sendMessage(new TextComponentString("Usage: " + getUsage(sender)));
+//			sender.sendMessage(new StringTextComponent("Usage: " + getUsage(sender)));
 //			return;
 //		}
 //		
 //		String level = args[0];
 //		int amount = Integer.parseInt(args[1]);
 //		
-//		TOCPlayer pl = TOCMain.pm.getPlayer((EntityPlayer) sender.getCommandSenderEntity());
+//		TOCPlayer pl = TOCMain.pm.getPlayer((PlayerEntity) sender.getCommandSenderEntity());
 //		int prevXp = 0;
 //		if(pl != null) {
 //			Collection<Level> levels = pl.getPlayerLevels().getLevels();
@@ -75,11 +75,11 @@ public class CommandSetXp{
 //				if(l.getName().equalsIgnoreCase(level)) {
 //					prevXp = l.getXp();
 //					l.setXp(amount);
-//					sender.sendMessage(new TextComponentString(level + " xp updated to " + amount + "!" ));
+//					sender.sendMessage(new StringTextComponent(level + " xp updated to " + amount + "!" ));
 //					break;
 //				}
 //			}
-//			Network.INSTANCE.sendTo(new AddLevelXpMessage(level, amount - prevXp), (EntityPlayerMP)sender.getCommandSenderEntity());
+//			Network.INSTANCE.sendTo(new AddLevelXpMessage(level, amount - prevXp), (ServerPlayerEntity)sender.getCommandSenderEntity());
 //		}
 //	}
 //

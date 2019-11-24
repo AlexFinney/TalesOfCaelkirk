@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import skeeter144.toc.player.EntityLevels;
 import skeeter144.toc.player.TOCPlayer;
 import skeeter144.toc.quest.QuestProgress;
@@ -22,7 +22,7 @@ public class Database {
 	static String user = "ZkCYQE6thv";
 	static String pass = "IgeKU0szPG";
 
-	public static TOCPlayer createPlayerInDatabase(EntityPlayer player) 
+	public static TOCPlayer createPlayerInDatabase(PlayerEntity player) 
 	{
 		Database.executeUpdate(String.format("insert ignore into Players values(\"" + player.getUniqueID() + "\", NOW(), NOW(), 20, 12, \'%s\')", 
 				player.getDisplayName().getString()));
@@ -33,13 +33,13 @@ public class Database {
 		return tocPlayer;
 	}
 
-	public static boolean playerExists(EntityPlayer player) {
+	public static boolean playerExists(PlayerEntity player) {
 		if (getUserObject(player) != null)
 			return true;
 		return false;
 	}
 
-	public static TOCPlayer getPlayer(EntityPlayer player) {
+	public static TOCPlayer getPlayer(PlayerEntity player) {
 		return getUserObject(player);
 	}
 
@@ -52,7 +52,7 @@ public class Database {
 		updatePlayerLevels(player.levels);
 	}
 
-	private static TOCPlayer getUserObject(EntityPlayer player) {
+	private static TOCPlayer getUserObject(PlayerEntity player) {
 		String s = String.format("SELECT * FROM Players WHERE UUID = \"%s\"", player.getUniqueID().toString());
 		ArrayList<ArrayList<String>> rows = Database.executeQuery(s);
 

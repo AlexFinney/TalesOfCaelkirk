@@ -2,24 +2,26 @@ package skeeter144.toc.client.gui;
 
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.util.text.StringTextComponent;
 import skeeter144.toc.minigames.MiningMinigame_Old;
 import skeeter144.toc.minigames.MiningMinigame_Old.GameTile;
 import skeeter144.toc.util.Mouse;
 import skeeter144.toc.util.Util;
 
-public class MiningGameGui extends GuiScreen{
+public class MiningGameGui extends Screen{
 	MiningMinigame_Old game = null;
 	boolean wasMouseClicked = false;
 	public MiningGameGui() {
+		super(new StringTextComponent(""));
 		game = new MiningMinigame_Old(10, 10);
 	}
 	
 	
 	boolean mouseClicked = false;
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		this.drawDefaultBackground();
+		this.renderBackground();
 		drawBlockIcons();
 		handleMouseClicks();
 	}
@@ -83,18 +85,18 @@ public class MiningGameGui extends GuiScreen{
 				}
 				
 				tm.bindTexture(tile.block.icon);
-				drawModalRectWithCustomSizedTexture(x * 17, y * 17, 0, 0, 16, 16, 16, 16);
+				blit(x * 17, y * 17, 0, 0, 16, 16, 16, 16);
 				
 				if(tile.tileItem != null) {
 					tm.bindTexture(tile.tileItem.icon);
 				}
-				drawModalRectWithCustomSizedTexture(x * 17, y * 17, 0, 0, 16, 16, 16, 16);
+				blit(x * 17, y * 17, 0, 0, 16, 16, 16, 16);
 			}
 		}
 		
 		if(game.draggedTile != null) {
 			tm.bindTexture(game.draggedTile.block.icon);
-			drawModalRectWithCustomSizedTexture(-game.dragOffsetX + adjustedMouseX, -game.dragOffsetY + adjustedMouseY, 0, 0, 16, 16, 16, 16);
+			blit(-game.dragOffsetX + adjustedMouseX, -game.dragOffsetY + adjustedMouseY, 0, 0, 16, 16, 16, 16);
 		
 			if(!Util.inRange(mouseTileX, 0, game.board.tiles.length - 1) || 
 					   !Util.inRange(mouseTileY, 0, game.board.tiles[0].length - 1)) {
@@ -103,21 +105,21 @@ public class MiningGameGui extends GuiScreen{
 			
 			if(game.board.tileAt(mouseTileY, mouseTileY).tileItem == null &&( mouseTileX != game.draggedTile.x || mouseTileY != game.draggedTile.y)) {
 				tm.bindTexture(game.board.tileAt(mouseTileX, mouseTileY).block.icon);
-				drawModalRectWithCustomSizedTexture(game.draggedTile.x * 17, game.draggedTile.y  * 17, 0, 0, 16, 16, 16, 16);
+				blit(game.draggedTile.x * 17, game.draggedTile.y  * 17, 0, 0, 16, 16, 16, 16);
 			}
 		}
 		
 		//highlight main selected tile
 		if(game.selectedTile != null) {
-			drawRect(game.selectedTile.x*17, game.selectedTile.y*17, game.selectedTile.x*17 + 16, game.selectedTile.y*17 + 16, 0xA0FFFF00);
-			drawRect(0,0,0,0, 0xFFFFFFFF);
+			fill(game.selectedTile.x*17, game.selectedTile.y*17, game.selectedTile.x*17 + 16, game.selectedTile.y*17 + 16, 0xA0FFFF00);
+			fill(0,0,0,0, 0xFFFFFFFF);
 		}
 		
 		//highlight moveable tiles
 		if(game.breakableTiles != null) {
 			for(GameTile gt : game.breakableTiles) {
-				drawRect(gt.x*17, gt.y*17, gt.x*17 + 16, gt.y*17 + 16, 0x80ff9900);
-				drawRect(0,0,0,0, 0xFFFFFFFF);
+				fill(gt.x*17, gt.y*17, gt.x*17 + 16, gt.y*17 + 16, 0x80ff9900);
+				fill(0,0,0,0, 0xFFFFFFFF);
 			}
 		}
 		

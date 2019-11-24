@@ -40,16 +40,17 @@ public class Keybindings {
 		
 		int i = 0;
 		for(KeyBinding kb : Minecraft.getInstance().gameSettings.keyBindings) {
-			if(kb.equals(Minecraft.getInstance().gameSettings.keyBindInventory)) {
-				Minecraft.getInstance().gameSettings.keyBindInventory = new KeyBinding("key.inventory", GLFW.GLFW_KEY_V, "key.categories.inventory");
-				Minecraft.getInstance().gameSettings.keyBindings[i] = Minecraft.getInstance().gameSettings.keyBindInventory;
-				break;
-			}else if(kb.equals(Minecraft.getInstance().gameSettings.keyBindAdvancements)) {
-				Minecraft.getInstance().gameSettings.keyBindInventory = new KeyBinding("key.advancements", GLFW.GLFW_KEY_F18, "key.categories.misc");
-				Minecraft.getInstance().gameSettings.keyBindings[i] = Minecraft.getInstance().gameSettings.keyBindInventory;
-				break;
-			}
-			++i;
+			//TODO: rework or intercept gui open event
+//			if(kb.equals(Minecraft.getInstance().gameSettings.keyBindInventory)) {
+//				Minecraft.getInstance().gameSettings.keyBindInventory = new KeyBinding("key.inventory", GLFW.GLFW_KEY_V, "key.categories.inventory");
+//				Minecraft.getInstance().gameSettings.keyBindings[i] = Minecraft.getInstance().gameSettings.keyBindInventory;
+//				break;
+//			}else if(kb.equals(Minecraft.getInstance().gameSettings.keyBindAdvancements)) {
+//				Minecraft.getInstance().gameSettings.keyBindInventory = new KeyBinding("key.advancements", GLFW.GLFW_KEY_F18, "key.categories.misc");
+//				Minecraft.getInstance().gameSettings.keyBindings[i] = Minecraft.getInstance().gameSettings.keyBindInventory;
+//				break;
+//			}
+//			++i;
 		}
 	}
 }

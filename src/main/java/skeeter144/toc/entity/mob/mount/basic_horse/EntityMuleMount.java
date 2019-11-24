@@ -4,21 +4,22 @@ import java.util.UUID;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.entity.passive.horse.AbstractChestedHorseEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 
 public class EntityMuleMount extends EntityAbstractHorseMount {
-	public EntityMuleMount(EntityType<?> type, World worldIn) {
+	public EntityMuleMount(EntityType<? extends AbstractChestedHorseEntity> type, World worldIn) {
 		this(type, worldIn, null);
 	}
 
-	public EntityMuleMount(EntityType<?> type, World worldIn, UUID uuid) {
+	public EntityMuleMount(EntityType<? extends AbstractChestedHorseEntity> type, World worldIn, UUID uuid) {
 		super(type, worldIn, uuid);
-		this.tasks.taskEntries.clear();
-		this.targetTasks.taskEntries.clear();
+//		this.tasks.taskEntries.clear();
+//		this.targetTasks.taskEntries.clear();
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.11F);
 	}
 

@@ -2,11 +2,11 @@ package skeeter144.toc.network;
 
 import java.util.function.Supplier;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.fml.network.NetworkEvent;
 import skeeter144.toc.magic.Spells;
 
@@ -15,7 +15,7 @@ public class WandEmbuePKT{
 	String playerUUID;
 	int wandSlot, embueSpellId;
 	public WandEmbuePKT() {}
-	public WandEmbuePKT(EntityPlayer player, int wandSlot, int embueId) {
+	public WandEmbuePKT(PlayerEntity player, int wandSlot, int embueId) {
 		playerUUID = player.getUniqueID().toString();
 		this.wandSlot = wandSlot;
 		this.embueSpellId = embueId;
@@ -38,20 +38,20 @@ public class WandEmbuePKT{
 		public static void handle(final WandEmbuePKT message, Supplier<NetworkEvent.Context> ctx){
 			ctx.get().enqueueWork(new Runnable() {
 				public void run() {
-					EntityPlayer player =  ctx.get().getSender();
+					PlayerEntity player =  ctx.get().getSender();
 					int hand = message.wandSlot;
 					
 					ItemStack stack = (hand == 1 ? player.getHeldItemMainhand() : player.getHeldItemOffhand());
 					
-					NBTTagCompound nbt = null;
+					CompoundNBT nbt = null;
 					if(stack.getTag() == null) {
-						nbt = new NBTTagCompound();
+						nbt = new CompoundNBT();
 						stack.setTag(nbt);
 					}
 					nbt = stack.getTag();
-					nbt.setInt("embued_spell", message.embueSpellId);
+					nbt.putInt("embued_spell", message.embueSpellId);
 					
-					stack.setDisplayName(new TextComponentString("Wand: " + Spells.getSpell(message.embueSpellId).getName()));
+					stack.setDisplayName(new StringTextComponent("Wand: " + Spells.getSpell(message.embueSpellId).getName()));
 				}
 			});
 		}

@@ -1,10 +1,12 @@
 package skeeter144.toc.client.gui;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.text.StringTextComponent;
 import skeeter144.toc.network.CraftItemPKT;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.recipe.RecipeManager;
@@ -16,6 +18,7 @@ public class SmeltingGui extends CraftingGui{
 	
 	
 	public SmeltingGui() {
+		super(new StringTextComponent("Smelting"));
 		backgroundImage = new ResourceLocation(Reference.MODID, "textures/gui/smelting_gui.png");
 		allRecipes = RecipeManager.instance().SMELTING_RECIPES;
 		updatePlayersInventory();
@@ -23,13 +26,13 @@ public class SmeltingGui extends CraftingGui{
 	
 	@Override
 	public void render(int x, int y, float partialTicks) {
-		this.drawDefaultBackground();
+		this.renderBackground();
 		this.setGuiVals();
 		drawBackground();
 		drawRecipes();
 		super.render(x, y, partialTicks);
-		for(GuiButton btn : this.buttons) 
-			btn.enabled = selectedRecipe != null;
+		for(Widget btn : buttons) 
+			btn.active = selectedRecipe != null;
 	    
 	    if(resized) {
 	    	initGui();
@@ -45,39 +48,40 @@ public class SmeltingGui extends CraftingGui{
 		this.buttons.clear();
 		int btnWidth = (int)(guiWidth * .3f);
 		
-		GuiButton smelt1 = new GuiButton(0, (int)(guiX + guiWidth - btnWidth * 1.2f), guiY + (int)(guiY * .15f), "Smelt 1") {
+		Button smelt1 = new Button((int)(guiX + guiWidth - btnWidth * 1.2f), guiY + (int)(guiY * .15f), btnWidth, 20,"Smelt 1", new Button.IPressable() {
+			
 			@Override
-			public void onClick(double mouseX, double mouseY) {
-				EntityPlayer pl = Minecraft.getInstance().player;
+			public void onPress(Button p_onPress_1_) {
+				PlayerEntity pl = Minecraft.getInstance().player;
 				if (selectedRecipe.canRecipeBeCraftedNumberTimes(pl.inventory, totalCrafting + 1)) {
 					Network.INSTANCE.sendToServer(new CraftItemPKT(selectedRecipe.crafted.getItem(), 1));
 					totalCrafting++;
 					pl.world.playSound(pl, pl.getPosition(), Sounds.anvil_strike, SoundCategory.MASTER, 1, 1);
 				}
 			}
-		};
-		smelt1.width = btnWidth;
+		});
 		
-		GuiButton smeltAll = new GuiButton(1, (int)(guiX + guiWidth - btnWidth * 1.2f), guiY + (int)(guiY * .5f), "Smelt All") {
+		Button smeltAll = new Button((int)(guiX + guiWidth - btnWidth * 1.2f), guiY + (int)(guiY * .5f), btnWidth, 20, "Smelt All",  new Button.IPressable() {
+			
 			@Override
-			public void onClick(double mouseX, double mouseY) {
-				EntityPlayer pl = Minecraft.getInstance().player;
+			public void onPress(Button p_onPress_1_) {
+				PlayerEntity pl = Minecraft.getInstance().player;
 				int num = selectedRecipe.numberCanBeCrafted(pl.inventory) - totalCrafting;
 				Network.INSTANCE.sendToServer(new CraftItemPKT(selectedRecipe.crafted.getItem(), num));
 				totalCrafting += num;
 				updatePlayersInventory();
 				pl.world.playSound(pl, pl.getPosition(), Sounds.anvil_strike, SoundCategory.MASTER, 1, 1);
 			}
-		};
-		smeltAll.width = btnWidth;
+		});
 		
 		addButton(smelt1);
 		addButton(smeltAll);
 	}
 	
-	protected void actionPerformed(GuiButton button){
-		EntityPlayer pl = Minecraft.getInstance().player;
-		if(button.id == 0) {//smelt 1 more
+	protected void actionPerformed(Button button){
+		PlayerEntity pl = Minecraft.getInstance().player;
+		//TODO
+		if(button.x == 0) {//smelt 1 more
 			if(selectedRecipe.canRecipeBeCraftedNumberTimes(pl.inventory, this.totalCrafting + 1)) {
 			//	Network.INSTANCE.sendToServer(new CraftItemMessage(selectedRecipe.crafted.getItem(), 1));
 				totalCrafting++;
@@ -105,8 +109,9 @@ public class SmeltingGui extends CraftingGui{
 		 this.recipeSpace = iconDim / 2;
 	}
 
-	public void onGuiClosed() {
-		super.onGuiClosed();
+	@Override
+	public void onClose() {
+		super.onClose();
 		if(selectedRecipe != null)
 			Network.INSTANCE.sendToServer(new CraftItemPKT(selectedRecipe.crafted.getItem(), -1));
 	}

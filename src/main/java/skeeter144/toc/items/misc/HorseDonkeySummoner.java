@@ -2,17 +2,17 @@ package skeeter144.toc.items.misc;
 
 import java.util.UUID;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import skeeter144.toc.entity.mob.mount.basic_horse.EntityAbstractHorseMount;
 import skeeter144.toc.items.CustomItem;
 
@@ -25,12 +25,12 @@ public class HorseDonkeySummoner extends CustomItem {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
 		if(world.isRemote)
-			return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
+			return new ActionResult<ItemStack>(ActionResultType.PASS, player.getHeldItem(hand));
 		
 		if(player.getHeldItem(hand).getTag() == null) {
-			player.getHeldItem(hand).setTag(new NBTTagCompound());
+			player.getHeldItem(hand).setTag(new CompoundNBT());
 		}
 		
 		int type = player.getHeldItem(hand).getTag().getInt("mount_type");
@@ -52,22 +52,13 @@ public class HorseDonkeySummoner extends CustomItem {
 			horse.horseOwner = player.getUniqueID();
 			
 			horse.setPosition(player.posX, player.posY + 2, player.posZ);
-			world.spawnEntity(horse);
-			player.getHeldItem(hand).getTag().setUniqueId("mount_uuid", horse.getUniqueID());
+			world.addEntity(horse);
+			player.getHeldItem(hand).getTag().putUniqueId("mount_uuid", horse.getUniqueID());
 		}else {
-			Entity foundHorse = null;
-			for(Entity e : world.loadedEntityList) {
-				if(e instanceof EntityAbstractHorseMount) {
-					if(e.getUniqueID().equals(horseId)) {
-						moveHorseNearPlayerAndWalkTo((EntityAbstractHorseMount) e, player);
-						foundHorse = e;
-						break;
-					}
-				}
-			}
-			
-			if(foundHorse == null) {
-				EntityAbstractHorseMount horse = null;
+			EntityAbstractHorseMount horse = (EntityAbstractHorseMount)((ServerWorld)world).getEntityByUuid(horseId);
+			if(horse != null)
+				moveHorseNearPlayerAndWalkTo((EntityAbstractHorseMount) horse, player);
+			else{
 				try {
 					horse = type_summoned.getDeclaredConstructor(World.class, UUID.class).newInstance(player.world, player.getUniqueID());
 				} catch (Exception e) {
@@ -77,16 +68,16 @@ public class HorseDonkeySummoner extends CustomItem {
 				horse.world = player.world;
 				horse.horseOwner = player.getUniqueID();
 				
-				player.getHeldItem(hand).getTag().setUniqueId("mount_uuid", horse.getUniqueID());
+				player.getHeldItem(hand).getTag().putUniqueId("mount_uuid", horse.getUniqueID());
 				moveHorseNearPlayerAndWalkTo(horse, player);
-				world.spawnEntity(horse);
+				world.addEntity(horse);
 			}
 		}
 		return super.onItemRightClick(world, player, hand);
 	}
 	
 	
-	private void moveHorseNearPlayerAndWalkTo(EntityAbstractHorseMount horse, EntityPlayer player) {
+	private void moveHorseNearPlayerAndWalkTo(EntityAbstractHorseMount horse, PlayerEntity player) {
 		int diameter = 32;
 		int attempts = 15;
 		if(Math.sqrt(player.getPosition().distanceSq(horse.getPosition())) < 30) {

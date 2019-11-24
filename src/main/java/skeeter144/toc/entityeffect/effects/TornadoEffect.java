@@ -1,8 +1,8 @@
 package skeeter144.toc.entityeffect.effects;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.DamageSource;
 
 public class TornadoEffect extends EntityEffect {
@@ -38,8 +38,8 @@ public class TornadoEffect extends EntityEffect {
 		initialY = effected.posY;
 		initialZ = effected.posZ;
 		effected.addVelocity(0, .65, 0);
-		if(effected instanceof EntityPlayerMP) {
-			((EntityPlayerMP)effected).abilities.allowFlying = true;
+		if(effected instanceof ServerPlayerEntity) {
+			((ServerPlayerEntity)effected).abilities.allowFlying = true;
 		}
 	}
 
@@ -54,14 +54,14 @@ public class TornadoEffect extends EntityEffect {
 		
 		if(ticksRemaining % 20 == 0)
 		{
-			((EntityLivingBase)effected).attackEntityFrom(DamageSource.GENERIC, 1);
+			((LivingEntity)effected).attackEntityFrom(DamageSource.GENERIC, 1);
 		}
 	}
 	
 	@Override
 	protected void onEffectEnd(EffectEndType type) {
-		if(effected instanceof EntityPlayerMP) {
-			((EntityPlayerMP)effected).abilities.allowFlying = false;
+		if(effected instanceof ServerPlayerEntity) {
+			((ServerPlayerEntity)effected).abilities.allowFlying = false;
 		}
 		effected.setNoGravity(false);
 		

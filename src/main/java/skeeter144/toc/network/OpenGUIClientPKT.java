@@ -3,7 +3,7 @@ package skeeter144.toc.network;
 import java.util.function.Supplier;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -34,9 +34,9 @@ public class OpenGUIClientPKT{
 	public static class Handler
 	{
 		public static void handle(final OpenGUIClientPKT message, Supplier<NetworkEvent.Context> ctx){
-			Minecraft.getInstance().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().deferTask(new Runnable() {
 				public void run() {
-					Minecraft.getInstance().displayGuiScreen((GuiScreen) GuiHandler.Instance()
+					Minecraft.getInstance().displayGuiScreen((Screen) GuiHandler.Instance()
 							.getClientGuiElement(message.id, Minecraft.getInstance().player,  Minecraft.getInstance().world, 
 									message.pos.getX(), message.pos.getY(), message.pos.getZ()));
 				}

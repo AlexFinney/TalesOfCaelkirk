@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.minecraft.item.Item;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import skeeter144.toc.items.weapons.TOCBow;
@@ -35,23 +35,23 @@ public class ItemTooltipHandler {
 		
 		Item item = e.getItemStack().getItem();
 		
-		if(e.getEntityPlayer() == null || e.getFlags() == null)
+		if(e.getPlayer() == null || e.getFlags() == null)
 			return;
 		
 		tooltip.add(e.getItemStack().getDisplayName());
-		tooltip.add(new TextComponentString("")	);
+		tooltip.add(new StringTextComponent("")	);
 		
 		if(e.getItemStack().getItem() instanceof TOCSword) 
-			((TOCSword)item).addInformation(e.getItemStack(), e.getEntityPlayer().world, tooltip, e.getFlags());
+			((TOCSword)item).addInformation(e.getItemStack(), e.getPlayer().world, tooltip, e.getFlags());
 		
 		else if(e.getItemStack().getItem() instanceof TOCGreatSword) 
-			((TOCGreatSword)item).addInformation(e.getItemStack(), e.getEntityPlayer().world, tooltip, e.getFlags());
+			((TOCGreatSword)item).addInformation(e.getItemStack(), e.getPlayer().world, tooltip, e.getFlags());
 		
 		else if(e.getItemStack().getItem() instanceof TOCGreatAxe) 
-			((TOCGreatAxe)item).addInformation(e.getItemStack(), e.getEntityPlayer().world, tooltip, e.getFlags());
+			((TOCGreatAxe)item).addInformation(e.getItemStack(), e.getPlayer().world, tooltip, e.getFlags());
 		
 		else if(e.getItemStack().getItem() instanceof TOCBow) 
-			((TOCBow)item).addInformation(e.getItemStack(), e.getEntityPlayer().world, tooltip, e.getFlags());
+			((TOCBow)item).addInformation(e.getItemStack(), e.getPlayer().world, tooltip, e.getFlags());
 		
 	}
 }

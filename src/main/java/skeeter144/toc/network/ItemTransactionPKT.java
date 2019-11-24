@@ -4,13 +4,13 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -56,14 +56,14 @@ public class ItemTransactionPKT{
 	public static class Handler
 	{
 		public static void handle(final ItemTransactionPKT message, Supplier<NetworkEvent.Context> ctx){
-			ctx.get().getSender().getServerWorld().addScheduledTask(new Runnable() {
+			ctx.get().getSender().getServer().deferTask(new Runnable() {
 				public void run() {
 					Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(message.itemName));
 					if(item == null) {
 						System.out.println("WARNING *********** " + message.itemName + " did not map to an item!!!1!!!!");
 						return;
 					}
-					EntityPlayerMP pl = ctx.get().getSender();
+					ServerPlayerEntity pl = ctx.get().getSender();
 					
 					ItemStack stack = new ItemStack(item, message.count);
 					EntityShopKeeper theKeeper = null;
@@ -82,9 +82,9 @@ public class ItemTransactionPKT{
 								if(pl.inventory.addItemStackToInventory(stack))
 									CurrencyOperations.subtractMoneyFromPlayer(pl, price);
 								else
-									pl.sendMessage(new TextComponentString("Not enough inventory space!"));
+									pl.sendMessage(new StringTextComponent("Not enough inventory space!"));
 							}else {
-								pl.sendMessage(new TextComponentString("Not enough money that!"));
+								pl.sendMessage(new StringTextComponent("Not enough money that!"));
 							}
 						}else {
 							ItemStack stackToSell = null;

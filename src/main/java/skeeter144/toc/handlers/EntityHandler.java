@@ -8,10 +8,10 @@ import java.util.Map;
 import java.util.Set;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -40,12 +40,12 @@ public class EntityHandler {
 	public void livingUpdate(LivingUpdateEvent event) {
 		Entity e = event.getEntity();
 
-		if (!e.world.isRemote && e instanceof EntityPlayer) {
-			TOCPlayer pl = TOCMain.pm.getPlayer((EntityPlayer) e);
+		if (!e.world.isRemote && e instanceof PlayerEntity) {
+			TOCPlayer pl = TOCMain.pm.getPlayer((PlayerEntity) e);
 			pl.tick();
 
 			if (e.ticksExisted % 100 == 0) {
-				((EntityPlayer) e).getFoodStats().setFoodLevel(20);
+				((PlayerEntity) e).getFoodStats().setFoodLevel(20);
 			}
 
 			// do player region ticks
@@ -74,7 +74,7 @@ public class EntityHandler {
 					List<Region> exitedRegions = new ArrayList<Region>();
 					for (Region r : playerRegions) {
 						if (!foundRegions.contains(r)) {
-							r.onRegionExited((EntityLivingBase) e);
+							r.onRegionExited((LivingEntity) e);
 							exitedRegions.add(r);
 						}
 					}
@@ -88,14 +88,14 @@ public class EntityHandler {
 				// region ticks
 				if (playerRegions != null) {
 					for (Region r : playerRegions) {
-						r.onRegionTick((EntityLivingBase) e);
+						r.onRegionTick((LivingEntity) e);
 					}
 				}
 
 				// region entries
 				for (Region r : foundRegions) {
 					if (playerRegions == null || !playerRegions.contains(r)) {
-						r.onRegionEntered((EntityLivingBase) e);
+						r.onRegionEntered((LivingEntity) e);
 						if (playerRegions == null)
 							playerRegions = new HashSet<Region>();
 						playerRegions.add(r);
@@ -130,20 +130,20 @@ public class EntityHandler {
 			return;
 		}
 
-		if (e.getSource().getTrueSource() instanceof EntityPlayer) {
+		if (e.getSource().getTrueSource() instanceof PlayerEntity) {
 			Levels level = Levels.ATTACK;
 			int xp = CombatManager.getXpForEntity(e.getEntityLiving());
 			if (e.getSource() instanceof TOCDamageSource) {
 				TOCDamageSource src = (TOCDamageSource) e.getSource();
 				level = CombatManager.levelForDamageSource(src);
 			}
-			level = CombatManager.levelForHeldItem(((EntityPlayer)e.getSource().getTrueSource()));
-			TOCPlayer player = TOCMain.pm.getPlayer(((EntityPlayer) e.getSource().getTrueSource()));
+			level = CombatManager.levelForHeldItem(((PlayerEntity)e.getSource().getTrueSource()));
+			TOCPlayer player = TOCMain.pm.getPlayer(((PlayerEntity) e.getSource().getTrueSource()));
 
 			boolean leveledUp = player.getPlayerLevels().addExp(level, xp);
 			boolean hpLeveled = player.getPlayerLevels().addExp(Levels.HITPOINTS, xp / 4);
 
-			EntityPlayerMP truSource = (EntityPlayerMP) e.getSource().getTrueSource();
+			ServerPlayerEntity truSource = (ServerPlayerEntity) e.getSource().getTrueSource();
 
 			Network.INSTANCE.sendTo(new AddLevelXpPKT(level.name(), xp), truSource);
 			Network.INSTANCE.sendTo(new AddLevelXpPKT(Levels.HITPOINTS.name(), xp / 4), truSource);
@@ -154,7 +154,7 @@ public class EntityHandler {
 
 	@SubscribeEvent
 	public void entityHurt(LivingHurtEvent event) {
-		if (event.getEntity() instanceof EntityPlayer)
+		if (event.getEntity() instanceof PlayerEntity)
 			event.setCanceled(true);
 
 		if (event.getEntity().world.isRemote)
@@ -179,29 +179,29 @@ public class EntityHandler {
 		float amount = 0;
 		Entity attacker = event.getSource().getTrueSource();
 		if (attacker != null) {
-			if (attacker instanceof EntityPlayer) {
-				if (event.getEntityLiving() instanceof EntityPlayer) {
-					amount = TOCMain.cm.playerHurtPlayer((EntityPlayer) attacker, (EntityPlayer) event.getEntity(),
+			if (attacker instanceof PlayerEntity) {
+				if (event.getEntityLiving() instanceof PlayerEntity) {
+					amount = TOCMain.cm.playerHurtPlayer((PlayerEntity) attacker, (PlayerEntity) event.getEntity(),
 							event.getAmount(), source);
 				} else {
-					if (event.getEntity() instanceof EntityLiving)
-						amount = TOCMain.cm.playerHurtEntity((EntityPlayer) attacker, (EntityLiving) event.getEntity(),
+					if (event.getEntity() instanceof LivingEntity)
+						amount = TOCMain.cm.playerHurtEntity((PlayerEntity) attacker, (LivingEntity) event.getEntity(),
 								event.getAmount(), source);
 				}
 			} else {
-				if (event.getEntityLiving() instanceof EntityPlayer) {
+				if (event.getEntityLiving() instanceof PlayerEntity) {
 					try {
-						amount = TOCMain.cm.entityHurtPlayer((EntityPlayer) event.getEntity(), (EntityLiving) attacker,
+						amount = TOCMain.cm.entityHurtPlayer((PlayerEntity) event.getEntity(), (LivingEntity) attacker,
 								event.getAmount(), source);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 
 				} else {
-					if (attacker instanceof EntityLiving && event.getEntity() instanceof EntityLiving) {
+					if (attacker instanceof LivingEntity && event.getEntity() instanceof LivingEntity) {
 						try {
-							amount = TOCMain.cm.entityHurtAnother((EntityLiving) attacker,
-									(EntityLiving) event.getEntity(), event.getAmount(), source);
+							amount = TOCMain.cm.entityHurtAnother((LivingEntity) attacker,
+									(LivingEntity) event.getEntity(), event.getAmount(), source);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -214,8 +214,8 @@ public class EntityHandler {
 		}
 
 		if (amount != 0) {
-			if (event.getEntityLiving() instanceof EntityPlayer) {
-				TOCMain.pm.getPlayer((EntityPlayer) event.getEntity()).adjustVitals((int) -event.getAmount(), 0);
+			if (event.getEntityLiving() instanceof PlayerEntity) {
+				TOCMain.pm.getPlayer((PlayerEntity) event.getEntity()).adjustVitals((int) -event.getAmount(), 0);
 			} else {
 				event.setCanceled(false);
 				event.setAmount(amount);

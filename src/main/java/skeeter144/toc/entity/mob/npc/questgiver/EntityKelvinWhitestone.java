@@ -3,14 +3,15 @@ package skeeter144.toc.entity.mob.npc.questgiver;
 import java.util.UUID;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import skeeter144.toc.entity.TOCEntityType;
+import skeeter144.toc.entity.mob.npc.EntityNpc;
 import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.quests.ANewAdventureQuest.ANewAdventureQuestProgress;
@@ -23,17 +24,16 @@ public class EntityKelvinWhitestone extends EntityNPCInteractable{
 		this(TOCEntityType.KELVIN_WHITESTONE, worldIn);
 	}
 	
-	public EntityKelvinWhitestone(EntityType<?> type, World worldIn) {
+	public EntityKelvinWhitestone(EntityType<? extends EntityNpc> type, World worldIn) {
 		super(type, worldIn);
-		this.setSize(.75f, 2f);
 		if(texture == null)
 			texture = new ResourceLocation("toc:textures/entity/kelvin_whitestone.png");
 		
-		//this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(TOCItems.steel_pickaxe));
+		//this.setHeldItem(Hand.MAIN_HAND, new ItemStack(TOCItems.steel_pickaxe));
 	}
 	
 	@Override
-	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
+	protected boolean processInteract(PlayerEntity player, Hand hand) {
 		if(player.world.isRemote) {
 			return true;
 		}
@@ -93,7 +93,7 @@ public class EntityKelvinWhitestone extends EntityNPCInteractable{
 	}
 	
 	public void kelvinStart(UUID playerUUID) {
-		EntityPlayer player = world.getPlayerEntityByUUID(playerUUID);
+		PlayerEntity player = world.getPlayerByUuid(playerUUID);
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
 		qp.kelvinTalkedTo = true;
 		
@@ -103,7 +103,7 @@ public class EntityKelvinWhitestone extends EntityNPCInteractable{
 	}
 	
 	public void smeltingStart(UUID uuid) {
-		EntityPlayer player = world.getPlayerEntityByUUID(uuid);
+		PlayerEntity player = world.getPlayerByUuid(uuid);
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
 		Util.sendNewTaskMessage(player, QuestManager.A_NEW_ADVENTURE, "Smelt the Copper and Tin Ore into Bronze Ingots at the furnace.");
 		qp.smeltingStarted = true;
@@ -111,7 +111,7 @@ public class EntityKelvinWhitestone extends EntityNPCInteractable{
 	}
 	
 	public void smithingStart(UUID uuid) {
-		EntityPlayer player = world.getPlayerEntityByUUID(uuid);
+		PlayerEntity player = world.getPlayerByUuid(uuid);
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
 		player.addItemStackToInventory(new ItemStack(TOCItems.blacksmith_hammer));
 		Util.sendNewTaskMessage(player, QuestManager.A_NEW_ADVENTURE, "Smith a bronze longsword on an anvil, and return to Kelvin.");
@@ -120,7 +120,7 @@ public class EntityKelvinWhitestone extends EntityNPCInteractable{
 	}
 	
 	public void killGoblins(UUID uuid) {
-		EntityPlayer player = world.getPlayerEntityByUUID(uuid);
+		PlayerEntity player = world.getPlayerByUuid(uuid);
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
 		Util.sendNewTaskMessage(player, QuestManager.A_NEW_ADVENTURE, "Find the goblin camp, killing 10 of them and collecting an ear from each for the bounty.");
 	//	player.addItemStackToInventory(new ItemStack(TOCItems.bronze_chestplate));
@@ -129,10 +129,10 @@ public class EntityKelvinWhitestone extends EntityNPCInteractable{
 	}
 	
 	public void kelvinFinished(UUID uuid) {
-		EntityPlayer player = world.getPlayerEntityByUUID(uuid);
+		PlayerEntity player = world.getPlayerByUuid(uuid);
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
 		qp.incStage();
-		player.sendMessage(new TextComponentString(TextFormatting.BLUE  + "[" +  QuestManager.A_NEW_ADVENTURE + "] " + TextFormatting.GREEN + "[New Task]" + TextFormatting.WHITE + "Head out of the mine and to the magic temple."));
+		player.sendMessage(new StringTextComponent(TextFormatting.BLUE  + "[" +  QuestManager.A_NEW_ADVENTURE + "] " + TextFormatting.GREEN + "[New Task]" + TextFormatting.WHITE + "Head out of the mine and to the magic temple."));
 	//	int ears = TOCUtils.getItemCountInInventory(TOCItems.goblin_ear, player.inventory);
 	//	int copper = ears * 2;
 		//MinecraftForge.EVENT_BUS.post(new CoinsAddedToInventoryEvent(player, new ItemPrice(0, 0, copper)));

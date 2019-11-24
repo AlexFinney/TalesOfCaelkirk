@@ -1,8 +1,9 @@
 package skeeter144.toc.magic;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.combat.CombatManager.DamageType;
@@ -17,15 +18,14 @@ public class FlameSmolderSpell extends ElementalSpell {
 
 	@Override
 	public void onProjectileImpact(RayTraceResult res, EntityWandProjectile proj) {
-		Entity e = res.entity;
-		if(e != null  && !e.world.isRemote) {
-			if(e instanceof EntityLivingBase){
+		if(res instanceof EntityRayTraceResult) {
+			Entity e = ((EntityRayTraceResult)res).getEntity();
+			if(e instanceof LivingEntity){
 				int fireSecs = TOCMain.rand.nextInt(4) + 1;
 				e.setFire(fireSecs);
 				
-				((EntityLivingBase)e).attackEntityFrom(new TOCDamageSource(DamageType.MAGICAL, proj.getThrower()), damage);
-				if(e instanceof EntityLiving)
-					((EntityLiving)e).setRevengeTarget(proj.getThrower());
+				((LivingEntity)e).attackEntityFrom(new TOCDamageSource(DamageType.MAGICAL, proj.getThrower()), damage);
+				((LivingEntity)e).setRevengeTarget(proj.getThrower());
 			}
 		}
 		//TODO client code on server

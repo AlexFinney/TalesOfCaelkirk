@@ -1,7 +1,7 @@
 package skeeter144.toc.entityeffect.effects;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import skeeter144.toc.network.AdjustScreenDimPKT;
 import skeeter144.toc.network.Network;
 
@@ -17,15 +17,15 @@ public class ReducedVision extends EntityEffect{
 
 	@Override
 	protected void onEffectStart() {
-		if(effected instanceof EntityPlayerMP) {
-			Network.INSTANCE.sendTo(new AdjustScreenDimPKT(lightBlockedPct), (EntityPlayerMP)effected);
+		if(effected instanceof ServerPlayerEntity) {
+			Network.INSTANCE.sendTo(new AdjustScreenDimPKT(lightBlockedPct), (ServerPlayerEntity)effected);
 		}
 	}
 
 	@Override
 	protected void onEffectEnd(EffectEndType type) {
-		if(effected instanceof EntityPlayerMP) {
-			Network.INSTANCE.sendTo(new AdjustScreenDimPKT(0), (EntityPlayerMP)effected);
+		if(effected instanceof ServerPlayerEntity) {
+			Network.INSTANCE.sendTo(new AdjustScreenDimPKT(0), (ServerPlayerEntity)effected);
 		}
 	}
 

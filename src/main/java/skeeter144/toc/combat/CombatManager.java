@@ -1,10 +1,11 @@
 package skeeter144.toc.combat;
 
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.world.chunk.Chunk;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.TOCEntities;
 import skeeter144.toc.entity.mob.CustomMob;
@@ -32,22 +33,22 @@ public class CombatManager {
 		return instance;
 	}
 	
-	public float calcEntityDamage(EntityLivingBase e, float amount, DamageSource source) {
+	public float calcEntityDamage(LivingEntity e, float amount, DamageSource source) {
 		if(e.world.isRemote)
 			return 100;
 		
 		EntityLevels attackerLevels = null;
 		EntityLevels defenderLevels = null;
 		
-		if(e instanceof EntityPlayer) {
-			defenderLevels = TOCMain.pm.getPlayer((EntityPlayer) e).getPlayerLevels();
+		if(e instanceof PlayerEntity) {
+			defenderLevels = TOCMain.pm.getPlayer((PlayerEntity) e).getPlayerLevels();
 		}else if(e instanceof CustomMob) {
 			defenderLevels = TOCMain.mm.getMob(e.getUniqueID()).levels;
 		}
 		
 		if(source.getTrueSource() != null) {
-			if(source.getTrueSource() instanceof EntityPlayer) {
-				attackerLevels = TOCMain.pm.getPlayer((EntityPlayer) source.getTrueSource()).getPlayerLevels();
+			if(source.getTrueSource() instanceof PlayerEntity) {
+				attackerLevels = TOCMain.pm.getPlayer((PlayerEntity) source.getTrueSource()).getPlayerLevels();
 			}else if(source.getTrueSource() instanceof CustomMob) {
 				attackerLevels = TOCMain.mm.getMob(source.getTrueSource().getUniqueID()).levels;
 			}
@@ -74,7 +75,7 @@ public class CombatManager {
 			if(attackRoll < defenseRoll) {
 				if(TOCMain.rand.nextFloat() < .65f) {
 					Network.INSTANCE.sendToAllAround(new SpawnBlockedPKT(e), 
-							e.getEntityWorld().getChunk(e.getPosition()));
+							(Chunk)e.getEntityWorld().getChunk(e.getPosition()));
 					return -1;
 				}
 			}
@@ -130,23 +131,23 @@ public class CombatManager {
 		return actualDamage;
 	}
 	
-	public float playerHurtPlayer(EntityPlayer attacker, EntityPlayer attacked, float amount, DamageSource source) {
+	public float playerHurtPlayer(PlayerEntity attacker, PlayerEntity attacked, float amount, DamageSource source) {
 		return calcEntityDamage(attacked, amount, source);
 	}
 	
-	public float playerHurtEntity(EntityPlayer player, EntityLiving mob, float amount, DamageSource source) {
+	public float playerHurtEntity(PlayerEntity player, LivingEntity mob, float amount, DamageSource source) {
 		return calcEntityDamage(mob, amount, source);
 	}
 	
-	public float entityHurtPlayer(EntityPlayer player, EntityLiving mob, float amount, DamageSource source) {
+	public float entityHurtPlayer(PlayerEntity player, LivingEntity mob, float amount, DamageSource source) {
 		return calcEntityDamage(player, amount, source);
 	}
 	
-	public float entityHurtAnother(EntityLiving attacker, EntityLiving attacked, float amount, DamageSource source) {
+	public float entityHurtAnother(LivingEntity attacker, LivingEntity attacked, float amount, DamageSource source) {
 		return calcEntityDamage(attacked, amount, source);
 	}
 	
-	public static Levels levelForHeldItem(EntityPlayer pl) {
+	public static Levels levelForHeldItem(PlayerEntity pl) {
 		Levels level = Levels.ATTACK;
 		if (pl.getHeldItemMainhand().getItem() instanceof TOCGreatSword) {
 			level = Levels.ATTACK;
@@ -166,7 +167,7 @@ public class CombatManager {
 	public static Levels levelForDamageSource(TOCDamageSource src) {
 		Levels level = Levels.ATTACK;
 		if (src.type == DamageType.PHYSICAL) {
-			EntityPlayer pl = (EntityPlayer) src.source;
+			PlayerEntity pl = (PlayerEntity) src.source;
 			if (pl.getHeldItemMainhand().getItem() instanceof TOCGreatSword) {
 				level = Levels.ATTACK;
 			} else if (pl.getHeldItemMainhand().getItem() instanceof TOCGreatAxe) {
@@ -186,7 +187,7 @@ public class CombatManager {
 		return level;
 	}
 	
-	public static int getXpForEntity(EntityLivingBase e) {
+	public static int getXpForEntity(LivingEntity e) {
 		if(e instanceof CustomMob) {
 			CustomMob m = (CustomMob) e;
 			return m.xpGiven;

@@ -3,7 +3,7 @@ package skeeter144.toc.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData.ItemPrice;
@@ -60,7 +60,7 @@ public class CurrencyOperations {
 		return new ItemPrice(g, s, c);
 	}
 	
-	public static boolean doesPlayerHaveEnoughMoney(EntityPlayer pl, ItemPrice amt) {
+	public static boolean doesPlayerHaveEnoughMoney(PlayerEntity pl, ItemPrice amt) {
 		int plG = 0, plS = 0, plC = 0;
 		
 		List<ItemStack> plItems = new ArrayList<ItemStack>();
@@ -84,7 +84,7 @@ public class CurrencyOperations {
 		return playerTotal >= priceTotal;
 	}
 	
-	public static void subtractMoneyFromPlayer(EntityPlayer pl, ItemPrice amt) {
+	public static void subtractMoneyFromPlayer(PlayerEntity pl, ItemPrice amt) {
 		int plG = 0, plS = 0, plC = 0;
 		List<ItemStack> plItems = new ArrayList<ItemStack>();
 		List<ItemStack> plCoins = new ArrayList<ItemStack>();

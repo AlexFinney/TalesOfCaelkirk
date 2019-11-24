@@ -3,7 +3,7 @@ package skeeter144.toc.quest;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import skeeter144.toc.TOCMain;
@@ -28,7 +28,7 @@ public abstract class Quest {
 	}
 	
 
-	public void onQuestFinished(EntityPlayerMP player) {
+	public void onQuestFinished(ServerPlayerEntity player) {
 		EntityLevels l = TOCMain.pm.getPlayer(player).levels;
 		boolean combatLeveled = false;
 		for(Map.Entry<Levels, Integer> pair : experienceRewards.entrySet()) {
@@ -55,6 +55,6 @@ public abstract class Quest {
 	public boolean canPlayerStartQuest(TOCPlayer player) {return false;}
 	public abstract QuestProgress getNewQuestProgressInstance();
 	public abstract Class<? extends QuestProgress> getQuestProgressClass();
-	protected void questFinished(EntityPlayerMP player) {}
+	protected void questFinished(ServerPlayerEntity player) {}
 	
 }

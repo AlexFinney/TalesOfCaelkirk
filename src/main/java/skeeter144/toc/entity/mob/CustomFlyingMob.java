@@ -1,12 +1,12 @@
 package skeeter144.toc.entity.mob;
 
-import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.FlyingEntity;
 import net.minecraft.world.World;
 import skeeter144.toc.client.entity.animation.Animation;
 import skeeter144.toc.client.entity.animation.KeyFrame;
 
-public class CustomFlyingMob extends EntityFlying{
+public class CustomFlyingMob extends FlyingEntity{
 
 	public int hpLevel;
 	public int attackLevel;
@@ -19,7 +19,7 @@ public class CustomFlyingMob extends EntityFlying{
 	public float animationTicks;
 	public float animationStartTime;
 	
-	public CustomFlyingMob(EntityType<?> type, World worldIn) {
+	public CustomFlyingMob(EntityType<? extends FlyingEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 	

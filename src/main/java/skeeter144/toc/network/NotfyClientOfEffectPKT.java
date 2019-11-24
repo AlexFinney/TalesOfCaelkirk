@@ -30,7 +30,7 @@ public class NotfyClientOfEffectPKT	{
 	public static class Handler
 	{
 		public static void handle(final NotfyClientOfEffectPKT message, Supplier<NetworkEvent.Context> ctx){
-			Minecraft.getInstance().addScheduledTask(new Runnable() {
+			Minecraft.getInstance().deferTask(new Runnable() {
 				public void run() {
 					if(message.newEffect)
 						HUD.activeEffects.add(message.name);

@@ -4,19 +4,20 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.Random;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.model.ModelBase;
-import net.minecraft.client.renderer.entity.model.ModelBiped;
-import net.minecraft.client.renderer.entity.model.ModelHorseArmorBase;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.LivingRenderer;
+import net.minecraft.client.renderer.entity.model.BipedModel;
+import net.minecraft.client.renderer.model.Model;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagInt;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.IntNBT;
+import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -32,7 +33,6 @@ import skeeter144.toc.client.entity.model.ModelHumanNpc;
 import skeeter144.toc.client.entity.model.ModelRat;
 import skeeter144.toc.client.entity.model.ModelSiren;
 import skeeter144.toc.client.entity.model.ModelViking;
-import skeeter144.toc.client.entity.renderer.RenderCustomAbstractHorse;
 import skeeter144.toc.client.entity.renderer.RenderGhost;
 import skeeter144.toc.client.entity.renderer.RenderGiantScorpian;
 import skeeter144.toc.client.entity.renderer.RenderGiantSpider;
@@ -51,11 +51,6 @@ import skeeter144.toc.entity.mob.monster.EntityGoblin;
 import skeeter144.toc.entity.mob.monster.EntityRat;
 import skeeter144.toc.entity.mob.monster.EntitySiren;
 import skeeter144.toc.entity.mob.monster.EntityViking;
-import skeeter144.toc.entity.mob.mount.basic_horse.EntityDonkeyMount;
-import skeeter144.toc.entity.mob.mount.basic_horse.EntityMuleMount;
-import skeeter144.toc.entity.mob.mount.basic_horse.EntityVariableHorseMount;
-import skeeter144.toc.entity.mob.mount.flying.EntityGriffin;
-import skeeter144.toc.entity.mob.mount.flying.EntityPegasus;
 import skeeter144.toc.entity.mob.npc.banker.EntityBanker;
 import skeeter144.toc.entity.mob.npc.questgiver.EntityEvaTeffan;
 import skeeter144.toc.entity.mob.npc.questgiver.EntityKelvinWhitestone;
@@ -84,7 +79,7 @@ public class ClientForgeEventSubscriber
 
 	@SubscribeEvent
 	public static void asd(final EntityJoinWorldEvent e) {
-		if(e.getEntity() instanceof EntityPlayerSP) {
+		if(e.getEntity() instanceof ClientPlayerEntity) {
 			Minecraft.getInstance().ingameGUI = new HUD(Minecraft.getInstance());
 		}
 	}
@@ -160,12 +155,12 @@ public class ClientForgeEventSubscriber
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes", "unused" })
-	private static void createNewRender(Class<? extends Entity> c, Class<? extends Render> renderClass, ModelBase model, float shadowSize) {
+	private static void createNewRender(Class<? extends Entity> c, Class<? extends LivingRenderer> class1, Model model, float shadowSize) {
 		RenderingRegistry.registerEntityRenderingHandler(c, new IRenderFactory() {
-			public Render createRenderFor(RenderManager manager) {
+			public EntityRenderer<Entity> createRenderFor(EntityRendererManager manager) {
 				try {
-					Constructor c = renderClass.getConstructor(RenderManager.class, ModelBase.class, float.class);
-					return (Render)c.newInstance(manager, model, shadowSize);
+					Constructor c = class1.getConstructor(EntityRendererManager.class, Model.class, float.class);
+					return (EntityRenderer<Entity>)c.newInstance(manager, model, shadowSize);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -175,27 +170,19 @@ public class ClientForgeEventSubscriber
 	}
 	
 	
-	public void displayDamageDealt(EntityLivingBase entity) {
+	public void displayDamageDealt(LivingEntity entity) {
 		if (!entity.world.isRemote) {
 			return;
 		}
 
 		int currentHealth = (int) Math.ceil(entity.getHealth());
-		if(entity instanceof EntityPlayer) {
+		if(entity instanceof PlayerEntity) {
 			
 		}
 
-		if (entity.getEntityData().hasKey("health")) {
-			int entityHealth = ((NBTTagInt) entity.getEntityData().getTag("health")).getInt();
-
-			if (entityHealth != currentHealth) {
-				displayParticle(entity, (int) entityHealth - currentHealth);
-			}
-		}
-
-		entity.getEntityData().setTag("health", new NBTTagInt(currentHealth));
+		
+		displayParticle(entity, (int) currentHealth);
 	}
-
 	
 	public void displayParticle(Entity entity, int damage) {
 		if (damage == 0) {
@@ -205,7 +192,7 @@ public class ClientForgeEventSubscriber
 		double motionX = world.rand.nextGaussian() * 100;
 		double motionY = 0.5f;
 		double motionZ = world.rand.nextGaussian() * 100;
-		Particle damageIndicator = new DamageParticle(damage + "", world, entity.posX, entity.posY + entity.height, entity.posZ, motionX, motionY,
+		Particle damageIndicator = new DamageParticle(damage + "", world, entity.posX, entity.posY + entity.getHeight(), entity.posZ, motionX, motionY,
 				motionZ);
 		Minecraft.getInstance().particles.addEffect(damageIndicator);
 	}
@@ -215,8 +202,7 @@ public class ClientForgeEventSubscriber
 		double motionX = world.rand.nextGaussian() * 100;
 		double motionY = 0.5f;
 		double motionZ = world.rand.nextGaussian() * 100;
-		Particle damageIndicator = new DamageParticle(str, world, entity.posX, entity.posY + entity.height, entity.posZ, motionX, motionY,
-				motionZ);
+		Particle damageIndicator = new DamageParticle(str, world, entity.posX, entity.posY + entity.getHeight(), entity.posZ, motionX, motionY, motionZ);
 		Minecraft.getInstance().particles.addEffect(damageIndicator);
 	}
 
@@ -226,7 +212,7 @@ public class ClientForgeEventSubscriber
 		maxUpdatesToWait = 20;
 		Entity e = Util.getPointedEntity(Minecraft.getInstance().player, 1, 50);
 		if (e != null) {
-			entityStatusGUI.setEntity((EntityLivingBase) e);
+			entityStatusGUI.setEntity((LivingEntity) e);
 			updatesLeft = maxUpdatesToWait;
 			
 		}
@@ -242,7 +228,7 @@ public class ClientForgeEventSubscriber
 		Minecraft.getInstance().player.isSwingInProgress = false;
 	}
 	
-	public void magicLeavesParticle(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+	public void magicLeavesParticle(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 		BasicSpellTrailParticle p = new BasicSpellTrailParticle(worldIn,  pos.getX() + .5, pos.getY() + 1, pos.getZ() + .5, 
 				2, 0x00FFFF, 1f, true);
 		try {
@@ -256,14 +242,14 @@ public class ClientForgeEventSubscriber
 		Minecraft.getInstance().particles.addEffect(p);
 	}
 	
-	public void showDialogToPlayer(EntityLivingBase ent, NpcDialog dialog) {
+	public void showDialogToPlayer(LivingEntity ent, NpcDialog dialog) {
 		Minecraft.getInstance().displayGuiScreen(new DialogGui(ent, dialog));
 	}
 	
 	
 	
 	private static final ModelVikingHelm modelVikingHelm = new ModelVikingHelm();
-	public ModelBiped getModelForId(int id) {
+	public BipedModel<LivingEntity> getModelForId(int id) {
 		switch(id){
 			case 0:
 				return modelVikingHelm;

@@ -2,16 +2,18 @@ package skeeter144.toc.client.gui;
 
 import java.awt.geom.Rectangle2D;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.client.Keybindings;
 import skeeter144.toc.player.EntityLevels;
@@ -19,15 +21,17 @@ import skeeter144.toc.player.Level;
 import skeeter144.toc.util.Mouse;
 import skeeter144.toc.util.Reference;
 
-public class LevelsGui extends GuiScreen{
+public class LevelsGui extends Screen{
+
+	public LevelsGui(ITextComponent titleIn) {
+		super(titleIn);
+	}
 
 	ResourceLocation backgreoundImage = new ResourceLocation(Reference.MODID, "textures/gui/levels_background.png");
 
 	
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		this.drawDefaultBackground();
-	//    super.drawScreen(mouseX, mouseY, partialTicks);
-	   
+		this.renderBackground();
 	    
 	    drawBookBackground();
 	}
@@ -48,7 +52,7 @@ public class LevelsGui extends GuiScreen{
 		bookX = sr.getScaledWidth() / 2 - bookWidth / 2 - 5;
 		bookY = sr.getScaledHeight() / 10;
 		
-		drawModalRectWithCustomSizedTexture(bookX, bookY, 0, 0, bookWidth, bookHeight, bookWidth, bookHeight);
+		blit(bookX, bookY, 0, 0, bookWidth, bookHeight, bookWidth, bookHeight);
 		
 		
 		int baseX = bookX + bookWidth / 20;
@@ -67,7 +71,7 @@ public class LevelsGui extends GuiScreen{
 			int iconX = baseX + col * iconDim + iconSpace * col;
 			int iconY =  baseY + row * iconDim + iconSpace / 2 * row;
 			GlStateManager.color3f(1, 1, 1);
-			drawModalRectWithCustomSizedTexture(iconX, iconY, 0, 0, iconDim, iconDim, iconDim, iconDim);
+			blit(iconX, iconY, 0, 0, iconDim, iconDim, iconDim, iconDim);
 			
 			fr.drawString(level.getLevel() + "", iconX + iconDim - (int)(iconDim / 6f), iconY + iconDim - (int)(iconDim/2.5f), 0x000000);
 			
@@ -80,8 +84,8 @@ public class LevelsGui extends GuiScreen{
 					wasMouseClicked = true;
 					if(level.name.equalsIgnoreCase("mining")) {
 						ItemStack is = new ItemStack(Items.WRITABLE_BOOK);
-						NBTTagCompound nbt = new NBTTagCompound();
-						nbt.setString("pages", "[adasfasf]");
+						CompoundNBT nbt = new CompoundNBT();
+						nbt.putString("pages", "[adasfasf]");
 						is.setTag(nbt);
 						Minecraft.getInstance().player.inventory.addItemStackToInventory(is);
 					}
@@ -124,12 +128,11 @@ public class LevelsGui extends GuiScreen{
 		if(wasMouseClicked && !Mouse.isButtonDown(0)) {
 			wasMouseClicked = false;
 		}
-		
-		GlStateManager.popAttrib();
 	}
+	
 	@Override
-	public boolean doesGuiPauseGame() {
-	    return false;
+	public boolean isPauseScreen() {
+		return false;
 	}
 	
 	@Override

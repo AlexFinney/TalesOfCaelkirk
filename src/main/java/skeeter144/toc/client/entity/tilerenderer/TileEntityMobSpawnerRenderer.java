@@ -2,15 +2,15 @@ package skeeter144.toc.client.entity.tilerenderer;
 
 import java.util.Random;
 
-import net.minecraft.block.state.IBlockState;
+import com.mojang.blaze3d.platform.GlStateManager;
+
+import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.BlockPos;
@@ -36,11 +36,11 @@ public class TileEntityMobSpawnerRenderer extends TileEntityRenderer<TileEntityM
 		
 		BlockPos blockpos = te.getPos();
 		//TODO
-		IBlockState iblockstate = null;//TOCBlocks.blockMobSpawner.getDefaultState();
+		BlockState BlockState = null;//TOCBlocks.blockMobSpawner.getDefaultState();
 
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
-		this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+		//this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		RenderHelper.disableStandardItemLighting();
 		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 		GlStateManager.enableBlend();
@@ -56,18 +56,17 @@ public class TileEntityMobSpawnerRenderer extends TileEntityRenderer<TileEntityM
 		bufferbuilder.setTranslation(x - (double)blockpos.getX() , y - (double)blockpos.getY(), z - (double)blockpos.getZ());
 		World world = te.getWorld();
 
-		this.renderStateModel(blockpos, iblockstate, bufferbuilder, world, true);
+		this.renderStateModel(blockpos, BlockState, bufferbuilder, world, true);
 
 		bufferbuilder.setTranslation(0.0D, 0.0D, 0.0D);
 		tessellator.draw();
 		RenderHelper.enableStandardItemLighting();
 	}
 
-	private boolean renderStateModel(BlockPos pos, IBlockState state, BufferBuilder buffer, World w, boolean checkSides) {
-		IWorldReader world = MinecraftForgeClient.getRegionRenderCache(w, pos);
+	private boolean renderStateModel(BlockPos pos, BlockState state, BufferBuilder buffer, World w, boolean checkSides) {
         IBakedModel model = blockRenderer.getBlockModelShapes().getModel(state);
-        IModelData data = model.getModelData(world, pos, state, ModelDataManager.getModelData(w, pos));
+        IModelData data = model.getModelData(w, pos, state, ModelDataManager.getModelData(w, pos));
 		
-		return this.blockRenderer.getBlockModelRenderer().renderModel(world, model, state, pos, buffer, false, new Random(), 69, data);
+		return blockRenderer.getBlockModelRenderer().renderModel(w, model, state, pos, buffer, false, new Random(), 69, data);
 	}
 }

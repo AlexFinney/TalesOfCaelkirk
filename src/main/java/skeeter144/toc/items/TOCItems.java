@@ -7,13 +7,13 @@ import javax.annotation.Nonnull;
 import com.google.common.base.Preconditions;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTier;
+import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -76,7 +76,7 @@ public class TOCItems {
 			// Make the properties, and make it so that the item will be on our ItemGroup (CreativeTab)
 			final Item.Properties properties = new Item.Properties().group(MOD_GROUP).group(TOCItems.MOD_GROUP);
 			// Create the new ItemBlock with the block and it's properties
-			final ItemBlock itemBlock = new ItemBlock(block, properties);
+			final BlockItem itemBlock = new BlockItem(block, properties);
 			// Setup the new ItemBlock with the block's registry name and register it
 			registry.register(setup(itemBlock, blockRegistryName));
 		}
@@ -200,45 +200,45 @@ public class TOCItems {
 	public static Item runite_pickaxe = new TOCPickaxe(ItemTier.IRON, "pickaxe_runite", 1, 1, new Item.Properties().group(MOD_GROUP));
 	public static Item dragonstone_pickaxe = new TOCPickaxe(ItemTier.IRON, "pickaxe_dragonstone", 1, 1, new Item.Properties().group(MOD_GROUP));
 
-//	public static Item viking_helmet = new ArmorVikingHelmet(VIKING_STEEL_ARMOR_HELM, 0, EntityEquipmentSlot.HEAD, .05f, 0f, .10f);
-//	public static Item viking_chestplate = new CustomArmor(VIKING_STEEL_ARMOR, 1, EntityEquipmentSlot.CHEST, "viking_chestplate", .08f, 0f, .17f);
-//	public static Item viking_leggings = new CustomArmor(VIKING_STEEL_ARMOR, 2, EntityEquipmentSlot.LEGS, "viking_leggings", .05f, 0f, .12f);
-//	public static Item viking_boots = new CustomArmor(VIKING_STEEL_ARMOR, 3, EntityEquipmentSlot.FEET, "viking_boots", .03f, 0f, .08f);
+//	public static Item viking_helmet = new ArmorVikingHelmet(VIKING_STEEL_ARMOR_HELM, 0, EquipmentSlotType.HEAD, .05f, 0f, .10f);
+//	public static Item viking_chestplate = new CustomArmor(VIKING_STEEL_ARMOR, 1, EquipmentSlotType.CHEST, "viking_chestplate", .08f, 0f, .17f);
+//	public static Item viking_leggings = new CustomArmor(VIKING_STEEL_ARMOR, 2, EquipmentSlotType.LEGS, "viking_leggings", .05f, 0f, .12f);
+//	public static Item viking_boots = new CustomArmor(VIKING_STEEL_ARMOR, 3, EquipmentSlotType.FEET, "viking_boots", .03f, 0f, .08f);
 
-	public static Item bronze_helmet = new CustomArmor(ArmorMaterialList.bronze, EntityEquipmentSlot.HEAD, new Item.Properties().group(MOD_GROUP), "bronze_helmet", .02f, 0f, .06f);
-	public static Item bronze_chestplate = new CustomArmor(ArmorMaterialList.bronze, EntityEquipmentSlot.CHEST, new Item.Properties().group(MOD_GROUP), "bronze_chestplate", .05f, 0f, .09f);
-	public static Item bronze_leggings = new CustomArmor(ArmorMaterialList.bronze, EntityEquipmentSlot.LEGS, new Item.Properties().group(MOD_GROUP), "bronze_leggings", .03f, 0f, .05f);
-	public static Item bronze_boots = new CustomArmor(ArmorMaterialList.bronze, EntityEquipmentSlot.FEET, new Item.Properties().group(MOD_GROUP), "bronze_boots", .01f, 0f, .03f);
+	public static Item bronze_helmet = new CustomArmor(ArmorMaterialList.bronze, EquipmentSlotType.HEAD, new Item.Properties().group(MOD_GROUP), "bronze_helmet", .02f, 0f, .06f);
+	public static Item bronze_chestplate = new CustomArmor(ArmorMaterialList.bronze, EquipmentSlotType.CHEST, new Item.Properties().group(MOD_GROUP), "bronze_chestplate", .05f, 0f, .09f);
+	public static Item bronze_leggings = new CustomArmor(ArmorMaterialList.bronze, EquipmentSlotType.LEGS, new Item.Properties().group(MOD_GROUP), "bronze_leggings", .03f, 0f, .05f);
+	public static Item bronze_boots = new CustomArmor(ArmorMaterialList.bronze, EquipmentSlotType.FEET, new Item.Properties().group(MOD_GROUP), "bronze_boots", .01f, 0f, .03f);
 //
-//	public static Item iron_helmet = new CustomArmor(IRON_ARMOR, 0, EntityEquipmentSlot.HEAD, "iron_helmet", .03f, 0f, .08f);
-//	public static Item iron_chestplate = new CustomArmor(IRON_ARMOR, 1, EntityEquipmentSlot.CHEST, "iron_chestplate", .07f, 0f, .12f);
-//	public static Item iron_leggings = new CustomArmor(IRON_ARMOR, 2, EntityEquipmentSlot.LEGS, "iron_leggings", .05f, 0f, .06f);
-//	public static Item iron_boots = new CustomArmor(IRON_ARMOR, 3, EntityEquipmentSlot.FEET, "iron_boots", .02f, 0f, .06f);
+//	public static Item iron_helmet = new CustomArmor(IRON_ARMOR, 0, EquipmentSlotType.HEAD, "iron_helmet", .03f, 0f, .08f);
+//	public static Item iron_chestplate = new CustomArmor(IRON_ARMOR, 1, EquipmentSlotType.CHEST, "iron_chestplate", .07f, 0f, .12f);
+//	public static Item iron_leggings = new CustomArmor(IRON_ARMOR, 2, EquipmentSlotType.LEGS, "iron_leggings", .05f, 0f, .06f);
+//	public static Item iron_boots = new CustomArmor(IRON_ARMOR, 3, EquipmentSlotType.FEET, "iron_boots", .02f, 0f, .06f);
 //
-//	public static Item steel_helmet = new CustomArmor(STEEL_ARMOR, 0, EntityEquipmentSlot.HEAD, "steel_helmet", .03f, 0f, .08f);
-//	public static Item steel_chestplate = new CustomArmor(STEEL_ARMOR, 1, EntityEquipmentSlot.CHEST, "steel_chestplate", .07f, 0f, .12f);
-//	public static Item steel_leggings = new CustomArmor(STEEL_ARMOR, 2, EntityEquipmentSlot.LEGS, "steel_leggings", .05f, 0f, .06f);
-//	public static Item steel_boots = new CustomArmor(STEEL_ARMOR, 3, EntityEquipmentSlot.FEET, "steel_boots", .02f, 0f, .06f);
+//	public static Item steel_helmet = new CustomArmor(STEEL_ARMOR, 0, EquipmentSlotType.HEAD, "steel_helmet", .03f, 0f, .08f);
+//	public static Item steel_chestplate = new CustomArmor(STEEL_ARMOR, 1, EquipmentSlotType.CHEST, "steel_chestplate", .07f, 0f, .12f);
+//	public static Item steel_leggings = new CustomArmor(STEEL_ARMOR, 2, EquipmentSlotType.LEGS, "steel_leggings", .05f, 0f, .06f);
+//	public static Item steel_boots = new CustomArmor(STEEL_ARMOR, 3, EquipmentSlotType.FEET, "steel_boots", .02f, 0f, .06f);
 //
-//	public static Item mithril_helmet = new CustomArmor(MITHRIL_ARMOR, 0, EntityEquipmentSlot.HEAD, "mithril_helmet", .03f, 0f, .08f);
-//	public static Item mithril_chestplate = new CustomArmor(MITHRIL_ARMOR, 1, EntityEquipmentSlot.CHEST, "mithril_chestplate", .07f, 0f, .12f);
-//	public static Item mithril_leggings = new CustomArmor(MITHRIL_ARMOR, 2, EntityEquipmentSlot.LEGS, "mithril_leggings", .05f, 0f, .06f);
-//	public static Item mithril_boots = new CustomArmor(MITHRIL_ARMOR, 3, EntityEquipmentSlot.FEET, "mithril_boots", .02f, 0f, .06f);
+//	public static Item mithril_helmet = new CustomArmor(MITHRIL_ARMOR, 0, EquipmentSlotType.HEAD, "mithril_helmet", .03f, 0f, .08f);
+//	public static Item mithril_chestplate = new CustomArmor(MITHRIL_ARMOR, 1, EquipmentSlotType.CHEST, "mithril_chestplate", .07f, 0f, .12f);
+//	public static Item mithril_leggings = new CustomArmor(MITHRIL_ARMOR, 2, EquipmentSlotType.LEGS, "mithril_leggings", .05f, 0f, .06f);
+//	public static Item mithril_boots = new CustomArmor(MITHRIL_ARMOR, 3, EquipmentSlotType.FEET, "mithril_boots", .02f, 0f, .06f);
 //
-//	public static Item adamantite_helmet = new CustomArmor(ADAMANTITE_ARMOR, 0, EntityEquipmentSlot.HEAD, "adamantite_helmet", .03f, 0f, .08f);
-//	public static Item adamantite_chestplate = new CustomArmor(ADAMANTITE_ARMOR, 1, EntityEquipmentSlot.CHEST, "adamantite_chestplate", .07f, 0f, .12f);
-//	public static Item adamantite_leggings = new CustomArmor(ADAMANTITE_ARMOR, 2, EntityEquipmentSlot.LEGS, "adamantite_leggings", .05f, 0f, .06f);
-//	public static Item adamantite_boots = new CustomArmor(ADAMANTITE_ARMOR, 3, EntityEquipmentSlot.FEET, "adamantite_boots", .02f, 0f, .06f);
+//	public static Item adamantite_helmet = new CustomArmor(ADAMANTITE_ARMOR, 0, EquipmentSlotType.HEAD, "adamantite_helmet", .03f, 0f, .08f);
+//	public static Item adamantite_chestplate = new CustomArmor(ADAMANTITE_ARMOR, 1, EquipmentSlotType.CHEST, "adamantite_chestplate", .07f, 0f, .12f);
+//	public static Item adamantite_leggings = new CustomArmor(ADAMANTITE_ARMOR, 2, EquipmentSlotType.LEGS, "adamantite_leggings", .05f, 0f, .06f);
+//	public static Item adamantite_boots = new CustomArmor(ADAMANTITE_ARMOR, 3, EquipmentSlotType.FEET, "adamantite_boots", .02f, 0f, .06f);
 //
-//	public static Item runite_helmet = new CustomArmor(RUNITE_ARMOR, 0, EntityEquipmentSlot.HEAD, "runite_helmet", .03f, 0f, .08f);
-//	public static Item runite_chestplate = new CustomArmor(RUNITE_ARMOR, 1, EntityEquipmentSlot.CHEST, "runite_chestplate", .07f, 0f, .12f);
-//	public static Item runite_leggings = new CustomArmor(RUNITE_ARMOR, 2, EntityEquipmentSlot.LEGS, "runite_leggings", .05f, 0f, .06f);
-//	public static Item runite_boots = new CustomArmor(RUNITE_ARMOR, 3, EntityEquipmentSlot.FEET, "runite_boots", .02f, 0f, .06f);
+//	public static Item runite_helmet = new CustomArmor(RUNITE_ARMOR, 0, EquipmentSlotType.HEAD, "runite_helmet", .03f, 0f, .08f);
+//	public static Item runite_chestplate = new CustomArmor(RUNITE_ARMOR, 1, EquipmentSlotType.CHEST, "runite_chestplate", .07f, 0f, .12f);
+//	public static Item runite_leggings = new CustomArmor(RUNITE_ARMOR, 2, EquipmentSlotType.LEGS, "runite_leggings", .05f, 0f, .06f);
+//	public static Item runite_boots = new CustomArmor(RUNITE_ARMOR, 3, EquipmentSlotType.FEET, "runite_boots", .02f, 0f, .06f);
 //
-//	public static Item dragonstone_helmet = new CustomArmor(DRAGONSTONE_ARMOR, 0, EntityEquipmentSlot.HEAD, "dragonstone_helmet", .03f, 0f, .08f);
-//	public static Item dragonstone_chestplate = new CustomArmor(DRAGONSTONE_ARMOR, 1, EntityEquipmentSlot.CHEST, "dragonstone_chestplate", .07f, 0f, .12f);
-//	public static Item dragonstone_leggings = new CustomArmor(DRAGONSTONE_ARMOR, 2, EntityEquipmentSlot.LEGS, "dragonstone_leggings", .05f, 0f, .06f);
-//	public static Item dragonstone_boots = new CustomArmor(DRAGONSTONE_ARMOR, 3, EntityEquipmentSlot.FEET, "dragonstone_boots", .02f, 0f, .06f);
+//	public static Item dragonstone_helmet = new CustomArmor(DRAGONSTONE_ARMOR, 0, EquipmentSlotType.HEAD, "dragonstone_helmet", .03f, 0f, .08f);
+//	public static Item dragonstone_chestplate = new CustomArmor(DRAGONSTONE_ARMOR, 1, EquipmentSlotType.CHEST, "dragonstone_chestplate", .07f, 0f, .12f);
+//	public static Item dragonstone_leggings = new CustomArmor(DRAGONSTONE_ARMOR, 2, EquipmentSlotType.LEGS, "dragonstone_leggings", .05f, 0f, .06f);
+//	public static Item dragonstone_boots = new CustomArmor(DRAGONSTONE_ARMOR, 3, EquipmentSlotType.FEET, "dragonstone_boots", .02f, 0f, .06f);
 //
 	public static Item goblin_ear = new QuestItem(new Item.Properties().group(MOD_GROUP), "goblin_ear", false, 20);
 	public static Item rat_tail = new QuestItem(new Item.Properties().group(MOD_GROUP), "rat_tail", false, 20);

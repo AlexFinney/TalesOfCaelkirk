@@ -3,18 +3,18 @@ package skeeter144.toc.items.consumable;
 import java.util.List;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBucketMilk;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.MilkBucketItem;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import skeeter144.toc.entityeffect.ServerEffectHandler;
 import skeeter144.toc.entityeffect.effects.ManaPotionEffect;
 import skeeter144.toc.util.Reference;
 
-public class ItemManaPotion extends ItemBucketMilk {
+public class ItemManaPotion extends MilkBucketItem {
 
 	int duration;
 	float totalHeal;
@@ -26,7 +26,7 @@ public class ItemManaPotion extends ItemBucketMilk {
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
+	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
 		if(!worldIn.isRemote) {
 			ServerEffectHandler.attemptAddNewEffect(entityLiving.getUniqueID(), new ManaPotionEffect(entityLiving, duration, totalHeal));
 		}
@@ -36,8 +36,8 @@ public class ItemManaPotion extends ItemBucketMilk {
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TextComponentString(""));
-		tooltip.add(new TextComponentString("Restores " + (int)totalHeal + " mana over " + (float)(duration / 20) + " seconds"));
+		tooltip.add(new StringTextComponent(""));
+		tooltip.add(new StringTextComponent("Restores " + (int)totalHeal + " mana over " + (float)(duration / 20) + " seconds"));
 	}
 	
 }

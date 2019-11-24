@@ -1,11 +1,11 @@
 package skeeter144.toc.client.entity.model;
 
-import net.minecraft.client.renderer.entity.model.ModelBox;
+import net.minecraft.client.renderer.model.ModelBox;
 import net.minecraft.entity.Entity;
 import skeeter144.toc.client.entity.renderer.AdvancedModelRenderer;
 import skeeter144.toc.entity.mob.monster.EntitySiren;
 
-public class ModelSiren extends AdvancedModelBase {
+public class ModelSiren extends AdvancedModelBase<EntitySiren> {
 	private final AdvancedModelRenderer Base;
 	private final AdvancedModelRenderer Body;
 	private final AdvancedModelRenderer NeckBone;
@@ -95,14 +95,13 @@ public class ModelSiren extends AdvancedModelBase {
 	}
 
 	@Override
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+	public void render(EntitySiren entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		Base.render(f5);
 	}
 
 	@Override
-	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
-			float headPitch, float scaleFactor, Entity entityIn) {
-		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
+	public void setRotationAngles(EntitySiren entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
+			float headPitch, float scaleFactor) {
 		resetToDefaultPose();
 		if(entityIn.isInWater()) {
 			walk(Tail, .25f, .2f, false, 0, 7F, entityIn.ticksExisted, .2f);
@@ -122,9 +121,9 @@ public class ModelSiren extends AdvancedModelBase {
 		
 	}
 	
-	 public void setRotateAngle(AdvancedModelRenderer modelRenderer, float x, float y, float z) {
-	        modelRenderer.rotateAngleX = x;
-	        modelRenderer.rotateAngleY = y;
-	        modelRenderer.rotateAngleZ = z;
+	 public void setRotateAngle(AdvancedModelRenderer RendererModel, float x, float y, float z) {
+	        RendererModel.rotateAngleX = x;
+	        RendererModel.rotateAngleY = y;
+	        RendererModel.rotateAngleZ = z;
 	    }
 }

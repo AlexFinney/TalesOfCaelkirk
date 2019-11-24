@@ -4,15 +4,17 @@ import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import skeeter144.toc.client.Keybindings;
 import skeeter144.toc.items.magic.BasicWand;
 import skeeter144.toc.magic.Spell;
@@ -22,14 +24,18 @@ import skeeter144.toc.network.WandEmbuePKT;
 import skeeter144.toc.util.Mouse;
 import skeeter144.toc.util.Reference;
 
-public class SpellBookGUI extends GuiScreen {
+public class SpellBookGUI extends Screen {
+
+	protected SpellBookGUI(ITextComponent titleIn) {
+		super(titleIn);
+	}
 
 	static int selectedIcon = 0;
 	ResourceLocation spellBookImage = new ResourceLocation(Reference.MODID, "textures/gui/magic_book_background.png");
 	ResourceLocation selectedIconImage = new ResourceLocation(Reference.MODID, "textures/spells/selected_icon.png");
 
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		this.drawDefaultBackground();
+		this.renderBackground();
 		//super.drawScreen(mouseX, mouseY, partialTicks);
 
 		drawBookBackground();
@@ -37,7 +43,7 @@ public class SpellBookGUI extends GuiScreen {
 	}
 
 	@Override
-	public boolean doesGuiPauseGame() {
+	public boolean isPauseScreen() {
 		return false;
 	}
 
@@ -59,7 +65,7 @@ public class SpellBookGUI extends GuiScreen {
 		int adjustedY = sr.getScaledHeight()
 				- Mouse.getY() * sr.getScaledHeight() / sr.getHeight();
 
-		drawRect(adjustedX - 2, adjustedY - 2, adjustedX + 2, adjustedY + 2, 0xFFFFFFFF);
+		fill(adjustedX - 2, adjustedY - 2, adjustedX + 2, adjustedY + 2, 0xFFFFFFFF);
 
 		int baseX = bookX + bookWidth / 20;
 		int baseY = bookY + 10;
@@ -80,7 +86,7 @@ public class SpellBookGUI extends GuiScreen {
 			int iconX = baseX + col * iconDim + iconSpace * col;
 			int iconY = baseY + row * iconDim + iconSpace / 2 * row;
 
-			drawModalRectWithCustomSizedTexture(iconX, iconY, 0, 0, iconDim, iconDim, iconDim, iconDim);
+			blit(iconX, iconY, 0, 0, iconDim, iconDim, iconDim, iconDim);
 
 			Rectangle2D.Float rect = new Rectangle2D.Float(iconX, iconY, iconDim, iconDim);
 			if (spellIcons.get(s.getName()) == null || !rect.equals(spellIcons.get(s.getName()))) {
@@ -98,7 +104,7 @@ public class SpellBookGUI extends GuiScreen {
 
 			if (count == selectedIcon) {
 				tm.bindTexture(selectedIconImage);
-				drawModalRectWithCustomSizedTexture(iconX, iconY, 0, 0, iconDim, iconDim, iconDim, iconDim);
+				blit(iconX, iconY, 0, 0, iconDim, iconDim, iconDim, iconDim);
 			}
 			
 			if (rect.contains(adjustedX, adjustedY)) {
@@ -126,7 +132,7 @@ public class SpellBookGUI extends GuiScreen {
 			tm.bindTexture(new ResourceLocation(Reference.MODID, "textures/gui/embue_spell_inactive.png"));
 		}
 
-		drawModalRectWithCustomSizedTexture(buttonX, buttonY, 0, 0, buttonWidth, buttonHeight, buttonWidth,
+		blit(buttonX, buttonY, 0, 0, buttonWidth, buttonHeight, buttonWidth,
 				buttonHeight);
 
 		if (embueBtn.contains(adjustedX, adjustedY)) {
@@ -150,14 +156,14 @@ public class SpellBookGUI extends GuiScreen {
 				}
 
 				if (held != null) {
-					NBTTagCompound nbt = held.getTag();
+					CompoundNBT nbt = held.getTag();
 					if (nbt == null) {
-						nbt = new NBTTagCompound();
+						nbt = new CompoundNBT();
 						held.setTag(nbt);
 					}
 
-					nbt.setInt("embued_spell", selectedIcon);
-					nbt.setString("owner", Minecraft.getInstance().player.getUniqueID().toString());
+					nbt.putInt("embued_spell", selectedIcon);
+					nbt.putString("owner", Minecraft.getInstance().player.getUniqueID().toString());
 					int hand = held == right ? 1 : 0;
 
 					Network.INSTANCE
@@ -173,7 +179,7 @@ public class SpellBookGUI extends GuiScreen {
 			wasMouseClicked = false;
 		}
 
-		GlStateManager.popAttrib();
+		GlStateManager.popAttributes();
 	}
 
 	static int bookWidth, bookHeight, bookX, bookY;
@@ -192,9 +198,9 @@ public class SpellBookGUI extends GuiScreen {
 		bookX = sr.getScaledWidth() / 2 - bookWidth / 2 - 5;
 		bookY = sr.getScaledHeight() / 10;
 
-		drawModalRectWithCustomSizedTexture(bookX, bookY, 0, 0, bookWidth, bookHeight, bookWidth, bookHeight);
+		blit(bookX, bookY, 0, 0, bookWidth, bookHeight, bookWidth, bookHeight);
 
-		GlStateManager.popAttrib();
+		GlStateManager.popAttributes();
 	}
 
 	@Override
