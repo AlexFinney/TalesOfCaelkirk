@@ -40,7 +40,7 @@ public class EntityRat extends CustomMob{
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(3);
 		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.15);
-		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1);
+		//this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1);
 		this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(.2f);
 	}
 	

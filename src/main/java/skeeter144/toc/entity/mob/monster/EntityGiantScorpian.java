@@ -33,8 +33,6 @@ public class EntityGiantScorpian extends CustomMob{
 //		
 //		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, PlayerEntity.class, true, true));
 		
-		
-		
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50);
 		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.3f);

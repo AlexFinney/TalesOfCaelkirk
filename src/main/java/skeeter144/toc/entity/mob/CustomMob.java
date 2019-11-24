@@ -2,6 +2,7 @@ package skeeter144.toc.entity.mob;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.world.World;
 import skeeter144.toc.client.entity.animation.Animation;
 import skeeter144.toc.client.entity.animation.KeyFrame;
@@ -21,6 +22,7 @@ public class CustomMob extends MobEntity{
 	
 	public CustomMob(EntityType<? extends MobEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
 	}
 	
 	public KeyFrame lastFrame = null;

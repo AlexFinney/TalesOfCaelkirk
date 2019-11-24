@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.client.renderer.entity.model.BipedModel;
+import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.Model;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -159,8 +160,8 @@ public class ClientForgeEventSubscriber
 		RenderingRegistry.registerEntityRenderingHandler(c, new IRenderFactory() {
 			public EntityRenderer<Entity> createRenderFor(EntityRendererManager manager) {
 				try {
-					Constructor c = class1.getConstructor(EntityRendererManager.class, Model.class, float.class);
-					return (EntityRenderer<Entity>)c.newInstance(manager, model, shadowSize);
+					Constructor cons = class1.getConstructor(EntityRendererManager.class, EntityModel.class, float.class);
+					return (EntityRenderer<Entity>)cons.newInstance(manager, model, shadowSize);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

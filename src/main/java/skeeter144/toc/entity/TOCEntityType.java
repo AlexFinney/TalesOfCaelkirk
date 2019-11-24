@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.function.Function;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EntityType.Builder;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.passive.horse.AbstractChestedHorseEntity;
-import net.minecraft.entity.passive.horse.MuleEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent;
@@ -53,32 +54,29 @@ public class TOCEntityType {
 	private static final List<EntityType<?>> ENTITY_TYPES = new LinkedList<>();
 	
 	static {
-		ROBERT_CROMWELL = createEntityType("robert_cromwell", EntityRobertCromwell.class, EntityRobertCromwell::new, 64, 1, false);
-		ULRIC_WESTON = createEntityType("ulric_weston", EntityUlricWeston.class, EntityUlricWeston::new, 64, 1, false);
-		EVA_TEFFAN = createEntityType("eva_teffan", EntityEvaTeffan.class, EntityEvaTeffan::new, 64, 1, false);
-		MARLIN_MONROE = createEntityType("marlin_monroe", EntityMarlinMonroe.class, EntityMarlinMonroe::new, 64, 1, false);
-		KELVIN_WHITESTONE = createEntityType("kelvin_whitestone", EntityKelvinWhitestone.class, EntityKelvinWhitestone::new, 64, 1, false);
-		SELOVIUS_KAMAZZ = createEntityType("selovius_kamazz", EntitySeloviusKamazz.class, EntitySeloviusKamazz::new, 64, 1, false);
+		ROBERT_CROMWELL = createEntityType("robert_cromwell", 64, 1, Builder.<EntityRobertCromwell>create(EntityRobertCromwell::new, EntityClassification.AMBIENT));
+		ULRIC_WESTON = createEntityType("ulric_weston", 64, 1, Builder.<EntityUlricWeston>create(EntityUlricWeston::new, EntityClassification.AMBIENT));
+		EVA_TEFFAN = createEntityType("eva_teffan", 64, 1, Builder.<EntityEvaTeffan>create(EntityEvaTeffan::new, EntityClassification.AMBIENT));
+		MARLIN_MONROE = createEntityType("marlin_monroe", 64, 1, Builder.<EntityMarlinMonroe>create(EntityMarlinMonroe::new, EntityClassification.AMBIENT));
+		KELVIN_WHITESTONE = createEntityType("kelvin_whitestone", 64, 1, Builder.<EntityKelvinWhitestone>create(EntityKelvinWhitestone::new, EntityClassification.AMBIENT));
+		SELOVIUS_KAMAZZ = createEntityType("selovius_kamazz", 64, 1, Builder.<EntitySeloviusKamazz>create(EntitySeloviusKamazz::new, EntityClassification.AMBIENT));
 		
-		GOBLIN = createEntityType("goblin", EntityGoblin.class, EntityGoblin::new, 64, 3, false);
-		VIKING = createEntityType("viking", EntityViking.class, EntityViking::new, 64, 3, false);
-		RAT = createEntityType("rat", EntityRat.class, EntityRat::new, 64, 3, false);
-		GIANT_SCORPIAN = createEntityType("giant_scorpian", EntityGiantScorpian.class, EntityGiantScorpian::new, 64, 3, false);
-		GIANT_SPIDER = createEntityType("giant_spider", EntityGiantSpider.class, EntityGiantSpider::new, 64, 3, false);
-		GHOST = createEntityType("ghost", EntityGhost.class, EntityGhost::new, 64, 3, false);
-		SIREN = createEntityType("siren", EntitySiren.class, EntitySiren::new, 64, 3, false);
+		GOBLIN = createEntityType("goblin",64, 3, Builder.<EntityGoblin>create(EntityGoblin::new, EntityClassification.MONSTER));
+		VIKING = createEntityType("viking", 64, 3, Builder.<EntityViking>create(EntityViking::new, EntityClassification.MONSTER));
+		RAT = createEntityType("rat", 64, 3, Builder.<EntityRat>create(EntityRat::new, EntityClassification.AMBIENT));
+		GIANT_SCORPIAN = createEntityType("giant_scorpian", 64, 3, Builder.<EntityGiantScorpian>create(EntityGiantScorpian::new, EntityClassification.MONSTER));
+		GIANT_SPIDER = createEntityType("giant_spider", 64, 3, Builder.<EntityGiantSpider>create(EntityGiantSpider::new, EntityClassification.MONSTER));
+		GHOST = createEntityType("ghost", 64, 3, Builder.<EntitySiren>create(EntitySiren::new, EntityClassification.MONSTER));
+		SIREN = createEntityType("siren", 64, 3, Builder.<EntityGhost>create(EntityGhost::new, EntityClassification.MONSTER));
 		//MULE = createEntityType("mule", MuleEntity.class, MuleEntity::new, 64, 3, false);
-		GRIFFIN = createEntityType("griffen", EntityGriffin.class, EntityGriffin::new, 64, 3, false);
-		
+		GRIFFIN = createEntityType("griffen", 64, 3, Builder.<EntityGriffin>create(EntityGriffin::new, EntityClassification.CREATURE));
 	}
 	
-	private static <T extends Entity> EntityType<T> createEntityType(String id, Class<? extends T> entityClass, Function<? super World, ? extends T> factory, int range, int updateFrequency, boolean sendsVelocityUpdates)
-	{
-//		EntityType<T> type = EntityType.Builder.create(entityClass, factory).tracker(range, updateFrequency, sendsVelocityUpdates).build(Reference.MODID + ":" + id);
-//		type.setRegistryName(new ResourceLocation(Reference.MODID, id));
-//		ENTITY_TYPES.add(type);
-//		return type;
-		return null;
+	private static <T extends Entity> EntityType<T> createEntityType(String id, int range, int updateFrequency, Builder<T> builder){
+	    EntityType<T> type = builder.setTrackingRange(range).setUpdateInterval(updateFrequency).build(Reference.MODID + ":" + id);
+		type.setRegistryName(new ResourceLocation(Reference.MODID, id));
+		ENTITY_TYPES.add(type);
+		return type;
 	}
 
 	@SubscribeEvent

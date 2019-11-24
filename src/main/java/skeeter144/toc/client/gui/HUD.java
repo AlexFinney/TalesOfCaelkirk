@@ -357,6 +357,7 @@ public class HUD extends IngameGui {
 				scale = 1;
 			}
 
+			GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 			tm.bindTexture(healthBar);
 			blit(barX * 4 + barWidth * 4 - barWidth, barY * 4 - barHeight, 0, 0, barWidth,
 					barHeight, (int) (barWidth * scale), barHeight, barWidth, barHeight);

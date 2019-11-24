@@ -25,11 +25,16 @@ public class PlayerManager {
 	}
 	
 	public TOCPlayer getPlayer(PlayerEntity player) {
-		@Nullable 
 		TOCPlayer pl = players.get(player.getUniqueID());
-		
-		if(pl == null) { pl = Database.getPlayer(player); players.put(pl.mcEntity.getUniqueID(), pl); }
-		else players.put(player.getUniqueID(), pl);
+		if(pl == null) { 
+			pl = Database.getPlayer(player); 
+			if(pl == null) pl = new TOCPlayer(player);
+			
+			players.put(pl.mcEntity.getUniqueID(), pl); 
+		}
+		else {
+			players.put(player.getUniqueID(), pl);
+		}
 		
 		return pl;
 	}
