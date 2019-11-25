@@ -178,6 +178,7 @@ public class ModelGoblin extends AdvancedModelBase<EntityGoblin> {
         this.right_ear.addChild(this.left_ear_2_1);
         this.nose_1.addChild(this.nose_2);
         this.waist.addChild(this.left_leg);
+        this.body.defaultPositionY = 12f;
         updateDefaultPose();
     }
 
@@ -185,7 +186,6 @@ public class ModelGoblin extends AdvancedModelBase<EntityGoblin> {
     public void render(EntityGoblin entity, float f, float f1, float f2, float f3, float f4, float f5) { 
     	body.scaleChildren = true;
         this.body.setScale(.5f, .5f, .5f);
-        this.body.defaultPositionY = 12f;
         this.body.render(f5);
     }
 
