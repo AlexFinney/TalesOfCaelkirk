@@ -4,6 +4,8 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
+import org.lwjgl.glfw.GLFW;
+
 import com.mojang.blaze3d.platform.GlStateManager;
 
 import net.minecraft.client.MainWindow;
@@ -15,6 +17,8 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import skeeter144.toc.network.Network;
+import skeeter144.toc.network.SetAnvilRecipePKT;
 import skeeter144.toc.recipe.Recipe;
 
 public abstract class CraftingGui extends Screen implements IGuiEventListener{
@@ -74,8 +78,8 @@ public abstract class CraftingGui extends Screen implements IGuiEventListener{
 	
 
 	void drawBackground() {
-		drawBackground();
-		//blit(guiX, guiY, 0, 0, guiWidth, guiHeight, guiWidth, guiHeight);
+		tm.bindTexture(backgroundImage);
+		blit(guiX, guiY, 0, 0, guiWidth, guiHeight, guiWidth, guiHeight);
 	}
 	
 	void setGuiVals() {
@@ -95,18 +99,17 @@ public abstract class CraftingGui extends Screen implements IGuiEventListener{
 		GlStateManager.pushMatrix();
 		RenderHelper.enableGUIStandardItemLighting();
 		GlStateManager.enableLighting();
-		int x = 0, y = 0;
 		int row = 0, col = 0;
 		for(Recipe r : craftableRecipes) {
 			GlStateManager.translated(0, 0, 100);
-			x = recipeStartX + col * iconDim + col * recipeSpace;
-			y = recipeStartY + row * iconDim;
+			int x = recipeStartX + col * iconDim + col * recipeSpace;
+			int y = recipeStartY + row * iconDim - 1*(row) + recipeSpace * row;
 			Rectangle2D rect = new Rectangle2D.Double(x, y, iconDim, iconDim);
 			
 			if(selectedRecipe != null && r.equals(selectedRecipe))
-				fill((int)rect.getMinX(), (int)rect.getMinY(), (int)rect.getMaxX(), (int)rect.getMaxY(), 0xFFEBFF89);
+				fill((int)rect.getMinX() -1, (int)rect.getMinY() - 1, (int)rect.getMaxX() + 1, (int)rect.getMaxY() + 1, 0xFFEBFF89);
 			
-			itemRenderer.renderItemAndEffectIntoGUI(r.crafted, x+2, y+2);
+			itemRenderer.renderItemAndEffectIntoGUI(r.crafted, x-1, y);
 			GlStateManager.translatef(0, 0, -100);
 			++col;
 			if(col >= columns) {
@@ -131,7 +134,7 @@ public abstract class CraftingGui extends Screen implements IGuiEventListener{
 		int col = 0, row = 0;
 		for(Recipe r : craftableRecipes) {
 			int x = recipeStartX + col * iconDim + col * recipeSpace;
-			int y = recipeStartY + row * iconDim;
+			int y = recipeStartY + row * iconDim - 1*(row) + recipeSpace * row;
 			Rectangle2D rect = new Rectangle2D.Double(x, y, iconDim, iconDim);
 			if (rect.contains(new Point2D.Double(mx, my))) {
 				wasMouseClicked = true;
@@ -148,4 +151,11 @@ public abstract class CraftingGui extends Screen implements IGuiEventListener{
 		return false;
 	}
 	
+	@Override
+	public boolean keyPressed(int key, int scan, int modifiers) {
+		if(key == GLFW.GLFW_KEY_E || key == GLFW.GLFW_KEY_ESCAPE) {
+			onClose();
+		}
+		return true;
+	}
 }

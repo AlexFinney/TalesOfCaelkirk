@@ -59,7 +59,6 @@ public class TOCBlocks {
 	@ObjectHolder(Reference.MODID + ":te_harvested_tree")
 	public static TileEntityType<?> te_harvested_tree;
 	
-	@ObjectHolder(Reference.MODID + ":te_anvil")
 	public static TileEntityType<?> te_anvil;
 	
 	@ObjectHolder(Reference.MODID + ":te_mob_spawner")
@@ -83,15 +82,16 @@ public class TOCBlocks {
 		//te_harvested_tree = TileEntityType.register(Reference.MODID + ":harvested_tree", TileEntityType.Builder.create(TileEntityHarvestedTree::new));
 		//te_mob_spawner = TileEntityType.register(Reference.MODID + ":mob_spawner", TileEntityType.Builder.create(TileEntityMobSpawner::new));
 
-		registerTE(TileEntityType.Builder.create(TileEntityAnvil::new), "anvil", evt);
+		te_anvil = registerTE(TileEntityType.Builder.create(TileEntityAnvil::new, TOCBlocks.blockAnvil), "anvil", evt);
 	}
 
-	static void registerTE(Builder<TileEntity> builder, 
-			String name, RegistryEvent.Register<TileEntityType<?>> evt) 
+	static TileEntityType<?> registerTE(Builder<TileEntity> builder, 
+			String name, RegistryEvent.Register<TileEntityType<?>> evt, Block ...blocks) 
 	{
 		TileEntityType<?> type = builder.build(null);
 		type.setRegistryName(Reference.MODID, name);
 		evt.getRegistry().register(type);
+		return type;
 	}
 
 	public static void registerAllBlocks(final RegistryEvent.Register<Block> event) {

@@ -15,6 +15,7 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ForgeRegistries;
 import skeeter144.toc.TOCMain;
@@ -112,6 +113,7 @@ public class TileEntityAnvil extends TileEntity {
 	
 	public void sendUpdates() {
 		//world.markBlockRangeForRenderUpdate(pos, pos);
+		world.markAndNotifyBlock(pos, world.getChunkAt(pos), getState(), getState(), 3);
 		world.notifyBlockUpdate(pos, getState(), getState(), 3);
 		markDirty();
 	}

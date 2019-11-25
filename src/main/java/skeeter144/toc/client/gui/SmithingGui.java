@@ -54,13 +54,14 @@ public class SmithingGui extends CraftingGui{
 		 guiY = (int)(sr.getScaledHeight() * .2f);
 		 this.recipeStartX = guiX + (int)(guiX * .1f);
 		 this.recipeStartY = guiY + (int)(guiHeight * .12f);
-		 this.columns = 8;
+		 this.columns = 7;
 		 iconDim = (int)(guiWidth * .072f);
 		 this.recipeSpace = (int)(iconDim * .95f);
 	}
 	
 	@Override
 	public void onClose() {
+		super.onClose();
 		if(selectedRecipe != null) {
 			Network.INSTANCE.sendToServer(new SetAnvilRecipePKT(selectedRecipe, anvil.getPos()));
 		}
