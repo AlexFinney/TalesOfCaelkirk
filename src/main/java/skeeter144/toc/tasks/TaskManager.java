@@ -20,13 +20,12 @@ public class TaskManager {
 	public void tickTasks() {
 		currentTick++;
 		for(int i = tasks.size() - 1; i >= 0; --i) {
-			tasks.get(i).tick(currentTick);
-			if(--tasks.get(i).duration <= 0) {
+			TickableTask task = tasks.get(i);
+			task.tick(currentTick);
+			if(task.cancelled || task.duration <= 0) {
 				tasks.get(i).onEnd();
 				tasks.remove(i);
 			}
 		}
-		
-		
 	}
 }

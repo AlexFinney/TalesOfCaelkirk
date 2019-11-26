@@ -19,22 +19,21 @@ import skeeter144.toc.network.AddLevelXpPKT;
 import skeeter144.toc.network.ItemCraftedPKT;
 import skeeter144.toc.network.Network;
 import skeeter144.toc.player.EntityLevels.Levels;
-import skeeter144.toc.tasks.TaskManager;
-import skeeter144.toc.tasks.TickableTask;
-import skeeter144.toc.util.Util;
+import skeeter144.toc.tasks.CraftingTask;
 
 public class RecipeManager {
 
-	HashMap<UUID, List<Recipe>> playerCraftingQueue = new HashMap<UUID, List<Recipe>>();
+	HashMap<UUID, List<CraftingTask>> playerCraftingQueue = new HashMap<UUID, List<CraftingTask>>();
+	
 	public final Recipe[] SMELTING_RECIPES = new Recipe[] {
-			new Recipe(new ItemStack(TOCItems.ingot_bronze), Levels.SMITHING,      1, 12, new ItemStack(TOCItems.ore_copper), new ItemStack(TOCItems.ore_tin)),
-			new Recipe(new ItemStack(TOCItems.ingot_iron), Levels.SMITHING,        7, 20,new ItemStack(TOCItems.ore_iron, 2)),
-			new Recipe(new ItemStack(TOCItems.ingot_steel),Levels.SMITHING,        23, 35, new ItemStack(TOCItems.ore_iron, 2), new ItemStack(TOCItems.ore_coal)),
-			new Recipe(new ItemStack(TOCItems.ingot_gold), Levels.SMITHING,        23, 15, new ItemStack(TOCItems.ore_gold)),
-			new Recipe(new ItemStack(TOCItems.ingot_mithril), Levels.SMITHING,     35, 80,new ItemStack(TOCItems.ore_mithril), new ItemStack(TOCItems.ore_coal, 3)),
-			new Recipe(new ItemStack(TOCItems.ingot_adamantite), Levels.SMITHING,  50, 130,new ItemStack(TOCItems.ore_adamantite), new ItemStack(TOCItems.ore_coal, 5)),
-			new Recipe(new ItemStack(TOCItems.ingot_runite), Levels.SMITHING,      70, 203, new ItemStack(TOCItems.ore_runite), new ItemStack(TOCItems.ore_coal, 7)),
-			new Recipe(new ItemStack(TOCItems.ingot_dragonstone), Levels.SMITHING, 85, 317, new ItemStack(TOCItems.ore_dragonstone), new ItemStack(TOCItems.ore_coal, 9))
+			new TickableRecipe(new ItemStack(TOCItems.ingot_bronze), Levels.SMITHING,      1, 12, 40, new ItemStack(TOCItems.ore_copper), new ItemStack(TOCItems.ore_tin)),
+			new TickableRecipe(new ItemStack(TOCItems.ingot_iron), Levels.SMITHING,        7, 20, 50, new ItemStack(TOCItems.ore_iron, 2)),
+			new TickableRecipe(new ItemStack(TOCItems.ingot_steel),Levels.SMITHING,        23, 35,  60, new ItemStack(TOCItems.ore_iron, 2), new ItemStack(TOCItems.ore_coal)),
+			new TickableRecipe(new ItemStack(TOCItems.ingot_gold), Levels.SMITHING,        23, 15,  60, new ItemStack(TOCItems.ore_gold)),
+			new TickableRecipe(new ItemStack(TOCItems.ingot_mithril), Levels.SMITHING,     35, 80, 70, new ItemStack(TOCItems.ore_mithril), new ItemStack(TOCItems.ore_coal, 3)),
+			new TickableRecipe(new ItemStack(TOCItems.ingot_adamantite), Levels.SMITHING,  50, 130, 80, new ItemStack(TOCItems.ore_adamantite), new ItemStack(TOCItems.ore_coal, 5)),
+			new TickableRecipe(new ItemStack(TOCItems.ingot_runite), Levels.SMITHING,      70, 203,  90, new ItemStack(TOCItems.ore_runite), new ItemStack(TOCItems.ore_coal, 7)),
+			new TickableRecipe(new ItemStack(TOCItems.ingot_dragonstone), Levels.SMITHING, 85, 317,  100, new ItemStack(TOCItems.ore_dragonstone), new ItemStack(TOCItems.ore_coal, 9))
 			};
 	
 	
@@ -81,57 +80,28 @@ public class RecipeManager {
 	}
 	
 	public void queueRecipe(UUID uuid, Recipe recipe, int num) {
-		if(playerCraftingQueue.get(uuid) == null) 
-			playerCraftingQueue.put(uuid, new ArrayList<Recipe>());
+		if(playerCraftingQueue.containsKey(uuid)) cancelCraftingForPlayer(uuid);
+		playerCraftingQueue.put(uuid, new ArrayList<CraftingTask>());
 		
-		playerCraftingQueue.get(uuid).add(recipe);
+		CraftingTask task = new CraftingTask((TickableRecipe)recipe, uuid, num);
+		playerCraftingQueue.get(uuid).add(task);
 		
-		TOCMain.serverTaskManager.addTask(new TickableTask(num * 20) {
-			int nextCraftTick = -1;
-			@Override
-			public void tick(int worldTick) {
-				System.out.println(worldTick);
-				if(worldTick > nextCraftTick) {
-					System.out.println("craft");
-					craftRecipe(Util.getPlayerByUUID(uuid), recipe);
-					nextCraftTick = worldTick + 19;
-				}
-			}
-
-			@Override
-			public void onStart() {
-				nextCraftTick = start + 19;
-			}
-			
-			@Override
-			public void onEnd() {
-				cancelCraftingForPlayer(uuid);
-			}
-		});
-		
+		TOCMain.serverTaskManager.addTask(task);
 	}
 	
 	public void cancelCraftingForPlayer(UUID uuid) {
-		playerCraftingQueue.remove(uuid);
-	}
-	
-	public void craftRecipes() {
-		for(Map.Entry<UUID, List<Recipe>> entry : playerCraftingQueue.entrySet()) {
-			ServerPlayerEntity player = ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByUUID(entry.getKey());
-
-			Recipe r = entry.getValue().get(0);
-			if(r.canRecipeBeCrafted(player.inventory)) {
-				craftRecipe(player, r);
-			}else {
-				playerCraftingQueue.get(player.getUniqueID()).remove(r);
-				if(playerCraftingQueue.get(player.getUniqueID()).size() == 0)
-					playerCraftingQueue.remove(player.getUniqueID());
-			}
+		if(playerCraftingQueue.containsKey(uuid)) {
+			playerCraftingQueue.get(uuid).get(0).cancel();
+			playerCraftingQueue.remove(uuid);
 		}
 	}
 	
-	private void craftRecipe(ServerPlayerEntity player, Recipe r) {
-		if(!playerCraftingQueue.containsKey(player.getUniqueID())) return;
+	public void playerFinishedCrafting(UUID uuid) {
+		
+	}
+		
+	public boolean craftRecipe(ServerPlayerEntity player, Recipe r) {
+		if(!playerCraftingQueue.containsKey(player.getUniqueID())) return false;
 		
 		ItemStack[] itemsLeft = new ItemStack[r.components.length];
 		for(int i = 0; i < itemsLeft.length; ++i) 
@@ -156,6 +126,7 @@ public class RecipeManager {
 		Network.INSTANCE.sendTo(new ItemCraftedPKT(), player);
 		TOCMain.pm.getPlayer(player).levels.addExp(r.level, r.xp);
 		Network.INSTANCE.sendTo(new AddLevelXpPKT(r.level.name().toString(), r.xp), player);
+		return true;
 	}
 	
 	static RecipeManager instance;

@@ -153,7 +153,8 @@ public class ANewAdventureQuest extends Quest{
 	@SubscribeEvent
 	public void bronzeSmithed(ItemSmithedEvent e) {
 		ANewAdventureQuestProgress qp = (ANewAdventureQuestProgress)QuestManager.getQuestProgressForPlayer(e.player.getUniqueID(), getQuestProgressClass());
-	
+		if(!qp.smeltingStarted) return;
+		
 		if(qp.bronzeSmelted < 5 && e.smithed.getItem() == TOCItems.ingot_bronze) {
 			if(++qp.bronzeSmelted >= 5){
 				Util.sendTaskUpdateMessage(e.player, this, "Smelt 5 bronze ingots. (Complete)");

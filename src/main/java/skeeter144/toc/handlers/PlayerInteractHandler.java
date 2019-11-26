@@ -126,7 +126,7 @@ public class PlayerInteractHandler {
 		float pitchOffset = TOCMain.rand.nextFloat() / .3f - .15f;
 		world.playSound(null, pos, SoundEvents.BLOCK_WOOD_HIT, SoundCategory.MASTER, 1, 1 + pitchOffset);
 
-		Network.INSTANCE.sendToAll(new SpawnParticlesPKT(ParticleSystem.ORE_MINING_PARTICLE_SYSTEM, pos));
+		//Network.INSTANCE.sendToAll(new SpawnParticlesPKT(ParticleSystem.ORE_MINING_PARTICLE_SYSTEM, pos));
 		
 		LogBlock log = (LogBlock) world.getBlockState(pos).getBlock();
 

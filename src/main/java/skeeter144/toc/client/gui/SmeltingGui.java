@@ -53,22 +53,23 @@ public class SmeltingGui extends CraftingGui{
 			@Override
 			public void onPress(Button p_onPress_1_) {
 				PlayerEntity pl = Minecraft.getInstance().player;
-				if (selectedRecipe.canRecipeBeCraftedNumberTimes(pl.inventory, totalCrafting + 1)) {
+				crafted = 0;
+				totalCrafting = 1;
+				if (selectedRecipe.canRecipeBeCraftedNumberTimes(pl.inventory, totalCrafting)) {
 					Network.INSTANCE.sendToServer(new CraftItemPKT(selectedRecipe.crafted.getItem(), 1));
-					totalCrafting++;
 					pl.world.playSound(pl, pl.getPosition(), Sounds.anvil_strike, SoundCategory.MASTER, 1, 1);
 				}
 			}
 		});
 		
 		Button smeltAll = new Button((int)(guiX + guiWidth - btnWidth * 1.2f), guiY + (int)(guiY * .5f), btnWidth, 20, "Smelt All",  new Button.IPressable() {
-			
 			@Override
 			public void onPress(Button p_onPress_1_) {
 				PlayerEntity pl = Minecraft.getInstance().player;
-				int num = selectedRecipe.numberCanBeCrafted(pl.inventory) - totalCrafting;
+				int num = selectedRecipe.numberCanBeCrafted(pl.inventory);
+				crafted = 0;
+				totalCrafting = num;
 				Network.INSTANCE.sendToServer(new CraftItemPKT(selectedRecipe.crafted.getItem(), num));
-				totalCrafting += num;
 				updatePlayersInventory();
 				pl.world.playSound(pl, pl.getPosition(), Sounds.anvil_strike, SoundCategory.MASTER, 1, 1);
 			}

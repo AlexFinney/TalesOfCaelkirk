@@ -31,7 +31,7 @@ public class OreParticle extends Particle{
 	@Override
 	public IParticleRenderType getRenderType() {
 		// TODO Auto-generated method stub
-		return null;
+		return IParticleRenderType.CUSTOM;
 	}
 	
 }

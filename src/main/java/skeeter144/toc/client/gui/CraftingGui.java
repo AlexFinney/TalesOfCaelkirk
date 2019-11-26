@@ -65,9 +65,7 @@ public abstract class CraftingGui extends Screen implements IGuiEventListener{
 	}
 	
 	public void incrementCrafted() {
-		++crafted;
-		if(crafted == totalCrafting)
-			selectedRecipe = null;
+		if (crafted < totalCrafting) ++crafted;
 	}
 
 	public void incrementTotalCrafted() {
@@ -148,6 +146,11 @@ public abstract class CraftingGui extends Screen implements IGuiEventListener{
 				++row;
 			}
 		}
+		return false;
+	}
+	
+	@Override
+	public boolean isPauseScreen() {
 		return false;
 	}
 	

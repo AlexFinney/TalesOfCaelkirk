@@ -3,6 +3,7 @@ package skeeter144.toc.tasks;
 public abstract class TickableTask {
 	
 	public int duration;
+	boolean cancelled = false;
 	protected int start = 0;
 	public TickableTask(int duration) {
 		this.duration = duration;
@@ -16,4 +17,9 @@ public abstract class TickableTask {
 
 	public void onStart() {}
 	public void onEnd() {}
+	
+	public void cancel() {
+		cancelled = true;
+		duration = 0;
+	}
 }
