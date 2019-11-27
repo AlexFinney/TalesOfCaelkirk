@@ -4,9 +4,9 @@ import javax.annotation.Nullable;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
@@ -29,7 +29,7 @@ public class EntityViking extends CustomMob{
 		this(TOCEntityType.VIKING, world);
 	}
 	
-	public EntityViking(EntityType<? extends MobEntity> type, World worldIn) {
+	public EntityViking(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 		
 		this.attackLevel = 10;

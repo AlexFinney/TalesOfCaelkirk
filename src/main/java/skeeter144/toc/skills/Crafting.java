@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.text.StringTextComponent;
@@ -17,22 +18,22 @@ import skeeter144.toc.player.TOCPlayer;
 
 public class Crafting {
 
-	public IRecipe oak_stick;
-	public IRecipe birch_stick;
-	public IRecipe maple_stick;
-	public IRecipe yew_stick;
-	public IRecipe orc_stick;
-	public IRecipe magic_stick;
+	public IRecipe<CraftingInventory> oak_stick;
+	public IRecipe<CraftingInventory> birch_stick;
+	public IRecipe<CraftingInventory> maple_stick;
+	public IRecipe<CraftingInventory> yew_stick;
+	public IRecipe<CraftingInventory> orc_stick;
+	public IRecipe<CraftingInventory> magic_stick;
 	
-	public IRecipe oak_shortbow_unstrung;
-	public IRecipe oak_longbow_unstrung;
+	public IRecipe<CraftingInventory> oak_shortbow_unstrung;
+	public IRecipe<CraftingInventory> oak_longbow_unstrung;
 	
-	public IRecipe oak_shortbow;
-	public IRecipe oak_longbow;
+	public IRecipe<CraftingInventory> oak_shortbow;
+	public IRecipe<CraftingInventory> oak_longbow;
 	
-	public IRecipe string;
+	public IRecipe<CraftingInventory> string;
 	
-	public IRecipe fishingPole;
+	public IRecipe<CraftingInventory> fishingPole;
 	
 	
 	Map<Item, Integer> itemLevelRequirements = new HashMap<Item, Integer>();

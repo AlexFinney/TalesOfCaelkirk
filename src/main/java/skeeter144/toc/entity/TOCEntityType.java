@@ -2,7 +2,6 @@ package skeeter144.toc.entity;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Function;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
@@ -11,9 +10,9 @@ import net.minecraft.entity.EntityType.Builder;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.passive.horse.AbstractChestedHorseEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.entity.mob.monster.EntityGhost;
 import skeeter144.toc.entity.mob.monster.EntityGiantScorpian;
 import skeeter144.toc.entity.mob.monster.EntityGiantSpider;
@@ -32,13 +31,13 @@ import skeeter144.toc.entity.mob.npc.questgiver.EntityUlricWeston;
 import skeeter144.toc.util.Reference;
 
 public class TOCEntityType {
-	public static EntityType<? extends MobEntity> GOBLIN;
-	public static EntityType<? extends MobEntity> VIKING;
-	public static EntityType<? extends MobEntity> RAT;
-	public static EntityType<? extends MobEntity> GIANT_SCORPIAN;
-	public static EntityType<? extends MobEntity> GIANT_SPIDER;
-	public static EntityType<? extends MobEntity> GHOST;
-	public static EntityType<? extends MobEntity> SIREN;
+	public static EntityType<? extends CustomMob> GOBLIN;
+	public static EntityType<? extends CustomMob> VIKING;
+	public static EntityType<? extends CustomMob> RAT;
+	public static EntityType<? extends CustomMob> GIANT_SCORPIAN;
+	public static EntityType<? extends CustomMob> GIANT_SPIDER;
+	public static EntityType<? extends CustomMob> GHOST;
+	public static EntityType<? extends CustomMob> SIREN;
 	public static EntityType<? extends AbstractChestedHorseEntity> MULE;
 	public static EntityType<? extends AbstractChestedHorseEntity> DONKEY;
 	public static EntityType<? extends AbstractChestedHorseEntity> HORSE;

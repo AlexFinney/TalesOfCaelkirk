@@ -1,8 +1,8 @@
 package skeeter144.toc.entity.mob.monster;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -20,7 +20,7 @@ public class EntitySiren extends CustomMob{
 	}
 	
 	boolean isRapidSwim = false; 
-	public EntitySiren(EntityType<? extends MobEntity> type, World worldIn) {
+	public EntitySiren(EntityType<? extends CustomMob> type, World worldIn) {
 		super(type, worldIn);
 		
 		this.attackLevel = 10;

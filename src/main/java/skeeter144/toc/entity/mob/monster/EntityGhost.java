@@ -42,7 +42,7 @@ public class EntityGhost extends CustomMob{
 		this(TOCEntityType.GHOST, worldIn);
 	}
 	
-	public EntityGhost(EntityType<? extends MobEntity> type, World worldIn) {
+	public EntityGhost(EntityType<? extends CustomMob> type, World worldIn) {
 		super(type, worldIn);
 		
 		this.setNoGravity(true);

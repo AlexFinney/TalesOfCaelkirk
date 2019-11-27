@@ -16,7 +16,7 @@ public class EntityGiantScorpian extends CustomMob{
 		this(TOCEntityType.GIANT_SCORPIAN, worldIn);
 	}
 	
-	public EntityGiantScorpian(EntityType<? extends MobEntity> type, World worldIn) {
+	public EntityGiantScorpian(EntityType<? extends CustomMob> type, World worldIn) {
 		super(type, worldIn);
 
 		this.attackLevel = 10;

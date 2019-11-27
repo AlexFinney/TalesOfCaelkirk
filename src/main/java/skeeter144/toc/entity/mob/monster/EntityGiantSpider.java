@@ -16,7 +16,7 @@ public class EntityGiantSpider extends CustomMob{
 		this(TOCEntityType.GIANT_SPIDER, worldIn);
 	}
 	
-	public EntityGiantSpider(EntityType<? extends MobEntity> type, World worldIn) {
+	public EntityGiantSpider(EntityType<? extends CustomMob> type, World worldIn) {
 		super(type, worldIn);
 
 		this.attackLevel = 40;

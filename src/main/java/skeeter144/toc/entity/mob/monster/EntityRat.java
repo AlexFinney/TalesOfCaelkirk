@@ -18,7 +18,7 @@ public class EntityRat extends CustomMob{
 		this(TOCEntityType.RAT, worldIn);
 	}
 	
-	public EntityRat(EntityType<? extends MobEntity> type, World worldIn) {
+	public EntityRat(EntityType<? extends CustomMob> type, World worldIn) {
 		super(type, worldIn);
 
 		this.attackLevel = 1;

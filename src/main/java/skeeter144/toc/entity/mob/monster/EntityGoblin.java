@@ -3,10 +3,16 @@ package skeeter144.toc.entity.mob.monster;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.goal.HurtByTargetGoal;
+import net.minecraft.entity.ai.goal.LookAtGoal;
+import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.monster.ZombiePigmanEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.sounds.Sounds;
@@ -17,7 +23,7 @@ public class EntityGoblin extends CustomMob{
 		this(TOCEntityType.GOBLIN, worldIn);
 	}
 	
-	public EntityGoblin(EntityType<? extends MobEntity> type, World worldIn) {
+	public EntityGoblin(EntityType<? extends CustomMob> type, World worldIn) {
 		super(type, worldIn);
 		
 		this.attackLevel = 3;
@@ -35,16 +41,33 @@ public class EntityGoblin extends CustomMob{
 //		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
 		
 		this.setHealth(10f);
-		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10);
+		
+	}
+	
+	@Override
+	protected void registerGoals() {
+		super.registerGoals();
+		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
+		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setCallsForHelp(EntityGoblin.class));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 0, true, true, null));
+	}
+	
+	@Override
+	protected void registerAttributes() {
+		super.registerAttributes();
+		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(15);
 		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.25);
-		//this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(5);
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(5);
 		this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(.4f);
 	}
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return TOCMain.rand.nextInt(10) == 0 ? Sounds.goblin_laugh : Sounds.goblin_breathe;
+		// 10% chance of a laugh instead of breathe
+		return rand.nextInt(10) == 0 ? Sounds.goblin_laugh : Sounds.goblin_breathe;
 	}
 	
 	@Override
@@ -63,5 +86,11 @@ public class EntityGoblin extends CustomMob{
 		//TODO:
 //		this.entityDropItem(new ItemStack(TOCItems.goblin_ear), 0);
 	}
-
+	
+	@Override
+	public boolean isAIDisabled() {
+		// TODO Auto-generated method stub
+		return super.isAIDisabled();
+	}
+	
 }
