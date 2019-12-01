@@ -2,9 +2,8 @@ package skeeter144.toc.entity.tile;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.renderer.texture.ITickable;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
@@ -12,7 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.blocks.TOCBlocks;
 
-public class TileEntityHarvestedOre extends TileEntity implements ITickable{
+public class TileEntityHarvestedOre extends TileEntity implements ITickableTileEntity{
 	
 	public TileEntityHarvestedOre() {
 		super(TOCBlocks.te_harvested_ore);

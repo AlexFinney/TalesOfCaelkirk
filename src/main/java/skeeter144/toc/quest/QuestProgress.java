@@ -24,6 +24,6 @@ public class QuestProgress implements Serializable{
 	}
 	
 	public void save() {
-		Database.saveQuestProgress(playerId, questId, this);
+		if(playerId != null) Database.saveQuestProgress(playerId, questId, this);
 	}
 }

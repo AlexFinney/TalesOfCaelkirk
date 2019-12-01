@@ -86,6 +86,7 @@ public class SetMobSpawnerSettingsPKT{
 							tems.mob_spawn_search_radius = msg.spawnSearchRadius;
 							tems.mobs_per_spawn_min = msg.minMobsPerSpawn;
 							tems.mobs_per_spawn_max = msg.maxMobsPersSpawn;
+							tems.updateSpawnedMob();
 							player.sendMessage(new StringTextComponent("Spawner settings saved."));
 							tems.sendUpdates();
 						}

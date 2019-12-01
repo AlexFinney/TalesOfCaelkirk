@@ -179,14 +179,15 @@ public class PlayerInteractHandler {
 					}
 					world.setBlockState(entry.getKey(), Blocks.AIR.getDefaultState());
 				}
-				world.setBlockState(lowestPos, lowestBlock);
-			
+				world.setBlockState(lowestPos, TOCBlocks.harvested_tree.getDefaultState());
+				
 				TileEntityHarvestedTree tree = (TileEntityHarvestedTree) ((BlockHarvestedTree)TOCBlocks.harvested_tree).createTileEntity(null, world);
 				tree.minSecs = Woodcutting.getMinRespawnSecsForWood(log);
 				tree.maxSecs = Woodcutting.getMaxRespawnSecsForWood(log);
 				tree.treeBlocks = list;
-
-				world.setTileEntity(pos,  tree);
+				
+				world.setTileEntity(lowestPos,  tree);
+				System.out.println();
 			}
 			
 			if(player != null) {

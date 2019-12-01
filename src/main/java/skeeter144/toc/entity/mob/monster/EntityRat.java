@@ -44,6 +44,10 @@ public class EntityRat extends CustomMob{
 		this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(.2f);
 	}
 	
+	@Override
+	protected void registerGoals() {
+		super.registerGoals();
+	}
 
 	@Override
 	public void onDeath(DamageSource cause) {

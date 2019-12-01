@@ -1,7 +1,9 @@
 package skeeter144.toc.client.gui;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import com.mojang.blaze3d.platform.GLX;
 import com.mojang.blaze3d.platform.GlStateManager;
 
 import net.minecraft.client.MainWindow;
@@ -27,35 +29,56 @@ public class DialogGui extends Screen {
 	NpcDialog npcDialog;
 	int questId, dialogId;
 	public LivingEntity e;
-
 	public DialogGui(LivingEntity e, NpcDialog dialog) {
 		super(new StringTextComponent("Dialog"));
 		this.e = e;
 		this.npcDialog = dialog;
 
 		this.dialog = dialog.dialogText;
+		
+		
 
-		for (int i = 0; i < 5; ++i) {
-			this.buttonTexts[i] = "";
-		}
-
-		for (int i = 0; i < dialog.playerResponses.size(); ++i) {
-			this.buttonTexts[i] = dialog.playerResponses.get(i).responseName;
-		}
 	}
-
+	
+	boolean buttonsInit = false;
 	public void render(int mouseX, int mouseY, float partialTicks) {
 		renderBackground();
 		drawBookBackground();
 		super.render(mouseX, mouseY, partialTicks);
+		
 		if (e != null) {
 			pushEntityRotations();
 			renderEntity();
 			popEntityRotations();
 		}
 		drawDialog();
+		
+		
 	}
 
+	private void initButtons() {
+		int buttonWidth = (int)(bookWidth * .45f);
+		int numButtons = 0;
+		int buttonBaseY = bookY + bookHeight - (int)(1.5 * 20);
+		
+		for (int i = 0; i < npcDialog.playerResponses.size(); ++i) {
+			this.buttonTexts[i] = npcDialog.playerResponses.get(i).responseName;
+			addButton(new Button(bookX + 9,
+					buttonBaseY - i * 20 - i,
+					buttonWidth, 20, npcDialog.playerResponses.get(i).responseName, (button) ->  {
+						buttonClicked(button);
+					}));
+			System.out.println("Add Button");
+		}
+		
+		for (int i = 0; i < 5; ++i) {
+			if (buttonTexts[i] != null && !buttonTexts[i].equals("")) {
+				++numButtons;
+			}
+		}
+		buttonsInit = true;
+	}
+	
 	private void renderEntity() {
 		float x = bookX + bookWidth * .73f;
 		float y = bookY + bookHeight * .84f;
@@ -74,15 +97,16 @@ public class DialogGui extends Screen {
 		GlStateManager.translatef(0.0F, 0.0F, 0.0F);
 		EntityRendererManager rendermanager = Minecraft.getInstance().getRenderManager();
 		rendermanager.setPlayerViewY(180.0F);
-		rendermanager.setRenderShadow(false);
 		rendermanager.renderEntity(e, 0.0D, -.3D, 0.0D, 0.0F, 1.0F, false);
-		rendermanager.setRenderShadow(true);
+		GlStateManager.disableRescaleNormal();
 		GlStateManager.popMatrix();
 		RenderHelper.disableStandardItemLighting();
+		
+		RenderHelper.disableStandardItemLighting();
 		GlStateManager.disableRescaleNormal();
-//		GlStateManager.activeTexture(OpenGlHelper.GL_TEXTURE1);
-//		GlStateManager.disableTexture2D();
-//		GlStateManager.activeTexture(OpenGlHelper.GL_TEXTURE0);
+		GlStateManager.activeTexture(GLX.GL_TEXTURE1);
+		GlStateManager.disableTexture();
+		GlStateManager.activeTexture(GLX.GL_TEXTURE0);
 
 		FontRenderer fr = Minecraft.getInstance().fontRenderer;
 		String name = e.getName().getFormattedText();
@@ -92,7 +116,7 @@ public class DialogGui extends Screen {
 	public String dialog = "";
 
 	private void drawDialog() {
-
+		GlStateManager.pushMatrix();
 		String[] temp = dialog.split(" ");
 		ArrayList<String> tokens = new ArrayList<String>();
 		for (String s : temp)
@@ -120,45 +144,43 @@ public class DialogGui extends Screen {
 			font.drawString(lines.get(i), (bookX + bookWidth * .03f) * invscalef,
 					(bookY + bookWidth * .03f + font.FONT_HEIGHT * i) * invscalef, 0x000000);
 		}
+		GlStateManager.popMatrix();
 	}
 
 	public String[] buttonTexts = { "", "", "", "", "" };
+	
 	@Override
-	public void init() {
-		super.init();
-		this.buttons.clear();
-		this.children.clear();
-		int buttonWidth = (int)(bookWidth * .45f);
-		int numButtons = 0;
-		for (int i = 0; i < 5; ++i) {
-			if (buttonTexts[i] != null && !buttonTexts[i].equals("")) {
-				++numButtons;
-			}
-		}
-		if (numButtons > 0) {
-			Button temp = new Button(0, 0, 0, 0, "", new IPressable() {
-				@Override
-				public void onPress(Button p_onPress_1_) {
-					
-				}
-			});
-		}
-
-		int buttonBaseY = bookY + bookHeight - (int)(1.5 * 20);
-		for (int i = 4; i >= 0; --i) {
-			if (buttonTexts[i] != null && !buttonTexts[i].equals("")) {
-
-				Button btn = new Button(bookX + bookWidth / 2 - buttonWidth - 7, buttonBaseY - i * 20 - i, buttonWidth,
-						20, buttonTexts[i], new IPressable() {
-							@Override
-							public void onPress(Button button) {
-								buttonClicked(button);
-							}
-						});
-
-				this.addButton(btn);
-			}
-		}
+	protected void init() {
+		bookWidth = 300;
+		bookHeight = 230;
+		
+		bookX = this.width / 2 - bookWidth / 2;
+		bookY = (this.height - bookHeight) / 2;
+		
+		initButtons();
+//		if (numButtons > 0) {
+//			Button temp = new Button(0, 0, 0, 0, "", new IPressable() {
+//				@Override
+//				public void onPress(Button p_onPress_1_) {
+//					
+//				}
+//			});
+//		}
+//
+//		for (int i = 4; i >= 0; --i) {
+//			if (buttonTexts[i] != null && !buttonTexts[i].equals("")) {
+//
+//				Button btn = new Button(bookX + bookWidth / 2 - buttonWidth - 7, buttonBaseY - i * 20 - i, buttonWidth,
+//						20, buttonTexts[i], new IPressable() {
+//							@Override
+//							public void onPress(Button button) {
+//								buttonClicked(button);
+//							}
+//						});
+//
+//				this.addButton(btn);
+//			}
+//		}
 	}
 
 	protected void buttonClicked(Button btn) {
@@ -183,21 +205,23 @@ public class DialogGui extends Screen {
 		}
 	}
 
-	static int bookWidth, bookHeight, bookX, bookY;
+	@Override
+	public void resize(Minecraft p_resize_1_, int p_resize_2_, int p_resize_3_) {
+		super.resize(p_resize_1_, p_resize_2_, p_resize_3_);
+	}
+	
+	int bookWidth, bookHeight, bookX, bookY;
 
 	private void drawBookBackground() {
 		GlStateManager.pushMatrix();
 		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 		TextureManager tm = Minecraft.getInstance().getTextureManager();
-		MainWindow sr = Minecraft.getInstance().mainWindow;
+		
 
 		tm.bindTexture(backgreoundImage);
 
-		bookWidth = (int)(sr.getScaledWidth() * .7f);
-		bookHeight = (int) (bookWidth * .7f);
-		bookX = sr.getScaledWidth() / 2 - bookWidth / 2 - 5;
-		bookY = (int)(sr.getScaledHeight() * .02f);
+		
 
 		blit(bookX, bookY, 0, 0, bookWidth, bookHeight, bookWidth, bookHeight);
 		GlStateManager.popMatrix();

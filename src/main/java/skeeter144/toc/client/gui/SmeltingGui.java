@@ -22,6 +22,8 @@ public class SmeltingGui extends CraftingGui{
 		backgroundImage = new ResourceLocation(Reference.MODID, "textures/gui/smelting_gui.png");
 		allRecipes = RecipeManager.instance().SMELTING_RECIPES;
 		updatePlayersInventory();
+
+    	initGui();
 	}
 	
 	@Override
@@ -34,10 +36,6 @@ public class SmeltingGui extends CraftingGui{
 		for(Widget btn : buttons) 
 			btn.active = selectedRecipe != null;
 	    
-	    if(resized) {
-	    	initGui();
-	    	resized = false;
-	    }
 	    
 	    if(wasMouseClicked && !Mouse.isButtonDown(0)) 
 			wasMouseClicked = false;

@@ -65,8 +65,8 @@ public class TOCEntityType {
 		RAT = createEntityType("rat", 64, 3, Builder.<EntityRat>create(EntityRat::new, EntityClassification.AMBIENT));
 		GIANT_SCORPIAN = createEntityType("giant_scorpian", 64, 3, Builder.<EntityGiantScorpian>create(EntityGiantScorpian::new, EntityClassification.MONSTER));
 		GIANT_SPIDER = createEntityType("giant_spider", 64, 3, Builder.<EntityGiantSpider>create(EntityGiantSpider::new, EntityClassification.MONSTER));
-		GHOST = createEntityType("ghost", 64, 3, Builder.<EntitySiren>create(EntitySiren::new, EntityClassification.MONSTER));
-		SIREN = createEntityType("siren", 64, 3, Builder.<EntityGhost>create(EntityGhost::new, EntityClassification.MONSTER));
+		GHOST = createEntityType("ghost", 64, 3, Builder.<EntityGhost>create(EntityGhost::new, EntityClassification.MONSTER));
+		SIREN = createEntityType("siren", 64, 3, Builder.<EntitySiren>create(EntitySiren::new, EntityClassification.MONSTER));
 		//MULE = createEntityType("mule", MuleEntity.class, MuleEntity::new, 64, 3, false);
 		GRIFFIN = createEntityType("griffen", 64, 3, Builder.<EntityGriffin>create(EntityGriffin::new, EntityClassification.CREATURE));
 	}

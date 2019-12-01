@@ -207,7 +207,7 @@ public class HUD extends IngameGui {
 			for (int i = 0; i < activeEffects.size(); ++i) {
 				int iconX = (int) (screenWidth / 2 + .05f * screenWidth * i - screenWidth / 50);
 				ResourceLocation icon = new ResourceLocation(Reference.MODID,
-						"textures/icons/effects/" + activeEffects.get(i) + ".png");
+						"textures/icons/effects/" + activeEffects.get(i).toLowerCase() + ".png");
 				tm.bindTexture(icon);
 				blit((int) (iconX - iconSize / 2f), (int) (y), 0, 0, iconSize, iconSize, iconSize, iconSize, iconSize,
 						iconSize);

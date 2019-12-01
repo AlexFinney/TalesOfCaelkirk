@@ -4,12 +4,21 @@ import java.util.Random;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttribute;
+import net.minecraft.entity.ai.controller.FlyingMovementController;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.HurtByTargetGoal;
+import net.minecraft.entity.ai.goal.LookAtGoal;
+import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.monster.ZombiePigmanEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -54,8 +63,6 @@ public class EntityGhost extends CustomMob{
 		
 		this.getAttributes().registerAttribute(SharedMonsterAttributes.FLYING_SPEED);
 		
-		this.getAttributes().registerAttribute(DIVE_STAGE);
-		
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50);
 		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(1f);
@@ -64,6 +71,37 @@ public class EntityGhost extends CustomMob{
 		this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(.8f);
 		
 		this.setHealth(50f);	
+	}
+	
+//	@Override
+//	protected void initEntityAI() {
+//		this.tasks.addTask(0, new EntityAISwimming(this));
+//		this.tasks.addTask(1, new AIGhostDiveAttack(this));
+//		this.tasks.addTask(2, new EntityAIAttackMelee(this, 1, false));
+//		this.tasks.addTask(5, new AIRandomFly(this));
+//		this.tasks.addTask(6, new EntityAILookIdle(this));
+//
+//		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, PlayerEntity.class, true, true));
+//	}
+	
+	@Override
+	protected void registerAttributes() {
+		super.registerAttributes();
+		 this.getAttributes().registerAttribute(DIVE_STAGE);
+	}
+	
+	@Override
+	protected void registerGoals() {
+		super.registerGoals();
+		this.navigator = new FlyingPathNavigator(this, world);
+		this.moveController = new FlyingMovementController(this);
+		
+		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setCallsForHelp(EntityGhost.class));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 	}
 	
 	public void setDiveStage(DiveStage stage) {
@@ -78,18 +116,10 @@ public class EntityGhost extends CustomMob{
 	}
 	
 	
-//	@Override
-//	protected void initEntityAI() {
-//		this.navigator = new PathNavigateFlying(this, this.world);
-//		this.moveHelper = new EntityFlyHelper(this);
-//		this.tasks.addTask(0, new EntityAISwimming(this));
-//		this.tasks.addTask(1, new AIGhostDiveAttack(this));
-//		this.tasks.addTask(2, new EntityAIAttackMelee(this, 1, false));
-//		this.tasks.addTask(5, new AIRandomFly(this));
-//		this.tasks.addTask(6, new EntityAILookIdle(this));
-//
-//		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, PlayerEntity.class, true, true));
-//	}
+	@Override
+	public boolean isAIDisabled() {
+		return false;
+	}
 	
 	public void fall(float distance, float damageMultiplier) {}
 	

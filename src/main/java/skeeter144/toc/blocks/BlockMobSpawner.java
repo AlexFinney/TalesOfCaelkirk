@@ -2,16 +2,19 @@ package skeeter144.toc.blocks;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import skeeter144.toc.client.gui.MobSpawnerGUI;
 import skeeter144.toc.entity.tile.BlockTileEntity;
 import skeeter144.toc.entity.tile.TileEntityMobSpawner;
 
@@ -26,9 +29,12 @@ public class BlockMobSpawner extends BlockTileEntity<TileEntityMobSpawner> {
 	public BlockRenderLayer getBlockLayer() {
 		return BlockRenderLayer.TRANSLUCENT;
 	}
+	
+	@OnlyIn(Dist.CLIENT)
 	@Override
 	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		if(player.isCreative()){
+		if(player.isCreative() && worldIn.isRemote){
+			Minecraft.getInstance().displayGuiScreen(new MobSpawnerGUI((TileEntityMobSpawner)worldIn.getTileEntity(pos)));
 			//TODO: show gui
 			//playerIn.show(TOCMain.instance, Guis.MOB_SPAWNER_GUI, worldIn, pos.getX(),
 			//		pos.getY(), pos.getZ());
@@ -44,7 +50,17 @@ public class BlockMobSpawner extends BlockTileEntity<TileEntityMobSpawner> {
 
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new TileEntityMobSpawner(null);
+		return new TileEntityMobSpawner();
+	}
+	
+	@Override
+	public boolean hasTileEntity() {
+		return true;
+	}
+	
+	@Override
+	public boolean hasTileEntity(BlockState state) {
+		return true;
 	}
 	
 }

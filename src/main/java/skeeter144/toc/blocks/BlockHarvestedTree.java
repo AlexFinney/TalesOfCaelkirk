@@ -4,6 +4,7 @@ import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
@@ -12,25 +13,30 @@ import skeeter144.toc.entity.tile.TileEntityHarvestedTree;
 
 public class BlockHarvestedTree extends BlockTileEntity<TileEntityHarvestedTree> {
 
-	public BlockHarvestedTree(Material materialIn, String name) {
-		super(Properties.create(materialIn), name);
+	public BlockHarvestedTree(Properties props, String name) {
+		super(props, name);
 	}
 
 	@Override
-	public Class getTileEntityClass() {
+	public Class<TileEntityHarvestedTree> getTileEntityClass() {
 		return TileEntityHarvestedTree.class;
 	}
 
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new TileEntityHarvestedTree(TOCBlocks.te_harvested_tree);
+		return new TileEntityHarvestedTree();
 	}
 	
 	@Override
 	public BlockRenderType getRenderType(BlockState state) {
 		return BlockRenderType.INVISIBLE;
 	}
+	
 
+	@Override
+	public boolean hasTileEntity() {
+		return true;
+	}
 
 	public boolean canCollideCheck(BlockState state, boolean hitIfLiquid) {
 		return false;
@@ -42,6 +48,11 @@ public class BlockHarvestedTree extends BlockTileEntity<TileEntityHarvestedTree>
 
 	public boolean isFullCube(BlockState state) {
 		return false;
+	}
+	
+	@Override
+	public BlockRenderLayer getRenderLayer() {
+		return BlockRenderLayer.CUTOUT;
 	}
 
 }

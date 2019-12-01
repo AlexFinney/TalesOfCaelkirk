@@ -12,6 +12,7 @@ public class Animation {
 
 	String name;
 	int durationTicks;
+	public float speed = 1f;
 	List<KeyFrame> keyFrames = new ArrayList<KeyFrame>();
 	public List<AnimationEvent> events = new ArrayList<AnimationEvent>();
 	Model model;
@@ -26,10 +27,12 @@ public class Animation {
 	
 	
 	
-	public AnimationState render(CustomMob mob, float tickStartTime, float newTickTime) {
-		float currentTick = newTickTime - tickStartTime;
+	public AnimationState render(CustomMob mob, float tickStartTime, float ticksExisted) {
+		// get the current tick of the animation from the mobs life - the tick the animation started
+		float currentTick = ticksExisted - tickStartTime;
 		AnimationState currentState = AnimationState.NOT_RUNNING;
 		
+		// check if the animation is finished
 		if(currentTick > durationTicks) {
 			currentState = AnimationState.FINISHED;
 			if(keyFrames.get(keyFrames.size() - 1).onFrameChanged != null)
@@ -46,7 +49,7 @@ public class Animation {
 		KeyFrame targetFrame = null;
 		for(int i = 0; i < keyFrames.size(); ++i) {
 			KeyFrame frame = keyFrames.get(i);
-			if(currentTick <= frame.whenOccurs) {
+			if(currentTick * speed <= frame.whenOccurs) {
 				KeyFrame temp = mob.currentFrame;
 				mob.currentFrame = (i > 0) ? keyFrames.get(i-1) : keyFrames.get(0);
 				if(mob.currentFrame != temp && mob.currentFrame.onFrameChanged != null) {

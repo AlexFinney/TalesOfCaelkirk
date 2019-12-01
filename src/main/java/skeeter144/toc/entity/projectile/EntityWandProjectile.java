@@ -14,7 +14,6 @@ import skeeter144.toc.magic.Spells;
 import skeeter144.toc.particles.system.ParticleSystem;
 import skeeter144.toc.particles.system.PunishUndeadSystem;
 
-@Mod.EventBusSubscriber
 public class EntityWandProjectile extends ThrowableEntity{
 
 	int spellId;

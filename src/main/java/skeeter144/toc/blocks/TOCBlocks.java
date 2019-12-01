@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Block.Properties;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -18,6 +19,9 @@ import skeeter144.toc.blocks.log.BlockMagicLeaves;
 import skeeter144.toc.blocks.log.CustomBlockLeaves;
 import skeeter144.toc.blocks.log.CustomBlockLog;
 import skeeter144.toc.entity.tile.TileEntityAnvil;
+import skeeter144.toc.entity.tile.TileEntityHarvestedOre;
+import skeeter144.toc.entity.tile.TileEntityHarvestedTree;
+import skeeter144.toc.entity.tile.TileEntityMobSpawner;
 import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.util.Reference;
 
@@ -36,10 +40,10 @@ public class TOCBlocks {
 	
 //	//blocks that have corresponding TileEntity
 	public static Block harvested_ore = new BlockHarvestedOre(Material.ROCK, "harvested_ore");
-	public static Block harvested_tree = new BlockHarvestedTree(Material.WOOD, "harvested_tree");
+	public static Block harvested_tree = new BlockHarvestedTree(Properties.create(Material.AIR).hardnessAndResistance(-1f), "harvested_tree");
 	public static Block blockAnvil = new BlockAnvil("anvil");
-	public static Block blockMobSpawnerInvis = new BlockMobSpawner("mob_spawner");
-	public static Block blockMobSpawner = new CustomBlock(Properties.create(Material.ROCK), "mob_spawner_model");
+//	public static Block blockMobSpawnerInvis = new BlockMobSpawner("mob_spawner");
+	public static Block blockMobSpawner = new BlockMobSpawner("mob_spawner_model");
 	
 	public static Block oak_log = new CustomBlockLog("oak_log");
 	public static Block birch_log = new CustomBlockLog("birch_log");
@@ -53,12 +57,8 @@ public class TOCBlocks {
 	public static Block maple_leaves = new CustomBlockLeaves("maple_leaves");
 	public static Block yew_leaves = new CustomBlockLeaves("yew_leaves");
 	
-	@ObjectHolder(Reference.MODID + ":te_harvested_ore")
 	public static TileEntityType<?> te_harvested_ore;
-	
-	@ObjectHolder(Reference.MODID + ":te_harvested_tree")
 	public static TileEntityType<?> te_harvested_tree;
-	
 	public static TileEntityType<?> te_anvil;
 	
 	@ObjectHolder(Reference.MODID + ":te_mob_spawner")
@@ -78,11 +78,10 @@ public class TOCBlocks {
 	
 	@SubscribeEvent
 	public static void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> evt) {
-		//te_harvested_ore = TileEntityType.register(Reference.MODID + ":harvested_ore", TileEntityType.Builder.create(TileEntityHarvestedOre::new));
-		//te_harvested_tree = TileEntityType.register(Reference.MODID + ":harvested_tree", TileEntityType.Builder.create(TileEntityHarvestedTree::new));
-		//te_mob_spawner = TileEntityType.register(Reference.MODID + ":mob_spawner", TileEntityType.Builder.create(TileEntityMobSpawner::new));
-
-		te_anvil = registerTE(TileEntityType.Builder.create(TileEntityAnvil::new, TOCBlocks.blockAnvil), "anvil", evt);
+		te_harvested_ore = registerTE(TileEntityType.Builder.create(TileEntityHarvestedOre::new, TOCBlocks.harvested_ore), "harvested_ore", evt);
+		te_harvested_tree = registerTE(TileEntityType.Builder.create(TileEntityHarvestedTree::new, TOCBlocks.harvested_tree, Blocks.DIAMOND_BLOCK), "harvested_tree", evt);
+		te_mob_spawner = registerTE(TileEntityType.Builder.create(TileEntityMobSpawner::new, TOCBlocks.blockMobSpawner), "mob_spawner", evt);
+		te_anvil =         registerTE(TileEntityType.Builder.create(TileEntityAnvil::new, TOCBlocks.blockAnvil), "anvil", evt);
 	}
 
 	static TileEntityType<?> registerTE(Builder<TileEntity> builder, 

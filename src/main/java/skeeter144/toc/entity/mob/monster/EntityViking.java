@@ -76,6 +76,11 @@ public class EntityViking extends CustomMob{
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.hpLevel * EntityLevels.HP_PER_LEVEL);
 		this.setHealth(this.hpLevel * EntityLevels.HP_PER_LEVEL);
 	}
+	
+	@Override
+	protected void registerGoals() {
+		super.registerGoals();
+	}
 
 
 	@Override

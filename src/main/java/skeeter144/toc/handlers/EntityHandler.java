@@ -9,7 +9,7 @@ import java.util.Set;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.DamageSource;
@@ -18,6 +18,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.combat.CombatManager;
 import skeeter144.toc.combat.CombatManager.DamageType;
@@ -33,81 +34,83 @@ import skeeter144.toc.player.TOCPlayer;
 import skeeter144.toc.regions.Point;
 import skeeter144.toc.regions.Region;
 import skeeter144.toc.regions.RegionBound;
+import skeeter144.toc.util.Reference;
 
+@Mod.EventBusSubscriber(modid = Reference.MODID)
 public class EntityHandler {
 
 	@SubscribeEvent
-	public void livingUpdate(LivingUpdateEvent event) {
+	public static void livingUpdate(LivingUpdateEvent event) {
 		Entity e = event.getEntity();
+		if (e.world.isRemote || !(e instanceof PlayerEntity))
+			return;
 
-		if (!e.world.isRemote && e instanceof PlayerEntity) {
-			TOCPlayer pl = TOCMain.pm.getPlayer((PlayerEntity) e);
-			pl.tick();
+		TOCPlayer pl = TOCMain.pm.getPlayer((PlayerEntity) e);
+		pl.tick();
 
-			if (e.ticksExisted % 100 == 0) {
-				((PlayerEntity) e).getFoodStats().setFoodLevel(20);
+		if (e.ticksExisted % 100 == 0) {
+			((PlayerEntity) e).getFoodStats().setFoodLevel(20);
+		}
+
+		// do player region ticks
+		if (e.ticksExisted % 20 == 0) {
+			if (TOCMain.rm == null || TOCMain.rm.playerRegions == null) {
+				if (TOCMain.rm == null)
+					System.out.println("Fatal error: TOCMain.rm == null");
+				if (TOCMain.rm.playerRegions == null)
+					System.out.println("Fatal error: TOCMain.rm.playerRegions == null");
+				return;
 			}
 
-			// do player region ticks
-			if (e.ticksExisted % 20 == 0) {
-				if (TOCMain.rm == null || TOCMain.rm.playerRegions == null) {
-					if (TOCMain.rm == null)
-						System.out.println("Fatal error: TOCMain.rm == null");
-					if (TOCMain.rm.playerRegions == null)
-						System.out.println("Fatal error: TOCMain.rm.playerRegions == null");
-					return;
-				}
-
-				Set<Region> foundRegions = new HashSet<Region>();
-				for (Map.Entry<String, Region> entry : TOCMain.rm.getRegions().entrySet()) {
-					for (RegionBound rb : entry.getValue().bounds) {
-						if (rb.containsPoint(new Point((int) e.posX, (int) e.posZ))) {
-							foundRegions.add(entry.getValue());
-							break;
-						}
+			Set<Region> foundRegions = new HashSet<Region>();
+			for (Map.Entry<String, Region> entry : TOCMain.rm.getRegions().entrySet()) {
+				for (RegionBound rb : entry.getValue().bounds) {
+					if (rb.containsPoint(new Point((int) e.posX, (int) e.posZ))) {
+						foundRegions.add(entry.getValue());
+						break;
 					}
 				}
+			}
 
-				Set<Region> playerRegions = TOCMain.rm.playerRegions.get(e.getUniqueID());
-				// region exits
-				if (playerRegions != null) {
-					List<Region> exitedRegions = new ArrayList<Region>();
-					for (Region r : playerRegions) {
-						if (!foundRegions.contains(r)) {
-							r.onRegionExited((LivingEntity) e);
-							exitedRegions.add(r);
-						}
+			Set<Region> playerRegions = TOCMain.rm.playerRegions.get(e.getUniqueID());
+			// region exits
+			if (playerRegions != null) {
+				List<Region> exitedRegions = new ArrayList<Region>();
+				for (Region r : playerRegions) {
+					if (!foundRegions.contains(r)) {
+						r.onRegionExited((LivingEntity) e);
+						exitedRegions.add(r);
 					}
+				}
 
-					for (Region r : exitedRegions) {
-						playerRegions.remove(r);
-					}
+				for (Region r : exitedRegions) {
+					playerRegions.remove(r);
+				}
+				TOCMain.rm.playerRegions.put(e.getUniqueID(), playerRegions);
+			}
+
+			// region ticks
+			if (playerRegions != null) {
+				for (Region r : playerRegions) {
+					r.onRegionTick((LivingEntity) e);
+				}
+			}
+
+			// region entries
+			for (Region r : foundRegions) {
+				if (playerRegions == null || !playerRegions.contains(r)) {
+					r.onRegionEntered((LivingEntity) e);
+					if (playerRegions == null)
+						playerRegions = new HashSet<Region>();
+					playerRegions.add(r);
 					TOCMain.rm.playerRegions.put(e.getUniqueID(), playerRegions);
-				}
-
-				// region ticks
-				if (playerRegions != null) {
-					for (Region r : playerRegions) {
-						r.onRegionTick((LivingEntity) e);
-					}
-				}
-
-				// region entries
-				for (Region r : foundRegions) {
-					if (playerRegions == null || !playerRegions.contains(r)) {
-						r.onRegionEntered((LivingEntity) e);
-						if (playerRegions == null)
-							playerRegions = new HashSet<Region>();
-						playerRegions.add(r);
-						TOCMain.rm.playerRegions.put(e.getUniqueID(), playerRegions);
-					}
 				}
 			}
 		}
 	}
 
 	@SubscribeEvent
-	public void entityJoin(EntityJoinWorldEvent e) {
+	public static void entityJoin(EntityJoinWorldEvent e) {
 		if (e.getEntity().world.isRemote) {
 			return;
 		}
@@ -122,10 +125,16 @@ public class EntityHandler {
 			levels.setLevelFor(Levels.HITPOINTS, cm.hpLevel, false);
 			TOCMain.mm.addMob(e.getEntity().getUniqueID(), new TOCEntity(e.getEntity(), levels));
 		}
+
+		// fuck slimes
+		if (e.getEntity() instanceof SlimeEntity) {
+			e.setCanceled(true);
+			e.getEntity().remove();
+		}
 	}
 
 	@SubscribeEvent
-	public void entityDeath(LivingDeathEvent e) {
+	public static void entityDeath(LivingDeathEvent e) {
 		if (e.getEntity().world.isRemote) {
 			return;
 		}
@@ -137,7 +146,7 @@ public class EntityHandler {
 				TOCDamageSource src = (TOCDamageSource) e.getSource();
 				level = CombatManager.levelForDamageSource(src);
 			}
-			level = CombatManager.levelForHeldItem(((PlayerEntity)e.getSource().getTrueSource()));
+			level = CombatManager.levelForHeldItem(((PlayerEntity) e.getSource().getTrueSource()));
 			TOCPlayer player = TOCMain.pm.getPlayer(((PlayerEntity) e.getSource().getTrueSource()));
 
 			boolean leveledUp = player.getPlayerLevels().addExp(level, xp);
@@ -153,7 +162,7 @@ public class EntityHandler {
 	}
 
 	@SubscribeEvent
-	public void entityHurt(LivingHurtEvent event) {
+	public static void entityHurt(LivingHurtEvent event) {
 		if (event.getEntity() instanceof PlayerEntity)
 			event.setCanceled(true);
 

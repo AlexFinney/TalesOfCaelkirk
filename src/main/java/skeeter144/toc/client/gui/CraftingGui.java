@@ -29,7 +29,6 @@ public abstract class CraftingGui extends Screen implements IGuiEventListener{
 
 	int totalCrafting = 0;
 	int crafted = 0;
-	boolean resized = true;
 	boolean wasMouseClicked = false;
 	int guiWidth, guiHeight, guiX, guiY;
 	int iconDim;

@@ -32,6 +32,8 @@ public abstract class EntityNPCInteractable extends EntityNpc{
 	protected abstract boolean processInteract(PlayerEntity player, Hand hand);
 	
 	public void runServerFunction(UUID playerUUID, String dialogResponse) {
+		if(world.isRemote) {System.err.println("Error: Server function called on client."); return;}
+		
 		for(Entry<String, NpcDialog> dialog : dialogs.entrySet()) {
 			for(NpcDialogResponse response : dialog.getValue().playerResponses) {
 				if(response.serverEventFunc.equals(dialogResponse)) {

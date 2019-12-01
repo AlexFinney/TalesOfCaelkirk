@@ -6,6 +6,7 @@ import java.util.Map;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.texture.ITickable;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
@@ -14,14 +15,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.blocks.TOCBlocks;
 
-public class TileEntityHarvestedTree extends TileEntity implements ITickable{
+public class TileEntityHarvestedTree extends TileEntity implements ITickableTileEntity{
 	
 	public TileEntityHarvestedTree() {
 		super(TOCBlocks.te_harvested_tree);
-	}
-	
-	public TileEntityHarvestedTree(TileEntityType<?> tileEntityTypeIn) {
-		super(tileEntityTypeIn);
 	}
 
 	public Map<BlockPos, BlockState> treeBlocks = new HashMap<BlockPos, BlockState>();

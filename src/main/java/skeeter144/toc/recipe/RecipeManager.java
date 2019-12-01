@@ -3,7 +3,6 @@ package skeeter144.toc.recipe;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,7 +11,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.network.AddLevelXpPKT;

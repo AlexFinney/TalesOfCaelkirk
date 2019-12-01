@@ -1,32 +1,36 @@
 package skeeter144.toc.entity.tile;
 
-import java.lang.reflect.InvocationTargetException;
-
 import javax.annotation.Nullable;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.texture.ITickable;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 import skeeter144.toc.blocks.TOCBlocks;
 
-public class TileEntityMobSpawner extends TileEntity implements ITickable {
+public class TileEntityMobSpawner extends TileEntity implements ITickableTileEntity {
+
+	long ticksAlive = 0;
 
 	public TileEntityMobSpawner() {
 		super(TOCBlocks.te_mob_spawner);
 	}
-	
+
 	public TileEntityMobSpawner(TileEntityType<?> tileEntityTypeIn) {
 		super(tileEntityTypeIn);
 	}
 
+	EntityType<?> summon_type;
 	public String mob_name = "";
 	public int spawn_radius = 10;
 	public int avg_spawns_per_min = 5;
@@ -49,6 +53,8 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable {
 
 	@Override
 	public void read(CompoundNBT compound) {
+		if(!world.isRemote) return;
+		
 		mob_name = compound.getString("mob_name");
 		spawn_radius = compound.getInt("spawn_radius");
 		avg_spawns_per_min = compound.getInt("avg_spawns_per_min");
@@ -56,67 +62,73 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable {
 		mob_spawn_search_radius = compound.getInt("mob_spawn_search_radius");
 		mobs_per_spawn_min = compound.getInt("mobs_per_spawn_min");
 		mobs_per_spawn_max = compound.getInt("mobs_per_spawn_max");
+		updateSpawnedMob();
+	}
+	
+	public void updateSpawnedMob() {
+		summon_type = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(mob_name));
+		System.out.println();
 	}
 
 	@Override
 	public void tick() {
-		if(this.world.isRemote)
+		if (this.world.isRemote)
 			return;
-		
-		if(this.world.rand.nextInt(20) == 0) {//"tick" once per second
-			
+
+		if (ticksAlive % 20 == 0) { // tick once per second
+
 			float chance = avg_spawns_per_min / 60f;
-			if(this.world.rand.nextFloat() < chance) {
-				for(EntityType<?> entry : ForgeRegistries.ENTITIES) {
-					if(entry.getClass().getName().equals(mob_name)) {
-						AxisAlignedBB bb = new AxisAlignedBB(pos.getX() - mob_spawn_search_radius / 2,
-															 pos.getY() - 5, 
-															 pos.getZ() - mob_spawn_search_radius / 2,
-															 
-															 pos.getX() + mob_spawn_search_radius / 2,
-															 pos.getY() + 5, 
-															 pos.getZ() + mob_spawn_search_radius / 2);
-						//TODO:
-						if(true) {//this.world.getEntitiesWithinAABB(entry.getClass(), bb).size() < mob_spawn_limit) {
-							int numMobs = world.rand.nextInt(mobs_per_spawn_max - mobs_per_spawn_min + 1) + mobs_per_spawn_min;
-							try {
-								
-								for(int i = 0; i < numMobs; ++i) {
-									int spawnXOffset = world.rand.nextInt(spawn_radius) - spawn_radius / 2;
-									int spawnZOffset = world.rand.nextInt(spawn_radius) - spawn_radius / 2;
-									
-									BlockPos spawnPos = new BlockPos(pos.getX() + spawnXOffset, pos.getY(), pos.getZ() + spawnZOffset);
-									
-									if(!world.isAirBlock(spawnPos)) {
-										--i;
-										continue;
-									}
-									
-									while(world.isAirBlock(spawnPos) && pos.getY() - spawnPos.getY() < 10) {
-										spawnPos = spawnPos.add(0, -1, 0);
-									}
-									
-									spawnPos = spawnPos.add(0, 1, 0);
-									if(!world.isAirBlock(spawnPos) || !world.isAirBlock(spawnPos.add(0, 1, 0))) {
-										--i;
-										continue;
-									}else {
-										//TODO:
-//										EntityType e = entry.getClass().getConstructor(World.class).newInstance(world);
-//										e.setPosition(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
-//										world.addEntity(e);
-									}
+			float roll = this.world.rand.nextFloat();
+			if (roll < chance) {
+				AxisAlignedBB bb = new AxisAlignedBB(pos.getX() - mob_spawn_search_radius / 2, pos.getY() - 5,
+						pos.getZ() - mob_spawn_search_radius / 2,
+
+						pos.getX() + mob_spawn_search_radius / 2, pos.getY() + 5,
+						pos.getZ() + mob_spawn_search_radius / 2);
+				
+				// TODO:
+				if (true) {// this.world.getEntitiesWithinAABB(entry.getClass(), bb).size() <
+							// mob_spawn_limit) {
+					int numMobs = world.rand.nextInt(mobs_per_spawn_max - mobs_per_spawn_min + 1) + mobs_per_spawn_min;
+					try {
+
+						for (int i = 0; i < numMobs; ++i) {
+							int spawnXOffset = world.rand.nextInt(spawn_radius) - spawn_radius / 2;
+							int spawnZOffset = world.rand.nextInt(spawn_radius) - spawn_radius / 2;
+
+							BlockPos spawnPos = new BlockPos(pos.getX() + spawnXOffset, pos.getY(),
+									pos.getZ() + spawnZOffset);
+
+							if (!world.isAirBlock(spawnPos)) {
+								--i;
+								continue;
+							}
+
+							while (world.isAirBlock(spawnPos) && pos.getY() - spawnPos.getY() < 10) {
+								spawnPos = spawnPos.add(0, -1, 0);
+							}
+
+							spawnPos = spawnPos.add(0, 1, 0);
+							if (!world.isAirBlock(spawnPos) || !world.isAirBlock(spawnPos.add(0, 1, 0))) {
+								--i;
+								continue;
+							} else {
+								if(summon_type != null) {
+									Entity e = summon_type.create(world);
+									e.setPosition(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
+									world.addEntity(e);
 								}
-									
-							  } catch (IllegalArgumentException | SecurityException e) {
-									e.printStackTrace();
-							  }
+							}
 						}
+
+					} catch (IllegalArgumentException | SecurityException e) {
+						e.printStackTrace();
 					}
 				}
 			}
-			
 		}
+
+		++ticksAlive;
 	}
 
 	@Override
@@ -137,7 +149,7 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable {
 	}
 
 	public void sendUpdates() {
-		//world.markBlockRangeForRenderUpdate(pos, pos);
+		// world.markBlockRangeForRenderUpdate(pos, pos);
 		world.notifyBlockUpdate(pos, getState(), getState(), 3);
 		markDirty();
 	}

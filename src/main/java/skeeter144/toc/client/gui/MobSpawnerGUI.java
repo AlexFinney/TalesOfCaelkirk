@@ -1,7 +1,9 @@
 package skeeter144.toc.client.gui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
@@ -12,6 +14,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.registries.ForgeRegistries;
 import skeeter144.toc.entity.tile.TileEntityMobSpawner;
+import skeeter144.toc.network.Network;
+import skeeter144.toc.network.SetMobSpawnerSettingsPKT;
 
 public class MobSpawnerGUI extends Screen{
 	
@@ -25,7 +29,13 @@ public class MobSpawnerGUI extends Screen{
 	int minMobsPerSpawn;
 	int maxMobsPersSpawn;
 	
+	Button mobIndexP, mobIndexM, spawnRadiusP, spawnRadiusM,
+	spawnsPerMinP, spawnsPerMinM, mobSpawnLimitP, mobSpawnLimitM,
+	spawnSearchRadiusP, spawnSearchRadiusM, minMobsPerSpawnP, 
+	minMobsPerSpawnM, maxMobsPersSpawnP, maxMobsPersSpawnM;
+	
 	List<EntityType<?> > mobList = new ArrayList<EntityType<?> >();
+	final Map<Button, Integer> buttons = new HashMap<Button, Integer>();
 	
 	public MobSpawnerGUI(TileEntityMobSpawner spawner) {
 		super(new StringTextComponent("Mob Spawner"));
@@ -52,129 +62,132 @@ public class MobSpawnerGUI extends Screen{
 		
 	} 
 	
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		this.renderBackground();
-	   // super.drawScreen(mouseX, mouseY, partialTicks);
-	   
-	    drawBackground();
-	}
-	
-	boolean wasMouseClicked = false;
-	static int bookWidth, bookHeight, bookX, bookY;
-	private void drawBackground() {
-		
-		TextureManager tm = Minecraft.getInstance().getTextureManager();
-		MainWindow sr = Minecraft.getInstance().mainWindow;
-		
+	@Override
+	protected void init() {
+		super.init();
 		super.buttons.clear();
 		
-		this.drawString(this.font, "Mob Type: " + mobList.get(mobIndex).getRegistryName(), 65, 5, 0XFFFFFF);
-		this.drawString(this.font, "Spawn Radius: " + spawnRadius, 65, 25, 0XFFFFFF);
-		this.drawString(this.font, "Average Spawns/Min: " + spawnsPerMin, 65, 45, 0XFFFFFF);
-		this.drawString(this.font, "Mob Spawn Limit: " + mobSpawnLimit, 65, 65, 0XFFFFFF);
-		this.drawString(this.font, "Mob Spawn Search Radius: " + spawnSearchRadius, 65, 85, 0XFFFFFF);
-		this.drawString(this.font, "Mobs Per Spawn Min: " + minMobsPerSpawn, 65, 105, 0XFFFFFF);
-		this.drawString(this.font, "Mobs Per Spawn Max: " + maxMobsPersSpawn, 65, 125, 0XFFFFFF);
-		
-		int buttonId = 0;
-		for(int i = 0; i < 7; ++i) {
-			Button b = new Button(0, 10, 30, i * 20, "<-", new Button.IPressable() {
-				@Override
-				public void onPress(Button btn) {
-					mouseClicked(btn.x, btn.y, 0);
-				}
-			}); ;
-			b.setWidth(30);
-			
-			Button b2 = new Button(30, 30, 30, i * 20, "->", new Button.IPressable() {
-				@Override
-				public void onPress(Button btn) {
-					handleButtonClicked(btn);
-				}
-			});
-			
-			b2.setWidth(30);
-			
-			this.addButton(b);
-			this.addButton(b2);
-			
-			buttonId += 2;
-		}
-		
-		Button b = new Button(30, 30, 30, 160, "->", new Button.IPressable() {
-			@Override
+		mobIndexP = new Button(30, 20, 30, 20, ">", new Button.IPressable() {
 			public void onPress(Button btn) {
-				handleButtonClicked(btn);
+				++mobIndex; enforceSettingsBounds();
 			}
 		});
-	
-		this.addButton(b);
+		mobIndexM = new Button(0, 20, 30, 20, "<", new Button.IPressable() {
+			public void onPress(Button btn) {
+				--mobIndex; enforceSettingsBounds();
+			}
+		});
+		
+		spawnRadiusP = new Button(30, 40, 30, 20, ">", new Button.IPressable() {
+			public void onPress(Button btn) {
+				++spawnRadius; enforceSettingsBounds();
+			}
+		});
+		spawnRadiusM = new Button(0, 40, 30, 20, "<", new Button.IPressable() {
+			public void onPress(Button btn) {
+				--spawnRadius; enforceSettingsBounds();
+			}
+		});
+		
+		spawnsPerMinP = new Button(30, 60, 30, 20, ">", new Button.IPressable() {
+			public void onPress(Button btn) {
+				++spawnsPerMin; enforceSettingsBounds();
+			}
+		});
+		spawnsPerMinM = new Button(0, 60, 30, 20, "<", new Button.IPressable() {
+			public void onPress(Button btn) {
+				--spawnsPerMin; enforceSettingsBounds();
+			}
+		});
+		
+		mobSpawnLimitP = new Button(30, 80, 30, 20, ">", new Button.IPressable() {
+			public void onPress(Button btn) {
+				++mobSpawnLimit; enforceSettingsBounds();
+			}
+		});
+		mobSpawnLimitM = new Button(0, 80, 30, 20, "<", new Button.IPressable() {
+			public void onPress(Button btn) {
+				--mobSpawnLimit; enforceSettingsBounds();
+			}
+		});
+		
+		spawnSearchRadiusP = new Button(30, 100, 30, 20, ">", new Button.IPressable() {
+			public void onPress(Button btn) {
+				++spawnSearchRadius; enforceSettingsBounds();
+			}
+		});
+		spawnSearchRadiusM = new Button(0, 100, 30, 20, "<", new Button.IPressable() {
+			public void onPress(Button btn) {
+				--spawnSearchRadius; enforceSettingsBounds();
+			}
+		});
+		
+		minMobsPerSpawnP = new Button(30, 120, 30, 20, ">", new Button.IPressable() {
+			public void onPress(Button btn) {
+				++minMobsPerSpawn; enforceSettingsBounds();
+			}
+		});
+		minMobsPerSpawnM = new Button(0, 120, 30, 20, "<", new Button.IPressable() {
+			public void onPress(Button btn) {
+				--minMobsPerSpawn; enforceSettingsBounds();
+			}
+		});
+		
+		maxMobsPersSpawnP = new Button(30, 140, 30, 20, ">", new Button.IPressable() {
+			public void onPress(Button btn) {
+				++maxMobsPersSpawn; enforceSettingsBounds();
+			}
+		});
+		maxMobsPersSpawnM = new Button(0, 140, 30, 20, "<", new Button.IPressable() {
+			public void onPress(Button btn) {
+				--maxMobsPersSpawn; enforceSettingsBounds();
+			}
+		});
+		
+		Button saveSettings = addButton(new Button(0, 160, 30, 20, "Save", new Button.IPressable() {
+			@Override
+			public void onPress(Button btn) {
+				Network.INSTANCE.sendToServer(new SetMobSpawnerSettingsPKT(
+					    mobList.get(mobIndex).getRegistryName().toString(),
+						spawnRadius,
+						spawnsPerMin,
+						mobSpawnLimit,
+						spawnSearchRadius,
+						minMobsPerSpawn,
+						maxMobsPersSpawn, 
+						spawner.getPos().getX(), 
+						spawner.getPos().getY(), 
+						spawner.getPos().getZ()));
+			}
+		}));
+		
+		addButtons(mobIndexP, mobIndexM, spawnRadiusP, spawnRadiusM,
+		spawnsPerMinP, spawnsPerMinM, mobSpawnLimitP, mobSpawnLimitM,
+		spawnSearchRadiusP, spawnSearchRadiusM, minMobsPerSpawnP, 
+		minMobsPerSpawnM, maxMobsPersSpawnP, maxMobsPersSpawnM);
 	}
 	
-	  
-	public boolean handleButtonClicked(Button button){
-		//TODO
-		switch(button.x) {
-		case 0:
-			--mobIndex;
-			break;
-		case 1:
-			++mobIndex;
-			break;
-		case 2:
-			--spawnRadius;
-			break;
-		case 3:
-			++spawnRadius;
-			break;
-		case 4:
-			--spawnsPerMin;
-			break;
-		case 5:
-			++spawnsPerMin;
-			break;
-		case 6:
-			--mobSpawnLimit;
-			break;
-		case 7:
-			++mobSpawnLimit;
-			break;
-		case 8:
-			--spawnSearchRadius;
-			break;
-		case 9:
-			++spawnSearchRadius;
-			break;
-		case 10:
-			--minMobsPerSpawn;
-			break;
-		case 11:
-			if(minMobsPerSpawn < maxMobsPersSpawn) {
-				++minMobsPerSpawn;
-			}
-			break;
-		case 12:
-			--maxMobsPersSpawn;
-			break;
-		case 13:
-			++maxMobsPersSpawn;
-			break;
-		case 14:
-			//TODO
-			/*Network.INSTANCE.sendToServer(new SetMobSpawnerSettingsMessage(
-								    mobList.get(mobIndex).getEntityClass().getName(),
-									spawnRadius,
-									spawnsPerMin,
-									mobSpawnLimit,
-									spawnSearchRadius,
-									minMobsPerSpawn,
-									maxMobsPersSpawn, 
-									spawner.getPos().getX(), 
-									spawner.getPos().getY(), 
-									spawner.getPos().getZ()));*/
-			break;
+	void addButtons(Button... buttons) {
+		for(Button button : buttons){
+			addButton(button);
 		}
+	}
+	
+	@Override
+	public void render(int mouseX, int mouseY, float partialTicks) {
+		this.renderBackground();
+		super.render(mouseX, mouseY, partialTicks);
 		
+		this.drawString(this.font, "Mob Type: " + mobList.get(mobIndex).getRegistryName(), 65, 20+6, 0XFFFFFF);
+		this.drawString(this.font, "Spawn Radius: " + spawnRadius, 65, 40+6, 0XFFFFFF);
+		this.drawString(this.font, "Average Spawns/Min: " + spawnsPerMin, 65, 60+6, 0XFFFFFF);
+		this.drawString(this.font, "Mob Spawn Limit: " + mobSpawnLimit, 65, 80+6, 0XFFFFFF);
+		this.drawString(this.font, "Mob Spawn Search Radius: " + spawnSearchRadius, 65, 100+6, 0XFFFFFF);
+		this.drawString(this.font, "Mobs Per Spawn Min: " + minMobsPerSpawn, 65, 120+6, 0XFFFFFF);
+		this.drawString(this.font, "Mobs Per Spawn Max: " + maxMobsPersSpawn, 65, 140+6, 0XFFFFFF);
+	}
+	
+	void enforceSettingsBounds() {
 		if(mobIndex < 0)
 			mobIndex = mobList.size() - 1;
 		if(mobIndex == mobList.size())
@@ -197,8 +210,6 @@ public class MobSpawnerGUI extends Screen{
 			mobSpawnLimit = 1;
 		if(mobSpawnLimit > 50)
 			mobSpawnLimit = 50;
-		
-		return true;
 	}
 	
 	@Override

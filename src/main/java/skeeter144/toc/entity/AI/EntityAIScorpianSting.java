@@ -14,14 +14,13 @@ public class EntityAIScorpianSting extends Goal{
 	public EntityAIScorpianSting(EntityGiantScorpian e, float ticksBetweenAttacks, float maxDamage) {
 		this.e = e;
 		this.ticksBetweenAttacks = ticksBetweenAttacks;
-		this.ticksBetweenAttacks = 20;
 		this.maxDamage = maxDamage;
 	}
 	
 	@Override
 	public boolean shouldExecute() {
 		
-		float distToSting = 3;
+		float distToSting = 5;
 		float timeDelta = (e.ticksExisted - lastAttackTime);
 		if(e.currentAnim == null &&  timeDelta > ticksBetweenAttacks && e.getAttackTarget() != null) {
 			if(e.getPositionVector().distanceTo(e.getAttackTarget().getPositionVector()) < distToSting) {

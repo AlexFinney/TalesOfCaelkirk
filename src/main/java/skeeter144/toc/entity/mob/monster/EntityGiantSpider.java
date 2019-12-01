@@ -44,6 +44,10 @@ public class EntityGiantSpider extends CustomMob{
 		this.setHealth(75f);
 	}
 	
+	@Override
+	protected void registerGoals() {
+		super.registerGoals();
+	}
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
