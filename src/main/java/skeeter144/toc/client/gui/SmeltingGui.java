@@ -15,15 +15,13 @@ import skeeter144.toc.util.Mouse;
 import skeeter144.toc.util.Reference;
 
 public class SmeltingGui extends CraftingGui{
-	
+	static final ResourceLocation smeltingBackground = new ResourceLocation(Reference.MODID, "textures/gui/smelting_gui.png");
 	
 	public SmeltingGui() {
 		super(new StringTextComponent("Smelting"));
-		backgroundImage = new ResourceLocation(Reference.MODID, "textures/gui/smelting_gui.png");
+		this.backgroundImage = smeltingBackground;
 		allRecipes = RecipeManager.instance().SMELTING_RECIPES;
 		updatePlayersInventory();
-
-    	initGui();
 	}
 	
 	@Override
@@ -41,13 +39,14 @@ public class SmeltingGui extends CraftingGui{
 			wasMouseClicked = false;
 	}
 
-	
-	public void initGui() {
+	@Override
+	protected void init() {
+		super.init();
 		this.buttons.clear();
+		this.children.clear();
 		int btnWidth = (int)(guiWidth * .3f);
 		
-		Button smelt1 = new Button((int)(guiX + guiWidth - btnWidth * 1.2f), guiY + (int)(guiY * .15f), btnWidth, 20,"Smelt 1", new Button.IPressable() {
-			
+		Button smelt1 = new Button((int)(guiX + guiWidth - btnWidth * 1.2f), guiY + (int)(guiY * .5f) - 20 + 5, btnWidth, 20,"Smelt 1", new Button.IPressable() {
 			@Override
 			public void onPress(Button p_onPress_1_) {
 				PlayerEntity pl = Minecraft.getInstance().player;
@@ -60,7 +59,7 @@ public class SmeltingGui extends CraftingGui{
 			}
 		});
 		
-		Button smeltAll = new Button((int)(guiX + guiWidth - btnWidth * 1.2f), guiY + (int)(guiY * .5f), btnWidth, 20, "Smelt All",  new Button.IPressable() {
+		Button smeltAll = new Button((int)(guiX + guiWidth - btnWidth * 1.2f), guiY + (int)(guiY * .5f) + 5 + 2, btnWidth, 20, "Smelt All",  new Button.IPressable() {
 			@Override
 			public void onPress(Button p_onPress_1_) {
 				PlayerEntity pl = Minecraft.getInstance().player;

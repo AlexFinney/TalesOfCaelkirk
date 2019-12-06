@@ -107,10 +107,6 @@ public class DialogGui extends Screen {
 		GlStateManager.activeTexture(GLX.GL_TEXTURE1);
 		GlStateManager.disableTexture();
 		GlStateManager.activeTexture(GLX.GL_TEXTURE0);
-
-		FontRenderer fr = Minecraft.getInstance().fontRenderer;
-		String name = e.getName().getFormattedText();
-		fr.drawString(name, x - fr.getStringWidth(name) / 2, y - e.getHeight() * scalef - fr.FONT_HEIGHT * 1.5f + 25, 0x000000);
 	}
 
 	public String dialog = "";

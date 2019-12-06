@@ -46,7 +46,7 @@ public class EntityKelvinWhitestone extends EntityNPCInteractable{
 				else {
 					if(!qp.smeltingStarted) sendDialog("tut_2", player);
 					else {
-						if(!qp.smeltingFinished) sendDialog("", player);
+						if(!qp.smeltingFinished) sendDialog("tut_2", player);
 						else {
 							if(!qp.smithingStarted) sendDialog("tut_3", player);
 							else {

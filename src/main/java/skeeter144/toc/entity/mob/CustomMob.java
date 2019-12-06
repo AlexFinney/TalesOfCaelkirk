@@ -31,5 +31,10 @@ public class CustomMob extends MonsterEntity{
 		this.currentAnim = anim;
 		animationStartTime = this.ticksExisted;
 	}
+	
+	@Override
+	public boolean isCustomNameVisible() {
+		return false;
+	}
 
 }

@@ -32,15 +32,7 @@ public class EntityGiantScorpian extends CustomMob{
 		this.defenseLevel = 10;
 		this.magicLevel = 1;
 		this.xpGiven = 120;
-		
-//		this.tasks.addTask(1, new EntityAISwimming(this));
-//		this.tasks.addTask(2, new EntityAIScorpianSting(this, 100, 5));
-//		this.tasks.addTask(3, new EntityAIAttackMelee(this, 1.0, false));
-//		this.tasks.addTask(5, new  EntityAIWander(this, 1.0));
-//		this.tasks.addTask(6, new EntityAILookIdle(this));
-//		
-//		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, PlayerEntity.class, true, true));
-		
+
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50);
 		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.3f);
@@ -53,13 +45,12 @@ public class EntityGiantScorpian extends CustomMob{
 	protected void registerGoals() {
 		super.registerGoals();
 		this.goalSelector.addGoal(1, new EntityAIScorpianSting(this, 100, 20));
-		//this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
-		//this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-		//this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		//this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
+		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
 		
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, 0, true, true, null));
-		
 	}
 	
 	@Override
@@ -75,10 +66,5 @@ public class EntityGiantScorpian extends CustomMob{
 	@Override
 	protected SoundEvent getHurtSound(DamageSource d) {
 		return Sounds.scorpian_hurt;
-	}
-	
-	@Override
-	public double getYOffset() {
-		return 0;
 	}
 }

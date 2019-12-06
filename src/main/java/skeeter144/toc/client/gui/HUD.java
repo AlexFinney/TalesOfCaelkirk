@@ -202,15 +202,15 @@ public class HUD extends IngameGui {
 			int screenWidth = sr.getScaledWidth();
 			int screenHeight = sr.getScaledHeight();
 
-			int y = screenHeight - 87;
+			int y = screenHeight - 80;
 			int iconSize = (int) screenWidth / 20;
 			for (int i = 0; i < activeEffects.size(); ++i) {
 				int iconX = (int) (screenWidth / 2 + .05f * screenWidth * i - screenWidth / 50);
 				ResourceLocation icon = new ResourceLocation(Reference.MODID,
 						"textures/icons/effects/" + activeEffects.get(i).toLowerCase() + ".png");
 				tm.bindTexture(icon);
-				blit((int) (iconX - iconSize / 2f), (int) (y), 0, 0, iconSize, iconSize, iconSize, iconSize, iconSize,
-						iconSize);
+				iconSize = 16;
+				blit((int) (iconX - iconSize / 2f), (int) (y), 0, 0, iconSize, iconSize, iconSize, iconSize);
 			}
 
 			GlStateManager.popMatrix();
@@ -234,7 +234,7 @@ public class HUD extends IngameGui {
 		fill(barX, barY, barX + barWidth, barY + barHeight, 0xFF000000);
 		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		tm.bindTexture(healthBar);
-		blit(barX, barY, 0, 0, barWidth, barHeight, (int) (barWidth * scale), barHeight);
+		blit(barX, barY, 0, 0, (int) (barWidth * scale), barHeight, barWidth , barHeight);
 		tm.bindTexture(emptyBarHealth);
 		blit(barX, barY, 0, 0, barWidth, barHeight, barWidth, barHeight);
 
@@ -266,19 +266,14 @@ public class HUD extends IngameGui {
 			} else {
 				scale = 1;
 			}
-
+			
 			GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 			tm.bindTexture(healthBar);
-			blit(barX * 4 + barWidth * 4 - barWidth, barY * 4 - barHeight, 0, 0, barWidth, barHeight,
-					(int) (barWidth * scale), barHeight);
-
-			if (scale == 1) {
-				blit(barX * 4 + (int) (barWidth * 4.05f), barY * 4 - barHeight, 0, 0, barWidth, barHeight,
-						(int) (barWidth * .1f), barHeight);
-			}
+			blit(barX * 4 + barWidth * 4 - barWidth, barY * 4 - barHeight, 0, 0, (int) (barWidth * scale), barHeight,
+					barWidth, barHeight);
 
 			tm.bindTexture(emptyBarHealth);
-			blit(barX * 4 + barWidth * 4 - barWidth, barY * 4 - barHeight, 0, 0, barWidth, barHeight);
+			blit(barX * 4 + barWidth * 4 - barWidth, barY * 4 - barHeight, 0, 0, barWidth, barHeight, barWidth, barHeight);
 
 			GlStateManager.popMatrix();
 		}

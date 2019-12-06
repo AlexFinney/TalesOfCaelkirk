@@ -160,6 +160,8 @@ public class ANewAdventureQuest extends Quest{
 				Util.sendTaskUpdateMessage(e.player, this, "Smelt 5 bronze ingots. (Complete)");
 				Util.sendNewTaskMessage(e.player, this, "Return to Kelvin Whitestone.");
 				qp.smeltingFinished = true;
+			}else{
+				Util.sendTaskUpdateMessage(e.player, this, String.format("Smelt 5 bronze ingots. (%s/5)", qp.bronzeSmelted));
 			}
 			qp.save();
 		}

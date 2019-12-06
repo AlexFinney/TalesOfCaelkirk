@@ -38,7 +38,6 @@ public class EntityGoblin extends CustomMob{
 		this.xpGiven = 12;
 		
 		this.setHealth(10f);
-		
 	}
 	
 	@Override

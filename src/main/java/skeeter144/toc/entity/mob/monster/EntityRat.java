@@ -1,14 +1,24 @@
 package skeeter144.toc.entity.mob.monster;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.goal.HurtByTargetGoal;
+import net.minecraft.entity.ai.goal.LookAtGoal;
+import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import skeeter144.toc.TOCMain;
 import skeeter144.toc.entity.TOCEntityType;
+import skeeter144.toc.entity.AI.EntityAICrazyRunIdle;
 import skeeter144.toc.entity.mob.CustomMob;
+import skeeter144.toc.handlers.PlayerInventoryHandler.ItemAddedToInventoryEvent;
+import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.sounds.Sounds;
 import skeeter144.toc.util.Util;
 
@@ -28,25 +38,24 @@ public class EntityRat extends CustomMob{
 		this.magicLevel = 1;
 		this.xpGiven = 10;
 		
-//		this.tasks.addTask(1, new EntityAISwimming(this));
-//		this.tasks.addTask(2, new EntityAIAttackMelee(this, 2.0, false));
-//		this.tasks.addTask(3, new EntityAICrazyRunIdle(this, 2));
-//		this.tasks.addTask(5, new  EntityAIWander(this, 1.0));
-//		this.tasks.addTask(6, new EntityAILookIdle(this));
-//		
-//		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
-		
 		this.setHealth(3f);
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(3);
 		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.15);
-		//this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1);
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1);
 		this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(.2f);
 	}
 	
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
+		this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(3, new EntityAICrazyRunIdle(this, 2));
+		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
+		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
+		
+		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 	}
 
 	@Override
@@ -56,11 +65,10 @@ public class EntityRat extends CustomMob{
 			return; 
 		PlayerEntity pl = Util.getPlayerFromDamageSource(cause);
 		if(pl != null) {
-			//TODO
-			//pl.addItemStackToInventory(new ItemStack(TOCItems.rat_tail));
-			//int coins = TOCMain.rand.nextInt(5) + 1;
-			//ItemStack is = new ItemStack(TOCItems.copper_coin, coins);
-			//MinecraftForge.EVENT_BUS.post(new ItemAddedToInventoryEvent(pl, is));
+			pl.addItemStackToInventory(new ItemStack(TOCItems.rat_tail));
+			int coins = TOCMain.rand.nextInt(2) + 1;
+			ItemStack is = new ItemStack(TOCItems.copper_coin, coins);
+			MinecraftForge.EVENT_BUS.post(new ItemAddedToInventoryEvent(pl, is));
 		}
 	}
 	

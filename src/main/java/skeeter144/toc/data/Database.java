@@ -57,7 +57,7 @@ public class Database {
 		ArrayList<ArrayList<String>> rows = Database.executeQuery(s);
 
 		TOCPlayer tocPlayer = null;
-		if (rows.size() > 0) {
+		if (rows != null && rows.size() > 0) {
 			ArrayList<String> row = rows.get((0));
 			
 			s = String.format("SELECT * FROM PlayerLevels WHERE UUID = \"%s\"", player.getUniqueID().toString());

@@ -72,6 +72,11 @@ public abstract class CraftingGui extends Screen implements IGuiEventListener{
 		updatePlayersInventory();
 	}
 	
+	@Override
+	protected void init() {
+		super.init();
+		setGuiVals();
+	}
 	
 
 	void drawBackground() {
@@ -82,8 +87,6 @@ public abstract class CraftingGui extends Screen implements IGuiEventListener{
 	void setGuiVals() {
 		tm = Minecraft.getInstance().getTextureManager();
 		MainWindow mw = Minecraft.getInstance().mainWindow;
-		
-		tm.bindTexture(backgroundImage);
 		
 		guiWidth = mw.getScaledWidth() / 2;
 		guiHeight = mw.getScaledHeight() / 4;
