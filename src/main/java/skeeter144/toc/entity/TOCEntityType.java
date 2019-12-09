@@ -60,7 +60,7 @@ public class TOCEntityType {
 		KELVIN_WHITESTONE = createEntityType("kelvin_whitestone", 64, 1, Builder.<EntityKelvinWhitestone>create(EntityKelvinWhitestone::new, EntityClassification.AMBIENT));
 		SELOVIUS_KAMAZZ = createEntityType("selovius_kamazz", 64, 1, Builder.<EntitySeloviusKamazz>create(EntitySeloviusKamazz::new, EntityClassification.AMBIENT));
 		
-		GOBLIN = createEntityType("goblin",64, 3, Builder.<EntityGoblin>create(EntityGoblin::new, EntityClassification.MONSTER));
+		GOBLIN = createEntityType("goblin",10, 3, Builder.<EntityGoblin>create(EntityGoblin::new, EntityClassification.MONSTER));
 		VIKING = createEntityType("viking", 64, 3, Builder.<EntityViking>create(EntityViking::new, EntityClassification.MONSTER));
 		RAT = createEntityType("rat", 64, 3, Builder.<EntityRat>create(EntityRat::new, EntityClassification.AMBIENT));
 		GIANT_SCORPIAN = createEntityType("giant_scorpian", 64, 3, Builder.<EntityGiantScorpian>create(EntityGiantScorpian::new, EntityClassification.MONSTER));

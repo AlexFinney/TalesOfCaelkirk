@@ -146,7 +146,7 @@ public class QuestManager{
 		try {
 			qp = (T) playersQuestProgress.get(q.id);
 			if(qp == null) { 
-				qp = (T) q.getNewQuestProgressInstance();
+				qp = (T) q.getNewQuestProgressInstance(uuid);
 				playersQuestProgress.put(q.id, qp);
 			}
 		}catch(Exception e) {

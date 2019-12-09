@@ -41,6 +41,7 @@ public class TileEntityMobSpawner extends TileEntity implements ITickableTileEnt
 
 	@Override
 	public CompoundNBT write(CompoundNBT compound) {
+		super.write(compound);
 		compound.putString("mob_name", mob_name);
 		compound.putInt("spawn_radius", spawn_radius);
 		compound.putInt("avg_spawns_per_min", avg_spawns_per_min);
@@ -51,9 +52,13 @@ public class TileEntityMobSpawner extends TileEntity implements ITickableTileEnt
 		return compound;
 	}
 
+	public EntityType<?> getSummonedType(){
+		return summon_type;
+	}
+	
 	@Override
 	public void read(CompoundNBT compound) {
-		if(!world.isRemote) return;
+		super.read(compound);
 		
 		mob_name = compound.getString("mob_name");
 		spawn_radius = compound.getInt("spawn_radius");
@@ -66,8 +71,7 @@ public class TileEntityMobSpawner extends TileEntity implements ITickableTileEnt
 	}
 	
 	public void updateSpawnedMob() {
-		summon_type = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(mob_name));
-		System.out.println();
+		if(!mob_name.isEmpty()) summon_type = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(mob_name));
 	}
 
 	@Override
@@ -80,15 +84,17 @@ public class TileEntityMobSpawner extends TileEntity implements ITickableTileEnt
 			float chance = avg_spawns_per_min / 60f;
 			float roll = this.world.rand.nextFloat();
 			if (roll < chance) {
-				AxisAlignedBB bb = new AxisAlignedBB(pos.getX() - mob_spawn_search_radius / 2, pos.getY() - 5,
-						pos.getZ() - mob_spawn_search_radius / 2,
+				AxisAlignedBB bb = new AxisAlignedBB(pos.getX() - mob_spawn_search_radius, pos.getY() - 5,
+						pos.getZ() - mob_spawn_search_radius,
 
-						pos.getX() + mob_spawn_search_radius / 2, pos.getY() + 5,
-						pos.getZ() + mob_spawn_search_radius / 2);
+						pos.getX() + mob_spawn_search_radius, pos.getY() + 5,
+						pos.getZ() + mob_spawn_search_radius);
 				
-				// TODO:
-				if (true) {// this.world.getEntitiesWithinAABB(entry.getClass(), bb).size() <
-							// mob_spawn_limit) {
+				int mobsFound = this.world.getEntitiesWithinAABB(summon_type, bb, (entity) -> { return true;})
+						.size();
+				System.out.println("Located " + mobsFound + " mobs in range.");
+				if (mobsFound < mob_spawn_limit) 
+				{
 					int numMobs = world.rand.nextInt(mobs_per_spawn_max - mobs_per_spawn_min + 1) + mobs_per_spawn_min;
 					try {
 

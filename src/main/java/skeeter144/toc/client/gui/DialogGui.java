@@ -33,11 +33,7 @@ public class DialogGui extends Screen {
 		super(new StringTextComponent("Dialog"));
 		this.e = e;
 		this.npcDialog = dialog;
-
 		this.dialog = dialog.dialogText;
-		
-		
-
 	}
 	
 	boolean buttonsInit = false;
@@ -52,8 +48,6 @@ public class DialogGui extends Screen {
 			popEntityRotations();
 		}
 		drawDialog();
-		
-		
 	}
 
 	private void initButtons() {
@@ -127,6 +121,19 @@ public class DialogGui extends Screen {
 		String curLine = "";
 		ArrayList<String> lines = new ArrayList<String>();
 		for (String token : tokens) {
+			String newLineToken = "";
+			for(int i = 0; i < token.length(); ++i) {
+				if(token.charAt(i) == '/' && token.charAt(i+1) == 'n') {
+					if(!newLineToken.isEmpty()) curLine += " " + newLineToken;
+					lines.add(curLine);
+					curLine = "";
+					token = token.substring(token.indexOf("/n")+2);
+					--i;
+				}else {
+					newLineToken += token.charAt(i);
+				}
+			}
+			
 			if (bookX + font.getStringWidth(curLine + token + " ") - bookWidth * .17f < bookX + maxWidth) {
 				curLine += token + " ";
 			} else {

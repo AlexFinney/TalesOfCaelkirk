@@ -1,5 +1,6 @@
 package skeeter144.toc.blocks;
 
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -28,6 +29,12 @@ public class BlockMobSpawner extends BlockTileEntity<TileEntityMobSpawner> {
 	
 	public BlockRenderLayer getBlockLayer() {
 		return BlockRenderLayer.TRANSLUCENT;
+	}
+	
+	@OnlyIn(Dist.CLIENT)
+	@Override
+	public BlockRenderType getRenderType(BlockState state) {
+		return BlockRenderType.MODEL;
 	}
 	
 	@OnlyIn(Dist.CLIENT)

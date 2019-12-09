@@ -45,7 +45,7 @@
 		}
 	},
 	"tut_4_1": {
-		"text": "You see, a huge problem we miners have is that we'll spend thousands of gold preparing a mine, laying the tunnel frameworks, building the cranes, laying the tracks, and as we get finally start to get to the ores, a raid of goblins will swoop into the mines!'",
+		"text": "You see, a huge problem we miners have is that we'll spend thousands of gold preparing a mine, laying the tunnel frameworks, building the cranes, laying the tracks, and as we get finally get to the ores, a raid of goblins will swoop into the mines!'",
 		"responses": {
 			"Goblins?!": {
 				"transition": "tut_4_2",

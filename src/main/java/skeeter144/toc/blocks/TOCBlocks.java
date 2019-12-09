@@ -42,8 +42,7 @@ public class TOCBlocks {
 	public static Block harvested_ore = new BlockHarvestedOre(Material.ROCK, "harvested_ore");
 	public static Block harvested_tree = new BlockHarvestedTree(Properties.create(Material.AIR).hardnessAndResistance(-1f), "harvested_tree");
 	public static Block blockAnvil = new BlockAnvil("anvil");
-//	public static Block blockMobSpawnerInvis = new BlockMobSpawner("mob_spawner");
-	public static Block blockMobSpawner = new BlockMobSpawner("mob_spawner_model");
+	public static Block blockMobSpawner = new BlockMobSpawner("mob_spawner");
 	
 	public static Block oak_log = new CustomBlockLog("oak_log");
 	public static Block birch_log = new CustomBlockLog("birch_log");

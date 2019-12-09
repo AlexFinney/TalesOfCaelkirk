@@ -4,11 +4,14 @@ import java.util.UUID;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.mob.npc.EntityNpc;
+import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.quests.ANewAdventureQuest.ANewAdventureQuestProgress;
 
@@ -30,27 +33,33 @@ public class EntitySeloviusKamazz extends EntityNPCInteractable{
 			return true;
 		
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
-		if(qp.stage == 13)
-			sendDialog("intro", player);
-		else if(qp.stage >= 14)
-			sendDialog("finished", player);
-		
+		if(qp.kelvinFinished) {
+			if(!qp.seloviusTalkedTo) sendDialog("intro", player);
+			else{
+				if(!qp.seloviusFinished) sendDialog("finished", player);
+				else sendDialog("finished", player);
+			}
+		}
 		return true;
 	}
 
 	
 	public void chickenKilling(UUID playerUUID) {
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(playerUUID, ANewAdventureQuestProgress.class);
-		qp.incStage();
+		qp.seloviusTalkedTo = true;
 		PlayerEntity pl = this.world.getPlayerByUuid(playerUUID);
-		//pl.addItemStackToInventory(new ItemStack(TOCItems.wand_basic));
+		pl.addItemStackToInventory(new ItemStack(TOCItems.wand_basic));
+		qp.save();
 	}
 	
 	public void tutorialFinished(UUID playerUUID) {
 		PlayerEntity pl = this.world.getPlayerByUuid(playerUUID);
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(playerUUID, ANewAdventureQuestProgress.class);
-		qp.incStage();
-		// QuestManager.A_NEW_ADVENTURE.onQuestFinished((ServerPlayerEntity) pl);
+		if (!qp.completed) {
+			QuestManager.A_NEW_ADVENTURE.onQuestFinished((ServerPlayerEntity) pl);
+			qp.completed = true;
+			qp.save();
+		}
 	}
 	
 }

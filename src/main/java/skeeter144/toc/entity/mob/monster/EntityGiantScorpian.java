@@ -44,8 +44,9 @@ public class EntityGiantScorpian extends CustomMob{
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.goalSelector.addGoal(1, new EntityAIScorpianSting(this, 100, 20));
-		this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
+		
+		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(2, new EntityAIScorpianSting(this, 100, 20));
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));

@@ -185,6 +185,7 @@ public class ModelGoblin extends AdvancedModelBase<EntityGoblin> {
     @Override
     public void render(EntityGoblin entity, float f, float f1, float f2, float f3, float f4, float f5) { 
     	body.scaleChildren = true;
+    	body.defaultOffsetY = .7f;
         this.body.render(f5);
     }
 

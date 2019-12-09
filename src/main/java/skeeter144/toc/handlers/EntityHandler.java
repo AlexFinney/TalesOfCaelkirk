@@ -9,7 +9,13 @@ import java.util.Set;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.entity.monster.EndermanEntity;
+import net.minecraft.entity.monster.SkeletonEntity;
 import net.minecraft.entity.monster.SlimeEntity;
+import net.minecraft.entity.monster.SpiderEntity;
+import net.minecraft.entity.monster.WitchEntity;
+import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.DamageSource;
@@ -127,7 +133,11 @@ public class EntityHandler {
 		}
 
 		// fuck slimes
-		if (e.getEntity() instanceof SlimeEntity) {
+		if (e.getEntity() instanceof SlimeEntity || e.getEntity() instanceof CreeperEntity ||
+				 e.getEntity() instanceof ZombieEntity || e.getEntity() instanceof SkeletonEntity
+				 || e.getEntity() instanceof SpiderEntity || e.getEntity() instanceof WitchEntity 
+				 || e.getEntity() instanceof EndermanEntity) 
+		{
 			e.setCanceled(true);
 			e.getEntity().remove();
 		}

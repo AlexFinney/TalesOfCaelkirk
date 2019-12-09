@@ -2,6 +2,7 @@ package skeeter144.toc.quest;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
@@ -53,7 +54,7 @@ public abstract class Quest {
 	}
 	
 	public boolean canPlayerStartQuest(TOCPlayer player) {return false;}
-	public abstract QuestProgress getNewQuestProgressInstance();
+	public abstract QuestProgress getNewQuestProgressInstance(UUID playerId);
 	public abstract Class<? extends QuestProgress> getQuestProgressClass();
 	protected void questFinished(ServerPlayerEntity player) {}
 	

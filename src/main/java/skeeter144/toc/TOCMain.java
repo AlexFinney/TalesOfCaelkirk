@@ -1,15 +1,24 @@
 package skeeter144.toc;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Random;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.IChunk;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -20,10 +29,12 @@ import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import skeeter144.toc.blocks.TOCBlocks;
 import skeeter144.toc.blocks.TOCClientBlockRenderers;
+import skeeter144.toc.client.Keybindings;
 import skeeter144.toc.combat.CombatManager;
 import skeeter144.toc.config.ConfigHolder;
 import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.mob.npc.DialogManager;
+import skeeter144.toc.magic.Spells;
 import skeeter144.toc.player.TOCPlayer;
 import skeeter144.toc.proxy.ClientForgeEventSubscriber;
 import skeeter144.toc.quest.QuestManager;
@@ -69,8 +80,9 @@ public class TOCMain
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::serverStopping);
 		
 		DialogManager.init();
+		Spells.init();
 	}
-	
+
 	void tickTasks(TickEvent.ServerTickEvent e) {
 		serverTaskManager.tickTasks();
 	}
@@ -79,12 +91,11 @@ public class TOCMain
 	public void clientSetup(final FMLClientSetupEvent evt) {
 		TOCClientBlockRenderers.registerAll();
 		ClientForgeEventSubscriber.registerClientEntityRenders();
+		Keybindings.registerKeybinds();
 	}
 	
 	public void commonSetup(final FMLCommonSetupEvent evt) {
 		QuestManager.initQuests();
-		
-		
 	}
 	
 	public void serverSetup(final FMLDedicatedServerSetupEvent evt) {

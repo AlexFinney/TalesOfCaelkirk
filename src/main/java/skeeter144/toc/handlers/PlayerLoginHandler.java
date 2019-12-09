@@ -25,13 +25,13 @@ public class PlayerLoginHandler {
 		if(player.world.isRemote) {
 		   return;
 	   }
-	   
        TOCPlayer tocPlayer = TOCMain.pm.getPlayer(player);
 	   if(tocPlayer != null) {
 		   ((ServerPlayerEntity)player).sendMessage(new StringTextComponent("Welcome back, traveller.  I see you haven't been eaten by a monster yet.  This is good..."), ChatType.CHAT);
 	   }else {
 		   ((ServerPlayerEntity)player).sendMessage(new StringTextComponent("Welome to the Land of Caelkirk, traveller.  So now, here begins your tale..."), ChatType.CHAT);
 		   tocPlayer = Database.createPlayerInDatabase(player);
+		   TOCMain.pm.addPlayer(tocPlayer);
 	   }
 	   
 	   

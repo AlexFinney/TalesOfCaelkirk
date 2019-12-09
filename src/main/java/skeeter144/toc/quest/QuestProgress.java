@@ -11,6 +11,7 @@ public class QuestProgress implements Serializable{
 	public UUID playerId;
 	public int questId;
 	public int stage = 0;
+	public boolean completed = false;
 	
 	public QuestProgress(UUID playerId, int questId, int stage) {
 		this.playerId = playerId;

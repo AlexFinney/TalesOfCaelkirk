@@ -10,8 +10,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.mob.npc.EntityNpc;
+import skeeter144.toc.entity.mob.npc.shopkeeper.ShopData.ItemPrice;
+import skeeter144.toc.handlers.PlayerInventoryHandler.CoinsAddedToInventoryEvent;
 import skeeter144.toc.items.TOCItems;
 import skeeter144.toc.quest.QuestManager;
 import skeeter144.toc.quest.quests.ANewAdventureQuest.ANewAdventureQuestProgress;
@@ -29,7 +32,7 @@ public class EntityKelvinWhitestone extends EntityNPCInteractable{
 		if(texture == null)
 			texture = new ResourceLocation("toc:textures/entity/kelvin_whitestone.png");
 		
-		//this.setHeldItem(Hand.MAIN_HAND, new ItemStack(TOCItems.steel_pickaxe));
+		this.setHeldItem(Hand.MAIN_HAND, new ItemStack(TOCItems.steel_pickaxe));
 	}
 	
 	@Override
@@ -123,7 +126,7 @@ public class EntityKelvinWhitestone extends EntityNPCInteractable{
 		PlayerEntity player = world.getPlayerByUuid(uuid);
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
 		Util.sendNewTaskMessage(player, QuestManager.A_NEW_ADVENTURE, "Find the goblin camp, killing 10 of them and collecting an ear from each for the bounty.");
-	//	player.addItemStackToInventory(new ItemStack(TOCItems.bronze_chestplate));
+		player.addItemStackToInventory(new ItemStack(TOCItems.bronze_chestplate));
 		qp.combatStarted = true;
 		qp.save();
 	}
@@ -131,12 +134,15 @@ public class EntityKelvinWhitestone extends EntityNPCInteractable{
 	public void kelvinFinished(UUID uuid) {
 		PlayerEntity player = world.getPlayerByUuid(uuid);
 		ANewAdventureQuestProgress qp = QuestManager.getQuestProgressForPlayer(player.getUniqueID(), ANewAdventureQuestProgress.class);
-		qp.incStage();
-		player.sendMessage(new StringTextComponent(TextFormatting.BLUE  + "[" +  QuestManager.A_NEW_ADVENTURE + "] " + TextFormatting.GREEN + "[New Task]" + TextFormatting.WHITE + "Head out of the mine and to the magic temple."));
-	//	int ears = TOCUtils.getItemCountInInventory(TOCItems.goblin_ear, player.inventory);
-	//	int copper = ears * 2;
-		//MinecraftForge.EVENT_BUS.post(new CoinsAddedToInventoryEvent(player, new ItemPrice(0, 0, copper)));
-		//TOCUtils.removeItemsFromInventory(TOCItems.goblin_ear, 10, player.inventory);
+		if (!qp.kelvinFinished) {
+			qp.kelvinFinished = true;
+			Util.sendNewTaskMessage(player, QuestManager.A_NEW_ADVENTURE, "Head out of the mine and to the magic temple.");
+			int ears = TOCUtils.getItemCountInInventory(TOCItems.goblin_ear, player.inventory);
+			int copper = ears * 2;
+			MinecraftForge.EVENT_BUS.post(new CoinsAddedToInventoryEvent(player, new ItemPrice(0, 0, copper)));
+			TOCUtils.removeItemsFromInventory(TOCItems.goblin_ear, ears, player.inventory);
+			qp.save();
+		}
 	}
 	
 	

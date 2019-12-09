@@ -41,7 +41,7 @@ public class EntityEvaTeffan extends EntityNPCInteractable{
 			else {
 				if(qp.sheepsSheared == 0) sendDialog("returned", player);
 				else {
-					if(!qp.stringCrafted || !qp.sticksCrafted) sendDialog("tutorial_2", player);	
+					if(qp.stringCrafted < 2|| qp.sticksCrafted < 3) sendDialog("tutorial_2", player);	
 					else {
 						if(!qp.fishingRodCrafted) sendDialog("tutorial_3", player);
 						else {
@@ -87,5 +87,10 @@ public class EntityEvaTeffan extends EntityNPCInteractable{
 		qp.save();
 	}
 	
+	
+	public void beginCraftingRod(UUID playerUUID) {
+		PlayerEntity player = world.getPlayerByUuid(playerUUID);
+		Util.sendNewTaskMessage(player, QuestManager.A_NEW_ADVENTURE, "Craft a Fishing Rod: (0/1)");
+	}
 	
 }

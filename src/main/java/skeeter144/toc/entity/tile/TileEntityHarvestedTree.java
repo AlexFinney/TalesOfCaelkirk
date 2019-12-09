@@ -26,6 +26,7 @@ public class TileEntityHarvestedTree extends TileEntity implements ITickableTile
 	
 	@Override
 	public CompoundNBT write(CompoundNBT compound) {
+		super.write(compound);
 		compound.putInt("secsRemaining", secsRemaining);
 		compound.putInt("numTreeBlocks", treeBlocks.size());
 		
@@ -41,6 +42,7 @@ public class TileEntityHarvestedTree extends TileEntity implements ITickableTile
 	
 	@Override
 	public void read(CompoundNBT compound) {
+		super.read(compound);
 		treeBlocks.clear();
 		secsRemaining = compound.getInt("secsRemaining");
 		int numBlocks = compound.getInt("numTreeBlocks");

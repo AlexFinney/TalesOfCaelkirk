@@ -41,7 +41,7 @@ public class MobSpawnerGUI extends Screen{
 		super(new StringTextComponent("Mob Spawner"));
 		this.spawner = spawner;
 		
-		this.mobIndex = 10;
+		this.mobIndex = 0;
 		this.spawnRadius = spawner.spawn_radius;
 		this.spawnsPerMin = spawner.avg_spawns_per_min;
 		this.mobSpawnLimit = spawner.mob_spawn_limit;
@@ -53,7 +53,11 @@ public class MobSpawnerGUI extends Screen{
 		for(EntityType<?> entry : ForgeRegistries.ENTITIES) {
 			if(entry.isSummonable()) {
 				mobList.add(entry);
-				if(entry.getClass().getName().equals(spawner.mob_name)) {
+				if(entry == spawner.getSummonedType()) {
+					mobIndex = i;
+				}
+				
+				if(mobIndex == 0 && entry.getRegistryName().getNamespace().contains("toc")) {
 					mobIndex = i;
 				}
 				++i;

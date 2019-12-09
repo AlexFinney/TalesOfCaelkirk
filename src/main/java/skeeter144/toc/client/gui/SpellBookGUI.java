@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.text.ITextComponent;
 import skeeter144.toc.client.Keybindings;
 import skeeter144.toc.items.magic.BasicWand;
@@ -26,7 +27,7 @@ import skeeter144.toc.util.Reference;
 
 public class SpellBookGUI extends Screen {
 
-	protected SpellBookGUI(ITextComponent titleIn) {
+	public SpellBookGUI(ITextComponent titleIn) {
 		super(titleIn);
 	}
 
@@ -34,9 +35,10 @@ public class SpellBookGUI extends Screen {
 	ResourceLocation spellBookImage = new ResourceLocation(Reference.MODID, "textures/gui/magic_book_background.png");
 	ResourceLocation selectedIconImage = new ResourceLocation(Reference.MODID, "textures/spells/selected_icon.png");
 
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	@Override
+	public void render(int mouseX, int mouseY, float partialTicks) {
 		this.renderBackground();
-		//super.drawScreen(mouseX, mouseY, partialTicks);
+		super.render(mouseX, mouseY, partialTicks);
 
 		drawBookBackground();
 		drawSpellIcons();
@@ -60,10 +62,10 @@ public class SpellBookGUI extends Screen {
 		TextureManager tm = Minecraft.getInstance().getTextureManager();
 		MainWindow sr = Minecraft.getInstance().mainWindow;
 		FontRenderer fr = Minecraft.getInstance().fontRenderer;
-
+		if(sr == null) return;
+		
 		int adjustedX = Mouse.getX() * sr.getScaledWidth() / sr.getWidth();
-		int adjustedY = sr.getScaledHeight()
-				- Mouse.getY() * sr.getScaledHeight() / sr.getHeight();
+		int adjustedY = Mouse.getY() * sr.getScaledHeight() / sr.getHeight();
 
 		fill(adjustedX - 2, adjustedY - 2, adjustedX + 2, adjustedY + 2, 0xFFFFFFFF);
 
@@ -93,18 +95,18 @@ public class SpellBookGUI extends Screen {
 				spellIcons.put(s.getName(), rect);
 			}
 
-			if (!wasMouseClicked && Mouse.isButtonDown(0)) {
-				if (rect.contains(adjustedX, adjustedY)) {
-					wasMouseClicked = true;
+			if (wasMouseClicked) {
+				if (rect.contains(lastClick.x, lastClick.y)) {
 					// TODO: level check to make sure player can select the spell
 					selectedIcon = count;
+					wasMouseClicked = false;
 				}
 
 			}
 
 			if (count == selectedIcon) {
 				tm.bindTexture(selectedIconImage);
-				blit(iconX, iconY, 0, 0, iconDim, iconDim, iconDim, iconDim);
+				blit(iconX, iconY, 0, 0,iconDim, iconDim, iconDim, iconDim);
 			}
 			
 			if (rect.contains(adjustedX, adjustedY)) {
@@ -139,9 +141,7 @@ public class SpellBookGUI extends Screen {
 			String str = "Embue: " + Spells.getSpell(selectedIcon).getName();
 			fr.drawString(str, buttonX - fr.getStringWidth(str) / 5, buttonY - 10, 0xFF1010);
 
-			if (!wasMouseClicked && Mouse.isButtonDown(0) && selectedIcon >= 0) {
-				wasMouseClicked = true;
-
+			if (wasMouseClicked && selectedIcon >= 0) {
 				ItemStack right = Minecraft.getInstance().player.getHeldItemMainhand();
 				ItemStack left = Minecraft.getInstance().player.getHeldItemOffhand();
 
@@ -175,13 +175,20 @@ public class SpellBookGUI extends Screen {
 			}
 		}
 
-		if (wasMouseClicked && !Mouse.isButtonDown(0)) {
-			wasMouseClicked = false;
-		}
-
 		GlStateManager.popAttributes();
 	}
 
+	Vec2f lastClick = null;
+	int lastClickButton = -1;
+	@Override
+	public boolean mouseClicked(double x, double y, int btn) {
+		wasMouseClicked = true;
+		lastClick = new Vec2f((float)x, (float)y);
+		lastClickButton = btn;
+		System.out.println("Click at: " + lastClick.x + ", " + lastClick.y);
+		return super.mouseClicked(x, y, btn);
+	}
+	
 	static int bookWidth, bookHeight, bookX, bookY;
 
 	private void drawBookBackground() {

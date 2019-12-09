@@ -26,9 +26,10 @@ public class TileEntityMobSpawnerRenderer extends TileEntityRenderer<TileEntityM
 
 	@Override
 	public void render(TileEntityMobSpawner te, double x, double y, double z, float partialTicks, int destroyStage) {
-		
 		if(!Minecraft.getInstance().player.isCreative()) 
 			return;
+		
+		super.render(te, x, y, z, partialTicks, destroyStage);
 		
 		if (blockRenderer == null)
 			blockRenderer = Minecraft.getInstance().getBlockRendererDispatcher(); 
@@ -38,7 +39,7 @@ public class TileEntityMobSpawnerRenderer extends TileEntityRenderer<TileEntityM
 
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
-		//this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+//		this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		RenderHelper.disableStandardItemLighting();
 		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 		GlStateManager.enableBlend();

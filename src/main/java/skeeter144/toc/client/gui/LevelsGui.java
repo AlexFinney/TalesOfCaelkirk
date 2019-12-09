@@ -29,9 +29,10 @@ public class LevelsGui extends Screen{
 
 	ResourceLocation backgreoundImage = new ResourceLocation(Reference.MODID, "textures/gui/levels_background.png");
 
-	
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	@Override
+	public void render(int mouseX, int mouseY, float partialTicks) {
 		this.renderBackground();
+		super.render(mouseX, mouseY, partialTicks);
 	    
 	    drawBookBackground();
 	}
