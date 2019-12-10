@@ -68,10 +68,11 @@ public class BasicWand extends CustomItem
 				ParticleSystem system = ParticleSystem.getNewParticleSystem(es.getSpellTrailId());
 				system.updatePosition(world, player.posX, player.posY, player.posZ);
 					
-				EntityWandProjectile spell = new EntityWandProjectile(null, world, player, embuedSpell.getId(), system);
+				EntityWandProjectile spell = new EntityWandProjectile(es.entityType, world, player, embuedSpell.getId(), system);
 				spell.shoot(player, player.rotationPitch, player.rotationYaw, 0, 3.0f, 0);
 				
-				//do special stuff for special spells down here. Kinda ugly but whatevs
+				//do special stuff for special spells down here. Kinda ugly but whatevs.
+				// Later comment: no not whatevs. this is shit. fix this at some point
 				if(embuedSpell.getName().equals(Strings.PUNISH_UNDEAD)) {
 					spell.disableRepeatedParticles();
 					((PunishUndeadSystem)system).setForwardVector(Minecraft.getInstance().player.getLookVec());

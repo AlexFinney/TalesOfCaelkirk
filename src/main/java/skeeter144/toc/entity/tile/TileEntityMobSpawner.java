@@ -20,7 +20,7 @@ import skeeter144.toc.blocks.TOCBlocks;
 
 public class TileEntityMobSpawner extends TileEntity implements ITickableTileEntity {
 
-	long ticksAlive = 0;
+	public long ticksAlive = 0;
 
 	public TileEntityMobSpawner() {
 		super(TOCBlocks.te_mob_spawner);
@@ -76,6 +76,9 @@ public class TileEntityMobSpawner extends TileEntity implements ITickableTileEnt
 
 	@Override
 	public void tick() {
+		// update ticksAlive on client as well, for spawner animation
+		++ticksAlive;
+		
 		if (this.world.isRemote)
 			return;
 
@@ -134,7 +137,6 @@ public class TileEntityMobSpawner extends TileEntity implements ITickableTileEnt
 			}
 		}
 
-		++ticksAlive;
 	}
 
 	@Override

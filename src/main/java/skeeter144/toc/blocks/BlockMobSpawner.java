@@ -33,13 +33,13 @@ public class BlockMobSpawner extends BlockTileEntity<TileEntityMobSpawner> {
 	
 	@Override
 	public BlockRenderLayer getRenderLayer() {
-		return BlockRenderLayer.CUTOUT;
+		return BlockRenderLayer.TRANSLUCENT;
 	}
 	
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public BlockRenderType getRenderType(BlockState state) {
-		return BlockRenderType.MODEL;
+		return BlockRenderType.INVISIBLE;
 	}
 	
 	@OnlyIn(Dist.CLIENT)
