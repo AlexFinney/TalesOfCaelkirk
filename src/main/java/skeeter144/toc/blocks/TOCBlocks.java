@@ -59,8 +59,6 @@ public class TOCBlocks {
 	public static TileEntityType<?> te_harvested_ore;
 	public static TileEntityType<?> te_harvested_tree;
 	public static TileEntityType<?> te_anvil;
-	
-	@ObjectHolder(Reference.MODID + ":te_mob_spawner")
 	public static TileEntityType<?> te_mob_spawner;
 
 	public static void registerRenders() {

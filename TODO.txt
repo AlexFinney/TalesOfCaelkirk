@@ -1,7 +1,7 @@
 Game theory:
 	The grind should be about unlocking areas/teachers/techniques that give high xp/level rates,
 	not grinding the levels themselves. Players should need to explore, talk to NPCs, do quests, find maps, notes, clues, etc.
-	It should be about the adventure. Not about 
+	It should be about the adventure. Not about the xp grind
 	
 	There should be PLENTY of NPCs at spawn after the tutorial that can give the player direction based on what they want to do when they start.
 
@@ -10,13 +10,31 @@ Code:
 - Get quest markers working
 - Refactor some quest code, making
 
-Create Sailor entities and world sailing travel mechanism
-## Implement a fishing system
-	- going to need custom biomes
-	- fishing poles/spears
-	- large fish mobs to swim around and spear
+- Create Sailor entities and world sailing travel mechanism
 
-## Teleport items/spells (really need built cities first)
+- Implement a fishing system
+	- large fish mobs to swim around and spear
+    - Strength skill helps with catch rate for large fishes
+  - some kind of net sysem
+  - Fishing types:
+    - Rod
+    - Spear
+    - Net
+   
+
+Quests:
+Goblin King quest
+  - Goblins are attacking a farm village
+  - Hunt down their camp in the forest
+  - Camp is abandoned, just some scattered goblins around
+  - Other race of goblins chased this race out of their caves
+  - They can return if you wipe out the other race, they should be injured, aspect of surprise etc.
+  - Introduction to sneaking around
+  - Infiltrate the goblin cave, kill the goblin boss
+
+
+
+## Teleport items/spells (really need to build cities first, but just have configurable coordinates)
 
 # More bows
 # More wood types
@@ -32,7 +50,6 @@ Tutorial Spawn Area
 Desert City
 
 Main City:
-	- Stockades/Gallows
 	
 Finish castle:
 	- Kitchen

@@ -31,6 +31,11 @@ public class BlockMobSpawner extends BlockTileEntity<TileEntityMobSpawner> {
 		return BlockRenderLayer.TRANSLUCENT;
 	}
 	
+	@Override
+	public BlockRenderLayer getRenderLayer() {
+		return BlockRenderLayer.CUTOUT;
+	}
+	
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public BlockRenderType getRenderType(BlockState state) {
