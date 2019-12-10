@@ -58,7 +58,7 @@
 		},
 		"woodcutting_tutorial5":
 		{
-			"text": "I'm gonna give you a bronze axe here, and I want you to go chop down some oak tree, alright? I'll even pay you for yer work.  I'm going to need you to harvest 10 oak logs, alright? Once you have enough, bring them back to me for yer reward. Rememeber, one click per chop.  You'll get the hang of it.",
+			"text": "I'm gonna give you a bronze axe here, and I want you to go chop down some oak trees, alright? I'll even pay you for yer work.  I'm going to need you to harvest 10 oak logs, alright? Once you have enough, bring them back to me for yer reward. Rememeber, one click per chop.  You'll get the hang of it.",
 			"responses":
 			{
 				"Sounds good.": 
@@ -78,7 +78,7 @@
 		},
 		"finished":
 		{
-			"text": "Nice. I see ye've brought plenty o logs.  Ye did that pretty quick.  I can see the makin's of a fine lumberjack in ye one day.  I'll let ye keep the axe and the logs ye chopped down.  /n/nYe should go talk to Eva Teffan next.  She can show ye some cool things to craft from these logs.",
+			"text": "Nice. I see ye've brought plenty o' logs.  Ye did that pretty quick.  I can see the makin's of a fine lumberjack in ye one day.  I'll let ye keep the axe and the logs ye chopped down.  /n/nYe should go talk to Eva Teffan next.  She can show ye some cool things to craft from these logs.",
 			"responses":
 			{
 				"My payment?": {"transition": "finished2"}

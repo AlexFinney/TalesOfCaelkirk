@@ -1,6 +1,6 @@
 {
 	"introduction": {
-		"text": "Hello there, new adventurer! So you're new to Caelkirk? Oh boy, this is exciting... you're going to love it here! Assuming you're not brutally killed by a monster that is... But not to worry, you might actually stand a chance here! Are you ready then?",
+		"text": "Hello there, new adventurer! So you're new to Caelkirk? Oh boy, this is exciting... you're going to love it here! /n/nAssuming you're not brutally killed by a monster that is... /n/nBut not to worry, you might actually stand a chance! Are you ready then?",
 		"responses": {
 			"Let's go!": {
 				"transition": "info_offer"
@@ -55,7 +55,7 @@
 		}
 	},
 	"first_task": {
-		"text": "Alright, your first task is to go outside next door to the woodcutting shack and talk to Ulric. He'll teach you about the skill of Woodcutting. I put a marker on your map for you in case you have trouble finding it.",
+		"text": "Alright, your first task is to go outside next door to the woodcutting shack and talk to Ulric. He'll teach you about the skill of Woodcutting. I put a marker on your map in case you have trouble finding it.",
 		"responses": {
 			"Thanks!": {
 				"transition": "",

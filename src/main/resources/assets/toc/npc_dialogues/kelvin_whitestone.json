@@ -1,6 +1,6 @@
 {
 	"intro": {
-		"text": "Hey there.  Today you're gonna be learning about mining, smelting, and smithing.  A very valuable trade.  Here's a pickaxe.  Go find some copper ore and tin ore and mine them, come back to me when you have 5 of each.",
+		"text": "Hey there.  Today you're gonna be learning about mining, smelting, and smithing.  A very valuable trade.  Here's a pickaxe.  Go find some copper ore and tin ore and mine them. Come back to me when you have five of each.",
 		"responses": {
 			"Okay.": {
 				"transition": "",

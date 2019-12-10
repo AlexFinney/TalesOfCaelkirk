@@ -50,7 +50,7 @@
 		},
 		"tutorial_1_2":
 		{
-			"text": "For most common items though, a decent crafting level and a little bit of intuition is all you'll need. Oh, and the required crafting materials, of course. Speaking of which, we'll need to get you some materials so can learn to craft something.",
+			"text": "For most common items though, a decent crafting level and a little bit of intuition is all you'll need. Oh, and the required crafting materials, of course. Speaking of which, we'll need to get you some materials so you can learn to craft something.",
 			"responses":
 			{
 				"What do I need?": {"transition": "tutorial_1_3"}
@@ -91,7 +91,7 @@
 		},
 		"tutorial_2_1":
 		{
-			"text": "After you've crafted your strings, do the same thing with one of the logs you chopped down earlier.  This time you'll craft sticks from your logs.  Each log will yield four sticks.  Come back to me once you've crafted at least 3 sticks and two string, okay?",
+			"text": "After you've crafted your strings, do the same thing with one of the logs you chopped down earlier.  This time you'll craft sticks from your logs.  Each log will yield four sticks.  Come back to me once you've crafted at least three sticks and two string, okay?",
 			"responses":
 			{
 				"Alright, time to craft.": {"transition": "", "event": "beginCrafting"}

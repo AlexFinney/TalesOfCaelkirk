@@ -23,6 +23,9 @@ import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.GameType;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -181,7 +184,6 @@ public class HUD extends IngameGui {
 	Method renderPlayerStats = null;
 	Method renderVehicleHealth = null;
 
-	
 	void drawLightBlock() {
 		TextureManager tm = Minecraft.getInstance().getTextureManager();
 		MainWindow sr = Minecraft.getInstance().mainWindow;
@@ -234,7 +236,7 @@ public class HUD extends IngameGui {
 		fill(barX, barY, barX + barWidth, barY + barHeight, 0xFF000000);
 		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		tm.bindTexture(healthBar);
-		blit(barX, barY, 0, 0, (int) (barWidth * scale), barHeight, barWidth , barHeight);
+		blit(barX, barY, 0, 0, (int) (barWidth * scale), barHeight, barWidth, barHeight);
 		tm.bindTexture(emptyBarHealth);
 		blit(barX, barY, 0, 0, barWidth, barHeight, barWidth, barHeight);
 
@@ -266,14 +268,15 @@ public class HUD extends IngameGui {
 			} else {
 				scale = 1;
 			}
-			
+
 			GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 			tm.bindTexture(healthBar);
 			blit(barX * 4 + barWidth * 4 - barWidth, barY * 4 - barHeight, 0, 0, (int) (barWidth * scale), barHeight,
 					barWidth, barHeight);
 
 			tm.bindTexture(emptyBarHealth);
-			blit(barX * 4 + barWidth * 4 - barWidth, barY * 4 - barHeight, 0, 0, barWidth, barHeight, barWidth, barHeight);
+			blit(barX * 4 + barWidth * 4 - barWidth, barY * 4 - barHeight, 0, 0, barWidth, barHeight, barWidth,
+					barHeight);
 
 			GlStateManager.popMatrix();
 		}
@@ -314,9 +317,9 @@ public class HUD extends IngameGui {
 		GlStateManager.enableBlend();
 		GlStateManager.popMatrix();
 	}
-	
-	
+
 	float xpMessageSpeed = -1;
+
 	void drawXpMessages() {
 		MainWindow sr = Minecraft.getInstance().mainWindow;
 		int screenWidth = sr.getScaledWidth();
@@ -359,7 +362,7 @@ public class HUD extends IngameGui {
 		msg.y = startingY;
 		xpMessages.add(msg);
 	}
-	
+
 	void renderVanillaModified(float partialTicks) {
 		// super.renderGameOverlay(partialTicks);
 		this.scaledWidth = this.mc.mainWindow.getScaledWidth();
@@ -553,8 +556,8 @@ public class HUD extends IngameGui {
 				this.renderScoreboard(scoreobjective1);
 			}
 
-			//Vanilla chat render here
-			
+			// Vanilla chat render here
+
 			scoreobjective1 = scoreboard.getObjectiveInDisplaySlot(0);
 			if (!this.mc.gameSettings.keyBindPlayerList.isKeyDown() || this.mc.isIntegratedServerRunning()
 					&& this.mc.player.connection.getPlayerInfoMap().size() <= 1 && scoreobjective1 == null) {
@@ -568,6 +571,53 @@ public class HUD extends IngameGui {
 		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.disableLighting();
 		GlStateManager.enableAlphaTest();
+	}
+
+	@Override
+	public void renderSelectedItem() {
+		this.mc.getProfiler().startSection("selectedItemName");
+		if (this.remainingHighlightTicks > 0 && !this.highlightingItemStack.isEmpty()) {
+			ITextComponent itextcomponent = (new StringTextComponent(""))
+					.appendSibling(this.highlightingItemStack.getDisplayName())
+					.applyTextStyle(this.highlightingItemStack.getRarity().color);
+			if (this.highlightingItemStack.hasDisplayName()) {
+				itextcomponent.applyTextStyle(TextFormatting.ITALIC);
+			}
+
+			String s = itextcomponent.getFormattedText();
+			s = this.highlightingItemStack.getItem().getHighlightTip(this.highlightingItemStack, s);
+			int i = (this.scaledWidth - this.getFontRenderer().getStringWidth(s)) / 2;
+			int j = this.scaledHeight - 73;
+			if (!this.mc.playerController.shouldDrawHUD()) {
+				j += 14;
+			}
+
+			int k = (int) ((float) this.remainingHighlightTicks * 256.0F / 10.0F);
+			if (k > 255) {
+				k = 255;
+			}
+
+			if (k > 0) {
+				GlStateManager.pushMatrix();
+				GlStateManager.enableBlend();
+				GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
+						GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
+						GlStateManager.DestFactor.ZERO);
+				fill(i - 2, j - 2, i + this.getFontRenderer().getStringWidth(s) + 2, j + 9 + 2,
+						this.mc.gameSettings.func_216839_a(0));
+				FontRenderer font = highlightingItemStack.getItem().getFontRenderer(highlightingItemStack);
+				if (font == null) {
+					this.getFontRenderer().drawStringWithShadow(s, (float) i, (float) j, 16777215 + (k << 24));
+				} else {
+					i = (this.scaledWidth - font.getStringWidth(s)) / 2;
+					font.drawStringWithShadow(s, (float) i, (float) j, 16777215 + (k << 24));
+				}
+				GlStateManager.disableBlend();
+				GlStateManager.popMatrix();
+			}
+		}
+
+		this.mc.getProfiler().endSection();
 	}
 
 	// Copied from IngameGui
