@@ -30,6 +30,7 @@ import skeeter144.toc.client.entity.model.ModelRat;
 import skeeter144.toc.client.entity.model.ModelSiren;
 import skeeter144.toc.client.entity.model.ModelViking;
 import skeeter144.toc.client.entity.renderer.RenderCustomLiving;
+import skeeter144.toc.client.entity.renderer.RenderGoblin;
 import skeeter144.toc.client.entity.renderer.RenderGriffin;
 import skeeter144.toc.client.entity.renderer.RenderHumanNpc;
 import skeeter144.toc.client.entity.renderer.RenderPegasus;
@@ -117,7 +118,7 @@ public class ClientProxy extends CommonProxy
 		rm.renderers.put(EntityGhost.class, new RenderCustomLiving<EntityGhost, ModelGhost>(rm, new ModelGhost(), .5f, new ResourceLocation(Reference.MODID, "textures/entity/ghost.png")));
 		rm.renderers.put(EntityGiantSpider.class, new RenderCustomLiving<EntityGiantSpider, ModelGiantSpider>(rm, new ModelGiantSpider(), .5f, new ResourceLocation(Reference.MODID, "textures/entity/giant_spider.png")));
 		rm.renderers.put(EntityRat.class, new RenderCustomLiving<EntityRat, ModelRat>(rm, new ModelRat(), .25f, new ResourceLocation(Reference.MODID, "textures/entity/rat.png")));
-		rm.renderers.put(EntityGoblin.class, new RenderCustomLiving<EntityGoblin, ModelGoblin>(rm, new ModelGoblin(), .5f,  new ResourceLocation(Reference.MODID, "textures/entity/goblin.png")));
+		//rm.renderers.put(EntityGoblin.class, new RenderGoblin<EntityGoblin, ModelGoblin>(rm, new ModelGoblin(), .5f,  new ResourceLocation(Reference.MODID, "textures/entity/goblin.png")));
 		rm.renderers.put(EntityGiantScorpian.class, new RenderCustomLiving<EntityGiantScorpian, ModelGiantScorpian>(rm, new ModelGiantScorpian(), .5f,  new ResourceLocation(Reference.MODID, "textures/entity/giant_scorpian.png")));
 		rm.renderers.put(EntitySiren.class, new RenderCustomLiving<EntitySiren, ModelSiren>(rm, new ModelSiren(), .5f, new ResourceLocation(Reference.MODID, "textures/entity/siren.png")));
 
@@ -126,6 +127,8 @@ public class ClientProxy extends CommonProxy
 		//rm.renderers.put(EntityVariableHorseMount.class, new RenderCustomAbstractHorse(rm, 1F));
 		rm.renderers.put(EntityPegasus.class, new RenderPegasus<EntityPegasus, ModelPegasus>(rm, new ModelPegasus(), 1F));
 		rm.renderers.put(EntityGriffin.class, new RenderGriffin<EntityGriffin, ModelGriffin>(rm, new ModelGriffin(), 1F));
+		
+		rm.renderers.put(EntityGoblin.class, new RenderGoblin(rm));
 		
 	}	
 

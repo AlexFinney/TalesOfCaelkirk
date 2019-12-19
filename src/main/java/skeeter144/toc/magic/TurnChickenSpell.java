@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.projectile.EntityWandProjectile;
 import skeeter144.toc.entityeffect.ServerEffectHandler;
 import skeeter144.toc.entityeffect.effects.ChickenEffect;
@@ -13,7 +14,7 @@ import skeeter144.toc.entityeffect.effects.ChickenEffect;
 public class TurnChickenSpell extends ShootableSpell{
 
 	public TurnChickenSpell(String name, String iconName, int cooldown, int trailId) {
-		super(name, iconName, cooldown, trailId);
+		super(TOCEntityType.TURN_CHICKEN, name, iconName, cooldown, trailId);
 	}
 
 	@Override

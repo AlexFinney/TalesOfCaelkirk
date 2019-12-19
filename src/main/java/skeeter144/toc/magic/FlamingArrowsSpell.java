@@ -80,7 +80,7 @@ public class FlamingArrowsSpell extends Spell {
 					w.addEntity(entityarrow);
 
 					try {
-						Field f = ArrowEntity.class.getDeclaredField("ticksInGround");
+						Field f = AbstractArrowEntity.class.getDeclaredField("ticksInGround");
 						f.setAccessible(true);
 						f.set(entityarrow, 1100);
 					} catch (NoSuchFieldException | SecurityException | IllegalArgumentException

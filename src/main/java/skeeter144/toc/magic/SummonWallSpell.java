@@ -12,13 +12,14 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import skeeter144.toc.TOCMain;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.projectile.EntityWandProjectile;
 import skeeter144.toc.tasks.TickableTask;
 
 public class SummonWallSpell extends ShootableSpell{
 
 	public SummonWallSpell(String name, String iconName, int cooldown, int trailId) {
-		super(name, iconName, cooldown, trailId);
+		super(TOCEntityType.SUMMON_WALL, name, iconName, cooldown, trailId);
 	}
 
 	@Override

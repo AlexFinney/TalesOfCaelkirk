@@ -8,12 +8,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import skeeter144.toc.TOCMain;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.projectile.EntityWandProjectile;
 import skeeter144.toc.tasks.TickableTask;
 
 public class ZoneEntangleSpell extends ShootableSpell{
 	public ZoneEntangleSpell(String name, String iconName, int cooldown, int trailId) {
-		super(name, iconName, cooldown, trailId);
+		super(TOCEntityType.ZONE_ENTANGLE, name, iconName, cooldown, trailId);
 	}
 
 	@Override

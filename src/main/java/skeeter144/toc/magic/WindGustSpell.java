@@ -7,13 +7,14 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import skeeter144.toc.combat.CombatManager.DamageType;
 import skeeter144.toc.combat.TOCDamageSource;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.projectile.EntityWandProjectile;
 import skeeter144.toc.sounds.Sounds;
 
 public class WindGustSpell extends ElementalSpell{
 
 	public WindGustSpell(String name, String iconName, int damage, int cooldown, int trailId) {
-		super(name, iconName, damage, cooldown, trailId);
+		super(TOCEntityType.WIND_GUST, name, iconName, damage, cooldown, trailId);
 		levelRequirement = 1;
 		this.sound = Sounds.spell_wind_gust;
 	}

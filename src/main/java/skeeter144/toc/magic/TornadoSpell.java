@@ -5,6 +5,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.chunk.Chunk;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.projectile.EntityWandProjectile;
 import skeeter144.toc.entityeffect.ServerEffectHandler;
 import skeeter144.toc.entityeffect.ServerEffectHandler.EffectAddResult;
@@ -16,7 +17,7 @@ import skeeter144.toc.particles.system.ParticleSystem;
 public class TornadoSpell extends ShootableSpell{
 
 	public TornadoSpell(String name, String iconName, int trailId) {
-		super(name, iconName, 200, trailId);
+		super(TOCEntityType.TORNADO, name, iconName, 200, trailId);
 		this.levelRequirement = 1;
 	}
 

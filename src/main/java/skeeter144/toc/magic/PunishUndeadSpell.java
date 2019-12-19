@@ -10,13 +10,14 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import skeeter144.toc.combat.CombatManager.DamageType;
 import skeeter144.toc.combat.TOCDamageSource;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.projectile.EntityWandProjectile;
 
 public class PunishUndeadSpell extends ShootableSpell {
 	
 	static final int DAMAGE = 25;
 	public PunishUndeadSpell(String name, String iconName, int cooldown, int trailId) {
-		super(name, iconName, cooldown, trailId);
+		super(TOCEntityType.PUNISH_UNDEAD, name, iconName, cooldown, trailId);
 	}
 
 	@Override

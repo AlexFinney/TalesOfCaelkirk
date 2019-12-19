@@ -7,12 +7,13 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import skeeter144.toc.combat.CombatManager.DamageType;
 import skeeter144.toc.combat.TOCDamageSource;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.projectile.EntityWandProjectile;
 
 public class WaterRippleSpell extends ElementalSpell{
 
 	public WaterRippleSpell(String name, String iconName, int damage, int cooldown, int trailId) {
-		super(name, iconName, damage, cooldown, trailId);
+		super(TOCEntityType.WATER_RIPPLE, name, iconName, damage, cooldown, trailId);
 	}
 
 	

@@ -175,7 +175,7 @@ public class SpellBookGUI extends Screen {
 			}
 		}
 
-		GlStateManager.popAttributes();
+		GlStateManager.popMatrix();
 	}
 
 	Vec2f lastClick = null;
@@ -207,7 +207,7 @@ public class SpellBookGUI extends Screen {
 
 		blit(bookX, bookY, 0, 0, bookWidth, bookHeight, bookWidth, bookHeight);
 
-		GlStateManager.popAttributes();
+		GlStateManager.popMatrix();
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import skeeter144.toc.entity.mob.monster.EntityGoblin;
  * Goblin - Skeeter144
  * Created using Tabula 5.1.0
  */
-public class ModelGoblin extends AdvancedModelBase<EntityGoblin> {
+public class ModelGoblin<T extends EntityGoblin> extends AdvancedModelBase<EntityGoblin> {
     public AdvancedModelRenderer body;
     public AdvancedModelRenderer head;
     public AdvancedModelRenderer waist;
@@ -189,6 +189,7 @@ public class ModelGoblin extends AdvancedModelBase<EntityGoblin> {
         this.body.render(f5);
     }
 
+    
     @Override
     public void setRotationAngles(EntityGoblin entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
     		float headPitch, float scaleFactor) {

@@ -8,12 +8,13 @@ import net.minecraft.util.math.RayTraceResult;
 import skeeter144.toc.TOCMain;
 import skeeter144.toc.combat.CombatManager.DamageType;
 import skeeter144.toc.combat.TOCDamageSource;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.projectile.EntityWandProjectile;
 
 public class FlameSmolderSpell extends ElementalSpell {
 
 	public FlameSmolderSpell(String name, String iconName, int damage, int cooldown, int trailId) {
-		super(name, iconName, damage, cooldown, trailId);
+		super(TOCEntityType.FLAME_SMOLDER, name, iconName, damage, cooldown, trailId);
 	}
 
 	@Override

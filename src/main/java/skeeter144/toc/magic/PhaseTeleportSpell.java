@@ -8,12 +8,13 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.StringTextComponent;
 import skeeter144.toc.TOCMain;
+import skeeter144.toc.entity.TOCEntityType;
 import skeeter144.toc.entity.projectile.EntityWandProjectile;
 
 public class PhaseTeleportSpell extends ShootableSpell {
 
 	public PhaseTeleportSpell(String name, String iconName, int cooldown, int trailId) {
-		super(name, iconName, cooldown, trailId);
+		super(TOCEntityType.PHASE_TELEPORT, name, iconName, cooldown, trailId);
 	}
 
 	@Override
