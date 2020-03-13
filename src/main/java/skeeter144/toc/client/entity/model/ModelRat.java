@@ -1,11 +1,14 @@
 package skeeter144.toc.client.entity.model;
 
-import net.minecraft.client.renderer.entity.model.RendererModel;
-import net.minecraft.entity.Entity;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.renderer.model.ModelRenderer;
 import skeeter144.toc.client.entity.renderer.AdvancedModelRenderer;
 import skeeter144.toc.entity.mob.monster.EntityRat;
 
-public class ModelRat extends AdvancedModelBase<EntityRat> {
+public class ModelRat extends EntityModel<EntityRat>
+{
 	public AdvancedModelRenderer body;
 	public AdvancedModelRenderer head;
 	public AdvancedModelRenderer tail1;
@@ -21,8 +24,8 @@ public class ModelRat extends AdvancedModelBase<EntityRat> {
 	public AdvancedModelRenderer tail4;
 
 	public ModelRat() {
-		this.textureWidth = 64;
-		this.textureHeight = 64;
+//		this.textureWidth = 64;
+//		this.textureHeight = 64;
 		this.tail1 = new AdvancedModelRenderer(this, 0, 0);
 		this.tail1.setRotationPoint(2.0F, 1.0F, 9.0F);
 		this.tail1.addBox(0.0F, 0.0F, 0.0F, 1, 1, 2, 0.0F);
@@ -76,46 +79,58 @@ public class ModelRat extends AdvancedModelBase<EntityRat> {
 		this.head.addChild(this.right_ear);
 		this.tail1.addChild(this.tail2);
 
-		updateDefaultPose();
+//		updateDefaultPose();
 	}
 
 	@Override
-	public void render(EntityRat entity, float f, float f1, float f2, float f3, float f4, float f5) {
-		this.body.render(f5);
+	public void setRotationAngles(EntityRat entityRat, float v, float v1, float v2, float v3, float v4)
+	{
+
 	}
 
-	@Override
-	public void setRotationAngles(EntityRat entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,
-			float netHeadYaw, float headPitch, float scaleFactor) {
-		resetToDefaultPose();
+//	@Override
+//	public void render(EntityRat entity, float f, float f1, float f2, float f3, float f4, float f5) {
+//		this.body.render(f5);
+//	}
+//
+//	@Override
+//	public void setRotationAngles(EntityRat entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,
+//			float netHeadYaw, float headPitch, float scaleFactor) {
+//		resetToDefaultPose();
+//
+//		float f = limbSwing;
+//		float f1 = limbSwingAmount;
+//
+//		float speed = 1.3f;
+//		float height = .5f;
+//		float degree = 1.5f;
+//
+//		bob(body, speed, height, false, f, f1);
+//		walk(back_left_leg, 0.5f * speed, .5f * degree, false, 0, 0, f, f1);
+//		walk(front_left_leg, 0.5f * speed, .5f * degree, true, 0, 0, f, f1);
+//		walk(back_right_leg, 0.5f * speed, .5f * degree, true, 0, 0, f, f1);
+//		walk(front_right_leg, 0.5f * speed, .5f * degree, false, 0, 0, f, f1);
+//
+//		walk(tail1, speed, .1f * degree, true, 0, 0, f, f1);
+//		walk(tail2, speed, .2f * degree, true, 0, 0, f, f1);
+//		walk(tail3, speed, .3f * degree, true, 0, 0, f, f1);
+//
+//		swing(tail1, speed, .2f * degree, true, 0, 0, f, f1);
+//		swing(tail2, speed, .3f * degree, true, 0, 0, f, f1);
+//		swing(tail3, speed, .4f * degree, true, 0, 0, f, f1);
+//
+//		walk(head, speed, .1f, false, 0, 0, f, f1);
+//	}
 
-		float f = limbSwing;
-		float f1 = limbSwingAmount;
-
-		float speed = 1.3f;
-		float height = .5f;
-		float degree = 1.5f;
-
-		bob(body, speed, height, false, f, f1);
-		walk(back_left_leg, 0.5f * speed, .5f * degree, false, 0, 0, f, f1);
-		walk(front_left_leg, 0.5f * speed, .5f * degree, true, 0, 0, f, f1);
-		walk(back_right_leg, 0.5f * speed, .5f * degree, true, 0, 0, f, f1);
-		walk(front_right_leg, 0.5f * speed, .5f * degree, false, 0, 0, f, f1);
-
-		walk(tail1, speed, .1f * degree, true, 0, 0, f, f1);
-		walk(tail2, speed, .2f * degree, true, 0, 0, f, f1);
-		walk(tail3, speed, .3f * degree, true, 0, 0, f, f1);
-
-		swing(tail1, speed, .2f * degree, true, 0, 0, f, f1);
-		swing(tail2, speed, .3f * degree, true, 0, 0, f, f1);
-		swing(tail3, speed, .4f * degree, true, 0, 0, f, f1);
-
-		walk(head, speed, .1f, false, 0, 0, f, f1);
-	}
-
-	public void setRotateAngle(RendererModel RendererModel, float x, float y, float z) {
+	public void setRotateAngle(ModelRenderer RendererModel, float x, float y, float z) {
 		RendererModel.rotateAngleX = x;
 		RendererModel.rotateAngleY = y;
 		RendererModel.rotateAngleZ = z;
+	}
+
+	@Override
+	public void render(MatrixStack matrixStack, IVertexBuilder iVertexBuilder, int i, int i1, float v, float v1, float v2, float v3)
+	{
+
 	}
 }

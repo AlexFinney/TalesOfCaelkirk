@@ -34,9 +34,9 @@ public class TornadoEffect extends EntityEffect {
 	protected void onEffectStart() {
 		//spawn tornado particle effect
 		effected.setNoGravity(true);
-		initialX = effected.posX;
-		initialY = effected.posY;
-		initialZ = effected.posZ;
+		initialX = effected.getPosX();
+		initialY = effected.getPosY();
+		initialZ = effected.getPosZ();
 		effected.addVelocity(0, .65, 0);
 		if(effected instanceof ServerPlayerEntity) {
 			((ServerPlayerEntity)effected).abilities.allowFlying = true;
@@ -45,12 +45,12 @@ public class TornadoEffect extends EntityEffect {
 
 	@Override
 	protected void onEffectTick() {
-		if(effected.posY > initialY + maxHeight)
+		if(effected.getPosY() > initialY + maxHeight)
 		{
-			effected.setPosition(effected.posX, initialY + maxHeight, effected.posZ);
+			effected.setPosition(effected.getPosX(), initialY + maxHeight, effected.getPosZ());
 		}
 		
-		effected.setPosition(initialX, effected.posY, initialZ);
+		effected.setPosition(initialX, effected.getPosY(), initialZ);
 		
 		if(ticksRemaining % 20 == 0)
 		{

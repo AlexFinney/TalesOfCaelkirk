@@ -102,9 +102,9 @@ public class EntityTOCArrow extends ArrowEntity {
 	public void tick() {
 		super.tick();
 		for (int k = 0; k < 4; ++k) {
-			this.world.addParticle(ParticleTypes.CRIT, this.posX + this.getMotion().x * (double) k / 4.0D,
-					this.posY + this.getMotion().y * (double) k / 4.0D,
-					this.posZ + this.getMotion().z * (double) k / 4.0D, -this.getMotion().x, -this.getMotion().y + 0.2D,
+			this.world.addParticle(ParticleTypes.CRIT, this.getPosX() + this.getMotion().x * (double) k / 4.0D,
+					this.getPosY() + this.getMotion().y * (double) k / 4.0D,
+					this.getPosZ() + this.getMotion().z * (double) k / 4.0D, -this.getMotion().x, -this.getMotion().y + 0.2D,
 					-this.getMotion().z);
 		}
 	}

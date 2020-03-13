@@ -40,8 +40,8 @@ public class MiningMinigame_Old {
 			return;
 		
 		if(board.tileAt(x, y).tileItem == null) {
-			MainWindow sr = Minecraft.getInstance().mainWindow;
-			int adjustedMouseX = Mouse.getX() * sr.getScaledWidth() / Minecraft.getInstance().mainWindow.getWidth();
+			MainWindow sr = Minecraft.getInstance().getMainWindow();
+			int adjustedMouseX = Mouse.getX() * sr.getScaledWidth() / Minecraft.getInstance().getMainWindow().getWidth();
 			int adjustedMouseY = sr.getScaledHeight() - Mouse.getY() * sr.getScaledHeight() / sr.getHeight();
 			
 			draggedTile = board.tileAt(x, y);

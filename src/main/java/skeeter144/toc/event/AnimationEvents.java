@@ -26,8 +26,8 @@ public class AnimationEvents {
 		CustomMob cm = (CustomMob)e;
 		cm.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0);
 		
-		double dx =  cm.getAttackTarget().posX - cm.posX;
-		double dz =  cm.getAttackTarget().posZ - cm.posZ;
+		double dx =  cm.getAttackTarget().getPosX() - cm.getPosX();
+		double dz =  cm.getAttackTarget().getPosZ() - cm.getPosZ();
 		
 		double distance = Math.sqrt(dx * dx + dz * dz);
 		double angle = Math.toDegrees(Math.acos(dz / distance));

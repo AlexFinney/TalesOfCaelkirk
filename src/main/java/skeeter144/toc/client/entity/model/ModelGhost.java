@@ -1,7 +1,10 @@
 package skeeter144.toc.client.entity.model;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 import skeeter144.toc.TOCMain;
@@ -14,7 +17,8 @@ import skeeter144.toc.particles.particle.BasicParticle;
  * Ghost - Undefined
  * Created using Tabula 7.0.0
  */
-public class ModelGhost extends AdvancedModelBase<EntityGhost> {
+public class ModelGhost extends EntityModel<EntityGhost>
+{
     public AdvancedModelRenderer body;
     public AdvancedModelRenderer head;
     public AdvancedModelRenderer left_arm;
@@ -38,42 +42,44 @@ public class ModelGhost extends AdvancedModelBase<EntityGhost> {
         this.body.addChild(this.left_arm_1);
         this.body.addChild(this.left_arm);
         this.body.addChild(this.head);
-        updateDefaultPose();
-    }
-
-    @Override 
-    public void render(EntityGhost entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        this.body.render(scale);
+       // updateDefaultPose();
     }
 
     @Override
+    public void setRotationAngles(EntityGhost entityGhost, float v, float v1, float v2, float v3, float v4)
+    {
+
+    }
+
+
+ /*   @Override
     public void setRotationAngles(EntityGhost entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,	float headPitch, float scaleFactor) {
-    	resetToDefaultPose();
+    	//resetToDefaultPose();
 
     	EntityGhost ghost = (EntityGhost)entityIn;
     	float f = entityIn.ticksExisted;
         float f1 = 1;
     	float speed = .2f;
         float degree =  1.5f;
-    	
+
         int stage = (int)ghost.getAttribute(EntityGhost.DIVE_STAGE).getBaseValue();
-        
-        
-        if(ghost.world.rand.nextInt(20) == 0) {
-			Particle p = new BasicParticle(ghost.world, ghost.posX, ghost.posY + 1, ghost.posZ, 1, 0x000000, 
-					TOCMain.rand.nextFloat() * .5f - .25f, 
-					TOCMain.rand.nextFloat() * .25f + .125f, 
-					TOCMain.rand.nextFloat() * .5f - .25f, 
+
+
+       *//* if(ghost.world.rand.nextInt(20) == 0) {
+			Particle p = new BasicParticle(ghost.world, ghost.posX, ghost.getPosY() + 1, ghost.posZ, 1, 0x000000,
+					TOCMain.rand.nextFloat() * .5f - .25f,
+					TOCMain.rand.nextFloat() * .25f + .125f,
+					TOCMain.rand.nextFloat() * .5f - .25f,
 					true);
 			Minecraft.getInstance().particles.addEffect(p);
-		}
-        
-        if(stage == DiveStage.IDLE.ordinal()) {
+		}*//*
+
+       *//* if(stage == DiveStage.IDLE.ordinal()) {
         	this.walk(left_arm, speed, degree / 10, false, 0, 0, f, f1);
             this.walk(left_arm_1, speed, degree / 10, true, 0, 0, f, f1);
-            
+
             bob(body, speed, 3, false, f, f1);
-            
+
         }else if(stage == DiveStage.ANGRY.ordinal()) {
 	        this.left_arm.rotationPointX = 8;
 	        this.left_arm.rotationPointY = -6;
@@ -98,7 +104,7 @@ public class ModelGhost extends AdvancedModelBase<EntityGhost> {
 	        swing(head, .5f, .3f, false, 0, 0, f, f1);
 	        
 	        if(ghost.world.rand.nextInt(2) == 0) {
-				Particle p = new BasicParticle(ghost.world, ghost.posX, ghost.posY + 1, ghost.posZ, 1, 0x000000, 
+				Particle p = new BasicParticle(ghost.world, ghost.posX, ghost.getPosY() + 1, ghost.posZ, 1, 0x000000,
 						TOCMain.rand.nextFloat() * .5f - .25f, 
 						TOCMain.rand.nextFloat() * .25f + .125f, 
 						TOCMain.rand.nextFloat() * .5f - .25f, 
@@ -109,9 +115,9 @@ public class ModelGhost extends AdvancedModelBase<EntityGhost> {
 	        
         }else if(stage == DiveStage.DIVING.ordinal()) {
         	
-        	Vec3d prevPos = new Vec3d(ghost.prevPosX, ghost.prevPosY, ghost.prevPosZ);
+        	Vec3d prevPos = new Vec3d(ghost.prevPosX, ghost.prevgetPosY(), ghost.prevPosZ);
         	
-        	double dy = ghost.prevPosY - ghost.posY;
+        	double dy = ghost.prevgetPosY() - ghost.getPosY();
             	
             double dist = prevPos.distanceTo(ghost.getPositionVector());
             
@@ -138,7 +144,7 @@ public class ModelGhost extends AdvancedModelBase<EntityGhost> {
             walk(left_arm_1, .1f, .3f, true, 0, 0, f, f1);
             
             if(ghost.world.rand.nextInt(2) == 0) {
-				Particle p = new BasicParticle(ghost.world, ghost.posX, ghost.posY + 1, ghost.posZ, 1, 0x000000, 
+				Particle p = new BasicParticle(ghost.world, ghost.posX, ghost.getPosY() + 1, ghost.posZ, 1, 0x000000,
 						TOCMain.rand.nextFloat() * .5f - .25f, 
 						TOCMain.rand.nextFloat() * .25f + .125f, 
 						TOCMain.rand.nextFloat() * .5f - .25f, 
@@ -146,12 +152,18 @@ public class ModelGhost extends AdvancedModelBase<EntityGhost> {
 				
 				Minecraft.getInstance().particles.addEffect(p);
 			}
-        }
+        }*//*
     }
-    
+    */
     public void setRotateAngle(AdvancedModelRenderer RendererModel, float x, float y, float z) {
         RendererModel.rotateAngleX = x;
         RendererModel.rotateAngleY = y;
         RendererModel.rotateAngleZ = z;
+    }
+
+    @Override
+    public void render(MatrixStack matrixStack, IVertexBuilder iVertexBuilder, int i, int i1, float v, float v1, float v2, float v3)
+    {
+
     }
 }

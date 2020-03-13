@@ -103,7 +103,7 @@ public class TOCBow extends BowItem {
 						worldIn.addEntity(entityarrow);
 					}
 
-					worldIn.playSound((PlayerEntity) null, PlayerEntity.posX, PlayerEntity.posY, PlayerEntity.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F,
+					worldIn.playSound((PlayerEntity) null, PlayerEntity.getPosX(), PlayerEntity.getPosY(), PlayerEntity.getPosZ(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F,
 							1.0F / (random.nextFloat() * 0.4F + 1.2F) + velocity * 0.5F);
 
 					if (!flag1 && !PlayerEntity.abilities.isCreativeMode) {

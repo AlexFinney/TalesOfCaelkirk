@@ -128,7 +128,7 @@ public class GuiEntityStatus extends Screen {
 //			displayWidth = 100;
 	//	}
 
-		MainWindow viewport = mc.mainWindow;
+		MainWindow viewport = mc.getMainWindow();
 		String displayPosition = "TOPLEFT";//ConfigurationHandler.statusDisplayPosition;
 
 		int sh = viewport.getScaledHeight();

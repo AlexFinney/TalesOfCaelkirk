@@ -21,7 +21,7 @@ public class ChickenEffect extends EntityEffect{
 	@Override
 	protected void onEffectStart() {
 		chicken = new ChickenEntity(EntityType.CHICKEN, effected.world);
-		chicken.setPosition(effected.posX, effected.posY + 1.5f, effected.posZ);
+		chicken.setPosition(effected.getPosX(), effected.getPosY() + 1.5f, effected.getPosZ());
 		effected.world.addEntity(chicken);
 		effected.setInvulnerable(true);
 		
@@ -51,7 +51,7 @@ public class ChickenEffect extends EntityEffect{
 	protected void onEffectEnd(EffectEndType type) {
 		effected.setInvisible(false);
 		effected.setInvulnerable(false);
-		effected.setPositionAndUpdate(chicken.posX, chicken.posY, chicken.posZ);
+		effected.setPositionAndUpdate(chicken.getPosX(), chicken.getPosY(), chicken.getPosZ());
 		effected.noClip = false;
 		effected.setNoGravity(false);
 		
@@ -66,7 +66,7 @@ public class ChickenEffect extends EntityEffect{
 
 	Entity chicken;
 	protected void onEffectTick() {
-			effected.setPositionAndRotation(chicken.posX, chicken.posY + 1, chicken.posZ, chicken.rotationYaw, chicken.rotationPitch);
+			effected.setPositionAndRotation(chicken.getPosX(), chicken.getPosY() + 1, chicken.getPosZ(), chicken.rotationYaw, chicken.rotationPitch);
 	}
 
 //	private void copyTaskSetTo(Set<EntityAITaskEntry> tasks, Set<EntityAITaskEntry> copyTo) {

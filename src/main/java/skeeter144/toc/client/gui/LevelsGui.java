@@ -44,7 +44,7 @@ public class LevelsGui extends Screen{
 		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		
 		TextureManager tm = Minecraft.getInstance().getTextureManager();
-		MainWindow sr = Minecraft.getInstance().mainWindow;
+		MainWindow sr = Minecraft.getInstance().getMainWindow();
 		
 		tm.bindTexture(backgreoundImage);
 		
@@ -71,14 +71,14 @@ public class LevelsGui extends Screen{
 			tm.bindTexture(new ResourceLocation("toc:textures/icons/levels/" + level.getName().toLowerCase() + "_icon.png"));
 			int iconX = baseX + col * iconDim + iconSpace * col;
 			int iconY =  baseY + row * iconDim + iconSpace / 2 * row;
-			GlStateManager.color3f(1, 1, 1);
+			GlStateManager.color4f(1, 1, 1, 1);
 			blit(iconX, iconY, 0, 0, iconDim, iconDim, iconDim, iconDim);
 			
 			fr.drawString(level.getLevel() + "", iconX + iconDim - (int)(iconDim / 6f), iconY + iconDim - (int)(iconDim/2.5f), 0x000000);
 			
 			Rectangle2D.Float rect = new Rectangle2D.Float(iconX, iconY, iconDim, iconDim);
-			int adjustedX = Mouse.getX() * sr.getScaledWidth() / Minecraft.getInstance().mainWindow.getWidth();
-			int adjustedY = sr.getScaledHeight() - Mouse.getY() * sr.getScaledHeight() / Minecraft.getInstance().mainWindow.getHeight();
+			int adjustedX = Mouse.getX() * sr.getScaledWidth() / Minecraft.getInstance().getMainWindow().getWidth();
+			int adjustedY = sr.getScaledHeight() - Mouse.getY() * sr.getScaledHeight() / Minecraft.getInstance().getMainWindow().getHeight();
 			
 			if(rect.contains(adjustedX, adjustedY)) {
 				if(!wasMouseClicked && Mouse.isButtonDown(0)) {
@@ -115,7 +115,7 @@ public class LevelsGui extends Screen{
 				fr.drawString("Xp Remaining: " + (EntityLevels.getExpForLevel(level.getLevel() + 1) - level.getXp()), descBaseX, descBaseY + 2 * gap, 0x000000);
 				
 				
-				GlStateManager.color3f(1, 1, 1);
+				GlStateManager.color4f(1, 1, 1, 1);
 			}
 			
 			count++;

@@ -1,10 +1,14 @@
 package skeeter144.toc.client.entity.model;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.renderer.entity.model.EntityModel;
 import skeeter144.toc.client.entity.renderer.AdvancedModelRenderer;
 import skeeter144.toc.entity.mob.mount.flying.EntityGriffin;
 
 
-public class ModelGriffin extends AdvancedModelBase<EntityGriffin> {
+public class ModelGriffin extends EntityModel<EntityGriffin>
+{
     public AdvancedModelRenderer body;
     public AdvancedModelRenderer l_wing;
     public AdvancedModelRenderer r_wing;
@@ -259,14 +263,21 @@ public class ModelGriffin extends AdvancedModelBase<EntityGriffin> {
         this.bl_shin.addChild(this.bl_hoof);
         this.fl_shoulder.addChild(this.fl_shin);
         this.fr_main_shin_1.addChild(this.fr_claw_2_1);
-        this.updateDefaultPose();
+      //  this.updateDefaultPose();
     }
+
+    @Override
+    public void setRotationAngles(EntityGriffin entityGriffin, float v, float v1, float v2, float v3, float v4)
+    {
+
+    }
+/*
 
     @Override
     public void setRotationAngles(EntityGriffin entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
     		float headPitch, float scaleFactor) {
     	//init();
-    	resetToDefaultPose();
+    //	resetToDefaultPose();
 
     	boolean isFlying = true;//((EntityPegasus)entityIn).getIsFlying();
     	
@@ -341,6 +352,7 @@ public class ModelGriffin extends AdvancedModelBase<EntityGriffin> {
     public void render(EntityGriffin entity, float f, float f1, float f2, float f3, float f4, float f5) { 
         this.body.render(f5);
     }
+*/
 
     /**
      * This is a helper function from Tabula to set the rotation of model parts
@@ -349,5 +361,11 @@ public class ModelGriffin extends AdvancedModelBase<EntityGriffin> {
         RendererModel.rotateAngleX = x;
         RendererModel.rotateAngleY = y;
         RendererModel.rotateAngleZ = z;
+    }
+
+    @Override
+    public void render(MatrixStack matrixStack, IVertexBuilder iVertexBuilder, int i, int i1, float v, float v1, float v2, float v3)
+    {
+
     }
 }

@@ -103,49 +103,49 @@ public class ClientProxy extends CommonProxy
 		EntityRendererManager rm = Minecraft.getInstance().getRenderManager();
 		
 		
-		rm.renderers.put(EntityRobertCromwell.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
-		rm.renderers.put(EntityUlricWeston.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
-		rm.renderers.put(EntityEvaTeffan.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
-		rm.renderers.put(EntityKelvinWhitestone.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
-		rm.renderers.put(EntityMarlinMonroe.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
-		rm.renderers.put(EntitySeloviusKamazz.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
-		
-		rm.renderers.put(EntityBanker.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
-		
-		rm.renderers.put(EntityHumanShopKeeper.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
-		
-		rm.renderers.put(EntityViking.class, new RenderViking<EntityViking, ModelViking>(rm, new ModelViking(), .5f));
-		rm.renderers.put(EntityGhost.class, new RenderCustomLiving<EntityGhost, ModelGhost>(rm, new ModelGhost(), .5f, new ResourceLocation(Reference.MODID, "textures/entity/ghost.png")));
-		rm.renderers.put(EntityGiantSpider.class, new RenderCustomLiving<EntityGiantSpider, ModelGiantSpider>(rm, new ModelGiantSpider(), .5f, new ResourceLocation(Reference.MODID, "textures/entity/giant_spider.png")));
-		rm.renderers.put(EntityRat.class, new RenderCustomLiving<EntityRat, ModelRat>(rm, new ModelRat(), .25f, new ResourceLocation(Reference.MODID, "textures/entity/rat.png")));
-		//rm.renderers.put(EntityGoblin.class, new RenderGoblin<EntityGoblin, ModelGoblin>(rm, new ModelGoblin(), .5f,  new ResourceLocation(Reference.MODID, "textures/entity/goblin.png")));
-		rm.renderers.put(EntityGiantScorpian.class, new RenderCustomLiving<EntityGiantScorpian, ModelGiantScorpian>(rm, new ModelGiantScorpian(), .5f,  new ResourceLocation(Reference.MODID, "textures/entity/giant_scorpian.png")));
-		rm.renderers.put(EntitySiren.class, new RenderCustomLiving<EntitySiren, ModelSiren>(rm, new ModelSiren(), .5f, new ResourceLocation(Reference.MODID, "textures/entity/siren.png")));
+//		rm.renderers.put(EntityRobertCromwell.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
+//		rm.renderers.put(EntityUlricWeston.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
+//		rm.renderers.put(EntityEvaTeffan.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
+//		rm.renderers.put(EntityKelvinWhitestone.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
+//		rm.renderers.put(EntityMarlinMonroe.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
+//		rm.renderers.put(EntitySeloviusKamazz.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
+//		
+//		rm.renderers.put(EntityBanker.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
+//		
+//		rm.renderers.put(EntityHumanShopKeeper.class, new RenderHumanNpc(rm, new ModelHumanNpc(), .5f));
+//		
+//		rm.renderers.put(EntityViking.class, new RenderViking<EntityViking, ModelViking>(rm, new ModelViking(), .5f));
+//		rm.renderers.put(EntityGhost.class, new RenderCustomLiving<EntityGhost, ModelGhost>(rm, new ModelGhost(), .5f, new ResourceLocation(Reference.MODID, "textures/entity/ghost.png")));
+//		rm.renderers.put(EntityGiantSpider.class, new RenderCustomLiving<EntityGiantSpider, ModelGiantSpider>(rm, new ModelGiantSpider(), .5f, new ResourceLocation(Reference.MODID, "textures/entity/giant_spider.png")));
+//		rm.renderers.put(EntityRat.class, new RenderCustomLiving<EntityRat, ModelRat>(rm, new ModelRat(), .25f, new ResourceLocation(Reference.MODID, "textures/entity/rat.png")));
+//		//rm.renderers.put(EntityGoblin.class, new RenderGoblin<EntityGoblin, ModelGoblin>(rm, new ModelGoblin(), .5f,  new ResourceLocation(Reference.MODID, "textures/entity/goblin.png")));
+//		rm.renderers.put(EntityGiantScorpian.class, new RenderCustomLiving<EntityGiantScorpian, ModelGiantScorpian>(rm, new ModelGiantScorpian(), .5f,  new ResourceLocation(Reference.MODID, "textures/entity/giant_scorpian.png")));
+//		rm.renderers.put(EntitySiren.class, new RenderCustomLiving<EntitySiren, ModelSiren>(rm, new ModelSiren(), .5f, new ResourceLocation(Reference.MODID, "textures/entity/siren.png")));
 
 		//rm.renderers.put(EntityMuleMount.class, new RenderCustomAbstractHorse<EntityMuleMount, HorseModel>(rm, new HorseModel<EntityMuleMount>(1), 0.92F, 0));
 		//rm.renderers.put(EntityDonkeyMount.class, new RenderCustomAbstractHorse(rm, 0.87F));
 		//rm.renderers.put(EntityVariableHorseMount.class, new RenderCustomAbstractHorse(rm, 1F));
-		rm.renderers.put(EntityPegasus.class, new RenderPegasus<EntityPegasus, ModelPegasus>(rm, new ModelPegasus(), 1F));
-		rm.renderers.put(EntityGriffin.class, new RenderGriffin<EntityGriffin, ModelGriffin>(rm, new ModelGriffin(), 1F));
-		
-		rm.renderers.put(EntityGoblin.class, new RenderGoblin(rm));
+//		rm.renderers.put(EntityPegasus.class, new RenderPegasus<EntityPegasus, ModelPegasus>(rm, new ModelPegasus(), 1F));
+//		rm.renderers.put(EntityGriffin.class, new RenderGriffin<EntityGriffin, ModelGriffin>(rm, new ModelGriffin(), 1F));
+//		
+//		rm.renderers.put(EntityGoblin.class, new RenderGoblin(rm));
 		
 	}	
 
 	
 	@SuppressWarnings({ "unchecked", "rawtypes", "unused" })
 	private void createNewRender(Class<? extends Entity> c, Class<? extends LivingRenderer> renderClass, Model model, float shadowSize) {
-		RenderingRegistry.registerEntityRenderingHandler(c, new IRenderFactory() {
-			public LivingRenderer createRenderFor(EntityRendererManager manager) {
-				try {
-					Constructor c = renderClass.getConstructor(EntityRendererManager.class, Model.class, float.class);
-					return (LivingRenderer)c.newInstance(manager, model, shadowSize);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return null;
-			}
-		});
+//		RenderingRegistry.registerEntityRenderingHandler(c, new IRenderFactory() {
+//			public LivingRenderer createRenderFor(EntityRendererManager manager) {
+//				try {
+//					Constructor c = renderClass.getConstructor(EntityRendererManager.class, Model.class, float.class);
+//					return (LivingRenderer)c.newInstance(manager, model, shadowSize);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//				return null;
+//			}
+//		});
 	}
 	
 	
@@ -180,7 +180,7 @@ public class ClientProxy extends CommonProxy
 		double motionX = world.rand.nextGaussian() * 100;
 		double motionY = 0.5f;
 		double motionZ = world.rand.nextGaussian() * 100;
-		Particle damageIndicator = new DamageParticle(damage + "", world, entity.posX, entity.posY + entity.getHeight(), entity.posZ, motionX, motionY,
+		Particle damageIndicator = new DamageParticle(damage + "", world, entity.getPosX(), entity.getPosY() + entity.getHeight(), entity.getPosZ(), motionX, motionY,
 				motionZ);
 		Minecraft.getInstance().particles.addEffect(damageIndicator);
 	}
@@ -190,7 +190,7 @@ public class ClientProxy extends CommonProxy
 		double motionX = world.rand.nextGaussian() * 100;
 		double motionY = 0.5f;
 		double motionZ = world.rand.nextGaussian() * 100;
-		Particle damageIndicator = new DamageParticle(str, world, entity.posX, entity.posY + entity.getHeight(), entity.posZ, motionX, motionY,
+		Particle damageIndicator = new DamageParticle(str, world, entity.getPosX(), entity.getPosY() + entity.getHeight(), entity.getPosZ(), motionX, motionY,
 				motionZ);
 		Minecraft.getInstance().particles.addEffect(damageIndicator);
 	}

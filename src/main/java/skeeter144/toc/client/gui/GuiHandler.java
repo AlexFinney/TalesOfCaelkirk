@@ -5,23 +5,21 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.IGuiHandler;
 import skeeter144.toc.entity.tile.TileEntityMobSpawner;
 
-public class GuiHandler implements IGuiHandler {
+public class GuiHandler /*implements IGuiHandler*/ {
 	
 	static GuiHandler instance;
 	public static GuiHandler Instance() {
 		if(instance == null) instance = new GuiHandler();
+
 		return instance;
 	}
 	
-	@Override
 	public Object getServerGuiElement(int ID, PlayerEntity player, World world, int x, int y, int z) {
 		return null;
 	}
 
-	@Override
 	public Object getClientGuiElement(int ID, PlayerEntity player, World world, int x, int y, int z) {
 		if(ID == Guis.SPELL_BOOK_GUI) 
 			return new SpellBookGUI(new StringTextComponent("Spellbook"));

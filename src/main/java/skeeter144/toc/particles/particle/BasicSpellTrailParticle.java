@@ -2,6 +2,7 @@ package skeeter144.toc.particles.particle;
 
 import java.awt.Color;
 
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.ActiveRenderInfo;
@@ -40,9 +41,9 @@ public class BasicSpellTrailParticle extends Particle{
 	}
 
 	@Override
-	public void renderParticle(BufferBuilder buffer, ActiveRenderInfo entityIn, float partialTicks, float rotationX,
-			float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
-		
+	public void renderParticle(IVertexBuilder iVertexBuilder, ActiveRenderInfo activeRenderInfo, float v)
+	{
+
 	}
 
 	@Override

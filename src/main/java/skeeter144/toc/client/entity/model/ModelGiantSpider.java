@@ -3,6 +3,9 @@ package skeeter144.toc.client.entity.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.entity.Entity;
 import skeeter144.toc.client.entity.animation.Animation;
 import skeeter144.toc.client.entity.renderer.AdvancedModelRenderer;
@@ -12,7 +15,8 @@ import skeeter144.toc.entity.mob.monster.EntityGiantSpider;
  * GiantSpider - Undefined
  * Created using Tabula 5.1.0
  */
-public class ModelGiantSpider extends AdvancedModelBase<EntityGiantSpider> {
+public class ModelGiantSpider extends EntityModel<EntityGiantSpider>
+{
     public AdvancedModelRenderer body;
     public AdvancedModelRenderer head;
     public AdvancedModelRenderer butt;
@@ -295,8 +299,14 @@ public class ModelGiantSpider extends AdvancedModelBase<EntityGiantSpider> {
         this.left_fang_2.addChild(this.left_fang_3);
         this.butt.addChild(this.butt_1);
         this.right_middle_1_leg_3.addChild(this.right_middle_1_leg_4);
-        updateDefaultPose();
+       // updateDefaultPose();
         setAnimations();
+    }
+
+    @Override
+    public void setRotationAngles(EntityGiantSpider entityGiantSpider, float v, float v1, float v2, float v3, float v4)
+    {
+
     }
 
     Animation currentAnim = null;
@@ -305,6 +315,7 @@ public class ModelGiantSpider extends AdvancedModelBase<EntityGiantSpider> {
     
     }
     
+/*
     @Override
     public void setRotationAngles(EntityGiantSpider entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
     		float headPitch, float scaleFactor) {
@@ -354,7 +365,8 @@ public class ModelGiantSpider extends AdvancedModelBase<EntityGiantSpider> {
         
         swing(left_fang_3, speed / 2f, degree / 2f, false, -2.7f, 0, f, f1);
         swing(right_fang_3, speed / 2f, degree / 2f, false, -2.7f, 0, f, f1);
-        /*  
+        */
+/*
         flap(left_back_leg_1, speed / 2, legHeight / 4, false, -2f, 0, f, f1);
         
         swing(left_middle_leg_1, speed / 2, degree / 2, false, -2f, 0, f, f1);
@@ -362,19 +374,29 @@ public class ModelGiantSpider extends AdvancedModelBase<EntityGiantSpider> {
         
         swing(left_front_leg_1, speed / 2, degree / 2, false, -1, 0, f, f1);
         flap(left_front_leg_1, speed / 2, legHeight / 4, false, -3f, 0, f, f1);
-        */
+        *//*
+
         
     
     }
-    
+*/
+/*
+
     @Override
     public void render(EntityGiantSpider entity, float f, float f1, float f2, float f3, float f4, float f5) { 
         this.body.render(f5);
     }
+*/
 
     public void setRotateAngle(AdvancedModelRenderer RendererModel, float x, float y, float z) {
         RendererModel.rotateAngleX = x;
         RendererModel.rotateAngleY = y;
         RendererModel.rotateAngleZ = z;
+    }
+
+    @Override
+    public void render(MatrixStack matrixStack, IVertexBuilder iVertexBuilder, int i, int i1, float v, float v1, float v2, float v3)
+    {
+
     }
 }

@@ -93,7 +93,7 @@ public class EntityGhost extends CustomMob{
 	protected void registerGoals() {
 		super.registerGoals();
 		this.navigator = new FlyingPathNavigator(this, world);
-		this.moveController = new FlyingMovementController(this);
+		//this.moveController = new FlyingMovementController(this);
 		
 		this.goalSelector.addGoal(1, new AIRandomFly(this));
 		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
@@ -137,8 +137,8 @@ public class EntityGhost extends CustomMob{
 			float f = 0.91F;
 
 			if (this.onGround) {
-				BlockPos underPos = new BlockPos(MathHelper.floor(this.posX),
-						MathHelper.floor(this.getBoundingBox().minY) - 1, MathHelper.floor(this.posZ));
+				BlockPos underPos = new BlockPos(MathHelper.floor(this.getPosX()),
+						MathHelper.floor(this.getBoundingBox().minY) - 1, MathHelper.floor(this.getPosZ()));
 				BlockState underState = this.world.getBlockState(underPos);
 				f = underState.getBlock().getSlipperiness(underState, this.world, underPos, this) * 0.91F;
 			}
@@ -148,8 +148,8 @@ public class EntityGhost extends CustomMob{
 			f = 0.91F;
 
 			if (this.onGround) {
-				BlockPos underPos = new BlockPos(MathHelper.floor(this.posX),
-						MathHelper.floor(this.getBoundingBox().minY) - 1, MathHelper.floor(this.posZ));
+				BlockPos underPos = new BlockPos(MathHelper.floor(this.getPosX()),
+						MathHelper.floor(this.getBoundingBox().minY) - 1, MathHelper.floor(this.getPosZ()));
 				BlockState underState = this.world.getBlockState(underPos);
 				f = underState.getBlock().getSlipperiness(underState, this.world, underPos, this) * 0.91F;
 			}
@@ -159,8 +159,8 @@ public class EntityGhost extends CustomMob{
 		}
 
 		this.prevLimbSwingAmount = this.limbSwingAmount;
-		double d1 = this.posX - this.prevPosX;
-		double d0 = this.posZ - this.prevPosZ;
+		double d1 = this.getPosX() - this.prevPosX;
+		double d0 = this.getPosZ() - this.prevPosZ;
 		float f2 = MathHelper.sqrt(d1 * d1 + d0 * d0) * 4.0F;
 
 		if (f2 > 1.0F) {
@@ -185,9 +185,9 @@ public class EntityGhost extends CustomMob{
 			if (!entitymovehelper.isUpdating()) {
 				return true;
 			} else {
-				double d0 = entitymovehelper.getX() - this.parentEntity.posX;
-				double d1 = entitymovehelper.getY() - this.parentEntity.posY;
-				double d2 = entitymovehelper.getZ() - this.parentEntity.posZ;
+				double d0 = entitymovehelper.getX() - this.parentEntity.getPosX();
+				double d1 = entitymovehelper.getY() - this.parentEntity.getPosY();
+				double d2 = entitymovehelper.getZ() - this.parentEntity.getPosZ();
 				double d3 = d0 * d0 + d1 * d1 + d2 * d2;
 				return d3 < 1.0D || d3 > 3600.0D;
 			}
@@ -199,18 +199,17 @@ public class EntityGhost extends CustomMob{
 
 		public void startExecuting() {
 			Random random = this.parentEntity.getRNG();
-			double d0 = this.parentEntity.posX
+			double d0 = this.parentEntity.getPosX()
 					+ (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
-			double d1 = this.parentEntity.posY
+			double d1 = this.parentEntity.getPosY()
 					+ (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
-			double d2 = this.parentEntity.posZ
+			double d2 = this.parentEntity.getPosZ()
 					+ (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
 			this.parentEntity.getMoveHelper().setMoveTo(d0, d1, d2, 1.0D);
 		}
 	}
 
 	public static class AIGhostDiveAttack extends Goal {
-		
 		EntityGhost ghost;
 		BlockPos raisePos;
 		DiveStage currentStage = DiveStage.IDLE;
@@ -234,9 +233,9 @@ public class EntityGhost extends CustomMob{
 			int max = 25;
 			int highest = 0;
 			for(int i = 0; i < max; ++i) {
-				BlockPos pos = new BlockPos(ghost.posX, ghost.posY + i, ghost.posZ);
+				BlockPos pos = new BlockPos(ghost.getPosX(), ghost.getPosY() + i, ghost.getPosZ());
 				if(!ghost.world.getBlockState(pos).isAir(ghost.world, pos)) {
-					highest = (int)ghost.posY + i;
+					highest = (int)ghost.getPosY() + i;
 				}
 			}
 			
@@ -279,8 +278,8 @@ public class EntityGhost extends CustomMob{
 				
 				moveVec = moveVec.scale(.5);
 				
-				double dx = ghost.posX - ghost.getAttackTarget().posX;
-				double dz = ghost.posZ - ghost.getAttackTarget().posZ;
+				double dx = ghost.getPosX() - ghost.getAttackTarget().getPosX();
+				double dz = ghost.getPosZ() - ghost.getAttackTarget().getPosZ();
 				
 				
 				float f9 = (float)(MathHelper.atan2(dz, dx) * (180D / Math.PI)) + 90.0F;
@@ -288,7 +287,7 @@ public class EntityGhost extends CustomMob{
 				
 				ghost.getMotion().scale(-moveVec.x);
 				
-				double dy = ghost.getAttackTarget().posY - ghost.posX;
+				double dy = ghost.getAttackTarget().getPosY() - ghost.getPosX();
             	
             	double dist = ghost.getAttackTarget().getPositionVector().distanceTo(ghost.getPositionVector());
             	ghost.rotationPitch = (float)Math.asin(dy / dist);

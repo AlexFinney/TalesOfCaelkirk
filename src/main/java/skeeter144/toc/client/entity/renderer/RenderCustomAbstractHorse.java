@@ -3,6 +3,7 @@ package skeeter144.toc.client.entity.renderer;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -33,16 +34,16 @@ public class RenderCustomAbstractHorse<T extends AbstractHorseEntity, M extends 
      * Allows the render to do state modifications necessary before the model is rendered.
      */
     @SuppressWarnings("unchecked")
-	protected void preRenderCallback(AbstractHorseEntity entitylivingbaseIn, float partialTickTime)
+	protected void preRenderCallback(AbstractHorseEntity entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime)
     {
         GlStateManager.scalef(this.scale, this.scale, this.scale);
-        super.preRenderCallback((T) entitylivingbaseIn, partialTickTime);
+        super.preRenderCallback((T) entitylivingbaseIn, matrixStackIn, partialTickTime);
     }
 
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(AbstractHorseEntity entity)
+    public ResourceLocation getEntityTexture(AbstractHorseEntity entity)
     {
     	if(entity instanceof EntityVariableHorseMount) {
     		return HORSE_MAP.get( ((EntityVariableHorseMount)entity).getHorseVariant()  );

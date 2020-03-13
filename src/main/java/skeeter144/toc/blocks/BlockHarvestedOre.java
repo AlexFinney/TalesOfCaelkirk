@@ -3,7 +3,6 @@ package skeeter144.toc.blocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.world.IBlockReader;
 import skeeter144.toc.entity.tile.BlockTileEntity;
 import skeeter144.toc.entity.tile.TileEntityHarvestedOre;
@@ -30,8 +29,4 @@ public class BlockHarvestedOre extends BlockTileEntity<TileEntityHarvestedOre>{
 		return true;
 	}
 
-	@Override
-	public BlockRenderLayer getRenderLayer() {
-		return BlockRenderLayer.CUTOUT;
-	}
 }

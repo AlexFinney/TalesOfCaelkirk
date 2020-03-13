@@ -81,7 +81,8 @@ public class ClientForgeEventSubscriber
 	@SubscribeEvent
 	public static void asd(final EntityJoinWorldEvent e) {
 		if(e.getEntity() instanceof ClientPlayerEntity) {
-			Minecraft.getInstance().ingameGUI = new HUD(Minecraft.getInstance());
+			//TODO: ingame gui
+			//Minecraft.getInstance().ingameGUI = new HUD(Minecraft.getInstance());
 		}
 	}
 	
@@ -138,7 +139,7 @@ public class ClientForgeEventSubscriber
 
 		//TODO: Update the rest of the renderers to the new cleaner way
 		EntityRendererManager rm = Minecraft.getInstance().getRenderManager();
-		rm.register(EntityGoblin.class, new RenderGoblin(rm));
+//		rm.register(EntityGoblin.class, new RenderGoblin(rm));
 		//		createNewRender(EntityMuleMount.class, RenderCustomAbstractHorse.class, new ModelHor(), .5f);
 //		createNewRender(EntityDonkeyMount.class, RenderCustomAbstractHorse.class, new ModelViking(), .5f);
 //		createNewRender(EntityVariableHorseMount.class, RenderCustomAbstractHorse.class, new ModelViking(), .5f);
@@ -161,17 +162,17 @@ public class ClientForgeEventSubscriber
 	
 	@SuppressWarnings({ "unchecked", "rawtypes", "unused" })
 	private static void createNewRender(Class<? extends Entity> c, Class<? extends LivingRenderer> class1, Model model, float shadowSize) {
-		RenderingRegistry.registerEntityRenderingHandler(c, new IRenderFactory() {
-			public EntityRenderer<Entity> createRenderFor(EntityRendererManager manager) {
-				try {
-					Constructor cons = class1.getConstructor(EntityRendererManager.class, EntityModel.class, float.class);
-					return (EntityRenderer<Entity>)cons.newInstance(manager, model, shadowSize);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return null;
-			}
-		});
+//		RenderingRegistry.registerEntityRenderingHandler(c, new IRenderFactory() {
+//			public EntityRenderer<Entity> createRenderFor(EntityRendererManager manager) {
+//				try {
+//					Constructor cons = class1.getConstructor(EntityRendererManager.class, EntityModel.class, float.class);
+//					return (EntityRenderer<Entity>)cons.newInstance(manager, model, shadowSize);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//				return null;
+//			}
+//		});
 	}
 	
 	
@@ -197,7 +198,7 @@ public class ClientForgeEventSubscriber
 		double motionX = world.rand.nextGaussian() * 100;
 		double motionY = 0.5f;
 		double motionZ = world.rand.nextGaussian() * 100;
-		Particle damageIndicator = new DamageParticle(damage + "", world, entity.posX, entity.posY + entity.getHeight(), entity.posZ, motionX, motionY,
+		Particle damageIndicator = new DamageParticle(damage + "", world, entity.getPosX(), entity.getPosY() + entity.getHeight(), entity.getPosZ(), motionX, motionY,
 				motionZ);
 		Minecraft.getInstance().particles.addEffect(damageIndicator);
 	}
@@ -207,7 +208,7 @@ public class ClientForgeEventSubscriber
 		double motionX = world.rand.nextGaussian() * 100;
 		double motionY = 0.5f;
 		double motionZ = world.rand.nextGaussian() * 100;
-		Particle damageIndicator = new DamageParticle(str, world, entity.posX, entity.posY + entity.getHeight(), entity.posZ, motionX, motionY, motionZ);
+		Particle damageIndicator = new DamageParticle(str, world, entity.getPosX(), entity.getPosY() + entity.getHeight(), entity.getPosZ(), motionX, motionY, motionZ);
 		Minecraft.getInstance().particles.addEffect(damageIndicator);
 	}
 

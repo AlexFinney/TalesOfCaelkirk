@@ -2,6 +2,7 @@ package skeeter144.toc.blocks;
 
 import java.util.ArrayList;
 
+import net.minecraft.util.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,15 +17,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -60,7 +55,7 @@ public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
 	}
 
 	@Override
-	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		boolean isServer = !worldIn.isRemote;
 
 		if (ingots.contains(player.getHeldItem(hand).getItem())) {
@@ -69,7 +64,7 @@ public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
 				if (anvil.anvilOwner != null) {
 					if (!anvil.anvilOwner.equals(player.getUniqueID())) {
 						player.sendMessage(new StringTextComponent("Someone else is using that anvil! Find an empty one"));
-						return false;
+						return ActionResultType.FAIL;
 					}
 				}
 			}
@@ -100,12 +95,7 @@ public class BlockAnvil extends BlockTileEntity<TileEntityAnvil> {
 				}
 			}
 		}
-		return true;
-	}
-
-	@Override
-	public BlockRenderLayer getRenderLayer() {
-		return BlockRenderLayer.CUTOUT;
+		return ActionResultType.SUCCESS;
 	}
 
 	@Override

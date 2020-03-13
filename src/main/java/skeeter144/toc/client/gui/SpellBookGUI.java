@@ -60,7 +60,7 @@ public class SpellBookGUI extends Screen {
 		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 		TextureManager tm = Minecraft.getInstance().getTextureManager();
-		MainWindow sr = Minecraft.getInstance().mainWindow;
+		MainWindow sr = Minecraft.getInstance().getMainWindow();
 		FontRenderer fr = Minecraft.getInstance().fontRenderer;
 		if(sr == null) return;
 		
@@ -196,7 +196,7 @@ public class SpellBookGUI extends Screen {
 		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 		TextureManager tm = Minecraft.getInstance().getTextureManager();
-		MainWindow sr = Minecraft.getInstance().mainWindow;
+		MainWindow sr = Minecraft.getInstance().getMainWindow();
 
 		tm.bindTexture(spellBookImage);
 

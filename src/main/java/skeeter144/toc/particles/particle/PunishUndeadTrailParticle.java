@@ -1,5 +1,6 @@
 package skeeter144.toc.particles.particle;
 
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.ActiveRenderInfo;
@@ -35,7 +36,13 @@ public class PunishUndeadTrailParticle extends Particle{
 	    	 this.setExpired();
 	     }
 	}
-	
+
+	@Override
+	public void renderParticle(IVertexBuilder iVertexBuilder, ActiveRenderInfo activeRenderInfo, float v)
+	{
+
+	}
+
 	public void updatePos(float dist) {
 		 this.prevPosX = posX;
 		 this.prevPosY = posY;
@@ -44,12 +51,6 @@ public class PunishUndeadTrailParticle extends Particle{
 		 this.posX = posX + forward.x * dist;
 	     this.posY = posY + forward.y * dist;
 	     this.posZ = posZ + forward.z * dist;
-	}
-
-	@Override
-	public void renderParticle(BufferBuilder buffer, ActiveRenderInfo entityIn, float partialTicks, float rotationX,
-			float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
-		
 	}
 
 	@Override

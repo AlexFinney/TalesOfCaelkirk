@@ -15,7 +15,7 @@ public class RenderGriffin<T extends LivingEntity, M extends EntityModel<T>> ext
 	}
 
 	@Override
-	protected ResourceLocation getEntityTexture(T entity) {
+	public ResourceLocation getEntityTexture(T entity) {
 		return texture;
 	}
 

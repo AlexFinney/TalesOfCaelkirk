@@ -1,9 +1,13 @@
 package skeeter144.toc.client.entity.model;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.renderer.entity.model.EntityModel;
 import skeeter144.toc.client.entity.renderer.AdvancedModelRenderer;
 import skeeter144.toc.entity.mob.mount.flying.EntityPegasus;
 
-public class ModelPegasus extends AdvancedModelBase<EntityPegasus> {
+public class ModelPegasus extends EntityModel<EntityPegasus>
+{
     public AdvancedModelRenderer body;
     public AdvancedModelRenderer l_wing;
     public AdvancedModelRenderer r_wing;
@@ -54,6 +58,12 @@ public class ModelPegasus extends AdvancedModelBase<EntityPegasus> {
         this.textureWidth = 128;
         this.textureHeight = 128;
         init();
+    }
+
+    @Override
+    public void setRotationAngles(EntityPegasus entityPegasus, float v, float v1, float v2, float v3, float v4)
+    {
+
     }
 
     private void init() {
@@ -249,15 +259,16 @@ public class ModelPegasus extends AdvancedModelBase<EntityPegasus> {
           this.fr_shin.addChild(this.fr_hoof);
           this.head.addChild(this.left_ear);
           this.body.addChild(this.bl_shoulder);
-          this.updateDefaultPose();
+   //       this.updateDefaultPose();
     }
     
-    
+/*
+
     @Override
     public void setRotationAngles(EntityPegasus entityIn,float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
     		float headPitch, float scaleFactor) {
     	//init();
-    	resetToDefaultPose();
+    //	resetToDefaultPose();
 
     	boolean isFlying = ((EntityPegasus)entityIn).getIsFlying();
     	
@@ -329,6 +340,7 @@ public class ModelPegasus extends AdvancedModelBase<EntityPegasus> {
     public void render(EntityPegasus entity, float f, float f1, float f2, float f3, float f4, float f5) { 
         this.body.render(f5);
     }
+*/
 
     /**
      * This is a helper function from Tabula to set the rotation of model parts
@@ -337,5 +349,11 @@ public class ModelPegasus extends AdvancedModelBase<EntityPegasus> {
         RendererModel.rotateAngleX = x;
         RendererModel.rotateAngleY = y;
         RendererModel.rotateAngleZ = z;
+    }
+
+    @Override
+    public void render(MatrixStack matrixStack, IVertexBuilder iVertexBuilder, int i, int i1, float v, float v1, float v2, float v3)
+    {
+
     }
 }

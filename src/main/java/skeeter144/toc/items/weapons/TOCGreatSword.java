@@ -70,8 +70,8 @@ public class TOCGreatSword extends SwordItem implements ISpecialAttackWeapon{
 		
 		if(!attacker.world.isRemote) {
 			List<Entity> entities = attacker.world.getEntitiesWithinAABBExcludingEntity(attacker, 
-												new AxisAlignedBB(attacker.posX- 5, attacker.posY - 5, attacker.posZ - 5, 
-																  attacker.posX + 5, attacker.posY + 5, attacker.posZ + 5));
+												new AxisAlignedBB(attacker.getPosX()- 5, attacker.getPosY() - 5, attacker.getPosZ() - 5, 
+																  attacker.getPosX() + 5, attacker.getPosY() + 5, attacker.getPosZ() + 5));
 			for(Entity e : entities) {
 				boolean hit = Util.isEntityWithinViewCone(e, attacker, -45, 45);
 				

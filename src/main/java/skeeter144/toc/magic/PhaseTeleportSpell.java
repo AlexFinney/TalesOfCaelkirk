@@ -23,13 +23,13 @@ public class PhaseTeleportSpell extends ShootableSpell {
 		if (hitPos.distanceTo(proj.getThrower().getPositionVector()) < 100) {
 			
 			for (int i = 0; i < 32; ++i) {
-				proj.world.addParticle(ParticleTypes.PORTAL, proj.getThrower().posX, proj.getThrower().posY + TOCMain.rand.nextDouble() * 2.0D,
-						 proj.getThrower().posZ, TOCMain.rand.nextGaussian(), 0.0D, TOCMain.rand.nextGaussian());
+				proj.world.addParticle(ParticleTypes.PORTAL, proj.getThrower().getPosX(), proj.getThrower().getPosY() + TOCMain.rand.nextDouble() * 2.0D,
+						 proj.getThrower().getPosZ(), TOCMain.rand.nextGaussian(), 0.0D, TOCMain.rand.nextGaussian());
 			}
 			if(res instanceof EntityRayTraceResult) {
 				EntityRayTraceResult resEnt = (EntityRayTraceResult)res;
 				if(resEnt.getEntity() != null && (resEnt.getEntity() instanceof LivingEntity || resEnt.getEntity() instanceof LivingEntity)) {
-					resEnt.getEntity().setPositionAndUpdate(proj.getThrower().posX, proj.getThrower().posY, proj.getThrower().posZ);
+					resEnt.getEntity().setPositionAndUpdate(proj.getThrower().getPosX(), proj.getThrower().getPosY(), proj.getThrower().getPosZ());
 					resEnt.getEntity().fallDistance = 0;
 				}
 			}
@@ -40,8 +40,8 @@ public class PhaseTeleportSpell extends ShootableSpell {
 			}
 			
 			for (int i = 0; i < 32; ++i) {
-				proj.world.addParticle(ParticleTypes.PORTAL, proj.getThrower().posX, proj.getThrower().posY + TOCMain.rand.nextDouble() * 2.0D,
-						 proj.getThrower().posZ, TOCMain.rand.nextGaussian(), 0.0D, TOCMain.rand.nextGaussian());
+				proj.world.addParticle(ParticleTypes.PORTAL, proj.getThrower().getPosX(), proj.getThrower().getPosY() + TOCMain.rand.nextDouble() * 2.0D,
+						 proj.getThrower().getPosZ(), TOCMain.rand.nextGaussian(), 0.0D, TOCMain.rand.nextGaussian());
 			}
 		} else {
 			proj.getThrower().sendMessage(new StringTextComponent("You can only Phase-Teleport within 100 blocks!"));

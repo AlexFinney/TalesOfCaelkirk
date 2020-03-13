@@ -71,7 +71,7 @@ public class EntityHandler {
 			Set<Region> foundRegions = new HashSet<Region>();
 			for (Map.Entry<String, Region> entry : TOCMain.rm.getRegions().entrySet()) {
 				for (RegionBound rb : entry.getValue().bounds) {
-					if (rb.containsPoint(new Point((int) e.posX, (int) e.posZ))) {
+					if (rb.containsPoint(new Point((int) e.getPosX(), (int) e.getPosZ()))) {
 						foundRegions.add(entry.getValue());
 						break;
 					}

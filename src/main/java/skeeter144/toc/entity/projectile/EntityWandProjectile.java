@@ -75,7 +75,7 @@ public class EntityWandProjectile extends Entity implements IProjectile{
 			{
 				if(trail != null) 
 				{
-					trail.updatePosition(world, posX, posY, posZ);
+					trail.updatePosition(world, getPosX(), getPosY(), getPosZ());
 					if(repeatedTrailSpawn)
 						trail.spawnParticles();
 					else {
@@ -85,7 +85,7 @@ public class EntityWandProjectile extends Entity implements IProjectile{
 							
 						}
 						if(trail instanceof PunishUndeadSystem) {
-							((PunishUndeadSystem)trail).updatePosition(new Vec3d(this.posX, this.posY, this.posZ));
+							((PunishUndeadSystem)trail).updatePosition(new Vec3d(this.getPosX(), this.getPosY(), this.getPosZ()));
 						}
 					}
 				}
@@ -95,23 +95,23 @@ public class EntityWandProjectile extends Entity implements IProjectile{
 	
 	void handleMovement()
 	{
-		 Vec3d vec3d = this.getMotion();
-	      RayTraceResult raytraceresult = ProjectileHelper.func_221267_a(this, this.getBoundingBox().expand(vec3d).grow(1.0D), (p_213879_1_) -> {
-	         return !p_213879_1_.isSpectator() && p_213879_1_ != this.thrower;
-	      }, RayTraceContext.BlockMode.OUTLINE, true);
-	      if (raytraceresult != null && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
-	         this.onHit(raytraceresult);
-	      }
-
-	      this.posX += vec3d.x;
-	      this.posY += vec3d.y;
-	      this.posZ += vec3d.z;
-	      float f = MathHelper.sqrt(func_213296_b(vec3d));
-	      this.rotationYaw = (float)(MathHelper.atan2(vec3d.x, vec3d.z) * (double)(180F / (float)Math.PI));
-
-	      for(this.rotationPitch = (float)(MathHelper.atan2(vec3d.y, (double)f) * (double)(180F / (float)Math.PI)); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
-	         ;
-	      }
+//		 Vec3d vec3d = this.getMotion();
+//	      RayTraceResult raytraceresult = ProjectileHelper.func_221267_a(this, this.getBoundingBox().expand(vec3d).grow(1.0D), (p_213879_1_) -> {
+//	         return !p_213879_1_.isSpectator() && p_213879_1_ != this.thrower;
+//	      }, RayTraceContext.BlockMode.OUTLINE, true);
+//	      if (raytraceresult != null && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
+//	         this.onHit(raytraceresult);
+//	      }
+//
+//	      this.getPosX() += vec3d.x;
+//	      this.getPosY() += vec3d.y;
+//	      this.getPosZ() += vec3d.z;
+//	      float f = MathHelper.sqrt(func_213296_b(vec3d));
+//	      this.rotationYaw = (float)(MathHelper.atan2(vec3d.x, vec3d.z) * (double)(180F / (float)Math.PI));
+//
+//	      for(this.rotationPitch = (float)(MathHelper.atan2(vec3d.y, (double)f) * (double)(180F / (float)Math.PI)); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
+//	         ;
+//	      }
 
 	      while(this.rotationPitch - this.prevRotationPitch >= 180.0F) {
 	         this.prevRotationPitch += 360.0F;
@@ -134,12 +134,12 @@ public class EntityWandProjectile extends Entity implements IProjectile{
 	      } else if (this.isInWaterOrBubbleColumn()) {
 	         this.remove();
 	      } else {
-	         this.setMotion(vec3d.scale((double)0.99F));
+//	         this.setMotion(vec3d.scale((double)0.99F));
 	         if (!this.hasNoGravity()) {
 	            this.setMotion(this.getMotion().add(0.0D, (double)-0.06F, 0.0D));
 	         }
 
-	         this.setPosition(this.posX, this.posY, this.posZ);
+	         this.setPosition(this.getPosX(), this.getPosY(), this.getPosZ());
 	      }
 	}
 	
@@ -186,9 +186,9 @@ public class EntityWandProjectile extends Entity implements IProjectile{
 						this.rand.nextGaussian() * (double) 0.0075F * (double) inaccuracy)
 				.scale((double) velocity);
 		this.setMotion(vec3d);
-		float f = MathHelper.sqrt(func_213296_b(vec3d));
-		this.rotationYaw = (float) (MathHelper.atan2(vec3d.x, z) * (double) (180F / (float) Math.PI));
-		this.rotationPitch = (float) (MathHelper.atan2(vec3d.y, (double) f) * (double) (180F / (float) Math.PI));
+//		float f = MathHelper.sqrt(func_213296_b(vec3d));
+//		this.rotationYaw = (float) (MathHelper.atan2(vec3d.x, z) * (double) (180F / (float) Math.PI));
+//		this.rotationPitch = (float) (MathHelper.atan2(vec3d.y, (double) f) * (double) (180F / (float) Math.PI));
 		this.prevRotationYaw = this.rotationYaw;
 		this.prevRotationPitch = this.rotationPitch;
 	}

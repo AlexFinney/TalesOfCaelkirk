@@ -3,8 +3,8 @@ package skeeter144.toc.client.entity.animation;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.client.renderer.entity.model.RendererModel;
 import net.minecraft.client.renderer.model.Model;
+import net.minecraft.client.renderer.model.ModelRenderer;
 import skeeter144.toc.entity.mob.CustomMob;
 import skeeter144.toc.event.AnimationEvent;
 
@@ -71,26 +71,27 @@ public class Animation {
 			ratio = (currentTick - lastFrame.whenOccurs) / ( targetFrame.whenOccurs - lastFrame.whenOccurs);
 		}
 		
-		for(PartOrientation po : targetFrame.getPartOrientations()) {
-			if(lastFrame == null) {
-				po.part.rotationPointX = po.x;
-				po.part.rotationPointY = po.y;
-				po.part.rotationPointZ = po.z;
-				po.part.rotateAngleX = po.rotX;
-				po.part.rotateAngleY = po.rotY;
-				po.part.rotateAngleZ = po.rotZ;
-			}else {
-				if(lastFrame.getPartOrientation(po.partName) != null) {
-					po.part.rotationPointX = lastFrame.getPartOrientation(po.partName).x + (targetFrame.getPartOrientation(po.partName).x - lastFrame.getPartOrientation(po.partName).x) * ratio;
-					po.part.rotationPointY = lastFrame.getPartOrientation(po.partName).y + (targetFrame.getPartOrientation(po.partName).y - lastFrame.getPartOrientation(po.partName).y) * ratio;
-					po.part.rotationPointZ = lastFrame.getPartOrientation(po.partName).z + (targetFrame.getPartOrientation(po.partName).z - lastFrame.getPartOrientation(po.partName).z) * ratio;
-					
-					po.part.rotateAngleX = lastFrame.getPartOrientation(po.partName).rotX + (targetFrame.getPartOrientation(po.partName).rotX - lastFrame.getPartOrientation(po.partName).rotX) * ratio;
-					po.part.rotateAngleY = lastFrame.getPartOrientation(po.partName).rotY + (targetFrame.getPartOrientation(po.partName).rotY - lastFrame.getPartOrientation(po.partName).rotY) * ratio;
-					po.part.rotateAngleZ = lastFrame.getPartOrientation(po.partName).rotZ + (targetFrame.getPartOrientation(po.partName).rotZ - lastFrame.getPartOrientation(po.partName).rotZ) * ratio;
-				}
-			}
-		}
+//		for(PartOrientation po : targetFrame.getPartOrientations()) {
+//			if(lastFrame == null) {
+//				po.part.rotationPointX = po.x;
+//				po.part.rotationPointY = po.y;
+//				po.part.rotationPointZ = po.z;
+//				po.part.rotateAngleX = po.rotX;
+//				po.part.rotateAngleY = po.rotY;
+//				po.part.rotateAngleZ = po.rotZ;
+//			}else {
+//				if(lastFrame.getPartOrientation(po.partName) != null) {
+//					po.part.rotationPointX = lastFrame.getPartOrientation(po.partName).x + (targetFrame.getPartOrientation(po.partName).x - lastFrame.getPartOrientation(po.partName).x) * ratio;
+//					po.part.rotationPointY = lastFrame.getPartOrientation(po.partName).y + (targetFrame.getPartOrientation(po.partName).y - lastFrame.getPartOrientation(po.partName).y) * ratio;
+//					po.part.rotationPointZ = lastFrame.getPartOrientation(po.partName).z + (targetFrame.getPartOrientation(po.partName).z - lastFrame.getPartOrientation(po.partName).z) * ratio;
+//
+//					po.part.rotateAngleX = lastFrame.getPartOrientation(po.partName).rotX + (targetFrame.getPartOrientation(po.partName).rotX - lastFrame.getPartOrientation(po.partName).rotX) * ratio;
+//					po.part.rotateAngleY = lastFrame.getPartOrientation(po.partName).rotY + (targetFrame.getPartOrientation(po.partName).rotY - lastFrame.getPartOrientation(po.partName).rotY) * ratio;
+//					po.part.rotateAngleZ = lastFrame.getPartOrientation(po.partName).rotZ + (targetFrame.getPartOrientation(po.partName).rotZ - lastFrame.getPartOrientation(po.partName).rotZ) * ratio;
+//				}
+//			}
+//		}
+
 		return currentState;
 	}
 	
@@ -99,7 +100,7 @@ public class Animation {
 			for(PartOrientation po : frame.getPartOrientations()) {
 				try {
 					 model.getClass().getField(po.partName).setAccessible(true);
-					 po.part =  (RendererModel)model.getClass().getField(po.partName).get(model);
+					 po.part =  (ModelRenderer)model.getClass().getField(po.partName).get(model);
 				} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
 					e.printStackTrace();
 				}

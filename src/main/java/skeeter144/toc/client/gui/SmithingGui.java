@@ -47,7 +47,7 @@ public class SmithingGui extends CraftingGui{
 	@Override
 	void setGuiVals() {
 		 super.setGuiVals();
-		 MainWindow sr = Minecraft.getInstance().mainWindow;
+		 MainWindow sr = Minecraft.getInstance().getMainWindow();
 		 guiWidth = (int)(sr.getScaledWidth() * .5f);
 		 guiHeight = (int)(guiWidth * .5f);
 		 guiX = sr.getScaledWidth() / 2 - guiWidth / 2;

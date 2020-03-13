@@ -59,7 +59,7 @@ public class LightningBoltSpell extends Spell {
 	private void onBoltSpawn(LightningBoltEntity bolt, ArrayList<Entity> struckEntities) {
 		int arcR = (int)LightningBoltSpell.ARC_RADIUS;
 		
-		AxisAlignedBB bb = new AxisAlignedBB(bolt.posX - arcR, bolt.posY - 3, bolt.posZ - arcR, bolt.posX + arcR, bolt.posY + 20, bolt.posZ + arcR);
+		AxisAlignedBB bb = new AxisAlignedBB(bolt.getPosX() - arcR, bolt.getPosY() - 3, bolt.getPosZ() - arcR, bolt.getPosX() + arcR, bolt.getPosY() + 20, bolt.getPosZ() + arcR);
 		List<Entity> l = bolt.world.getEntitiesInAABBexcluding(bolt, bb, null);
 		for(Entity e : l) {
 			if(e instanceof LivingEntity || e instanceof LivingEntity && !struckEntities.contains(e)) {
@@ -70,7 +70,7 @@ public class LightningBoltSpell extends Spell {
 						
 						bolt.getServer().deferTask(new Runnable() {
 							public void run() {
-								spawnBolt(e.world, e.posX, e.posY, e.posZ, struckEntities);
+								spawnBolt(e.world, e.getPosX(), e.getPosY(), e.getPosZ(), struckEntities);
 							}
 						});
 					}

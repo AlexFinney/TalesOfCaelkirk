@@ -29,9 +29,9 @@ public class EntityAIGhostFlying extends Goal{
 			ticksSinceLastTarget = 0;
 			
 			
-			double newPosX = ghost.posX + TOCMain.rand.nextInt(10) - 5;
-			double newPosY = ghost.posY + TOCMain.rand.nextInt(10) - 5;
-			double newPosZ = ghost.posZ + TOCMain.rand.nextInt(10) - 5;
+			double newPosX = ghost.getPosX() + TOCMain.rand.nextInt(10) - 5;
+			double newPosY = ghost.getPosY() + TOCMain.rand.nextInt(10) - 5;
+			double newPosZ = ghost.getPosZ() + TOCMain.rand.nextInt(10) - 5;
 			
 			ghost.getNavigator().tryMoveToXYZ(newPosX, newPosY, newPosZ, .5);
 		}

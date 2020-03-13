@@ -123,8 +123,8 @@ public class Util {
 		if(lookerRotation < 0)
 			lookerRotation += 360;
 		
-		double dx =  tested.posX - looker.posX;
-		double dz =  tested.posZ - looker.posZ;
+		double dx =  tested.getPosX() - looker.getPosX();
+		double dz =  tested.getPosZ() - looker.getPosZ();
 		
 		double distance = Math.sqrt(dx * dx + dz * dz);
 		double angle = Math.toDegrees(Math.acos(dz / distance));

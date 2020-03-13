@@ -89,9 +89,9 @@ public class EntityDisplay implements ToroHealthDisplay {
 
 		GlStateManager.translatef(0.0F, 0.0F, 0.0F);
 		EntityRendererManager rendermanager = Minecraft.getInstance().getRenderManager();
-		rendermanager.setPlayerViewY(180.0F);
+//		rendermanager.setPlayerViewY(180.0F);
 		rendermanager.setRenderShadow(false);
-		rendermanager.renderEntity(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
+//		rendermanager.renderEntity(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
 		rendermanager.setRenderShadow(true);
 
 		GlStateManager.popMatrix();

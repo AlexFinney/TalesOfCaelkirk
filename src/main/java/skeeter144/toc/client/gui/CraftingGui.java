@@ -86,7 +86,7 @@ public abstract class CraftingGui extends Screen implements IGuiEventListener{
 	
 	void setGuiVals() {
 		tm = Minecraft.getInstance().getTextureManager();
-		MainWindow mw = Minecraft.getInstance().mainWindow;
+		MainWindow mw = Minecraft.getInstance().getMainWindow();
 		
 		guiWidth = mw.getScaledWidth() / 2;
 		guiHeight = mw.getScaledHeight() / 4;
@@ -95,9 +95,9 @@ public abstract class CraftingGui extends Screen implements IGuiEventListener{
 	}
 	
 	void drawRecipes() {
-		MainWindow mw = Minecraft.getInstance().mainWindow;
+		MainWindow mw = Minecraft.getInstance().getMainWindow();
 		GlStateManager.pushMatrix();
-		RenderHelper.enableGUIStandardItemLighting();
+		RenderHelper.enableStandardItemLighting();
 		GlStateManager.enableLighting();
 		int row = 0, col = 0;
 		for(Recipe r : craftableRecipes) {

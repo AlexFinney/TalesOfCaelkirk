@@ -3,7 +3,6 @@ package skeeter144.toc.config;
 import java.io.File;
 
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 
 public class ConfigurationHandler {
 
@@ -48,12 +47,12 @@ public class ConfigurationHandler {
 //		}
 	}
 
-	@SubscribeEvent
-	public void onConfigChangeEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
+//	@SubscribeEvent
+//	public void onConfigChangeEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
 //		if (event.getModID().equalsIgnoreCase(Reference.MODID)) {
 //			loadConfiguration();
 //		}
-	}
+//	}
 
 	private static int mapColor(String color) {
 		if (color.equals("RED")) {

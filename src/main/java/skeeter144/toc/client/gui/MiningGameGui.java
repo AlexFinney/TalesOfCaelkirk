@@ -28,9 +28,9 @@ public class MiningGameGui extends Screen{
 	
 	
 	void handleMouseClicks() {
-		MainWindow mw = Minecraft.getInstance().mainWindow;
+		MainWindow mw = Minecraft.getInstance().getMainWindow();
 		int adjustedMouseX = Mouse.getX() * mw.getScaledWidth() / mw.getWidth();
-		int adjustedMouseY = (int) (mw.getScaledHeight() - Minecraft.getInstance().mouseHelper.getMouseY() * mw.getScaledHeight() / Minecraft.getInstance().mainWindow.getHeight());
+		int adjustedMouseY = (int) (mw.getScaledHeight() - Minecraft.getInstance().mouseHelper.getMouseY() * mw.getScaledHeight() / Minecraft.getInstance().getMainWindow().getHeight());
 		
 		//row/column in the puzzle
 		int x = adjustedMouseX / 17;
@@ -60,7 +60,7 @@ public class MiningGameGui extends Screen{
 	
 	
 	void drawBlockIcons() {
-		MainWindow sr = Minecraft.getInstance().mainWindow;
+		MainWindow sr = Minecraft.getInstance().getMainWindow();
 		int adjustedMouseX = Mouse.getX() * sr.getScaledWidth() / sr.getWidth();
 		int adjustedMouseY = sr.getScaledHeight() - Mouse.getY() * sr.getScaledHeight() / sr.getHeight();
 		

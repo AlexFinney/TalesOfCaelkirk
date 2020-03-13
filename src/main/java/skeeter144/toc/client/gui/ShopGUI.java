@@ -62,7 +62,7 @@ public class ShopGUI extends Screen{
 	private void drawSelectedItem() {
 		PlayerInventory inv = Minecraft.getInstance().player.inventory;
 		TextureManager tm = Minecraft.getInstance().getTextureManager();
-		MainWindow sr = Minecraft.getInstance().mainWindow;
+		MainWindow sr = Minecraft.getInstance().getMainWindow();
 		int iconDim = (int)(bookWidth * .07f);
 	    int adjustedX = Mouse.getX() * sr.getScaledWidth() / sr.getWidth();
 	    int adjustedY = sr.getScaledHeight() - Mouse.getY() * sr.getScaledHeight() / sr.getHeight();
@@ -125,7 +125,7 @@ public class ShopGUI extends Screen{
 	private void drawShopItems() {
 	    if(shopData != null) {
 	    	TextureManager tm = Minecraft.getInstance().getTextureManager();
-	    	MainWindow sr = Minecraft.getInstance().mainWindow;
+	    	MainWindow sr = Minecraft.getInstance().getMainWindow();
 	    	int iconDim = (int)(bookWidth * .07f);
 		    int adjustedX = Mouse.getX() * sr.getScaledWidth() / sr.getWidth();
 		    int adjustedY = sr.getScaledHeight() - Mouse.getY() * sr.getScaledHeight() / sr.getHeight();
@@ -150,7 +150,7 @@ public class ShopGUI extends Screen{
 
 				GlStateManager.pushMatrix();	
 				GlStateManager.translated(0.0F, 0.0F, 32.0F);
-				RenderHelper.enableGUIStandardItemLighting();
+				RenderHelper.enableStandardItemLighting();
 				GlStateManager.enableLighting();
 				
 				this.itemRenderer.renderItemAndEffectIntoGUI(is, x, y);
@@ -177,7 +177,7 @@ public class ShopGUI extends Screen{
 	boolean wasMouseClicked = false;
 	private void drawPlayersItems() {
 		TextureManager tm = Minecraft.getInstance().getTextureManager();
-		MainWindow sr = Minecraft.getInstance().mainWindow;
+		MainWindow sr = Minecraft.getInstance().getMainWindow();
 		PlayerInventory inv = Minecraft.getInstance().player.inventory;
 		int iconDim = (int)(bookWidth * .07f);
 	    int adjustedX = Mouse.getX() * sr.getScaledWidth() / sr.getWidth();
@@ -211,7 +211,7 @@ public class ShopGUI extends Screen{
 				continue;
 			}
 			
-			RenderHelper.enableGUIStandardItemLighting();
+			RenderHelper.enableStandardItemLighting();
 			GlStateManager.enableLighting();
 			this.itemRenderer.renderItemAndEffectIntoGUI(is, x, y);
 			GlStateManager.translated(0, 0, 200);
@@ -254,7 +254,7 @@ public class ShopGUI extends Screen{
 		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		
 		TextureManager tm = Minecraft.getInstance().getTextureManager();
-		MainWindow sr = Minecraft.getInstance().mainWindow;
+		MainWindow sr = Minecraft.getInstance().getMainWindow();
 		tm.bindTexture(shop_background);
 		
 		bookWidth = (int)(sr.getScaledWidth() * .5f);

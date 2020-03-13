@@ -51,7 +51,7 @@ public class HorseDonkeySummoner extends CustomItem {
 			horse.world = player.world;
 			horse.horseOwner = player.getUniqueID();
 			
-			horse.setPosition(player.posX, player.posY + 2, player.posZ);
+			horse.setPosition(player.getPosX(), player.getPosY() + 2, player.getPosZ());
 			world.addEntity(horse);
 			player.getHeldItem(hand).getTag().putUniqueId("mount_uuid", horse.getUniqueID());
 		}else {
@@ -91,7 +91,7 @@ public class HorseDonkeySummoner extends CustomItem {
 			int xOff = horse.world.rand.nextInt(diameter) - diameter / 2;
 			int zOff = horse.world.rand.nextInt(diameter) - diameter / 2;
 			
-			BlockPos pos = new BlockPos(player.posX + xOff, player.posY + 2, player.posZ +zOff);
+			BlockPos pos = new BlockPos(player.getPosX() + xOff, player.getPosY() + 2, player.getPosZ() +zOff);
 			
 			if(!horse.world.getBlockState(pos).equals(Blocks.AIR.getDefaultState())) 
 				continue;
@@ -115,7 +115,7 @@ public class HorseDonkeySummoner extends CustomItem {
 			}
 			
 		}
-		horse.setLocationAndAngles(player.posX, player.posY, player.posZ, horse.rotationYaw, horse.rotationPitch);
+		horse.setLocationAndAngles(player.getPosX(), player.getPosY(), player.getPosZ(), horse.rotationYaw, horse.rotationPitch);
 	}
 	
 		

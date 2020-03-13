@@ -15,7 +15,7 @@ public class RenderRat<T extends LivingEntity, M extends EntityModel<T>> extends
 	}
 
 	@Override
-	protected ResourceLocation getEntityTexture(T entity) {
+	public ResourceLocation getEntityTexture(T entity) {
 		return texture;
 	}
 

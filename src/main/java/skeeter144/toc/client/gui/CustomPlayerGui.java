@@ -170,9 +170,9 @@ public class CustomPlayerGui<T extends Container> extends DisplayEffectsScreen<T
         ent.prevRotationYawHead = ent.rotationYaw;
         GlStateManager.translatef(0.0F, 0.0F, 0.0F);
         EntityRendererManager rendermanager = Minecraft.getInstance().getRenderManager();
-        rendermanager.setPlayerViewY(180.0F);
+        //rendermanager. setPlayerViewY(180.0F);
         rendermanager.setRenderShadow(false);
-        rendermanager.renderEntity(ent, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
+        //rendermanager.renderEntity(ent, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
         rendermanager.setRenderShadow(true);
         ent.renderYawOffset = f;
         ent.rotationYaw = f1;

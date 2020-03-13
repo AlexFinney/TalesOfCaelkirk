@@ -3,6 +3,9 @@ package skeeter144.toc.client.entity.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.entity.Entity;
 import skeeter144.toc.client.entity.animation.Animation;
 import skeeter144.toc.client.entity.animation.Animation.AnimationState;
@@ -20,7 +23,8 @@ import skeeter144.toc.util.CustomRunnable;
  * GiantScorpian - Undefined
  * Created using Tabula 5.1.0
  */
-public class ModelGiantScorpian extends AdvancedModelBase<EntityGiantScorpian> {
+public class ModelGiantScorpian extends EntityModel<EntityGiantScorpian>
+{
     public AdvancedModelRenderer body_1;
     public AdvancedModelRenderer left_claw_1;
     public AdvancedModelRenderer body_2;
@@ -71,16 +75,22 @@ public class ModelGiantScorpian extends AdvancedModelBase<EntityGiantScorpian> {
     public ModelGiantScorpian() {
     	setupModel();
     }
-   
+
     @Override
-    public void render(EntityGiantScorpian entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+    public void setRotationAngles(EntityGiantScorpian entityGiantScorpian, float v, float v1, float v2, float v3, float v4)
+    {
+
+    }
+
+  /*  @Override
+    public void render(EntityGiantScorpian entity, float f, float f1, float f2, float f3, float f4, float f5) {
     	super.render(entity, f, f1, f2, f3, f4, f5);
     	this.body_1.render(f5);
     	boolean reloadModel = false;
     	if(reloadModel) setupModel();
-    }
+    }*/
     
-    @Override
+/*    @Override
     public void setRotationAngles(EntityGiantScorpian entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
     		float headPitch, float scaleFactor) {
     	resetToDefaultPose();
@@ -154,7 +164,8 @@ public class ModelGiantScorpian extends AdvancedModelBase<EntityGiantScorpian> {
         bob(tail_5, speed / 2, height * 4, false, f, f1);
         
     }
-    
+*/
+
     public void setRotateAngle(AdvancedModelRenderer RendererModel, float x, float y, float z) {
         RendererModel.rotateAngleX = x;
         RendererModel.rotateAngleY = y;
@@ -387,7 +398,7 @@ public class ModelGiantScorpian extends AdvancedModelBase<EntityGiantScorpian> {
         this.left_claw_4.addChild(this.left_claw_6);
         this.left_back_leg_1.addChild(this.left_back_leg_2);
         this.body_1.addChild(this.right_front_leg_1);
-       updateDefaultPose();
+       //updateDefaultPose();
        setAnimations();
    }
     
@@ -412,7 +423,7 @@ public class ModelGiantScorpian extends AdvancedModelBase<EntityGiantScorpian> {
 				Network.INSTANCE.sendToServer(new AnimationEventPKT("giantScorpianStingFinish", (CustomMob)mob));
 			}
 		});
-    	
+/*
     	start.addPartOrientation(new PartOrientation(body_1, "body_1"));
     	start.addPartOrientation(new PartOrientation(tail_base, "tail_base"));
     	start.addPartOrientation(new PartOrientation(tail_1, "tail_1"));
@@ -429,7 +440,7 @@ public class ModelGiantScorpian extends AdvancedModelBase<EntityGiantScorpian> {
     	start.addPartOrientation(new PartOrientation(left_front_leg_1, "left_front_leg_1"));
     	start.addPartOrientation(new PartOrientation(left_middle_leg_1, "left_middle_leg_1"));
     	start.addPartOrientation(new PartOrientation(left_back_leg_1, "left_back_leg_1"));
-    	
+ */
     	//windup
     	f1.addPartOrientation(new PartOrientation("body_1", body_1, 0, 12, -1.5f, 0, 0, 0));
 
@@ -461,7 +472,7 @@ public class ModelGiantScorpian extends AdvancedModelBase<EntityGiantScorpian> {
     	f2.addPartOrientation(new PartOrientation("left_middle_leg_1", left_middle_leg_1,   0, 0, 0, -10, 0, 0));
     	f2.addPartOrientation(new PartOrientation("left_back_leg_1", left_back_leg_1,       0, 0, 0, -10, 0, 0));
     	
-    	end.addPartOrientation(new PartOrientation(body_1, "body_1"));
+    	/*end.addPartOrientation(new PartOrientation(body_1, "body_1"));
     	end.addPartOrientation(new PartOrientation(tail_base, "tail_base"));
     	end.addPartOrientation(new PartOrientation(tail_1, "tail_1"));
     	end.addPartOrientation(new PartOrientation(tail_2, "tail_2"));
@@ -477,7 +488,7 @@ public class ModelGiantScorpian extends AdvancedModelBase<EntityGiantScorpian> {
     	end.addPartOrientation(new PartOrientation(left_front_leg_1, "left_front_leg_1"));
     	end.addPartOrientation(new PartOrientation(left_middle_leg_1, "left_middle_leg_1"));
     	end.addPartOrientation(new PartOrientation(left_back_leg_1, "left_back_leg_1"));
-    	
+*/
     	sting.addFrame(start);
     	sting.addFrame(f1);
     	sting.addFrame(f2);
@@ -486,5 +497,10 @@ public class ModelGiantScorpian extends AdvancedModelBase<EntityGiantScorpian> {
     	sting.lockInParts();
     	Animations.add(sting);
     }
-    
+
+    @Override
+    public void render(MatrixStack matrixStack, IVertexBuilder iVertexBuilder, int i, int i1, float v, float v1, float v2, float v3)
+    {
+
+    }
 }

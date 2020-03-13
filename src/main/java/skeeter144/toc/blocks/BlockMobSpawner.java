@@ -6,7 +6,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -19,21 +19,14 @@ import skeeter144.toc.client.gui.MobSpawnerGUI;
 import skeeter144.toc.entity.tile.BlockTileEntity;
 import skeeter144.toc.entity.tile.TileEntityMobSpawner;
 
+import javax.swing.*;
+
 public class BlockMobSpawner extends BlockTileEntity<TileEntityMobSpawner> {
 
 	protected static final AxisAlignedBB BB = new AxisAlignedBB(0, 0.0D, 0D, 1D, 1.0D, 1D);
 	protected static final AxisAlignedBB REED_AABB = new AxisAlignedBB(0.125D, 0.0D, 0.125D, 0.875D, 1.0D, 0.875D);
 	public BlockMobSpawner(String name) {
 		super(Properties.create(Material.ROCK).hardnessAndResistance(-1), name);
-	}
-	
-	public BlockRenderLayer getBlockLayer() {
-		return BlockRenderLayer.TRANSLUCENT;
-	}
-	
-	@Override
-	public BlockRenderLayer getRenderLayer() {
-		return BlockRenderLayer.TRANSLUCENT;
 	}
 	
 	@OnlyIn(Dist.CLIENT)
@@ -44,7 +37,7 @@ public class BlockMobSpawner extends BlockTileEntity<TileEntityMobSpawner> {
 	
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		if(player.isCreative() && worldIn.isRemote){
 			Minecraft.getInstance().displayGuiScreen(new MobSpawnerGUI((TileEntityMobSpawner)worldIn.getTileEntity(pos)));
 			//TODO: show gui
@@ -52,7 +45,7 @@ public class BlockMobSpawner extends BlockTileEntity<TileEntityMobSpawner> {
 			//		pos.getY(), pos.getZ());
 		}
 
-		return true;
+		return ActionResultType.SUCCESS;
 	}
 	
 	@Override

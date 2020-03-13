@@ -1,6 +1,7 @@
 package skeeter144.toc.particles.particle;
 
 
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
@@ -43,63 +44,69 @@ public class DamageParticle extends Particle {
 	}
 
 	@Override
-	public void renderParticle(BufferBuilder buffer, ActiveRenderInfo entityIn, float partialTicks, float rotationX,
-			float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
-		float rotationYaw = (-Minecraft.getInstance().player.rotationYaw);
-		float rotationPitch = Minecraft.getInstance().player.rotationPitch;
+	public void renderParticle(IVertexBuilder iVertexBuilder, ActiveRenderInfo activeRenderInfo, float v)
+	{
 
-		final float locX = ((float) (this.prevPosX + (this.posX - this.prevPosX) * 1 - interpPosX));
-		final float locY = ((float) (this.prevPosY + (this.posY - this.prevPosY) * 1 - interpPosY));
-		final float locZ = ((float) (this.prevPosZ + (this.posZ - this.prevPosZ) * 1 - interpPosZ));
-
-		GL11.glPushMatrix();
-		if (this.shouldOnTop) {
-			GL11.glDepthFunc(519);
-		} else {
-			GL11.glDepthFunc(515);
-		}
-		GL11.glTranslatef(locX, locY, locZ);
-		GL11.glRotatef(rotationYaw, 0.0F, 1.0F, 0.0F);
-		GL11.glRotatef(rotationPitch, 1.0F, 0.0F, 0.0F);
-
-		GL11.glScalef(-1.0F, -1.0F, 1.0F);
-		GL11.glScaled(this.scale * 0.008D, this.scale * 0.008D, this.scale * 0.008D);
-		GL11.glScaled(this.scale, this.scale, this.scale);
-
-		//OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0F, 0.003662109F);
-		GL11.glEnable(3553);
-		GL11.glDisable(3042);
-		GL11.glDepthMask(true);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		GL11.glEnable(3553);
-		GL11.glEnable(2929);
-		GL11.glDisable(2896);
-		GL11.glBlendFunc(770, 771);
-		GL11.glEnable(3042);
-		GL11.glEnable(3008);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		
-		int color = 0xFF0000;
-		if(this.text.equals("Blocked!")) {
-			color = 0x000000;
-		}
-
-		final FontRenderer fontRenderer = Minecraft.getInstance().fontRenderer;
-		fontRenderer.drawString(this.text, -MathHelper.floor(fontRenderer.getStringWidth(this.text) / 2.0F) + 1, -MathHelper.floor(fontRenderer.FONT_HEIGHT / 2.0F) + 1, color);
-		
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		GL11.glDepthFunc(515);
-
-		GL11.glPopMatrix();
-		if (this.grow) {
-			this.scale *= 1.08F;
-			if (this.scale > SIZE * 3.0D) {
-				this.grow = false;
-			}
-		} else {
-			this.scale *= 0.96F;
-		}
 	}
+
+//	@Override
+//	public void renderParticle(BufferBuilder buffer, ActiveRenderInfo entityIn, float partialTicks, float rotationX,
+//			float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+//		float rotationYaw = (-Minecraft.getInstance().player.rotationYaw);
+//		float rotationPitch = Minecraft.getInstance().player.rotationPitch;
+//
+//		final float locX = ((float) (this.prevPosX + (this.posX - this.prevPosX) * 1 - interpPosX));
+//		final float locY = ((float) (this.prevPosY + (this.posY - this.prevPosY) * 1 - interpPosY));
+//		final float locZ = ((float) (this.prevPosZ + (this.posZ - this.prevPosZ) * 1 - interpPosZ));
+//
+//		GL11.glPushMatrix();
+//		if (this.shouldOnTop) {
+//			GL11.glDepthFunc(519);
+//		} else {
+//			GL11.glDepthFunc(515);
+//		}
+//		GL11.glTranslatef(locX, locY, locZ);
+//		GL11.glRotatef(rotationYaw, 0.0F, 1.0F, 0.0F);
+//		GL11.glRotatef(rotationPitch, 1.0F, 0.0F, 0.0F);
+//
+//		GL11.glScalef(-1.0F, -1.0F, 1.0F);
+//		GL11.glScaled(this.scale * 0.008D, this.scale * 0.008D, this.scale * 0.008D);
+//		GL11.glScaled(this.scale, this.scale, this.scale);
+//
+//		//OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0F, 0.003662109F);
+//		GL11.glEnable(3553);
+//		GL11.glDisable(3042);
+//		GL11.glDepthMask(true);
+//		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+//		GL11.glEnable(3553);
+//		GL11.glEnable(2929);
+//		GL11.glDisable(2896);
+//		GL11.glBlendFunc(770, 771);
+//		GL11.glEnable(3042);
+//		GL11.glEnable(3008);
+//		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+//
+//		int color = 0xFF0000;
+//		if(this.text.equals("Blocked!")) {
+//			color = 0x000000;
+//		}
+//
+//		final FontRenderer fontRenderer = Minecraft.getInstance().fontRenderer;
+//		fontRenderer.drawString(this.text, -MathHelper.floor(fontRenderer.getStringWidth(this.text) / 2.0F) + 1, -MathHelper.floor(fontRenderer.FONT_HEIGHT / 2.0F) + 1, color);
+//
+//		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+//		GL11.glDepthFunc(515);
+//
+//		GL11.glPopMatrix();
+//		if (this.grow) {
+//			this.scale *= 1.08F;
+//			if (this.scale > SIZE * 3.0D) {
+//				this.grow = false;
+//			}
+//		} else {
+//			this.scale *= 0.96F;
+//		}
+//	}
 
 	public int getFXLayer() {
 		return 3;

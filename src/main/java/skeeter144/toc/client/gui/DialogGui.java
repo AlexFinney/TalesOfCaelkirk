@@ -90,17 +90,17 @@ public class DialogGui extends Screen {
 		RenderHelper.enableStandardItemLighting();
 		GlStateManager.translatef(0.0F, 0.0F, 0.0F);
 		EntityRendererManager rendermanager = Minecraft.getInstance().getRenderManager();
-		rendermanager.setPlayerViewY(180.0F);
-		rendermanager.renderEntity(e, 0.0D, -.3D, 0.0D, 0.0F, 1.0F, false);
+		//rendermanager.setPlayerViewY(180.0F);
+		//rendermanager.renderEntity(e, 0.0D, -.3D, 0.0D, 0.0F, 1.0F, false);
 		GlStateManager.disableRescaleNormal();
 		GlStateManager.popMatrix();
 		RenderHelper.disableStandardItemLighting();
 		
 		RenderHelper.disableStandardItemLighting();
 		GlStateManager.disableRescaleNormal();
-		GlStateManager.activeTexture(GLX.GL_TEXTURE1);
+		//GlStateManager.activeTexture(GLX.GL_TEXTURE1);
 		GlStateManager.disableTexture();
-		GlStateManager.activeTexture(GLX.GL_TEXTURE0);
+		//GlStateManager.activeTexture(GLX.GL_TEXTURE0);
 	}
 
 	public String dialog = "";

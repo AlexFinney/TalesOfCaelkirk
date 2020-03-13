@@ -67,7 +67,7 @@ public class ItemTransactionPKT{
 					
 					ItemStack stack = new ItemStack(item, message.count);
 					EntityShopKeeper theKeeper = null;
-					List<EntityShopKeeper> entities = pl.world.getEntitiesWithinAABB(EntityShopKeeper.class, new AxisAlignedBB(pl.posX - 10, pl.posY - 10, pl.posZ - 10, pl.posX + 10, pl.posY + 10, pl.posZ + 10));
+					List<EntityShopKeeper> entities = pl.world.getEntitiesWithinAABB(EntityShopKeeper.class, new AxisAlignedBB(pl.getPosX() - 10, pl.getPosY() - 10, pl.getPosZ() - 10, pl.getPosX() + 10, pl.getPosY() + 10, pl.getPosZ() + 10));
 					for(EntityShopKeeper e : entities) {
 						if(e.getUniqueID().equals(message.shopKeeperId)) {
 							theKeeper = e;

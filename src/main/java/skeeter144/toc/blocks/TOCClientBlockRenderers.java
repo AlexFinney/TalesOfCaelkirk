@@ -9,8 +9,8 @@ import skeeter144.toc.entity.tile.TileEntityMobSpawner;
 public class TOCClientBlockRenderers {
 
 	public static void registerAll() {
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnvil.class, new TileEntityAnvilRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMobSpawner.class, new TileEntityMobSpawnerRenderer());
+		//ClientRegistry.bindTileEntityRenderer(, TileEntityAnvil.class, new TileEntityAnvilRenderer());
+		//ClientRegistry.bindTileEntityRenderer(TileEntityMobSpawner.class, new TileEntityMobSpawnerRenderer());
 	}
 
 }

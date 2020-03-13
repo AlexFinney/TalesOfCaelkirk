@@ -1,5 +1,8 @@
 package skeeter144.toc.client.entity.model;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.renderer.entity.model.EntityModel;
 import skeeter144.toc.client.entity.renderer.AdvancedModelRenderer;
 import skeeter144.toc.entity.mob.monster.EntityGoblin;
 
@@ -7,7 +10,8 @@ import skeeter144.toc.entity.mob.monster.EntityGoblin;
  * Goblin - Skeeter144
  * Created using Tabula 5.1.0
  */
-public class ModelGoblin<T extends EntityGoblin> extends AdvancedModelBase<EntityGoblin> {
+public class ModelGoblin<T extends EntityGoblin> extends EntityModel<EntityGoblin>
+{
     public AdvancedModelRenderer body;
     public AdvancedModelRenderer head;
     public AdvancedModelRenderer waist;
@@ -179,9 +183,15 @@ public class ModelGoblin<T extends EntityGoblin> extends AdvancedModelBase<Entit
         this.nose_1.addChild(this.nose_2);
         this.waist.addChild(this.left_leg);
         this.body.setScale(.5f, .5f, .5f);
-        updateDefaultPose();
+        //updateDefaultPose();
     }
 
+    @Override
+    public void setRotationAngles(EntityGoblin entityGoblin, float v, float v1, float v2, float v3, float v4)
+    {
+
+    }
+/*
     @Override
     public void render(EntityGoblin entity, float f, float f1, float f2, float f3, float f4, float f5) { 
     	body.scaleChildren = true;
@@ -212,10 +222,16 @@ public class ModelGoblin<T extends EntityGoblin> extends AdvancedModelBase<Entit
         swing(body, speed / 2, .05f * degree, true, 0, 0, f, f1);
         bob(head, speed, height * .1f, false, f, f1);
     }
-    
+   */
     public void setRotateAngle(AdvancedModelRenderer RendererModel, float x, float y, float z) {
         RendererModel.rotateAngleX = x;
         RendererModel.rotateAngleY = y;
         RendererModel.rotateAngleZ = z;
+    }
+
+    @Override
+    public void render(MatrixStack matrixStack, IVertexBuilder iVertexBuilder, int i, int i1, float v, float v1, float v2, float v3)
+    {
+
     }
 }

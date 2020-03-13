@@ -169,9 +169,9 @@ public class HUD extends IngameGui {
 
 	void renderChat() {
 		GlStateManager.enableBlend();
-		GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
-				GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
-				GlStateManager.DestFactor.ZERO);
+		GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA.param,
+				GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.param, GlStateManager.SourceFactor.ONE.param,
+				GlStateManager.DestFactor.ZERO.param);
 		GlStateManager.disableAlphaTest();
 		GlStateManager.pushMatrix();
 		GlStateManager.translatef(0.0F, (float) (this.scaledHeight - 48), 0.0F);
@@ -186,7 +186,7 @@ public class HUD extends IngameGui {
 
 	void drawLightBlock() {
 		TextureManager tm = Minecraft.getInstance().getTextureManager();
-		MainWindow sr = Minecraft.getInstance().mainWindow;
+		MainWindow sr = Minecraft.getInstance().getMainWindow();
 		int screenWidth = sr.getScaledWidth();
 		int screenHeight = sr.getScaledHeight();
 		Byte light = new Byte((byte) (lightBlockedPct * 255));
@@ -199,7 +199,7 @@ public class HUD extends IngameGui {
 			GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 			TextureManager tm = Minecraft.getInstance().getTextureManager();
-			MainWindow sr = Minecraft.getInstance().mainWindow;
+			MainWindow sr = Minecraft.getInstance().getMainWindow();
 
 			int screenWidth = sr.getScaledWidth();
 			int screenHeight = sr.getScaledHeight();
@@ -225,7 +225,7 @@ public class HUD extends IngameGui {
 		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 		TextureManager tm = Minecraft.getInstance().getTextureManager();
-		MainWindow sr = Minecraft.getInstance().mainWindow;
+		MainWindow sr = Minecraft.getInstance().getMainWindow();
 
 		int screenWidth = sr.getScaledWidth();
 		int screenHeight = sr.getScaledHeight();
@@ -288,7 +288,7 @@ public class HUD extends IngameGui {
 		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 		TextureManager tm = Minecraft.getInstance().getTextureManager();
-		MainWindow sr = Minecraft.getInstance().mainWindow;
+		MainWindow sr = Minecraft.getInstance().getMainWindow();
 
 		int screenWidth = sr.getScaledWidth();
 		int screenHeight = sr.getScaledHeight();
@@ -321,7 +321,7 @@ public class HUD extends IngameGui {
 	float xpMessageSpeed = -1;
 
 	void drawXpMessages() {
-		MainWindow sr = Minecraft.getInstance().mainWindow;
+		MainWindow sr = Minecraft.getInstance().getMainWindow();
 		int screenWidth = sr.getScaledWidth();
 		int screenHeight = sr.getScaledHeight();
 
@@ -332,7 +332,7 @@ public class HUD extends IngameGui {
 		for (XpMessage msg : xpMessages) {
 			fr.drawString(msg.string, msg.x, msg.y, 0x000000);
 			tm.bindTexture(new ResourceLocation(msg.icon));
-			GlStateManager.color3f(1f, 1f, 1f);
+			GlStateManager.color4f(1f, 1f, 1f, 1f);
 			blit(msg.x - iconDim, (int) (msg.y - iconDim / 4f), iconDim, iconDim, iconDim, iconDim, iconDim, iconDim);
 			msg.y += xpMessageSpeed;
 		}
@@ -340,7 +340,7 @@ public class HUD extends IngameGui {
 	}
 
 	public static void addNewXpMessage(Level level, int amount) {
-		MainWindow sr = Minecraft.getInstance().mainWindow;
+		MainWindow sr = Minecraft.getInstance().getMainWindow();
 		int screenWidth = sr.getScaledWidth();
 		int screenHeight = sr.getScaledHeight();
 
@@ -365,17 +365,17 @@ public class HUD extends IngameGui {
 
 	void renderVanillaModified(float partialTicks) {
 		// super.renderGameOverlay(partialTicks);
-		this.scaledWidth = this.mc.mainWindow.getScaledWidth();
-		this.scaledHeight = this.mc.mainWindow.getScaledHeight();
+		this.scaledWidth = this.mc.getMainWindow().getScaledWidth();
+		this.scaledHeight = this.mc.getMainWindow().getScaledHeight();
 		FontRenderer fontrenderer = this.getFontRenderer();
 		GlStateManager.enableBlend();
 		if (Minecraft.isFancyGraphicsEnabled()) {
 			renderVignette(mc.getRenderViewEntity());
 		} else {
 			GlStateManager.enableDepthTest();
-			GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
-					GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
-					GlStateManager.DestFactor.ZERO);
+			GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA.param,
+					GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.param, GlStateManager.SourceFactor.ONE.param,
+					GlStateManager.DestFactor.ZERO.param);
 		}
 
 		ItemStack itemstack = this.mc.player.inventory.armorItemInSlot(3);
@@ -402,9 +402,9 @@ public class HUD extends IngameGui {
 			GlStateManager.enableBlend();
 			GlStateManager.enableAlphaTest();
 			this.renderAttackIndicator();
-			GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
-					GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
-					GlStateManager.DestFactor.ZERO);
+			GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA.param,
+					GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.param, GlStateManager.SourceFactor.ONE.param,
+					GlStateManager.DestFactor.ZERO.param);
 			this.mc.getProfiler().startSection("bossHealth");
 			this.overlayBoss.render();
 			this.mc.getProfiler().endSection();
@@ -475,9 +475,9 @@ public class HUD extends IngameGui {
 					GlStateManager.pushMatrix();
 					GlStateManager.translatef((float) (this.scaledWidth / 2), (float) (this.scaledHeight - 68), 0.0F);
 					GlStateManager.enableBlend();
-					GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
-							GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
-							GlStateManager.DestFactor.ZERO);
+					GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA.param,
+							GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.param, GlStateManager.SourceFactor.ONE.param,
+							GlStateManager.DestFactor.ZERO.param);
 					int k1 = 16777215;
 					if (this.animateOverlayMessageColor) {
 						k1 = MathHelper.hsvToRGB(f3 / 50.0F, 0.7F, 0.6F) & 16777215;
@@ -512,9 +512,9 @@ public class HUD extends IngameGui {
 					GlStateManager.pushMatrix();
 					GlStateManager.translatef((float) (this.scaledWidth / 2), (float) (this.scaledHeight / 2), 0.0F);
 					GlStateManager.enableBlend();
-					GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
-							GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
-							GlStateManager.DestFactor.ZERO);
+					GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA.param,
+							GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.param, GlStateManager.SourceFactor.ONE.param,
+							GlStateManager.DestFactor.ZERO.param);
 					GlStateManager.pushMatrix();
 					GlStateManager.scalef(4.0F, 4.0F, 4.0F);
 					int l1 = j1 << 24 & -16777216;
@@ -600,11 +600,11 @@ public class HUD extends IngameGui {
 			if (k > 0) {
 				GlStateManager.pushMatrix();
 				GlStateManager.enableBlend();
-				GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
-						GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
-						GlStateManager.DestFactor.ZERO);
-				fill(i - 2, j - 2, i + this.getFontRenderer().getStringWidth(s) + 2, j + 9 + 2,
-						this.mc.gameSettings.func_216839_a(0));
+				GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA.param,
+						GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.param, GlStateManager.SourceFactor.ONE.param,
+						GlStateManager.DestFactor.ZERO.param);
+//				fill(i - 2, j - 2, i + this.getFontRenderer().getStringWidth(s) + 2, j + 9 + 2,
+//						this.mc.gameSettings.func_216839_a(0));
 				FontRenderer font = highlightingItemStack.getItem().getFontRenderer(highlightingItemStack);
 				if (font == null) {
 					this.getFontRenderer().drawStringWithShadow(s, (float) i, (float) j, 16777215 + (k << 24));
@@ -622,11 +622,11 @@ public class HUD extends IngameGui {
 
 	// Copied from IngameGui
 	private void func_212909_a(FontRenderer p_212909_1_, int p_212909_2_, int p_212909_3_) {
-		int i = this.mc.gameSettings.func_216841_b(0.0F);
-		if (i != 0) {
-			int j = -p_212909_3_ / 2;
-			fill(j - 2, p_212909_2_ - 2, j + p_212909_3_ + 2, p_212909_2_ + 9 + 2, i);
-		}
+//		int i = this.mc.gameSettings.func_216841_b(0.0F);
+//		if (i != 0) {
+//			int j = -p_212909_3_ / 2;
+//			fill(j - 2, p_212909_2_ - 2, j + p_212909_3_ + 2, p_212909_2_ + 9 + 2, i);
+//		}
 
 	}
 }

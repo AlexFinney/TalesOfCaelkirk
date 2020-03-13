@@ -16,7 +16,7 @@ public class RenderGhost<T extends LivingEntity, M extends EntityModel<T>> exten
 	}
 
 	@Override
-	protected ResourceLocation getEntityTexture(T entity) {
+	public ResourceLocation getEntityTexture(T entity) {
 		return texture;
 	}
 
